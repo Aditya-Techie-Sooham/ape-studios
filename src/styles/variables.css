@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+
+
+
+
+/* =========================================================
+   APE GLOBAL DESIGN TOKENS
+========================================================= */
+
+:root {
+
+  --ape-black:
+    #020202;
+
+  --ape-obsidian: 
+    #070709;
+
+  --ape-charcoal:
+    #111115;
+
+  --ape-jungle:
+    #293628;
+
+  --ape-jungle-dark:
+    #151c16;
+
+  --ape-amber:
+    #c98942;
+
+  --ape-sunset:
+    #e3a255;
+
+  --ape-purple:
+    #6547a8;
+
+  --ape-violet:
+    #8d70d6;
+
+  --ape-violet-light:
+    #b9a7ee;
+
+  --ape-ivory:
+    #f5f3ef;
+
+  --ape-muted:
+    #a7a49e;
+
+  --ape-font-heading:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --ape-font-body:
+    "Montserrat",
+    sans-serif;
+
+}

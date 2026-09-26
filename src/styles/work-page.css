@@ -1,0 +1,1072 @@
+/* =========================================================
+   APE WORK — MOTION PLAYGROUND
+========================================================= */
+
+.work-page {
+  width: 100%;
+
+  overflow-x: clip;
+  overflow-y: visible;
+
+  background: #f8f5fc;
+
+  color: #28173d;
+}
+
+
+
+
+
+/* =========================================================
+   STICKY SAFETY
+========================================================= */
+
+html,
+body {
+  overflow-x: clip;
+}
+
+.work-page,
+.work-playground {
+  overflow-y: visible !important;
+}
+
+.work-playground__stage {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+
+  top: 0 !important;
+
+  height: 100vh;
+  height: 100svh;
+
+  overflow: hidden;
+}
+
+
+
+/* =========================================================
+   SCROLL STORY
+========================================================= */
+
+.work-playground {
+  position: relative;
+
+  width: 100%;
+
+  height: 600vh;
+
+  overflow: visible !important;
+
+  background: #f8f5fc;
+}
+
+
+.work-playground__stage {
+  position: sticky;
+
+  top: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 80% 18%,
+      rgba(216, 74, 169, 0.11),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 15% 80%,
+      rgba(116, 82, 217, 0.13),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f8f4fd 48%,
+      #eee7fb 100%
+    );
+}
+
+
+
+/* =========================================================
+   THREE CANVAS
+========================================================= */
+
+.work-playground__canvas {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.work-grid {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  opacity: 0.35;
+
+  background-image:
+
+    linear-gradient(
+      rgba(112, 78, 213, 0.07)
+      1px,
+      transparent
+      1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(112, 78, 213, 0.07)
+      1px,
+      transparent
+      1px
+    );
+
+  background-size:
+    7vw
+    7vw;
+
+  mask-image:
+    radial-gradient(
+      circle at center,
+      #000 15%,
+      transparent 78%
+    );
+}
+
+
+
+/* =========================================================
+   APE WATERMARK
+========================================================= */
+
+.work-ape-watermark {
+  position: absolute;
+
+  z-index: 3;
+
+  left: -8vw;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  font-size: 43vw;
+
+  font-weight: 950;
+
+  line-height: 0.64;
+
+  letter-spacing: -0.14em;
+
+  color:
+    rgba(
+      112,
+      77,
+      212,
+      0.035
+    );
+
+  pointer-events: none;
+}
+
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.work-meta {
+  position: absolute;
+
+  z-index: 50;
+
+  top: 105px;
+
+  left: 5vw;
+  right: 5vw;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color:
+    rgba(
+      40,
+      23,
+      61,
+      0.45
+    );
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.20em;
+
+  text-transform: uppercase;
+}
+
+
+
+/* =========================================================
+   MAIN WORK WORD
+========================================================= */
+
+.work-main-word {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  width: 100%;
+
+  text-align: center;
+}
+
+
+.work-main-word__mask {
+  overflow: hidden;
+}
+
+
+.work-main-word h1 {
+  margin: 0;
+
+  font-size:
+    clamp(
+      150px,
+      26vw,
+      480px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.70;
+
+  letter-spacing: -0.105em;
+
+  color: #29173f;
+
+  text-transform: uppercase;
+}
+
+
+
+/* =========================================================
+   ORBIT
+========================================================= */
+
+.work-orbit {
+  position: absolute;
+
+  z-index: 18;
+
+  right: 8vw;
+
+  top: 50%;
+
+  width:
+    clamp(
+      290px,
+      30vw,
+      520px
+    );
+
+  aspect-ratio: 1;
+
+  transform:
+    translateY(-50%);
+
+  pointer-events: none;
+}
+
+
+.work-orbit__ring {
+  position: absolute;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(
+      116,
+      82,
+      217,
+      0.22
+    );
+}
+
+
+.work-orbit__ring--one {
+  inset: 0;
+}
+
+
+.work-orbit__ring--two {
+  inset: 17%;
+}
+
+
+.work-orbit__ring--three {
+  inset: 34%;
+}
+
+
+.work-orbit__core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 72px;
+  height: 72px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7452d9,
+      #d84ba9
+    );
+
+  box-shadow:
+    0
+    0
+    80px
+    rgba(
+      116,
+      82,
+      217,
+      0.38
+    );
+}
+
+
+.work-orbit__core span {
+  font-size: 22px;
+
+  font-weight: 950;
+}
+
+
+.work-orbit__node {
+  position: absolute;
+
+  width: 11px;
+  height: 11px;
+
+  border-radius: 50%;
+
+  background: #d84ba9;
+
+  box-shadow:
+    0
+    0
+    20px
+    rgba(
+      216,
+      75,
+      169,
+      0.55
+    );
+}
+
+
+.work-orbit__node--one {
+  left: 7%;
+  top: 42%;
+}
+
+
+.work-orbit__node--two {
+  right: 20%;
+  top: 9%;
+}
+
+
+.work-orbit__node--three {
+  right: 1%;
+  bottom: 30%;
+}
+
+
+
+/* =========================================================
+   ABSTRACT SHAPES
+========================================================= */
+
+.work-shape {
+  position: absolute;
+
+  z-index: 16;
+
+  pointer-events: none;
+}
+
+
+.work-shape--square {
+  left: 12vw;
+  top: 18vh;
+
+  width: 68px;
+  height: 68px;
+
+  border:
+    2px solid
+    #7452d9;
+
+  transform:
+    rotate(17deg);
+}
+
+
+.work-shape--circle {
+  left: 23vw;
+  bottom: 15vh;
+
+  width: 46px;
+  height: 46px;
+
+  border:
+    2px solid
+    #d84ba9;
+
+  border-radius: 50%;
+}
+
+
+.work-shape--line {
+  right: 30vw;
+  top: 18vh;
+
+  width: 130px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7452d9,
+      #d84ba9
+    );
+
+  transform:
+    rotate(-25deg);
+}
+
+
+.work-shape--cross {
+  right: 15vw;
+  bottom: 14vh;
+
+  width: 42px;
+  height: 42px;
+}
+
+
+.work-shape--cross span {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 100%;
+  height: 2px;
+
+  background: #29173f;
+}
+
+
+.work-shape--cross span:first-child {
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+}
+
+
+.work-shape--cross span:last-child {
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    rotate(90deg);
+}
+
+
+
+/* =========================================================
+   STATEMENTS
+========================================================= */
+
+.work-statements {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 40;
+
+  pointer-events: none;
+}
+
+
+.work-statement {
+  position: absolute;
+
+  left: 5vw;
+  top: 50%;
+
+  width:
+    min(
+      1050px,
+      78vw
+    );
+
+  transform:
+    translateY(-50%);
+
+  opacity: 0;
+
+  visibility: hidden;
+}
+
+
+.work-statement.is-active {
+  visibility: visible;
+}
+
+
+.work-statement > span {
+  display: block;
+
+  margin-bottom: 20px;
+
+  color: #d84ba9;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.22em;
+}
+
+
+.work-statement h2 {
+  margin: 0;
+
+  font-size:
+    clamp(
+      80px,
+      10vw,
+      175px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.76;
+
+  letter-spacing: -0.078em;
+
+  text-transform: uppercase;
+}
+
+
+.work-statement h2 em {
+  display: block;
+
+  color: transparent;
+
+  font-style: normal;
+
+  -webkit-text-stroke:
+    1.6px
+    #7452d9;
+}
+
+
+
+/* =========================================================
+   SIGNAL
+========================================================= */
+
+.work-signal {
+  position: absolute;
+
+  z-index: 60;
+
+  right: 5vw;
+
+  bottom: 40px;
+
+  width: 220px;
+}
+
+
+.work-signal > span {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color:
+    rgba(
+      40,
+      23,
+      61,
+      0.42
+    );
+
+  font-size: 6px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+}
+
+
+.work-signal__line {
+  width: 100%;
+  height: 2px;
+
+  overflow: hidden;
+
+  background:
+    rgba(
+      40,
+      23,
+      61,
+      0.12
+    );
+}
+
+
+.work-signal__fill {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  transform:
+    scaleX(0);
+
+  transform-origin:
+    left center;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7452d9,
+      #d84ba9
+    );
+}
+
+
+
+/* =========================================================
+   FINAL REVEAL
+========================================================= */
+
+.work-reveal {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 80;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      #4f2b73,
+      #1a1026 72%
+    );
+
+  opacity: 0;
+
+  visibility: hidden;
+}
+
+
+.work-reveal > span {
+  margin-bottom: 24px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.50
+    );
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.22em;
+}
+
+
+.work-reveal h2 {
+  margin: 0;
+
+  font-size:
+    clamp(
+      90px,
+      11vw,
+      190px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.76;
+
+  letter-spacing: -0.08em;
+
+  text-transform: uppercase;
+}
+
+
+.work-reveal h2 em {
+  display: block;
+
+  color: #ef78c2;
+
+  font-style: normal;
+}
+
+
+.work-reveal__arrow {
+  width: 54px;
+  height: 54px;
+
+  margin-top: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.28
+    );
+
+  border-radius: 50%;
+
+  font-size: 17px;
+}
+
+
+
+/* =========================================================
+   FUTURE PROJECT AREA
+========================================================= */
+
+.work-projects-placeholder {
+  min-height: 60vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  color:
+    rgba(
+      40,
+      23,
+      61,
+      0.35
+    );
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.20em;
+}
+
+
+
+/* =========================================================
+   MOBILE
+   PURPOSE-BUILT VERSION
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .work-playground {
+    height: 390svh;
+  }
+
+
+  .work-playground__stage {
+    height: 100svh;
+  }
+
+
+  .work-grid {
+    background-size:
+      48px
+      48px;
+
+    opacity: 0.25;
+  }
+
+
+  .work-meta {
+    top: 92px;
+
+    left: 18px;
+    right: 18px;
+
+    font-size: 5px;
+  }
+
+
+  .work-meta span:last-child {
+    display: none;
+  }
+
+
+  .work-ape-watermark {
+    left: -45%;
+
+    font-size: 120vw;
+  }
+
+
+  .work-main-word h1 {
+    font-size:
+      clamp(
+        92px,
+        31vw,
+        130px
+      );
+
+    line-height: 0.75;
+  }
+
+
+  /* Orbit becomes a graphic accent,
+     not a huge desktop object */
+
+  .work-orbit {
+    right: -80px;
+
+    top: 68%;
+
+    width: 220px;
+
+    opacity: 0.60;
+  }
+
+
+  .work-orbit__core {
+    width: 46px;
+    height: 46px;
+  }
+
+
+  .work-orbit__core span {
+    font-size: 15px;
+  }
+
+
+  .work-shape--square {
+    left: 22px;
+    top: 24%;
+
+    width: 42px;
+    height: 42px;
+  }
+
+
+  .work-shape--circle {
+    left: 38px;
+    bottom: 19%;
+
+    width: 30px;
+    height: 30px;
+  }
+
+
+  .work-shape--line {
+    right: 30px;
+    top: 25%;
+
+    width: 80px;
+  }
+
+
+  .work-shape--cross {
+    display: none;
+  }
+
+
+  .work-statement {
+    left: 18px;
+    right: 18px;
+
+    width: auto;
+  }
+
+
+  .work-statement h2 {
+    font-size:
+      clamp(
+        48px,
+        14vw,
+        64px
+      );
+
+    line-height: 0.82;
+  }
+
+
+  .work-statement h2 em {
+    -webkit-text-stroke-width:
+      1px;
+  }
+
+
+  .work-statement > span {
+    font-size: 6px;
+  }
+
+
+  .work-signal {
+    left: 18px;
+    right: 18px;
+
+    bottom: 24px;
+
+    width: auto;
+  }
+
+
+  .work-reveal {
+    padding:
+      0
+      20px;
+
+    box-sizing: border-box;
+  }
+
+
+  .work-reveal > span {
+    width: 80%;
+
+    font-size: 5.5px;
+
+    line-height: 1.5;
+  }
+
+
+  .work-reveal h2 {
+    font-size:
+      clamp(
+        50px,
+        14vw,
+        67px
+      );
+
+    line-height: 0.80;
+  }
+
+
+  .work-reveal__arrow {
+    width: 45px;
+    height: 45px;
+
+    margin-top: 28px;
+  }
+
+}
+
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 374px) {
+
+  .work-statement h2 {
+    font-size: 45px;
+  }
+
+
+  .work-main-word h1 {
+    font-size: 96px;
+  }
+
+
+  .work-reveal h2 {
+    font-size: 47px;
+  }
+
+}

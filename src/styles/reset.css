@@ -1,0 +1,331 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ROOT / HTML
+========================================================= */
+
+html {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+
+  min-height: 100%;
+
+  background:
+    var(--ape-black);
+
+  overflow-x: hidden;
+
+  scroll-behavior: auto;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+
+  min-height: 100vh;
+  min-height: 100svh;
+
+  overflow-x: hidden;
+
+  background:
+    var(--ape-black);
+
+  color:
+    var(--ape-ivory);
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+  font-size: 16px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* =========================================================
+   HEADINGS
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-wrap: balance;
+}
+
+
+/* =========================================================
+   BODY TEXT
+========================================================= */
+
+p {
+  margin: 0;
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a {
+  color: inherit;
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+ul,
+ol {
+  margin: 0;
+
+  padding: 0;
+}
+
+
+li {
+  list-style: none;
+}
+
+
+/* =========================================================
+   MEDIA
+========================================================= */
+
+img,
+video,
+canvas,
+svg,
+picture {
+  display: block;
+
+  max-width: 100%;
+}
+
+
+img {
+  height: auto;
+}
+
+
+video {
+  width: 100%;
+}
+
+
+/* =========================================================
+   FORMS / BUTTONS
+========================================================= */
+
+button,
+input,
+textarea,
+select {
+  margin: 0;
+
+  font: inherit;
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+  color: inherit;
+}
+
+
+button {
+  padding: 0;
+
+  border: 0;
+
+  background: none;
+
+  cursor: pointer;
+}
+
+
+input,
+textarea,
+select {
+  border-radius: 0;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY HELPERS
+========================================================= */
+
+small,
+label,
+span {
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+}
+
+
+/*
+   IMPORTANT:
+   Any span inside a heading should inherit
+   the heading font instead of Montserrat.
+*/
+
+h1 span,
+h2 span,
+h3 span,
+h4 span,
+h5 span,
+h6 span {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   STRONG / EMPHASIS
+========================================================= */
+
+strong,
+b {
+  font-weight: 700;
+}
+
+
+em,
+i {
+  font-style: normal;
+}
+
+
+/* =========================================================
+   FIGURES
+========================================================= */
+
+figure {
+  margin: 0;
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+table {
+  border-collapse: collapse;
+
+  border-spacing: 0;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  color: #ffffff;
+
+  background: #7452d9;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+:focus-visible {
+  outline:
+    2px solid
+    #d84ba9;
+
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion:
+  reduce
+) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+
+}

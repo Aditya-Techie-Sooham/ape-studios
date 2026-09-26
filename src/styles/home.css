@@ -1,0 +1,1899 @@
+/* =========================================================
+   APE STUDIO — HOME
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.home {
+  position: relative;
+
+  width: 100%;
+
+  overflow-x: clip;
+
+  color: #29183f;
+
+  background: #ffffff;
+}
+
+
+.home img {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   01 — WHO ARE WE
+========================================================= */
+
+.home-who {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(90px, 7.5vw, 130px)
+    5vw;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 92% 15%,
+      rgba(216, 75, 169, 0.07),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(116, 82, 217, 0.08),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #fbf9fd 58%,
+      #f5effc 100%
+    );
+}
+
+
+.home-who__inner {
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.88fr)
+    minmax(420px, 1.12fr);
+
+  gap:
+    clamp(65px, 7vw, 125px);
+
+  align-items: center;
+}
+
+
+.home-who__eyebrow {
+  margin:
+    0
+    0
+    25px;
+
+  color: #d84ba9;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+.home-who__content h2 {
+  width: 100%;
+
+  max-width: 690px;
+
+  margin: 0;
+
+  color: #29183f;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(46px, 4.85vw, 80px);
+
+  font-weight: 700;
+
+  line-height: 0.95;
+
+  letter-spacing: -0.052em;
+
+  text-transform: uppercase;
+}
+
+
+.home-who__content h2 span {
+  display: block;
+
+  margin-top: 5px;
+
+  font-family: inherit;
+}
+
+
+.home-who__content h2 span:first-of-type {
+  color: transparent;
+
+  -webkit-text-stroke:
+    1.25px
+    #7452d9;
+}
+
+
+.home-who__content h2 .home-who__accent {
+  color: #d84ba9;
+
+  -webkit-text-stroke: 0;
+}
+
+
+.home-who__description {
+  width: min(520px, 96%);
+
+  margin:
+    30px
+    0
+    0;
+
+  color:
+    rgba(41, 24, 63, 0.68);
+
+  font-size: 14px;
+
+  line-height: 1.72;
+}
+
+
+/* =========================================================
+   WHO — CTAS
+========================================================= */
+
+.home-who__actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 33px;
+}
+
+
+.home-button {
+  min-width: 208px;
+  min-height: 58px;
+
+  padding:
+    0
+    8px
+    0
+    23px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.09em;
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    border-color 240ms ease;
+}
+
+
+.home-button i {
+  width: 41px;
+  height: 41px;
+
+  flex: 0 0 41px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 13px;
+
+  font-style: normal;
+}
+
+
+.home-button--primary {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7452d9,
+      #d84ba9
+    );
+
+  box-shadow:
+    0
+    12px
+    32px
+    rgba(116, 82, 217, 0.18);
+}
+
+
+.home-button--primary i {
+  color: #29183f;
+
+  background: #ffffff;
+}
+
+
+.home-button--secondary {
+  color: #29183f;
+
+  border:
+    1px solid
+    rgba(41, 24, 63, 0.17);
+
+  background:
+    rgba(255, 255, 255, 0.86);
+}
+
+
+.home-button--secondary i {
+  color: #ffffff;
+
+  background: #29183f;
+}
+
+
+@media (hover: hover) {
+
+  .home-button:hover {
+    transform:
+      translateY(-3px);
+  }
+
+}
+
+
+/* =========================================================
+   WHO IMAGE
+========================================================= */
+
+.home-who__visual {
+  width: 100%;
+}
+
+
+.home-who__image {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio:
+    1.16 / 1;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background: #eee8f5;
+}
+
+
+.home-who__image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 60%,
+      rgba(31, 17, 45, 0.10)
+    );
+}
+
+
+.home-who__image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform:
+    scale(1.001);
+
+  transition:
+    transform
+    850ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+@media (hover: hover) {
+
+  .home-who__image:hover img {
+    transform:
+      scale(1.035);
+  }
+
+}
+
+
+/* =========================================================
+   02 — SERVICES MARQUEE
+========================================================= */
+
+.home-services-strip {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background: #29183f;
+}
+
+
+.home-services-strip__marquee {
+  display: block;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  padding:
+    27px
+    0
+    30px;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+
+.home-services-strip__track {
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+  width: max-content;
+
+  padding-right: 25px;
+
+  will-change: transform;
+
+  animation:
+    apeHomeServicesMarquee
+    36s
+    linear
+    infinite;
+}
+
+
+.home-services-strip__track span {
+  flex: 0 0 auto;
+
+  color: #ffffff;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(24px, 2.25vw, 37px);
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: -0.035em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+.home-services-strip__track i {
+  flex: 0 0 auto;
+
+  color: #ef78c2;
+
+  font-size: 12px;
+
+  font-style: normal;
+}
+
+
+@keyframes apeHomeServicesMarquee {
+
+  from {
+    transform:
+      translate3d(0, 0, 0);
+  }
+
+  to {
+    transform:
+      translate3d(-50%, 0, 0);
+  }
+
+}
+
+
+@media (hover: hover) {
+
+  .home-services-strip__marquee:hover
+  .home-services-strip__track {
+    animation-play-state:
+      paused;
+  }
+
+}
+
+
+/* =========================================================
+   03 — THINK BIG
+========================================================= */
+
+.home-about {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(95px, 8vw, 135px)
+    5vw;
+
+  background: #ffffff;
+}
+
+
+.home-about__inner {
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(300px, 0.76fr)
+    minmax(0, 1.24fr);
+
+  gap:
+    clamp(70px, 8vw, 145px);
+
+  align-items: start;
+}
+
+
+.home-about__heading > p {
+  margin:
+    0
+    0
+    23px;
+
+  color: #d84ba9;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+.home-about__heading h2 {
+  margin: 0;
+
+  color: #29183f;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(50px, 5.5vw, 90px);
+
+  font-weight: 700;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.058em;
+
+  text-transform: uppercase;
+}
+
+
+.home-about__heading h2 span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: transparent;
+
+  font-family: inherit;
+
+  -webkit-text-stroke:
+    1.3px
+    #7452d9;
+}
+
+
+.home-about__lead {
+  max-width: 720px;
+
+  margin:
+    0
+    0
+    38px;
+
+  color: #29183f;
+
+  font-size:
+    clamp(23px, 2.05vw, 34px);
+
+  font-weight: 600;
+
+  line-height: 1.22;
+
+  letter-spacing: -0.032em;
+}
+
+
+.home-about__copy {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap:
+    24px
+    38px;
+}
+
+
+.home-about__copy p {
+  margin: 0;
+
+  color:
+    rgba(41, 24, 63, 0.64);
+
+  font-size: 14px;
+
+  line-height: 1.72;
+}
+
+
+.home-about__copy strong {
+  color: #29183f;
+}
+
+
+.home-about__copy p:last-child {
+  grid-column:
+    1 / -1;
+}
+
+
+/* =========================================================
+   ABOUT BOTTOM
+========================================================= */
+
+.home-about__bottom {
+  margin-top: 42px;
+
+  padding-top: 25px;
+
+  border-top:
+    1px solid
+    rgba(41, 24, 63, 0.12);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+
+.home-about__bottom p {
+  margin: 0;
+
+  color: #29183f;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1.6;
+
+  letter-spacing: 0.09em;
+}
+
+
+.home-about__bottom p span {
+  color: #d84ba9;
+}
+
+
+.home-about__bottom a {
+  flex-shrink: 0;
+
+  color: #29183f;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-decoration: none;
+
+  transition:
+    transform 200ms ease;
+}
+
+
+@media (hover: hover) {
+
+  .home-about__bottom a:hover {
+    transform:
+      translateX(4px);
+  }
+
+}
+
+
+/* =========================================================
+   04 — WORK
+========================================================= */
+
+.home-work-new {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(95px, 8vw, 135px)
+    5vw;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7f3fb 0%,
+      #f1eafa 100%
+    );
+}
+
+
+.home-work-new__inner {
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+}
+
+
+.home-work-new__header {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 60px;
+
+  margin-bottom: 52px;
+}
+
+
+.home-work-new__header p {
+  margin:
+    0
+    0
+    20px;
+
+  color: #d84ba9;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+.home-work-new__header h2 {
+  width: min(850px, 100%);
+
+  margin: 0;
+
+  color: #29183f;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(46px, 5.15vw, 84px);
+
+  font-weight: 700;
+
+  line-height: 0.91;
+
+  letter-spacing: -0.055em;
+
+  text-transform: uppercase;
+}
+
+
+.home-work-new__header h2 span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: transparent;
+
+  font-family: inherit;
+
+  -webkit-text-stroke:
+    1.3px
+    #7452d9;
+}
+
+
+.home-work-new__header > a {
+  flex: 0 0 auto;
+
+  margin-bottom: 5px;
+
+  color: #29183f;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-decoration: none;
+
+  transition:
+    transform 200ms ease;
+}
+
+
+@media (hover: hover) {
+
+  .home-work-new__header > a:hover {
+    transform:
+      translateX(4px);
+  }
+
+}
+
+
+/* =========================================================
+   WORK GRID — PERFECT COLUMN ALIGNMENT
+========================================================= */
+
+.home-work-new__grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.28fr)
+    minmax(320px, 0.72fr);
+
+  grid-template-rows:
+    repeat(2, minmax(0, 1fr));
+
+  gap:
+    28px
+    30px;
+
+  min-height:
+    clamp(
+      680px,
+      54vw,
+      820px
+    );
+}
+
+
+.home-work-new__project {
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+
+.home-work-new__project--large {
+  grid-column: 1;
+
+  grid-row:
+    1 / 3;
+}
+
+
+.home-work-new__project:nth-child(2) {
+  grid-column: 2;
+
+  grid-row: 1;
+}
+
+
+.home-work-new__project:nth-child(3) {
+  grid-column: 2;
+
+  grid-row: 2;
+}
+
+
+.home-work-new__project figure {
+  position: relative;
+
+  width: 100%;
+
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #ddd2eb;
+}
+
+
+.home-work-new__project img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform:
+    scale(1.001);
+
+  transition:
+    transform
+    800ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.home-work-new__project-info {
+  flex: 0 0 auto;
+
+  padding-top: 13px;
+}
+
+
+.home-work-new__project-info span {
+  color:
+    rgba(41, 24, 63, 0.50);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+}
+
+
+.home-work-new__project-info h3 {
+  margin:
+    7px
+    0
+    0;
+
+  color: #29183f;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(20px, 1.8vw, 31px);
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: -0.035em;
+}
+
+
+@media (hover: hover) {
+
+  .home-work-new__project:hover img {
+    transform:
+      scale(1.035);
+  }
+
+}
+
+
+/* =========================================================
+   05 — CLIENTS
+========================================================= */
+
+.home-clients {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(90px, 7vw, 120px)
+    5vw;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+
+.home-clients__inner {
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+}
+
+
+.home-clients__heading {
+  margin-bottom: 50px;
+}
+
+
+.home-clients__heading p {
+  margin:
+    0
+    0
+    18px;
+
+  color: #d84ba9;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+
+.home-clients__heading h2 {
+  margin: 0;
+
+  color: #29183f;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(44px, 4.7vw, 76px);
+
+  font-weight: 700;
+
+  line-height: 0.92;
+
+  letter-spacing: -0.052em;
+
+  text-transform: uppercase;
+}
+
+
+.home-clients__heading h2 span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: transparent;
+
+  font-family: inherit;
+
+  -webkit-text-stroke:
+    1.2px
+    #7452d9;
+}
+
+
+/* =========================================================
+   LOGOS
+========================================================= */
+
+.home-clients__logos {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  border-top:
+    1px solid
+    rgba(41, 24, 63, 0.10);
+
+  border-left:
+    1px solid
+    rgba(41, 24, 63, 0.10);
+}
+
+
+.home-client-logo {
+  min-width: 0;
+
+  min-height: 165px;
+
+  padding: 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-right:
+    1px solid
+    rgba(41, 24, 63, 0.10);
+
+  border-bottom:
+    1px solid
+    rgba(41, 24, 63, 0.10);
+
+  background: #ffffff;
+
+  transition:
+    background 240ms ease;
+}
+
+
+.home-client-logo img {
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  max-width: 72%;
+  max-height: 78px;
+
+  object-fit: contain;
+
+  opacity: 1;
+
+  transform:
+    scale(1);
+
+  transition:
+    transform 240ms ease;
+}
+
+
+.home-client-logo img[src$=".jpg"],
+.home-client-logo img[src$=".jpeg"] {
+  max-width: 68%;
+
+  max-height: 72px;
+}
+
+
+@media (hover: hover) {
+
+  .home-client-logo:hover {
+    background: #faf7fd;
+  }
+
+
+  .home-client-logo:hover img {
+    transform:
+      scale(1.055);
+  }
+
+}
+
+
+/* =========================================================
+   06 — AWARD
+========================================================= */
+
+.home-recognition {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(100px, 8vw, 135px)
+    5vw;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 86% 15%,
+      rgba(216, 75, 169, 0.20),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 8% 85%,
+      rgba(116, 82, 217, 0.26),
+      transparent 31%
+    ),
+    #1b1027;
+}
+
+
+.home-recognition__inner {
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(360px, 0.88fr)
+    minmax(0, 1.12fr);
+
+  gap:
+    clamp(65px, 8vw, 130px);
+
+  align-items: center;
+}
+
+
+.home-recognition__visual {
+  width: 100%;
+
+  height:
+    clamp(430px, 43vw, 580px);
+
+  overflow: hidden;
+
+  border-radius: 21px;
+
+  background: #2a1939;
+}
+
+
+.home-recognition__visual img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.home-recognition__title {
+  margin:
+    0
+    0
+    22px;
+
+  color: #ef78c2;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+
+.home-recognition__content h2 {
+  max-width: 790px;
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(45px, 4.85vw, 78px);
+
+  font-weight: 700;
+
+  line-height: 0.92;
+
+  letter-spacing: -0.052em;
+
+  text-transform: uppercase;
+}
+
+
+.home-recognition__content h2 span {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #ef78c2;
+
+  font-family: inherit;
+}
+
+
+.home-recognition__copy {
+  max-width: 560px;
+
+  margin:
+    30px
+    0
+    0;
+
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-size: 15px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1100px
+) {
+
+  .home-who {
+    padding:
+      90px
+      36px;
+  }
+
+
+  .home-who__inner {
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(330px, 1.05fr);
+
+    gap: 46px;
+  }
+
+
+  .home-who__content h2 {
+    font-size:
+      clamp(39px, 5.7vw, 58px);
+  }
+
+
+  .home-who__actions {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    max-width: 255px;
+  }
+
+
+  .home-button {
+    width: 100%;
+  }
+
+
+  .home-about {
+    padding:
+      90px
+      36px;
+  }
+
+
+  .home-about__inner {
+    grid-template-columns:
+      0.75fr
+      1.25fr;
+
+    gap: 55px;
+  }
+
+
+  .home-about__copy {
+    grid-template-columns: 1fr;
+  }
+
+
+  .home-about__copy p:last-child {
+    grid-column: auto;
+  }
+
+
+  .home-about__bottom {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .home-work-new {
+    padding:
+      90px
+      36px;
+  }
+
+
+  .home-work-new__grid {
+    min-height: 660px;
+  }
+
+
+  .home-clients {
+    padding:
+      90px
+      36px;
+  }
+
+
+  .home-clients__logos {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+
+  .home-client-logo {
+    min-height: 145px;
+  }
+
+
+  .home-recognition {
+    padding:
+      90px
+      36px;
+  }
+
+
+  .home-recognition__inner {
+    grid-template-columns:
+      0.9fr
+      1.1fr;
+
+    gap: 50px;
+  }
+
+
+  .home-recognition__visual {
+    height: 460px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .home-who {
+    padding:
+      72px
+      18px;
+  }
+
+
+  .home-who__inner {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 36px;
+  }
+
+
+  .home-who__eyebrow {
+    margin-bottom: 18px;
+
+    font-size: 8px;
+  }
+
+
+  .home-who__content h2 {
+    max-width: 100%;
+
+    font-size:
+      clamp(37px, 10.3vw, 48px);
+  }
+
+
+  .home-who__description {
+    width: 98%;
+
+    margin-top: 23px;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+  }
+
+
+  .home-who__actions {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-top: 27px;
+  }
+
+
+  .home-button {
+    width: 100%;
+
+    min-width: 0;
+    min-height: 50px;
+
+    padding:
+      0
+      6px
+      0
+      12px;
+
+    font-size: 7px;
+
+    letter-spacing: 0.065em;
+  }
+
+
+  .home-button i {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+
+  .home-who__image {
+    aspect-ratio:
+      1 / 1.03;
+
+    border-radius: 18px;
+  }
+
+
+  .home-services-strip__marquee {
+    padding:
+      22px
+      0
+      25px;
+  }
+
+
+  .home-services-strip__track {
+    gap: 17px;
+
+    padding-right: 17px;
+
+    animation-duration: 28s;
+  }
+
+
+  .home-services-strip__track span {
+    font-size: 22px;
+  }
+
+
+  .home-about {
+    padding:
+      74px
+      18px;
+  }
+
+
+  .home-about__inner {
+    display: block;
+  }
+
+
+  .home-about__heading > p {
+    margin-bottom: 18px;
+
+    font-size: 8px;
+  }
+
+
+  .home-about__heading h2 {
+    font-size:
+      clamp(42px, 11.8vw, 56px);
+  }
+
+
+  .home-about__content {
+    margin-top: 36px;
+  }
+
+
+  .home-about__lead {
+    margin-bottom: 28px;
+
+    font-size: 23px;
+  }
+
+
+  .home-about__copy {
+    display: block;
+  }
+
+
+  .home-about__copy p {
+    margin-bottom: 18px;
+
+    font-size: 13px;
+
+    line-height: 1.66;
+  }
+
+
+  .home-about__bottom {
+    display: block;
+
+    margin-top: 30px;
+
+    padding-top: 21px;
+  }
+
+
+  .home-about__bottom p {
+    font-size: 8px;
+
+    line-height: 1.7;
+  }
+
+
+  .home-about__bottom a {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    font-size: 10px;
+  }
+
+
+  .home-work-new {
+    padding:
+      76px
+      18px;
+  }
+
+
+  .home-work-new__header {
+    display: block;
+
+    margin-bottom: 34px;
+  }
+
+
+  .home-work-new__header p {
+    margin-bottom: 17px;
+
+    font-size: 8px;
+  }
+
+
+  .home-work-new__header h2 {
+    font-size:
+      clamp(39px, 10.9vw, 51px);
+  }
+
+
+  .home-work-new__header > a {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    font-size: 10px;
+  }
+
+
+  .home-work-new__grid {
+    display: block;
+
+    min-height: 0;
+  }
+
+
+  .home-work-new__project,
+  .home-work-new__project--large {
+    display: block;
+
+    margin-bottom: 36px;
+  }
+
+
+  .home-work-new__project:last-child {
+    margin-bottom: 0;
+  }
+
+
+  .home-work-new__project figure {
+    width: 100%;
+
+    height:
+      min(105vw, 410px);
+
+    border-radius: 16px;
+  }
+
+
+  .home-work-new__project-info {
+    padding-top: 12px;
+  }
+
+
+  .home-work-new__project-info span {
+    font-size: 7px;
+  }
+
+
+  .home-work-new__project-info h3 {
+    font-size: 23px;
+  }
+
+
+  .home-clients {
+    padding:
+      72px
+      18px;
+  }
+
+
+  .home-clients__heading {
+    margin-bottom: 32px;
+  }
+
+
+  .home-clients__heading p {
+    font-size: 8px;
+  }
+
+
+  .home-clients__heading h2 {
+    font-size:
+      clamp(38px, 10.7vw, 50px);
+  }
+
+
+  .home-clients__logos {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .home-client-logo {
+    min-height: 112px;
+
+    padding: 18px;
+  }
+
+
+  .home-client-logo img {
+    max-width: 78%;
+
+    max-height: 54px;
+  }
+
+
+  .home-recognition {
+    padding:
+      75px
+      18px;
+  }
+
+
+  .home-recognition__inner {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 38px;
+  }
+
+
+  .home-recognition__visual {
+    width: 100%;
+
+    height:
+      min(105vw, 390px);
+
+    border-radius: 17px;
+  }
+
+
+  .home-recognition__content {
+    width: 100%;
+  }
+
+
+  .home-recognition__title {
+    margin-bottom: 18px;
+
+    font-size: 8px;
+  }
+
+
+  .home-recognition__content h2 {
+    width: 100%;
+
+    font-size:
+      clamp(37px, 10vw, 49px);
+  }
+
+
+  .home-recognition__copy {
+    max-width: 96%;
+
+    margin-top: 21px;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 374px) {
+
+  .home-who,
+  .home-about,
+  .home-work-new,
+  .home-clients,
+  .home-recognition {
+    padding-left: 15px;
+
+    padding-right: 15px;
+  }
+
+
+  .home-who__content h2 {
+    font-size: 35px;
+  }
+
+
+  .home-who__actions {
+    grid-template-columns: 1fr;
+  }
+
+
+  .home-about__heading h2 {
+    font-size: 40px;
+  }
+
+
+  .home-work-new__header h2,
+  .home-clients__heading h2 {
+    font-size: 37px;
+  }
+
+
+  .home-client-logo {
+    min-height: 102px;
+  }
+
+
+  .home-recognition__content h2 {
+    font-size: 35px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .home-services-strip__track {
+    animation: none;
+  }
+
+
+  .home-who__image img,
+  .home-work-new__project img,
+  .home-client-logo img,
+  .home-button {
+    transition: none;
+  }
+
+}

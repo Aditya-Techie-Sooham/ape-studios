@@ -1,0 +1,1960 @@
+/* =========================================================
+   APE HOME — RESPONSIVE EXPERIENCE
+   TABLET + MOBILE ONLY
+
+   IMPORTANT:
+   - DESKTOP HOME REMAINS UNTOUCHED
+   - SCROLL VIDEO HERO REMAINS UNTOUCHED
+========================================================= */
+
+
+/* =========================================================
+   TABLET
+   768px — 1199px
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1199px
+) {
+
+  /* =====================================================
+     HOME INTRO
+  ===================================================== */
+
+  .home-intro {
+    min-height: auto;
+  }
+
+
+  .home-intro__inner {
+    width: 100%;
+
+    min-height: auto;
+
+    padding:
+      105px
+      34px
+      90px;
+  }
+
+
+  .home-intro__meta {
+    margin-bottom: 45px;
+  }
+
+
+  .home-intro__grid {
+    grid-template-columns:
+      minmax(0, 1.08fr)
+      minmax(280px, 0.92fr);
+
+    gap: 42px;
+
+    align-items: center;
+  }
+
+
+  .home-intro__title {
+    max-width: 650px;
+
+    font-size:
+      clamp(
+        54px,
+        7.5vw,
+        86px
+      );
+
+    line-height: 0.82;
+  }
+
+
+  .home-intro__bottom {
+    grid-template-columns: 1fr;
+
+    gap: 26px;
+
+    margin-top: 34px;
+  }
+
+
+  .home-intro__copy {
+    max-width: 500px;
+
+    font-size: 14px;
+  }
+
+
+  .home-intro__actions {
+    justify-content: flex-start;
+  }
+
+
+  .home-intro__visual {
+    min-height: 440px;
+  }
+
+
+  .home-intro__visual-frame {
+    inset:
+      4%
+      2%
+      6%;
+
+    padding: 28px;
+
+    border-radius: 24px;
+  }
+
+
+  .home-intro__visual-center strong {
+    font-size:
+      clamp(
+        54px,
+        7vw,
+        76px
+      );
+  }
+
+
+  .home-intro__visual-center em {
+    font-size: 22px;
+  }
+
+
+  .home-intro__floating-card {
+    padding:
+      10px
+      13px;
+
+    font-size: 6px;
+  }
+
+
+  .home-intro__marquee {
+    margin-top: 65px;
+  }
+
+
+
+  /* =====================================================
+     SERVICES
+     TABLET = NO LONG DESKTOP PIN
+  ===================================================== */
+
+  .home-services {
+    padding:
+      95px
+      0
+      105px;
+  }
+
+
+  .home-services__container {
+    width:
+      calc(
+        100% - 64px
+      );
+  }
+
+
+  .home-services__intro {
+    grid-template-columns: 1fr;
+
+    gap: 30px;
+
+    padding-bottom: 44px;
+  }
+
+
+  .home-services__intro-title {
+    max-width: 720px;
+  }
+
+
+  .home-services__intro-title h2 {
+    max-width: 700px;
+
+    font-size:
+      clamp(
+        48px,
+        7vw,
+        72px
+      );
+  }
+
+
+  .home-services__intro-side {
+    max-width: 600px;
+
+    grid-template-columns:
+      75px
+      1fr;
+
+    gap: 20px;
+  }
+
+
+  .services-signal {
+    width: 72px;
+    height: 72px;
+  }
+
+
+  .services-signal__ring--inner {
+    inset: 13px;
+  }
+
+
+  .services-signal__core {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  /*
+   * Tablet becomes a clean vertical experience.
+   */
+
+  .home-services__grid {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 0.90fr)
+      minmax(330px, 1.10fr);
+
+    gap: 36px;
+
+    align-items: start;
+
+    margin-top: 46px;
+  }
+
+
+  .home-services__list {
+    height: auto;
+
+    display: block;
+  }
+
+
+  .home-service-row {
+    min-height: 82px;
+
+    height: auto;
+
+    padding:
+      13px
+      8px
+      13px
+      0;
+  }
+
+
+  .home-service-row__content h3 {
+    font-size:
+      clamp(
+        21px,
+        3vw,
+        29px
+      );
+  }
+
+
+  .home-service-row__content p {
+    max-width: 320px;
+
+    font-size: 9px;
+
+    white-space: normal;
+  }
+
+
+  .home-services__visual-column {
+    height: auto;
+  }
+
+
+  .home-services__visual {
+    position: sticky;
+
+    top: 100px;
+
+    width: 100%;
+
+    height: 430px;
+
+    border-radius: 22px;
+  }
+
+
+  .home-service-panel {
+    padding: 30px;
+  }
+
+
+  .home-service-panel__center strong {
+    font-size:
+      clamp(
+        42px,
+        5.5vw,
+        62px
+      );
+  }
+
+
+
+  /* =====================================================
+     WHY APE
+     TABLET = COMPACT CINEMATIC
+  ===================================================== */
+
+  .home-why-scene {
+    padding:
+      100px
+      0;
+  }
+
+
+  .home-why-scene__stage {
+    width:
+      calc(
+        100% - 64px
+      );
+
+    height: auto;
+
+    min-height: 0;
+
+    margin: 0 auto;
+
+    padding:
+      70px
+      45px;
+
+    box-sizing: border-box;
+
+    border-radius: 28px;
+  }
+
+
+  .home-why-scene__heading {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 100%;
+
+    transform: none;
+  }
+
+
+  .home-why-scene__heading h2 {
+    max-width: 620px;
+
+    font-size:
+      clamp(
+        48px,
+        7vw,
+        70px
+      );
+  }
+
+
+  .home-why-scene__world {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width:
+      min(
+        52vw,
+        430px
+      );
+
+    height:
+      min(
+        52vw,
+        430px
+      );
+
+    margin:
+      65px
+      auto
+      55px;
+
+    transform: none;
+  }
+
+
+  .home-why-scene__messages {
+    position: relative;
+
+    right: auto;
+    top: auto;
+
+    width: 100%;
+
+    height: auto;
+
+    transform: none;
+  }
+
+
+  .home-why-scene__message {
+    position: relative;
+
+    inset: auto;
+
+    display: none;
+
+    min-height: 150px;
+  }
+
+
+  .home-why-scene__message.is-active {
+    display: flex;
+  }
+
+
+  .home-why-scene__message h3,
+  .home-why-scene__message:nth-child(3) h3,
+  .home-why-scene__message:nth-child(4) h3 {
+    max-width: 620px;
+
+    font-size:
+      clamp(
+        38px,
+        5.8vw,
+        58px
+      );
+  }
+
+
+  .home-why-scene__progress {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    margin-top: 35px;
+  }
+
+
+  .home-why-scene__ape {
+    display: none;
+  }
+
+
+
+  /* =====================================================
+     SELECTED WORK
+     TABLET = VERTICAL CARDS
+  ===================================================== */
+
+  .home-work {
+    padding:
+      100px
+      0
+      110px;
+  }
+
+
+  .home-work__stage {
+    width:
+      calc(
+        100% - 64px
+      );
+
+    height: auto;
+
+    min-height: 0;
+
+    margin: 0 auto;
+
+    overflow: visible;
+
+    background: transparent;
+  }
+
+
+  .home-work__top {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+
+    align-items: flex-end;
+
+    margin-bottom: 45px;
+  }
+
+
+  .home-work__top h2 {
+    font-size:
+      clamp(
+        48px,
+        6.5vw,
+        66px
+      );
+  }
+
+
+  .home-work__viewport {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+
+    overflow: visible;
+  }
+
+
+  .home-work__track {
+    width: 100%;
+
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap: 24px;
+
+    padding: 0;
+
+    transform: none !important;
+  }
+
+
+  .home-work-card {
+    width: 100%;
+
+    min-width: 0;
+
+    height: auto;
+
+    min-height: 540px;
+
+    grid-template-columns: 1fr;
+
+    grid-template-rows:
+      minmax(
+        300px,
+        1fr
+      )
+      auto;
+
+    border-radius: 22px;
+  }
+
+
+  .home-work-card__info {
+    min-height: 190px;
+  }
+
+
+  .home-work-card__info h3 {
+    font-size:
+      clamp(
+        28px,
+        4vw,
+        40px
+      );
+  }
+
+
+  .home-work__progress {
+    display: none;
+  }
+
+
+
+  /* =====================================================
+     INSIGHTS
+  ===================================================== */
+
+  .home-insights {
+    padding:
+      95px
+      0
+      105px;
+  }
+
+
+  .home-insights__container {
+    width:
+      calc(
+        100% - 64px
+      );
+  }
+
+
+  .home-insights__grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap:
+      35px
+      22px;
+  }
+
+
+  .home-insight-card:last-child {
+    grid-column:
+      1
+      /
+      -1;
+
+    width: 50%;
+  }
+
+
+  .home-insight-card__visual {
+    height:
+      clamp(
+        230px,
+        34vw,
+        320px
+      );
+  }
+
+
+
+  /* =====================================================
+     CLOSING
+  ===================================================== */
+
+  .home-closing {
+    padding:
+      80px
+      28px
+      28px;
+  }
+
+
+  .home-closing__scene {
+    min-height: 610px;
+
+    border-radius: 26px;
+  }
+
+
+  .home-closing__content {
+    width:
+      calc(
+        100% - 90px
+      );
+
+    margin-left: 45px;
+  }
+
+
+  .home-closing__content h2 {
+    max-width: 720px;
+
+    font-size:
+      clamp(
+        54px,
+        7.6vw,
+        82px
+      );
+  }
+
+
+  .home-closing__bottom {
+    max-width: 650px;
+  }
+
+
+  .home-closing__rings {
+    right: -5%;
+
+    opacity: 0.55;
+  }
+
+
+  .home-closing__float {
+    display: none;
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+   0 — 767px
+========================================================= */
+
+@media
+(
+  max-width: 767px
+) {
+
+  /* =====================================================
+     IMPORTANT
+     NOTHING HERE TARGETS THE VIDEO HERO.
+  ===================================================== */
+
+
+  /* =====================================================
+     HOME INTRO
+  ===================================================== */
+
+  .home-intro {
+    min-height: auto;
+
+    padding: 0;
+  }
+
+
+  .home-intro__inner {
+    width: 100%;
+
+    min-height: auto;
+
+    padding:
+      74px
+      18px
+      68px;
+  }
+
+
+  .home-intro__meta {
+    margin-bottom: 27px;
+
+    font-size: 5.5px;
+  }
+
+
+  .home-intro__meta span:last-child {
+    display: none;
+  }
+
+
+  .home-intro__grid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 35px;
+  }
+
+
+  .home-intro__eyebrow {
+    margin-bottom: 11px;
+
+    font-size: 6px;
+  }
+
+
+  .home-intro__title {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        42px,
+        12.1vw,
+        58px
+      );
+
+    line-height: 0.84;
+
+    letter-spacing: -0.062em;
+  }
+
+
+  .home-intro__line--outline {
+    -webkit-text-stroke-width:
+      1px;
+  }
+
+
+  .home-intro__bottom {
+    display: block;
+
+    margin-top: 25px;
+  }
+
+
+  .home-intro__copy {
+    max-width: 95%;
+
+    font-size: 12.5px;
+
+    line-height: 1.62;
+  }
+
+
+  .home-intro__actions {
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+
+    gap: 9px;
+
+    margin-top: 23px;
+  }
+
+
+  .ape-button {
+    width: 100%;
+
+    min-height: 47px;
+
+    padding:
+      0
+      14px;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+
+    font-size: 6.5px;
+  }
+
+
+  /* =====================================================
+     INTRO VISUAL
+     MOBILE BECOMES A COMPACT POSTER, NOT A GIANT BLOCK
+  ===================================================== */
+
+  .home-intro__visual {
+    min-height: 325px;
+
+    width: 100%;
+  }
+
+
+  .home-intro__visual-frame {
+    inset: 0;
+
+    padding: 23px;
+
+    border-radius: 20px;
+
+    transform: none;
+  }
+
+
+  .home-intro__visual-center strong {
+    font-size:
+      clamp(
+        55px,
+        17vw,
+        78px
+      );
+  }
+
+
+  .home-intro__visual-center em {
+    margin-top: 9px;
+
+    font-size:
+      clamp(
+        18px,
+        5.5vw,
+        23px
+      );
+  }
+
+
+  .home-intro__visual-top,
+  .home-intro__visual-bottom {
+    font-size: 5px;
+  }
+
+
+  .home-intro__floating-card {
+    min-width: 0;
+
+    padding:
+      8px
+      10px;
+
+    font-size: 5.5px;
+
+    letter-spacing: 0.12em;
+  }
+
+
+  .home-intro__floating-card--one {
+    left: 8px;
+    top: 13%;
+  }
+
+
+  .home-intro__floating-card--two {
+    right: 7px;
+    top: 48%;
+  }
+
+
+  .home-intro__floating-card--three {
+    left: 12px;
+    bottom: 5%;
+  }
+
+
+  .home-intro__marquee {
+    margin-top: 43px;
+  }
+
+
+  .home-intro__marquee-track {
+    padding:
+      14px
+      0;
+
+    gap: 24px;
+
+    font-size: 10px;
+  }
+
+
+
+  /* =====================================================
+     SERVICES
+     MOBILE = SERVICE CARDS
+     NOT "GIANT VISUAL + LIST"
+  ===================================================== */
+
+  .home-services {
+    padding:
+      72px
+      0
+      82px;
+  }
+
+
+  .home-services__container {
+    width:
+      calc(
+        100% - 36px
+      );
+  }
+
+
+  .home-services__intro {
+    display: block;
+
+    padding-bottom: 32px;
+  }
+
+
+  .home-services__intro-title > p {
+    margin-bottom: 11px;
+
+    font-size: 6px;
+  }
+
+
+  .home-services__intro-title h2 {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        39px,
+        11vw,
+        52px
+      );
+
+    line-height: 0.88;
+  }
+
+
+  .home-services__intro-side {
+    display: block;
+
+    margin-top: 23px;
+  }
+
+
+  .services-signal {
+    display: none;
+  }
+
+
+  .home-services__intro-copy p {
+    max-width: 95%;
+
+    font-size: 12.5px;
+  }
+
+
+  .home-services__micro-tags {
+    display: flex;
+
+    gap: 6px;
+
+    margin-top: 17px;
+  }
+
+
+  .home-services__micro-tags span {
+    padding:
+      6px
+      8px;
+
+    font-size: 5px;
+  }
+
+
+  .home-services__explore {
+    margin-top: 20px;
+  }
+
+
+  /*
+   * Mobile visual is intentionally removed from
+   * the top of the list.
+   *
+   * User should immediately see actual service names.
+   */
+
+  .home-services__grid {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: 0;
+
+    margin-top: 32px;
+  }
+
+
+  .home-services__visual-column {
+    display: none;
+  }
+
+
+  .home-services__list {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    height: auto;
+
+    border-top: 0;
+    border-bottom: 0;
+
+    gap: 10px;
+  }
+
+
+  .home-service-row {
+    position: relative;
+
+    min-height: 0;
+
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns:
+      1fr
+      34px;
+
+    padding:
+      19px
+      16px;
+
+    border:
+      1px solid
+      rgba(
+        40,
+        24,
+        62,
+        0.09
+      );
+
+    border-radius: 17px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.84
+      );
+
+    box-shadow:
+      0
+      10px
+      30px
+      rgba(
+        48,
+        27,
+        74,
+        0.045
+      );
+  }
+
+
+  .home-service-row::before {
+    display: none;
+  }
+
+
+  .home-service-row.is-active {
+    border-color:
+      rgba(
+        116,
+        82,
+        217,
+        0.20
+      );
+
+    background:
+      linear-gradient(
+        135deg,
+        #ffffff,
+        #f8f5ff
+      );
+  }
+
+
+  .home-service-row__content h3 {
+    max-width: 90%;
+
+    font-size:
+      clamp(
+        23px,
+        7vw,
+        31px
+      );
+
+    line-height: 0.92;
+  }
+
+
+  .home-service-row.is-active
+  .home-service-row__content h3 {
+    transform: none;
+  }
+
+
+  .home-service-row__content p {
+    max-width: 94%;
+
+    margin-top: 7px;
+
+    font-size: 10.5px;
+
+    line-height: 1.45;
+
+    white-space: normal;
+  }
+
+
+  .home-service-row.is-active
+  .home-service-row__content p {
+    transform: none;
+  }
+
+
+  .home-service-row__arrow {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    align-self: center;
+
+    color: #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #7452d9,
+        #d84ba9
+      );
+
+    opacity: 1;
+
+    font-size: 12px;
+  }
+
+
+
+  /* =====================================================
+     WHY APE
+     MOBILE = EDITORIAL STORY
+  ===================================================== */
+
+  .home-why-scene {
+    padding:
+      72px
+      0
+      80px;
+
+    background: #170f22;
+  }
+
+
+  .home-why-scene__stage {
+    width:
+      calc(
+        100% - 36px
+      );
+
+    height: auto;
+
+    min-height: 0;
+
+    margin: 0 auto;
+
+    padding: 0;
+
+    overflow: visible;
+
+    background: transparent;
+  }
+
+
+  .home-why-scene__heading {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 100%;
+
+    transform: none;
+  }
+
+
+  .home-why-scene__heading p {
+    margin-bottom: 12px;
+
+    font-size: 6px;
+  }
+
+
+  .home-why-scene__heading h2 {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        39px,
+        11vw,
+        51px
+      );
+
+    line-height: 0.88;
+  }
+
+
+  /*
+   * Smaller identity graphic.
+   */
+
+  .home-why-scene__world {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width:
+      min(
+        72vw,
+        275px
+      );
+
+    height:
+      min(
+        72vw,
+        275px
+      );
+
+    margin:
+      45px
+      auto;
+
+    transform: none !important;
+  }
+
+
+  .home-why-scene__core {
+    width: 82px;
+  }
+
+
+  .home-why-scene__core strong {
+    font-size: 29px;
+  }
+
+
+  /*
+   * ALL 4 REASONS ARE VISIBLE.
+   * No replacing one message while scrolling.
+   */
+
+  .home-why-scene__messages {
+    position: relative;
+
+    right: auto;
+    top: auto;
+
+    width: 100%;
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    transform: none;
+  }
+
+
+  .home-why-scene__message,
+  .home-why-scene__message.is-active {
+    position: relative;
+
+    inset: auto;
+
+    min-height: 0;
+
+    display: block;
+
+    padding:
+      22px
+      18px;
+
+    box-sizing: border-box;
+
+    border:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.08
+      );
+
+    border-radius: 17px;
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    transform: none !important;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.035
+      );
+  }
+
+
+  .home-why-scene__message small {
+    margin-bottom: 10px;
+
+    font-size: 6px;
+  }
+
+
+  .home-why-scene__message h3,
+  .home-why-scene__message:nth-child(3) h3,
+  .home-why-scene__message:nth-child(4) h3 {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        29px,
+        8vw,
+        38px
+      );
+
+    line-height: 0.90;
+  }
+
+
+  .home-why-scene__progress {
+    display: none;
+  }
+
+
+  .home-why-scene__ape {
+    display: none;
+  }
+
+
+
+  /* =====================================================
+     SELECTED WORK
+     MOBILE = VERTICAL PORTFOLIO
+  ===================================================== */
+
+  .home-work {
+    padding:
+      75px
+      0
+      85px;
+  }
+
+
+  .home-work__stage {
+    width:
+      calc(
+        100% - 36px
+      );
+
+    height: auto;
+
+    min-height: 0;
+
+    margin: 0 auto;
+
+    overflow: visible;
+
+    background: transparent;
+  }
+
+
+  .home-work__top {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+
+    width: 100%;
+
+    align-items: flex-end;
+
+    gap: 15px;
+
+    margin-bottom: 32px;
+  }
+
+
+  .home-work__top p {
+    margin-bottom: 9px;
+
+    font-size: 6px;
+  }
+
+
+  .home-work__top h2 {
+    font-size:
+      clamp(
+        38px,
+        10.5vw,
+        49px
+      );
+
+    line-height: 0.88;
+  }
+
+
+  .home-work__all span {
+    display: none;
+  }
+
+
+  .home-work__all i {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  .home-work__viewport {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+
+    overflow: visible;
+  }
+
+
+  .home-work__track {
+    width: 100%;
+
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+
+    padding: 0;
+
+    transform: none !important;
+  }
+
+
+  .home-work-card {
+    width: 100%;
+
+    min-width: 0;
+
+    height: auto;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    grid-template-rows:
+      260px
+      auto;
+
+    border-radius: 19px;
+  }
+
+
+  .home-work-card__visual {
+    min-height: 260px;
+  }
+
+
+  .home-work-card__info {
+    min-height: 0;
+
+    padding:
+      24px
+      20px
+      26px;
+  }
+
+
+  .home-work-card__info h3 {
+    max-width: 95%;
+
+    font-size:
+      clamp(
+        27px,
+        7.6vw,
+        35px
+      );
+
+    line-height: 0.91;
+  }
+
+
+  .home-work-card__info p {
+    font-size: 11px;
+
+    line-height: 1.55;
+  }
+
+
+  .home-work-card__hero-word {
+    font-size:
+      clamp(
+        90px,
+        32vw,
+        130px
+      );
+  }
+
+
+  .home-work__progress {
+    display: none;
+  }
+
+
+
+  /* =====================================================
+     INSIGHTS
+  ===================================================== */
+
+  .home-insights {
+    padding:
+      72px
+      0
+      82px;
+  }
+
+
+  .home-insights__container {
+    width:
+      calc(
+        100% - 36px
+      );
+  }
+
+
+  .home-insights__header {
+    align-items: flex-end;
+
+    gap: 15px;
+
+    padding-bottom: 28px;
+  }
+
+
+  .home-insights__eyebrow {
+    margin-bottom: 9px;
+
+    font-size: 6px;
+  }
+
+
+  .home-insights__header h2 {
+    max-width: 90%;
+
+    font-size:
+      clamp(
+        37px,
+        10.3vw,
+        49px
+      );
+
+    line-height: 0.89;
+  }
+
+
+  .home-insights__grid {
+    grid-template-columns: 1fr;
+
+    gap: 32px;
+
+    padding-top: 30px;
+  }
+
+
+  .home-insight-card__visual {
+    height:
+      clamp(
+        205px,
+        59vw,
+        270px
+      );
+
+    border-radius: 17px;
+  }
+
+
+  .home-insight-card__body {
+    padding-top: 14px;
+  }
+
+
+  .home-insight-card__body h3 {
+    max-width: 95%;
+
+    margin-top: 12px;
+
+    font-size:
+      clamp(
+        23px,
+        6.7vw,
+        31px
+      );
+  }
+
+
+
+  /* =====================================================
+     CLOSING
+  ===================================================== */
+
+  .home-closing {
+    padding:
+      55px
+      13px
+      13px;
+  }
+
+
+  .home-closing__scene {
+    min-height: 500px;
+
+    align-items: center;
+
+    border-radius: 21px;
+  }
+
+
+  .home-closing__content {
+    width:
+      calc(
+        100% - 40px
+      );
+
+    margin:
+      0
+      20px;
+  }
+
+
+  .home-closing__eyebrow {
+    margin-bottom: 15px;
+
+    font-size: 6px;
+  }
+
+
+  .home-closing__content h2 {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        40px,
+        11vw,
+        54px
+      );
+
+    line-height: 0.84;
+  }
+
+
+  .home-closing__outline {
+    -webkit-text-stroke-width:
+      1px;
+  }
+
+
+  .home-closing__bottom {
+    display: block;
+
+    margin-top: 27px;
+  }
+
+
+  .home-closing__bottom p {
+    max-width: 95%;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+
+
+  .home-closing__button {
+    margin-top: 22px;
+
+    font-size: 7px;
+  }
+
+
+  .home-closing__button i {
+    width: 45px;
+    height: 45px;
+  }
+
+
+  .home-closing__rings {
+    width: 90vw;
+
+    right: -48%;
+
+    opacity: 0.34;
+  }
+
+
+  .home-closing__float {
+    display: none;
+  }
+
+
+  .home-closing__background-word {
+    right: -32vw;
+
+    bottom: -2%;
+
+    font-size: 100vw;
+  }
+
+}
+
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media
+(
+  max-width: 374px
+) {
+
+  .home-intro__inner,
+  .home-services__container,
+  .home-why-scene__stage,
+  .home-work__stage,
+  .home-insights__container {
+    width:
+      calc(
+        100% - 30px
+      );
+  }
+
+
+  .home-intro__inner {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
+  .home-intro__title {
+    font-size: 39px;
+  }
+
+
+  .home-intro__visual {
+    min-height: 295px;
+  }
+
+
+  .home-services__intro-title h2 {
+    font-size: 37px;
+  }
+
+
+  .home-service-row__content h3 {
+    font-size: 22px;
+  }
+
+
+  .home-why-scene__heading h2 {
+    font-size: 37px;
+  }
+
+
+  .home-why-scene__message h3,
+  .home-why-scene__message:nth-child(3) h3,
+  .home-why-scene__message:nth-child(4) h3 {
+    font-size: 27px;
+  }
+
+
+  .home-work__top h2 {
+    font-size: 36px;
+  }
+
+
+  .home-work-card {
+    grid-template-rows:
+      235px
+      auto;
+  }
+
+
+  .home-work-card__visual {
+    min-height: 235px;
+  }
+
+
+  .home-insights__header h2 {
+    font-size: 35px;
+  }
+
+
+  .home-closing__content h2 {
+    font-size: 37px;
+  }
+
+}
+
+
+
+/* =========================================================
+   LARGE PHONES
+========================================================= */
+
+@media
+(
+  min-width: 390px
+)
+and
+(
+  max-width: 767px
+) {
+
+  .home-intro__visual {
+    min-height: 350px;
+  }
+
+
+  .home-work-card {
+    grid-template-rows:
+      285px
+      auto;
+  }
+
+
+  .home-work-card__visual {
+    min-height: 285px;
+  }
+
+}
+
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion: reduce
+) {
+
+  .home-intro__visual,
+  .home-intro__floating-card,
+  .home-service-row,
+  .home-why-scene__world,
+  .home-work-card,
+  .home-insight-card,
+  .home-closing__scene {
+    transform: none !important;
+  }
+
+}

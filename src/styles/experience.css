@@ -1,0 +1,251 @@
+/* =========================================================
+   CONTINUOUS APE EXPERIENCE
+========================================================= */
+
+.ape-experience {
+  position: relative;
+
+  width: 100%;
+
+  background:
+    var(--ape-black);
+
+  color:
+    var(--ape-ivory);
+}
+
+
+
+/* =========================================================
+   ONE PERSISTENT THREE.JS STAGE
+========================================================= */
+
+.experience-stage {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 20;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 62% 34%,
+      rgba(159, 140, 255, 0.20) 0%,
+      rgba(111, 88, 217, 0.18) 18%,
+      rgba(111, 232, 255, 0.10) 34%,
+      rgba(227, 162, 85, 0.08) 48%,
+      rgba(23, 18, 42, 0.94) 70%,
+      rgba(13, 10, 24, 0.98) 100%
+    );
+
+  transition:
+    opacity
+    400ms
+    ease;
+}
+
+
+.experience-stage.is-active {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+.experience-canvas {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+
+
+/* =========================================================
+   EXPERIENCE UI
+========================================================= */
+
+.experience-ui {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+
+.experience-kicker {
+  position: absolute;
+
+  top: 34px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  margin: 0;
+
+  font-size:
+    9px;
+
+  font-weight:
+    600;
+
+  line-height:
+    1;
+
+  letter-spacing:
+    0.34em;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+
+  color:
+    rgba(
+      245,
+      243,
+      239,
+      0.58
+    );
+}
+
+
+
+/* =========================================================
+   SHARED EXPERIENCE PROGRESS
+========================================================= */
+
+.experience-progress {
+  position: absolute;
+
+  left: 5vw;
+  right: 5vw;
+
+  bottom: 27px;
+
+  height: 1px;
+
+  overflow: hidden;
+
+  background:
+    rgba(
+      245,
+      243,
+      239,
+      0.10
+    );
+}
+
+
+.experience-progress-fill {
+  width: 100%;
+  height: 100%;
+
+  transform:
+    scaleX(0);
+
+  transform-origin:
+    left center;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--ape-amber),
+      var(--ape-purple),
+      var(--ape-violet)
+    );
+}
+
+
+
+/* =========================================================
+   CHAPTER BASE
+========================================================= */
+
+.experience-chapter {
+  position: relative;
+
+  width: 100%;
+
+  z-index: 1;
+}
+
+
+
+/* =========================================================
+   MOBILE EXPERIENCE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .experience-stage {
+    height:
+      100dvh;
+  }
+
+
+  .experience-kicker {
+    top:
+      max(
+        20px,
+        env(
+          safe-area-inset-top
+        )
+      );
+
+    font-size:
+      8px;
+
+    letter-spacing:
+      0.22em;
+  }
+
+
+  .experience-progress {
+    left:
+      20px;
+
+    right:
+      20px;
+
+    bottom:
+      20px;
+  }
+
+}
+
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .experience-stage {
+    transition: none;
+  }
+
+}

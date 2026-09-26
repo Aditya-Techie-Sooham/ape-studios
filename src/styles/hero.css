@@ -1,0 +1,644 @@
+/* =========================================================
+   APE STUDIO — HERO
+   FINAL CLEAN VERSION
+========================================================= */
+
+
+/* =========================================================
+   HERO SCROLL AREA
+========================================================= */
+
+.ape-hero {
+  position: relative;
+
+  width: 100%;
+
+  height:
+    calc(
+      100vh +
+      10000px
+    );
+
+  background: #000000;
+}
+
+
+/* =========================================================
+   HERO FIXED STAGE
+========================================================= */
+
+.ape-hero__stage {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: #000000;
+
+  z-index: 10;
+}
+
+
+.ape-hero__stage.is-fixed {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+}
+
+
+.ape-hero__stage.is-ended {
+  position: absolute;
+
+  top: auto;
+  bottom: 0;
+
+  left: 0;
+}
+
+
+/* =========================================================
+   HERO VIDEO
+========================================================= */
+
+.ape-hero__video {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center center;
+
+  background: #000000;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+}
+
+
+/* =========================================================
+   HERO DARK OVERLAY
+========================================================= */
+
+.ape-hero__dark {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      rgba(
+        30,
+        12,
+        48,
+        0.03
+      )
+      0%,
+      rgba(
+        8,
+        4,
+        18,
+        0.44
+      )
+      52%,
+      rgba(
+        0,
+        0,
+        0,
+        0.96
+      )
+      100%
+    );
+}
+
+
+/* =========================================================
+   TRANSITION CANVAS
+========================================================= */
+
+.ape-hero__transition {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 3;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   SHARED ANIMATED ITEM
+========================================================= */
+
+.ape-transition-item {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 94vw;
+
+  margin: 0;
+
+  opacity: 0;
+
+  transform:
+    translate(
+      -50%,
+      calc(
+        -50% +
+        25px
+      )
+    );
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/* =========================================================
+   AWARD-WINNING STATEMENT
+========================================================= */
+
+.ape-transition-award {
+  top: 28%;
+
+  width: auto;
+
+  max-width:
+    calc(
+      100vw -
+      80px
+    );
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+.ape-transition-award {
+  top: 28%;
+
+  width: auto;
+
+  max-width:
+    calc(
+      100vw - 80px
+    );
+
+  color: #ffffff;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(
+      18px,
+      2vw,
+      30px
+    );
+
+  font-weight: 700;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.02em;
+
+  text-align: center;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   SEMANTIC H1 WRAPPER
+========================================================= */
+
+.ape-transition-heading {
+  position: absolute;
+
+  inset: 0;
+
+  margin: 0;
+
+  padding: 0;
+
+  pointer-events: none;
+
+  font: inherit;
+
+  color: inherit;
+}
+
+
+/* =========================================================
+   HERO MAIN STATEMENTS
+========================================================= */
+
+.ape-transition-title {
+  width: 94vw;
+
+  font-family:
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(
+      52px,
+      9vw,
+      160px
+    );
+
+  font-weight: 700;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.055em;
+
+  text-transform: uppercase;
+}
+
+
+.ape-transition-title > span {
+  display: block;
+
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   OUTLINE WORDS
+========================================================= */
+
+.ape-outline {
+  color: transparent;
+
+  -webkit-text-stroke:
+    1.5px
+    rgba(
+      255,
+      255,
+      255,
+      0.92
+    );
+
+  paint-order:
+    stroke
+    fill;
+}
+
+
+/* =========================================================
+   SCROLL HINT
+========================================================= */
+
+.ape-hero__hint {
+  position: absolute;
+
+  left: 50%;
+  bottom: 28px;
+
+  z-index: 5;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.76
+    );
+
+  font-family:
+    "Montserrat",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing: 0.20em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  transition:
+    opacity
+    300ms
+    ease;
+}
+
+
+/* =========================================================
+   TABLET
+   768px — 1100px
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1100px
+) {
+
+  .ape-transition-award {
+    top: 29%;
+  }
+
+
+  .ape-transition-award strong {
+    font-size:
+      clamp(
+        13px,
+        1.7vw,
+        18px
+      );
+
+    letter-spacing: 0.05em;
+  }
+
+
+  .ape-transition-title {
+    width: 92vw;
+
+    font-size:
+      clamp(
+        58px,
+        10vw,
+        104px
+      );
+
+    line-height: 0.90;
+  }
+
+
+  .ape-outline {
+    -webkit-text-stroke-width:
+      1.25px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   IMPORTANT:
+   KEEP THE LONGER MOBILE SCROLL DISTANCE
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .ape-hero {
+    height:
+      calc(
+        100dvh +
+        20000px
+      );
+  }
+
+
+  .ape-hero__stage {
+    width: 100vw;
+
+    height: 100dvh;
+  }
+
+
+  .ape-hero__video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center center;
+  }
+
+
+
+  /* =====================================================
+     MOBILE AWARD
+  ===================================================== */
+
+  .ape-transition-award {
+    top: 27%;
+
+    width:
+      calc(
+        100vw - 36px
+      );
+
+    max-width: none;
+
+    font-size:
+      clamp(
+        16px,
+        5vw,
+        22px
+      );
+
+    line-height: 1.1;
+
+    white-space: normal;
+  }
+
+
+
+  /* =====================================================
+     MOBILE H1
+  ===================================================== */
+
+  .ape-transition-title {
+    width: 92vw;
+
+    font-size:
+      clamp(
+        40px,
+        13vw,
+        66px
+      );
+
+    font-weight: 700;
+
+    line-height: 0.94;
+
+    letter-spacing: -0.048em;
+  }
+
+
+  .ape-outline {
+    -webkit-text-stroke:
+      1px
+      rgba(
+        255,
+        255,
+        255,
+        0.92
+      );
+  }
+
+
+
+  /* =====================================================
+     MOBILE HINT
+  ===================================================== */
+
+  .ape-hero__hint {
+    bottom:
+      max(
+        20px,
+        env(
+          safe-area-inset-bottom
+        )
+      );
+
+    font-size: 7px;
+
+    letter-spacing: 0.18em;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   <= 374px
+========================================================= */
+
+@media (max-width: 374px) {
+
+  .ape-transition-award {
+    top: 28%;
+
+    width:
+      calc(
+        100vw -
+        30px
+      );
+  }
+
+
+  .ape-transition-award strong {
+    max-width: 290px;
+
+    font-size: 11px;
+
+    line-height: 1.22;
+  }
+
+
+  .ape-transition-title {
+    width: 94vw;
+
+    font-size:
+      clamp(
+        37px,
+        12.5vw,
+        47px
+      );
+
+    line-height: 0.96;
+  }
+
+
+  .ape-hero__hint {
+    font-size: 6px;
+  }
+
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1600px) {
+
+  .ape-transition-award {
+    top: 27%;
+  }
+
+
+  .ape-transition-award strong {
+    font-size: 22px;
+  }
+
+
+  .ape-transition-title {
+    max-width: 1600px;
+
+    font-size:
+      clamp(
+        130px,
+        8.6vw,
+        170px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .ape-hero__hint {
+    transition: none;
+  }
+
+}
