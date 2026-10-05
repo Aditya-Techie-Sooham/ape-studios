@@ -13,11 +13,11 @@
 
   <meta
     name="description"
-    content="APE Studio selected work."
+    content="Explore selected work from APE Studio across hospitality, education, lifestyle, branding, digital and creative projects."
   >
 
   <title>
-    Work — APE Studio
+    Work | APE Studio
   </title>
 
 </head>
@@ -37,6 +37,7 @@
 
     <div class="site-header__inner">
 
+
       <a
         href="/"
         class="site-header__brand"
@@ -50,6 +51,7 @@
         >
 
       </a>
+
 
 
       <nav
@@ -72,6 +74,7 @@
         <a
           href="/work/"
           class="is-active"
+          aria-current="page"
         >
           Work
         </a>
@@ -91,18 +94,22 @@
       </nav>
 
 
+
       <a
         href="/contact/"
         class="site-header__cta"
       >
+
         <span>
           Let's Talk
         </span>
 
-        <span>
+        <span aria-hidden="true">
           ↗
         </span>
+
       </a>
+
 
 
       <button
@@ -121,7 +128,6 @@
     </div>
 
 
-    <!-- MOBILE MENU -->
 
     <div
       id="site-mobile-menu"
@@ -154,7 +160,11 @@
           <span>Services</span>
         </a>
 
-        <a href="/work/">
+        <a
+          href="/work/"
+          class="is-active"
+          aria-current="page"
+        >
           <small>04</small>
           <span>Work</span>
         </a>
@@ -182,309 +192,72 @@
 
 
 
+
   <!-- =====================================================
-       WORK
+       WORK PAGE
   ====================================================== -->
 
   <main class="work-page">
 
 
-    <!-- =====================================================
-         MOTION PLAYGROUND
-    ====================================================== -->
+    <!-- ===================================================
+         HERO
+    ==================================================== -->
 
     <section
-      id="work-motion-playground"
-      class="work-playground"
+      id="work-hero"
+      class="work-hero"
     >
 
-      <div class="work-playground__stage">
+      <div
+        class="work-hero__lime"
+        aria-hidden="true"
+      ></div>
 
 
-        <!-- THREE.JS -->
-
-        <canvas
-          id="work-motion-canvas"
-          class="work-playground__canvas"
-          aria-hidden="true"
-        ></canvas>
+      <div class="work-hero__inner">
 
 
-
-        <!-- BACKGROUND GRID -->
-
-        <div
-          class="work-grid"
-          aria-hidden="true"
-        ></div>
+        <p class="work-hero__eyebrow">
+          Selected Work / APE Studio
+        </p>
 
 
+        <h1>
 
-        <!-- GIANT BACKGROUND APE -->
-
-        <div
-          class="work-ape-watermark"
-          aria-hidden="true"
-        >
-          APE
-        </div>
-
-
-
-        <!-- =================================================
-             TOP META
-        ================================================== -->
-
-        <div class="work-meta">
+          Ideas are better
 
           <span>
-            APE / SELECTED WORK
+            when you can see them.
           </span>
 
-          <span>
-            MOTION × DESIGN × TECHNOLOGY
-          </span>
-
-        </div>
+        </h1>
 
 
-
-        <!-- =================================================
-             HERO WORD
-        ================================================== -->
-
-        <div class="work-main-word">
-
-          <div class="work-main-word__mask">
-
-            <h1>
-              WORK
-            </h1>
-
-          </div>
-
-        </div>
+        <div class="work-hero__bottom">
 
 
+          <p class="work-hero__copy">
 
-        <!-- =================================================
-             ORBIT GRAPHIC
-        ================================================== -->
+            A selection of brands, businesses and ideas
+            we've had the opportunity to work with.
 
-        <div
-          class="work-orbit"
-          aria-hidden="true"
-        >
-
-          <div class="work-orbit__ring work-orbit__ring--one"></div>
-
-          <div class="work-orbit__ring work-orbit__ring--two"></div>
-
-          <div class="work-orbit__ring work-orbit__ring--three"></div>
+          </p>
 
 
-          <div class="work-orbit__core">
-
-            <span>
-              A
-            </span>
-
-          </div>
-
-
-          <i class="work-orbit__node work-orbit__node--one"></i>
-
-          <i class="work-orbit__node work-orbit__node--two"></i>
-
-          <i class="work-orbit__node work-orbit__node--three"></i>
-
-        </div>
-
-
-
-        <!-- =================================================
-             FLOATING GRAPHICS
-        ================================================== -->
-
-        <div class="work-graphics">
-
-
-          <div
-            class="
-              work-shape
-              work-shape--square
-            "
-            data-work-shape
-          ></div>
-
-
-          <div
-            class="
-              work-shape
-              work-shape--circle
-            "
-            data-work-shape
-          ></div>
-
-
-          <div
-            class="
-              work-shape
-              work-shape--line
-            "
-            data-work-shape
-          ></div>
-
-
-          <div
-            class="
-              work-shape
-              work-shape--cross
-            "
-            data-work-shape
-          >
-            <span></span>
-            <span></span>
-          </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             MOTION STATEMENTS
-        ================================================== -->
-
-        <div class="work-statements">
-
-
-          <article
-            class="
-              work-statement
-              work-statement--one
-              is-active
-            "
+          <a
+            href="#work-projects"
+            class="work-hero__cta"
           >
 
-            <span>
-              01
+            Explore Projects
+
+            <span aria-hidden="true">
+              ↓
             </span>
 
-            <h2>
+          </a>
 
-              MAKE IT
-
-              <em>
-                MOVE.
-              </em>
-
-            </h2>
-
-          </article>
-
-
-          <article
-            class="
-              work-statement
-              work-statement--two
-            "
-          >
-
-            <span>
-              02
-            </span>
-
-            <h2>
-
-              MAKE IT
-
-              <em>
-                FELT.
-              </em>
-
-            </h2>
-
-          </article>
-
-
-          <article
-            class="
-              work-statement
-              work-statement--three
-            "
-          >
-
-            <span>
-              03
-            </span>
-
-            <h2>
-
-              MAKE IT
-
-              <em>
-                REMEMBERED.
-              </em>
-
-            </h2>
-
-          </article>
-
-        </div>
-
-
-
-        <!-- =================================================
-             SIDE SIGNAL
-        ================================================== -->
-
-        <div class="work-signal">
-
-          <span>
-            SCROLL TO PLAY
-          </span>
-
-
-          <div class="work-signal__line">
-
-            <i
-              id="work-signal-fill"
-              class="work-signal__fill"
-            ></i>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             FINAL REVEAL
-        ================================================== -->
-
-        <div class="work-reveal">
-
-          <span>
-            THE THINKING.
-            THE CRAFT.
-            THE OUTCOME.
-          </span>
-
-
-          <h2>
-
-            NOW,
-
-            <em>
-              THE WORK.
-            </em>
-
-          </h2>
-
-
-          <div class="work-reveal__arrow">
-            ↓
-          </div>
 
         </div>
 
@@ -495,23 +268,341 @@
 
 
 
-    <!-- =====================================================
-         ACTUAL PROJECTS WILL START HERE LATER
-    ====================================================== -->
+
+    <!-- ===================================================
+         PROJECT DIRECTORY
+    ==================================================== -->
 
     <section
-      id="work-projects-start"
-      class="work-projects-placeholder"
+      id="work-projects"
+      class="work-projects"
     >
 
-      <span>
-        SELECTED WORK / COMING NEXT
-      </span>
+      <div class="work-projects__inner">
+
+
+        <div class="work-projects__top">
+
+
+          <div>
+
+            <p class="work-projects__eyebrow">
+              Our Work
+            </p>
+
+
+            <h2>
+              Worlds we've
+              <span>helped build.</span>
+            </h2>
+
+          </div>
+
+
+
+          <p class="work-projects__intro">
+
+            Explore the work by category or browse the complete
+            collection. Select a project to open its full visual story.
+
+          </p>
+
+
+        </div>
+
+
+
+        <!-- CATEGORY FILTERS -->
+
+        <div
+          id="work-filters"
+          class="work-filters"
+          aria-label="Filter projects by category"
+        ></div>
+
+
+
+        <!-- PROJECTS GENERATED BY JS -->
+
+        <div
+          id="work-grid"
+          class="work-grid"
+        ></div>
+
+
+      </div>
 
     </section>
 
 
   </main>
+
+
+
+
+  <!-- =====================================================
+       GLOBAL FOOTER
+  ====================================================== -->
+
+  <footer
+    id="site-footer"
+    class="site-footer"
+  >
+
+    <div class="site-footer__container">
+
+
+      <div class="site-footer__cta">
+
+        <div>
+
+          <p class="site-footer__eyebrow">
+            READY TO MAKE A MOVE?
+          </p>
+
+
+          <h2>
+
+            LET'S BUILD
+
+            <span>
+              SOMETHING GOOD.
+            </span>
+
+          </h2>
+
+        </div>
+
+
+        <a
+          href="/contact/"
+          class="site-footer__cta-button"
+        >
+
+          <span>
+            LET'S TALK
+          </span>
+
+          <i>
+            ↗
+          </i>
+
+        </a>
+
+      </div>
+
+
+
+      <div class="site-footer__main">
+
+
+        <div class="site-footer__brand-column">
+
+          <a
+            href="/"
+            class="site-footer__logo"
+            aria-label="APE Studio Home"
+          >
+
+            <img
+              src="/ape-logo.png"
+              alt="APE Studio"
+            >
+
+          </a>
+
+
+          <p>
+            Strategy, creativity, digital and production
+            brought together to build brands that get noticed,
+            remembered and chosen.
+          </p>
+
+        </div>
+
+
+
+        <div class="site-footer__column">
+
+          <p class="site-footer__column-title">
+            PAGES
+          </p>
+
+          <nav>
+
+            <a href="/">
+              Home
+            </a>
+
+            <a href="/about/">
+              About
+            </a>
+
+            <a href="/services/">
+              Services
+            </a>
+
+            <a href="/work/">
+              Work
+            </a>
+
+          </nav>
+
+        </div>
+
+
+
+        <div class="site-footer__column">
+
+          <p class="site-footer__column-title">
+            EXPLORE
+          </p>
+
+          <nav>
+
+            <a href="/blog/">
+              Blog
+            </a>
+
+            <a href="/faq/">
+              FAQ
+            </a>
+
+            <a href="/contact/">
+              Contact
+            </a>
+
+          </nav>
+
+        </div>
+
+
+
+        <div
+          class="site-footer__column site-footer__column--services"
+        >
+
+          <p class="site-footer__column-title">
+            CAPABILITIES
+          </p>
+
+
+          <nav>
+
+            <a href="/services/">
+              Social Media
+            </a>
+
+            <a href="/services/">
+              Performance Marketing
+            </a>
+
+            <a href="/services/">
+              Digital Marketing
+            </a>
+
+            <a href="/services/">
+              Website Development
+            </a>
+
+            <a href="/services/">
+              Packaging
+            </a>
+
+            <a href="/services/">
+              Branding
+            </a>
+
+            <a href="/services/">
+              Influencer Marketing
+            </a>
+
+            <a href="/services/">
+              Reels & Motion
+            </a>
+
+          </nav>
+
+        </div>
+
+
+      </div>
+
+
+
+      <div class="site-footer__divider"></div>
+
+
+
+      <div class="site-footer__bottom">
+
+
+        <div class="site-footer__copyright">
+
+          <span>
+            ©
+            <span id="ape-footer-year"></span>
+            APE STUDIO
+          </span>
+
+          <span>
+            ALL RIGHTS RESERVED
+          </span>
+
+        </div>
+
+
+
+        <div class="site-footer__bottom-nav">
+
+          <a href="/about/">
+            ABOUT
+          </a>
+
+          <a href="/services/">
+            SERVICES
+          </a>
+
+          <a href="/work/">
+            WORK
+          </a>
+
+          <a href="/blog/">
+            BLOG
+          </a>
+
+          <a href="/faq/">
+            FAQ
+          </a>
+
+          <a href="/contact/">
+            CONTACT
+          </a>
+
+        </div>
+
+
+
+        <a
+          href="#"
+          class="site-footer__top-link"
+        >
+
+          BACK TO TOP
+
+          <span>
+            ↑
+          </span>
+
+        </a>
+
+
+      </div>
+
+
+    </div>
+
+  </footer>
 
 
 

@@ -27,12 +27,6 @@ export function initHero() {
   const award =
     document.getElementById("ape-transition-award");
 
-  const lineOne =
-    document.getElementById("ape-transition-one");
-
-  const lineTwo =
-    document.getElementById("ape-transition-two");
-
 
   if (!hero || !stage || !video) {
 
@@ -66,7 +60,7 @@ export function initHero() {
    * 3. We Build What's Next
    */
 
-  const TRANSITION_SCROLL_DISTANCE = 3200;
+  const TRANSITION_SCROLL_DISTANCE = 1550;
 
 
   /*
@@ -520,10 +514,14 @@ export function initHero() {
   }
 
 
+  
 
-  /* =======================================================
-     HERO TRANSITION
-  ======================================================= */
+  /* =========================================================
+    HERO END TRANSITION
+
+    Only one statement now:
+    AWARD-WINNING CREATIVE & DIGITAL AGENCY
+  ========================================================= */
 
   function updateTransition() {
 
@@ -531,11 +529,14 @@ export function initHero() {
       getTransitionProgress();
 
 
+
     /* =====================================================
-       DARKEN FINAL VIDEO FRAME
+      DARKEN THE FINAL VIDEO FRAME
     ===================================================== */
 
-    if (dark) {
+    if (
+      dark
+    ) {
 
       dark.style.opacity =
         String(
@@ -548,7 +549,7 @@ export function initHero() {
 
           *
 
-          0.92
+          0.94
 
         );
 
@@ -557,23 +558,32 @@ export function initHero() {
 
 
     /* =====================================================
-       01 — AWARD-WINNING CREATIVE & DIGITAL AGENCY
+      AWARD STATEMENT ENTER
     ===================================================== */
 
     const awardIn =
       range(
         p,
-        0.10,
-        0.22
+        0.08,
+        0.25
       );
 
+
+
+    /* =====================================================
+      AWARD STATEMENT EXIT
+
+      It remains fully visible through most of the
+      post-video transition.
+    ===================================================== */
 
     const awardOut =
       range(
         p,
-        0.29,
-        0.38
+        0.88,
+        0.98
       );
+
 
 
     setTransitionItem(
@@ -581,75 +591,12 @@ export function initHero() {
       award,
 
       awardIn *
-      (1 - awardOut),
+      (
+        1 -
+        awardOut
+      ),
 
-      18
-
-    );
-
-
-
-    /* =====================================================
-       02 — WE DON'T JUST CREATE
-    ===================================================== */
-
-    const oneIn =
-      range(
-        p,
-        0.33,
-        0.46
-      );
-
-
-    const oneOut =
-      range(
-        p,
-        0.53,
-        0.62
-      );
-
-
-    setTransitionItem(
-
-      lineOne,
-
-      oneIn *
-      (1 - oneOut),
-
-      28
-
-    );
-
-
-
-    /* =====================================================
-       03 — WE BUILD WHAT'S NEXT
-    ===================================================== */
-
-    const twoIn =
-      range(
-        p,
-        0.57,
-        0.70
-      );
-
-
-    const twoOut =
-      range(
-        p,
-        0.89,
-        0.98
-      );
-
-
-    setTransitionItem(
-
-      lineTwo,
-
-      twoIn *
-      (1 - twoOut),
-
-      28
+      30
 
     );
 

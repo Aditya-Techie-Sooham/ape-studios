@@ -36,8 +36,6 @@ export function initHome() {
 
   initWho();
 
-  initAbout();
-
   initWork();
 
   initClients();
@@ -66,12 +64,10 @@ function showHomeContent() {
     [
       ".home-who__content",
       ".home-who__visual",
-      ".home-about__heading",
-      ".home-about__content",
       ".home-work-new__header",
       ".home-work-new__project",
       ".home-clients__heading",
-      ".home-client-logo",
+      ".home-clients__marquee",
       ".home-recognition__visual",
       ".home-recognition__content"
     ],
@@ -193,115 +189,6 @@ function initWho() {
 }
 
 
-/* =========================================================
-   ABOUT
-========================================================= */
-
-function initAbout() {
-
-  const section =
-    document.getElementById(
-      "home-about"
-    );
-
-
-  if (!section) {
-    return;
-  }
-
-
-  const heading =
-    section.querySelector(
-      ".home-about__heading"
-    );
-
-
-  const content =
-    section.querySelector(
-      ".home-about__content"
-    );
-
-
-  if (heading) {
-
-    gsap.fromTo(
-
-      heading,
-
-      {
-        y: 30,
-
-        opacity: 0
-      },
-
-      {
-        y: 0,
-
-        opacity: 1,
-
-        duration: 0.8,
-
-        ease: "power3.out",
-
-        scrollTrigger: {
-
-          trigger: section,
-
-          start:
-            "top 84%",
-
-          once: true
-
-        }
-
-      }
-
-    );
-
-  }
-
-
-  if (content) {
-
-    gsap.fromTo(
-
-      content,
-
-      {
-        y: 34,
-
-        opacity: 0
-      },
-
-      {
-        y: 0,
-
-        opacity: 1,
-
-        duration: 0.85,
-
-        delay: 0.07,
-
-        ease: "power3.out",
-
-        scrollTrigger: {
-
-          trigger: section,
-
-          start:
-            "top 84%",
-
-          once: true
-
-        }
-
-      }
-
-    );
-
-  }
-
-}
 
 
 /* =========================================================
@@ -438,19 +325,108 @@ function initClients() {
   }
 
 
+
+  /* =====================================================
+     BUILD SEAMLESS MARQUEE COPIES
+  ===================================================== */
+
+  const tracks =
+    section.querySelectorAll(
+      ".home-clients__track"
+    );
+
+
+  tracks.forEach(
+    function (
+      track
+    ) {
+
+      const originalGroup =
+        track.querySelector(
+          ".home-clients__group"
+        );
+
+
+      if (
+        !originalGroup
+      ) {
+
+        return;
+
+      }
+
+
+
+      /*
+       * Prevent duplicate cloning if initHome()
+       * is ever triggered more than once.
+       */
+
+      if (
+        track.querySelector(
+          ".home-clients__group[aria-hidden='true']"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+
+      const clone =
+        originalGroup.cloneNode(
+          true
+        );
+
+
+      clone.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      /*
+       * Images inside the duplicate are decorative.
+       */
+
+      clone
+        .querySelectorAll(
+          "img"
+        )
+        .forEach(
+          function (
+            image
+          ) {
+
+            image.alt =
+              "";
+
+          }
+        );
+
+
+      track.appendChild(
+        clone
+      );
+
+  });
+
+
+
+  /* =====================================================
+     HEADING REVEAL
+  ===================================================== */
+
   const heading =
     section.querySelector(
       ".home-clients__heading"
     );
 
 
-  const logos =
-    section.querySelectorAll(
-      ".home-client-logo"
-    );
-
-
-  if (heading) {
+  if (
+    heading
+  ) {
 
     gsap.fromTo(
 
@@ -458,27 +434,29 @@ function initClients() {
 
       {
         y: 28,
-
         opacity: 0
       },
 
       {
         y: 0,
-
         opacity: 1,
 
-        duration: 0.75,
+        duration:
+          0.75,
 
-        ease: "power3.out",
+        ease:
+          "power3.out",
 
         scrollTrigger: {
 
-          trigger: heading,
+          trigger:
+            heading,
 
           start:
             "top 88%",
 
-          once: true
+          once:
+            true
 
         }
 
@@ -489,28 +467,42 @@ function initClients() {
   }
 
 
-  if (logos.length) {
+
+  /* =====================================================
+     MARQUEE REVEAL
+  ===================================================== */
+
+  const marquees =
+    section.querySelectorAll(
+      ".home-clients__marquee"
+    );
+
+
+  if (
+    marquees.length
+  ) {
 
     gsap.fromTo(
 
-      logos,
+      marquees,
 
       {
-        y: 16,
-
+        y: 25,
         opacity: 0
       },
 
       {
         y: 0,
-
         opacity: 1,
 
-        duration: 0.55,
+        duration:
+          0.8,
 
-        stagger: 0.035,
+        stagger:
+          0.10,
 
-        ease: "power2.out",
+        ease:
+          "power3.out",
 
         scrollTrigger: {
 
@@ -520,7 +512,8 @@ function initClients() {
           start:
             "top 88%",
 
-          once: true
+          once:
+            true
 
         }
 

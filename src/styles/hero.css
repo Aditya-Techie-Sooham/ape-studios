@@ -1,6 +1,6 @@
 /* =========================================================
    APE STUDIO — HERO
-   FINAL CLEAN VERSION
+   FINAL UPDATED VERSION
 ========================================================= */
 
 
@@ -19,12 +19,13 @@
       10000px
     );
 
-  background: #000000;
+  background:
+    #000000;
 }
 
 
 /* =========================================================
-   HERO FIXED STAGE
+   FIXED HERO STAGE
 ========================================================= */
 
 .ape-hero__stage {
@@ -38,9 +39,11 @@
 
   overflow: hidden;
 
-  background: #000000;
+  background:
+    #000000;
 
-  z-index: 10;
+  z-index:
+    10;
 }
 
 
@@ -76,20 +79,25 @@
 
   object-fit: cover;
 
-  object-position: center center;
+  object-position:
+    center center;
 
-  background: #000000;
+  background:
+    #000000;
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
-  user-select: none;
+  user-select:
+    none;
 
-  -webkit-user-select: none;
+  -webkit-user-select:
+    none;
 }
 
 
 /* =========================================================
-   HERO DARK OVERLAY
+   FINAL FRAME DARKENING
 ========================================================= */
 
 .ape-hero__dark {
@@ -104,27 +112,33 @@
   pointer-events: none;
 
   background:
+
     radial-gradient(
-      circle at 50% 44%,
+      circle
+      at
+      50% 42%,
+
       rgba(
-        30,
-        12,
-        48,
-        0.03
+        42,
+        18,
+        67,
+        0.06
       )
       0%,
+
       rgba(
-        8,
-        4,
-        18,
-        0.44
+        10,
+        5,
+        19,
+        0.57
       )
-      52%,
+      48%,
+
       rgba(
         0,
         0,
         0,
-        0.96
+        0.97
       )
       100%
     );
@@ -146,14 +160,15 @@
 
   pointer-events: none;
 
-  text-align: center;
-
-  color: #ffffff;
+  color:
+    #ffffff;
 }
 
 
 /* =========================================================
-   SHARED ANIMATED ITEM
+   SHARED TRANSITION ITEM
+
+   hero.js controls opacity + vertical movement
 ========================================================= */
 
 .ape-transition-item {
@@ -161,8 +176,6 @@
 
   left: 50%;
   top: 50%;
-
-  width: 94vw;
 
   margin: 0;
 
@@ -173,7 +186,7 @@
       -50%,
       calc(
         -50% +
-        25px
+        30px
       )
     );
 
@@ -184,97 +197,58 @@
 
 
 /* =========================================================
-   AWARD-WINNING STATEMENT
+   FINAL AWARD EXPERIENCE
 ========================================================= */
 
 .ape-transition-award {
-  top: 28%;
-
-  width: auto;
-
-  max-width:
-    calc(
-      100vw -
-      80px
+  width:
+    min(
+      1500px,
+      91vw
     );
 
-  font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
+  display: grid;
 
-  text-align: center;
-
-  white-space: nowrap;
-}
-
-
-.ape-transition-award {
-  top: 28%;
-
-  width: auto;
-
-  max-width:
-    calc(
-      100vw - 80px
+  grid-template-columns:
+    minmax(
+      0,
+      1.62fr
+    )
+    minmax(
+      250px,
+      0.38fr
     );
 
-  color: #ffffff;
-
-  font-family:
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
-
-  font-size:
+  gap:
     clamp(
-      18px,
-      2vw,
-      30px
+      45px,
+      5vw,
+      95px
     );
 
-  font-weight: 700;
-
-  line-height: 1.05;
-
-  letter-spacing: -0.02em;
-
-  text-align: center;
-
-  text-transform: uppercase;
-
-  white-space: nowrap;
+  align-items:
+    center;
 }
 
 
 /* =========================================================
-   SEMANTIC H1 WRAPPER
+   AWARD COPY
 ========================================================= */
 
-.ape-transition-heading {
-  position: absolute;
+.ape-transition-award__copy {
+  position: relative;
 
-  inset: 0;
+  min-width: 0;
+}
+
+
+.ape-transition-award__title {
+  width: 100%;
 
   margin: 0;
 
-  padding: 0;
-
-  pointer-events: none;
-
-  font: inherit;
-
-  color: inherit;
-}
-
-
-/* =========================================================
-   HERO MAIN STATEMENTS
-========================================================= */
-
-.ape-transition-title {
-  width: 94vw;
+  color:
+    #ffffff;
 
   font-family:
     "Helvetica Neue",
@@ -284,47 +258,144 @@
 
   font-size:
     clamp(
-      52px,
-      9vw,
-      160px
+      68px,
+      7.25vw,
+      132px
     );
 
-  font-weight: 700;
+  font-weight:
+    900;
 
-  line-height: 0.88;
+  line-height:
+    0.83;
 
-  letter-spacing: -0.055em;
+  letter-spacing:
+    -0.067em;
 
-  text-transform: uppercase;
+  text-transform:
+    uppercase;
+
+  text-align:
+    left;
 }
 
 
-.ape-transition-title > span {
+.ape-transition-award__title > span {
   display: block;
 
-  font-family: inherit;
+  white-space:
+    nowrap;
 }
 
 
 /* =========================================================
-   OUTLINE WORDS
+   ACCENT LINE
 ========================================================= */
 
-.ape-outline {
-  color: transparent;
+.ape-transition-award__accent {
+  padding-right:
+    0.05em;
 
-  -webkit-text-stroke:
-    1.5px
-    rgba(
-      255,
-      255,
-      255,
-      0.92
+  color:
+    #c9b5ff;
+
+  background:
+
+    linear-gradient(
+      90deg,
+
+      #ffffff
+      0%,
+
+      #c7afff
+      42%,
+
+      #ef78c2
+      100%
     );
 
-  paint-order:
-    stroke
-    fill;
+  -webkit-background-clip:
+    text;
+
+  background-clip:
+    text;
+
+  -webkit-text-fill-color:
+    transparent;
+}
+
+
+/* =========================================================
+   TRANSPARENT AWARD IMAGE
+
+   No card
+   No placeholder
+   No background
+   No border
+   No forced aspect ratio
+========================================================= */
+
+.ape-transition-award__visual {
+  position: relative;
+
+  width:
+    min(
+      100%,
+      360px
+    );
+
+  height:
+    auto;
+
+  margin: 0;
+
+  justify-self:
+    end;
+
+  overflow:
+    visible;
+
+  border: 0;
+
+  border-radius: 0;
+
+  background:
+    transparent;
+
+  box-shadow:
+    none;
+}
+
+
+.ape-transition-award__visual::before,
+.ape-transition-award__visual::after {
+  display:
+    none;
+}
+
+
+.ape-transition-award__visual img {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  max-width: 100%;
+
+  object-fit:
+    contain;
+
+  object-position:
+    center;
+
+  background:
+    transparent;
+
+  border: 0;
+
+  box-shadow:
+    none;
 }
 
 
@@ -341,9 +412,12 @@
   z-index: 5;
 
   transform:
-    translateX(-50%);
+    translateX(
+      -50%
+    );
 
   color:
+
     rgba(
       255,
       255,
@@ -356,24 +430,96 @@
     Arial,
     sans-serif;
 
-  font-size: 9px;
+  font-size:
+    9px;
 
-  font-weight: 600;
+  font-weight:
+    600;
 
-  line-height: 1;
+  line-height:
+    1;
 
-  letter-spacing: 0.20em;
+  letter-spacing:
+    0.20em;
 
-  text-transform: uppercase;
+  text-transform:
+    uppercase;
 
-  white-space: nowrap;
+  white-space:
+    nowrap;
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity
     300ms
     ease;
+}
+
+
+/* =========================================================
+   SHORT DESKTOP / LAPTOP
+
+   Handles screens such as:
+   1366 × 768
+   1440 × 768
+   1536 × 864
+========================================================= */
+
+@media
+(
+  min-width: 1101px
+)
+and
+(
+  max-height: 820px
+) {
+
+  .ape-transition-award {
+    width:
+      min(
+        1380px,
+        90vw
+      );
+
+    grid-template-columns:
+      minmax(
+        0,
+        1.68fr
+      )
+      minmax(
+        210px,
+        0.32fr
+      );
+
+    gap:
+      clamp(
+        35px,
+        4vw,
+        70px
+      );
+  }
+
+
+  .ape-transition-award__title {
+    font-size:
+      clamp(
+        61px,
+        6.4vw,
+        106px
+      );
+  }
+
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        100%,
+        285px
+      );
+  }
+
 }
 
 
@@ -392,39 +538,52 @@ and
 ) {
 
   .ape-transition-award {
-    top: 29%;
-  }
-
-
-  .ape-transition-award strong {
-    font-size:
-      clamp(
-        13px,
-        1.7vw,
-        18px
+    width:
+      calc(
+        100vw -
+        70px
       );
 
-    letter-spacing: 0.05em;
-  }
-
-
-  .ape-transition-title {
-    width: 92vw;
-
-    font-size:
-      clamp(
-        58px,
-        10vw,
-        104px
+    grid-template-columns:
+      minmax(
+        0,
+        1.55fr
+      )
+      minmax(
+        205px,
+        0.45fr
       );
 
-    line-height: 0.90;
+    gap:
+      38px;
   }
 
 
-  .ape-outline {
-    -webkit-text-stroke-width:
-      1.25px;
+  .ape-transition-award__title {
+    font-size:
+      clamp(
+        55px,
+        7.4vw,
+        79px
+      );
+
+    line-height:
+      0.86;
+  }
+
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        100%,
+        250px
+      );
+
+    border-radius:
+      0;
+
+    box-shadow:
+      none;
   }
 
 }
@@ -432,14 +591,20 @@ and
 
 /* =========================================================
    MOBILE
-   IMPORTANT:
-   KEEP THE LONGER MOBILE SCROLL DISTANCE
 ========================================================= */
 
-@media (max-width: 767px) {
+@media
+(
+  max-width: 767px
+) {
+
+  /* =====================================================
+     HERO SCROLL DISTANCE
+  ===================================================== */
 
   .ape-hero {
     height:
+
       calc(
         100dvh +
         20000px
@@ -448,84 +613,199 @@ and
 
 
   .ape-hero__stage {
-    width: 100vw;
+    width:
+      100vw;
 
-    height: 100dvh;
+    height:
+      100dvh;
   }
 
 
   .ape-hero__video {
-    width: 100%;
-    height: 100%;
+    width:
+      100%;
 
-    object-fit: cover;
+    height:
+      100%;
 
-    object-position: center center;
+    object-fit:
+      cover;
+
+    object-position:
+      center center;
   }
 
 
-
   /* =====================================================
-     MOBILE AWARD
+     MOBILE AWARD COMPOSITION
   ===================================================== */
 
   .ape-transition-award {
-    top: 27%;
-
     width:
       calc(
-        100vw - 36px
+        100vw -
+        32px
       );
 
-    max-width: none;
+    max-height:
+      calc(
+        100dvh -
+        76px
+      );
 
-    font-size:
+    grid-template-columns:
+      1fr;
+
+    gap:
       clamp(
-        16px,
-        5vw,
-        22px
+        24px,
+        4.5vh,
+        38px
       );
 
-    line-height: 1.1;
+    align-items:
+      center;
 
-    white-space: normal;
+    justify-items:
+      center;
   }
-
 
 
   /* =====================================================
-     MOBILE H1
+     CENTER THE HEADLINE
   ===================================================== */
 
-  .ape-transition-title {
-    width: 92vw;
+  .ape-transition-award__copy {
+    width: 100%;
+
+    display: flex;
+
+    align-items:
+      center;
+
+    justify-content:
+      center;
+
+    text-align:
+      center;
+  }
+
+
+  .ape-transition-award__title {
+    width: 100%;
+
+    max-width:
+      330px;
+
+    margin:
+      0
+      auto;
 
     font-size:
       clamp(
-        40px,
-        13vw,
-        66px
+        42px,
+        12.7vw,
+        62px
       );
 
-    font-weight: 700;
+    font-weight:
+      900;
 
-    line-height: 0.94;
+    line-height:
+      0.87;
 
-    letter-spacing: -0.048em;
+    letter-spacing:
+      -0.058em;
+
+    text-align:
+      center;
   }
 
 
-  .ape-outline {
-    -webkit-text-stroke:
-      1px
-      rgba(
-        255,
-        255,
-        255,
-        0.92
-      );
+  .ape-transition-award__title > span {
+    width: 100%;
+
+    display: block;
+
+    white-space:
+      normal;
+
+    text-align:
+      center;
   }
 
+
+  /* =====================================================
+     CENTER TRANSPARENT AWARD IMAGE
+  ===================================================== */
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        55vw,
+        225px
+      );
+
+    height:
+      auto;
+
+    margin:
+      0
+      auto;
+
+    justify-self:
+      center;
+
+    align-self:
+      center;
+
+    aspect-ratio:
+      auto;
+
+    overflow:
+      visible;
+
+    border:
+      0;
+
+    border-radius:
+      0;
+
+    background:
+      transparent;
+
+    box-shadow:
+      none;
+  }
+
+
+  .ape-transition-award__visual img {
+    width: 100%;
+
+    height: auto;
+
+    margin:
+      0
+      auto;
+
+    object-fit:
+      contain;
+
+    object-position:
+      center;
+
+    background:
+      transparent;
+
+    border:
+      0;
+
+    border-radius:
+      0;
+
+    box-shadow:
+      none;
+  }
 
 
   /* =====================================================
@@ -534,6 +814,7 @@ and
 
   .ape-hero__hint {
     bottom:
+
       max(
         20px,
         env(
@@ -541,57 +822,119 @@ and
         )
       );
 
-    font-size: 7px;
+    font-size:
+      7px;
 
-    letter-spacing: 0.18em;
+    letter-spacing:
+      0.18em;
   }
 
 }
 
 
 /* =========================================================
-   SMALL MOBILE
-   <= 374px
+   SHORT MOBILE
+
+   Important for short-height devices and browser UI.
 ========================================================= */
 
-@media (max-width: 374px) {
+@media
+(
+  max-width: 767px
+)
+and
+(
+  max-height: 720px
+) {
 
   .ape-transition-award {
-    top: 28%;
+    gap:
+      20px;
 
-    width:
+    max-height:
       calc(
-        100vw -
-        30px
+        100dvh -
+        60px
       );
   }
 
 
-  .ape-transition-award strong {
-    max-width: 290px;
-
-    font-size: 11px;
-
-    line-height: 1.22;
-  }
-
-
-  .ape-transition-title {
-    width: 94vw;
+  .ape-transition-award__title {
+    max-width:
+      300px;
 
     font-size:
       clamp(
         37px,
-        12.5vw,
-        47px
+        11vw,
+        51px
       );
 
-    line-height: 0.96;
+    line-height:
+      0.88;
+  }
+
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        45vw,
+        185px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media
+(
+  max-width: 374px
+) {
+
+  .ape-transition-award {
+    width:
+      calc(
+        100vw -
+        26px
+      );
+
+    gap:
+      23px;
+  }
+
+
+  .ape-transition-award__title {
+    max-width:
+      305px;
+
+    font-size:
+      clamp(
+        37px,
+        11.7vw,
+        46px
+      );
+
+    line-height:
+      0.89;
+  }
+
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        52vw,
+        195px
+      );
   }
 
 
   .ape-hero__hint {
-    font-size: 6px;
+    font-size:
+      6px;
   }
 
 }
@@ -601,26 +944,35 @@ and
    LARGE DESKTOP
 ========================================================= */
 
-@media (min-width: 1600px) {
+@media
+(
+  min-width: 1600px
+) {
 
   .ape-transition-award {
-    top: 27%;
+    width:
+      min(
+        1600px,
+        90vw
+      );
   }
 
 
-  .ape-transition-award strong {
-    font-size: 22px;
-  }
-
-
-  .ape-transition-title {
-    max-width: 1600px;
-
+  .ape-transition-award__title {
     font-size:
       clamp(
-        130px,
-        8.6vw,
-        170px
+        115px,
+        7.35vw,
+        150px
+      );
+  }
+
+
+  .ape-transition-award__visual {
+    width:
+      min(
+        100%,
+        390px
       );
   }
 
@@ -638,7 +990,8 @@ and
 ) {
 
   .ape-hero__hint {
-    transition: none;
+    transition:
+      none;
   }
 
 }

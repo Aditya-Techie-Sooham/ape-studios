@@ -1897,3 +1897,1428 @@ and
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   WHO ARE WE — FINAL VIEWPORT FIT
+   Desktop / laptop
+========================================================= */
+
+@media (min-width: 1101px) {
+
+  .home-who {
+    min-height: 100svh;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+      clamp(
+        52px,
+        6vh,
+        78px
+      )
+      5vw;
+  }
+
+
+  .home-who__inner {
+    width:
+      min(
+        1450px,
+        100%
+      );
+
+    grid-template-columns:
+      minmax(
+        0,
+        0.92fr
+      )
+      minmax(
+        380px,
+        1.08fr
+      );
+
+    gap:
+      clamp(
+        48px,
+        5vw,
+        90px
+      );
+
+    align-items:
+      center;
+  }
+
+
+  /* ---------------------------------------------
+     COPY
+  --------------------------------------------- */
+
+  .home-who__eyebrow {
+    margin-bottom:
+      18px;
+  }
+
+
+  .home-who__content h2 {
+    max-width:
+      650px;
+
+    font-size:
+      clamp(
+        42px,
+        4.2vw,
+        68px
+      );
+
+    line-height:
+      0.92;
+  }
+
+
+  .home-who__content h2 span {
+    margin-top:
+      3px;
+  }
+
+
+  .home-who__description {
+    width:
+      min(
+        500px,
+        100%
+      );
+
+    margin-top:
+      22px;
+
+    font-size:
+      13px;
+
+    line-height:
+      1.62;
+  }
+
+
+  .home-who__actions {
+    margin-top:
+      25px;
+
+    gap:
+      11px;
+  }
+
+
+  .home-button {
+    min-width:
+      185px;
+
+    min-height:
+      52px;
+
+    padding:
+      0
+      7px
+      0
+      19px;
+
+    font-size:
+      8px;
+  }
+
+
+  .home-button i {
+    width:
+      37px;
+
+    height:
+      37px;
+
+    flex-basis:
+      37px;
+  }
+
+
+
+  /* ---------------------------------------------
+     IMAGE
+  --------------------------------------------- */
+
+  .home-who__visual {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+
+  .home-who__image {
+    width:
+      100%;
+
+    height:
+      min(
+        65vh,
+        560px
+      );
+
+    aspect-ratio:
+      auto;
+
+    border-radius:
+      22px;
+  }
+
+
+  .home-who__image img {
+    width:
+      100%;
+
+    height:
+      100%;
+
+    object-fit:
+      cover;
+
+    object-position:
+      center;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   WHO ARE WE — SHORT LAPTOP
+========================================================= */
+
+@media
+(
+  min-width: 1101px
+)
+and
+(
+  max-height: 820px
+) {
+
+  .home-who {
+    padding:
+      45px
+      5vw;
+  }
+
+
+  .home-who__inner {
+    gap:
+      clamp(
+        40px,
+        4vw,
+        70px
+      );
+  }
+
+
+  .home-who__eyebrow {
+    margin-bottom:
+      14px;
+  }
+
+
+  .home-who__content h2 {
+    font-size:
+      clamp(
+        38px,
+        3.8vw,
+        60px
+      );
+
+    line-height:
+      0.91;
+  }
+
+
+  .home-who__description {
+    margin-top:
+      17px;
+
+    font-size:
+      12.5px;
+
+    line-height:
+      1.55;
+  }
+
+
+  .home-who__actions {
+    margin-top:
+      20px;
+  }
+
+
+  .home-button {
+    min-height:
+      48px;
+  }
+
+
+  .home-button i {
+    width:
+      34px;
+
+    height:
+      34px;
+
+    flex-basis:
+      34px;
+  }
+
+
+  .home-who__image {
+    height:
+      min(
+        61vh,
+        490px
+      );
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   WHO ARE WE — TABLET REFINEMENT
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1100px
+) {
+
+  .home-who {
+    min-height:
+      auto;
+
+    padding:
+      70px
+      36px;
+  }
+
+
+  .home-who__inner {
+    grid-template-columns:
+      minmax(
+        0,
+        0.92fr
+      )
+      minmax(
+        300px,
+        1.08fr
+      );
+
+    gap:
+      38px;
+
+    align-items:
+      center;
+  }
+
+
+  .home-who__content h2 {
+    font-size:
+      clamp(
+        37px,
+        5vw,
+        52px
+      );
+  }
+
+
+  .home-who__description {
+    margin-top:
+      20px;
+
+    font-size:
+      13px;
+
+    line-height:
+      1.6;
+  }
+
+
+  .home-who__actions {
+    max-width:
+      none;
+
+    margin-top:
+      24px;
+
+    flex-direction:
+      row;
+
+    align-items:
+      center;
+
+    gap:
+      9px;
+  }
+
+
+  .home-button {
+    width:
+      auto;
+
+    min-width:
+      155px;
+
+    min-height:
+      49px;
+
+    padding-left:
+      15px;
+
+    font-size:
+      7px;
+  }
+
+
+  .home-button i {
+    width:
+      35px;
+
+    height:
+      35px;
+
+    flex-basis:
+      35px;
+  }
+
+
+  .home-who__image {
+    height:
+      min(
+        53vw,
+        470px
+      );
+
+    aspect-ratio:
+      auto;
+  }
+
+
+  .home-who__image img {
+    width:
+      100%;
+
+    height:
+      100%;
+
+    object-fit:
+      cover;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   WHO WE WORK WITH
+   TWO-ROW INFINITE CLIENT MARQUEE
+========================================================= */
+
+.home-clients {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    clamp(
+      90px,
+      7vw,
+      120px
+    )
+    0;
+
+  overflow:
+    hidden;
+
+  background:
+    #ffffff;
+}
+
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.home-clients__inner {
+  width:
+    100%;
+
+  margin:
+    0;
+}
+
+
+.home-clients__heading {
+  width:
+    min(
+      1500px,
+      calc(
+        100% -
+        10vw
+      )
+    );
+
+  margin:
+    0
+    auto
+    clamp(
+      48px,
+      5vw,
+      72px
+    );
+}
+
+
+
+/* =========================================================
+   MARQUEE WRAPPER
+========================================================= */
+
+.home-clients__logos {
+  position: relative;
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    clamp(
+      14px,
+      1.35vw,
+      22px
+    );
+
+  overflow:
+    hidden;
+
+  border:
+    0;
+}
+
+
+
+/* Soft edge fade */
+
+.home-clients__logos::before,
+.home-clients__logos::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    8;
+
+  top:
+    0;
+
+  bottom:
+    0;
+
+  width:
+    clamp(
+      35px,
+      7vw,
+      120px
+    );
+
+  pointer-events:
+    none;
+}
+
+
+.home-clients__logos::before {
+  left:
+    0;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      #ffffff
+      0%,
+      rgba(
+        255,
+        255,
+        255,
+        0.92
+      )
+      32%,
+      rgba(
+        255,
+        255,
+        255,
+        0
+      )
+      100%
+    );
+}
+
+
+.home-clients__logos::after {
+  right:
+    0;
+
+  background:
+
+    linear-gradient(
+      270deg,
+      #ffffff
+      0%,
+      rgba(
+        255,
+        255,
+        255,
+        0.92
+      )
+      32%,
+      rgba(
+        255,
+        255,
+        255,
+        0
+      )
+      100%
+    );
+}
+
+
+
+/* =========================================================
+   EACH ROW
+========================================================= */
+
+.home-clients__marquee {
+  --client-gap:
+    clamp(
+      14px,
+      1.3vw,
+      22px
+    );
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  padding:
+    2px
+    0;
+}
+
+
+
+/* =========================================================
+   MOVING TRACK
+========================================================= */
+
+.home-clients__track {
+  display:
+    flex;
+
+  align-items:
+    stretch;
+
+  width:
+    max-content;
+
+  will-change:
+    transform;
+}
+
+
+
+/* =========================================================
+   ONE COMPLETE SET OF LOGOS
+
+   Padding on the end is intentional:
+   each cloned group then has exactly the same width,
+   giving us a seamless 50% animation loop.
+========================================================= */
+
+.home-clients__group {
+  flex:
+    0
+    0
+    auto;
+
+  display:
+    flex;
+
+  align-items:
+    stretch;
+
+  gap:
+    var(
+      --client-gap
+    );
+
+  padding-right:
+    var(
+      --client-gap
+    );
+}
+
+
+
+/* =========================================================
+   LOGO CARD
+========================================================= */
+
+.home-client-logo {
+  flex:
+    0
+    0
+    clamp(
+      190px,
+      17vw,
+      285px
+    );
+
+  width:
+    clamp(
+      190px,
+      17vw,
+      285px
+    );
+
+  min-width:
+    0;
+
+  min-height:
+    150px;
+
+  padding:
+    24px
+    30px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  overflow:
+    hidden;
+
+  border:
+
+    1px solid
+    rgba(
+      41,
+      24,
+      63,
+      0.10
+    );
+
+  border-radius:
+    18px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0
+    8px
+    30px
+    rgba(
+      41,
+      24,
+      63,
+      0.035
+    );
+
+  transition:
+    background
+    260ms
+    ease,
+    border-color
+    260ms
+    ease,
+    transform
+    260ms
+    ease,
+    box-shadow
+    260ms
+    ease;
+}
+
+
+
+/* =========================================================
+   LOGO IMAGE
+========================================================= */
+
+.home-client-logo img {
+  display:
+    block;
+
+  width:
+    auto;
+
+  height:
+    auto;
+
+  max-width:
+    72%;
+
+  max-height:
+    72px;
+
+  object-fit:
+    contain;
+
+  opacity:
+    1;
+
+  transform:
+    scale(
+      1
+    );
+
+  transition:
+    transform
+    260ms
+    ease;
+}
+
+
+.home-client-logo img[src$=".jpg"],
+.home-client-logo img[src$=".jpeg"] {
+  max-width:
+    68%;
+
+  max-height:
+    68px;
+}
+
+
+
+/* =========================================================
+   ROW 1
+   LEFT → RIGHT
+========================================================= */
+
+.home-clients__marquee--forward
+.home-clients__track {
+
+  transform:
+    translate3d(
+      -50%,
+      0,
+      0
+    );
+
+  animation:
+    apeClientsForward
+    34s
+    linear
+    infinite;
+}
+
+
+@keyframes apeClientsForward {
+
+  from {
+
+    transform:
+      translate3d(
+        -50%,
+        0,
+        0
+      );
+
+  }
+
+
+  to {
+
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   ROW 2
+   RIGHT → LEFT
+========================================================= */
+
+.home-clients__marquee--reverse
+.home-clients__track {
+
+  animation:
+    apeClientsReverse
+    36s
+    linear
+    infinite;
+}
+
+
+@keyframes apeClientsReverse {
+
+  from {
+
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      );
+
+  }
+
+
+  to {
+
+    transform:
+      translate3d(
+        -50%,
+        0,
+        0
+      );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   DESKTOP HOVER
+========================================================= */
+
+@media
+(
+  hover: hover
+)
+and
+(
+  pointer: fine
+) {
+
+  .home-client-logo:hover {
+    z-index:
+      3;
+
+    border-color:
+
+      rgba(
+        116,
+        82,
+        217,
+        0.25
+      );
+
+    background:
+      #faf7fd;
+
+    box-shadow:
+
+      0
+      16px
+      42px
+      rgba(
+        116,
+        82,
+        217,
+        0.10
+      );
+
+    transform:
+      translateY(
+        -3px
+      );
+  }
+
+
+  .home-client-logo:hover img {
+    transform:
+      scale(
+        1.06
+      );
+  }
+
+
+
+  /* pause only the row being inspected */
+
+  .home-clients__marquee:hover
+  .home-clients__track {
+
+    animation-play-state:
+      paused;
+  }
+
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1100px
+) {
+
+  .home-clients {
+    padding:
+      80px
+      0;
+  }
+
+
+  .home-clients__heading {
+    width:
+      calc(
+        100% -
+        72px
+      );
+
+    margin-bottom:
+      48px;
+  }
+
+
+  .home-client-logo {
+    flex-basis:
+      220px;
+
+    width:
+      220px;
+
+    min-height:
+      135px;
+
+    padding:
+      22px;
+  }
+
+
+  .home-client-logo img {
+    max-height:
+      64px;
+  }
+
+
+  .home-clients__marquee--forward
+  .home-clients__track {
+
+    animation-duration:
+      31s;
+  }
+
+
+  .home-clients__marquee--reverse
+  .home-clients__track {
+
+    animation-duration:
+      33s;
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(
+  max-width: 767px
+) {
+
+  .home-clients {
+    padding:
+      72px
+      0
+      82px;
+  }
+
+
+  .home-clients__heading {
+    width:
+      calc(
+        100% -
+        36px
+      );
+
+    margin-bottom:
+      38px;
+  }
+
+
+  .home-clients__heading h2 {
+    font-size:
+      clamp(
+        38px,
+        11vw,
+        52px
+      );
+  }
+
+
+  .home-clients__logos {
+    gap:
+      10px;
+  }
+
+
+  .home-clients__marquee {
+    --client-gap:
+      10px;
+  }
+
+
+  .home-client-logo {
+    flex-basis:
+      155px;
+
+    width:
+      155px;
+
+    min-height:
+      105px;
+
+    padding:
+      17px
+      19px;
+
+    border-radius:
+      14px;
+  }
+
+
+  .home-client-logo img {
+    max-width:
+      78%;
+
+    max-height:
+      51px;
+  }
+
+
+  .home-client-logo img[src$=".jpg"],
+  .home-client-logo img[src$=".jpeg"] {
+
+    max-width:
+      73%;
+
+    max-height:
+      48px;
+  }
+
+
+  .home-clients__logos::before,
+  .home-clients__logos::after {
+
+    width:
+      30px;
+  }
+
+
+  .home-clients__marquee--forward
+  .home-clients__track {
+
+    animation-duration:
+      27s;
+  }
+
+
+  .home-clients__marquee--reverse
+  .home-clients__track {
+
+    animation-duration:
+      29s;
+  }
+
+}
+
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .home-clients__track {
+
+    animation:
+      none
+      !important;
+
+    transform:
+      none
+      !important;
+  }
+
+
+  .home-clients__marquee {
+
+    overflow-x:
+      auto;
+
+    scrollbar-width:
+      none;
+  }
+
+
+  .home-clients__marquee::-webkit-scrollbar {
+
+    display:
+      none;
+  }
+
+}
