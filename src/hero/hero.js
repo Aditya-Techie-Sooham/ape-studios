@@ -1,38 +1,201 @@
 /* =========================================================
    APE STUDIO — HERO
-   FINAL CLEAN VERSION
+   SMOOTH SCROLL-SCRUB VIDEO
+
+   IMPORTANT:
+   - Native mouse/touch scrolling remains untouched.
+   - Scroll only sets TARGET progress.
+   - Video smoothly follows target progress.
+   - Fast finger swipes cannot instantly skip the video.
+========================================================= */
+
+
+import gsap from "gsap";
+
+import {
+  ScrollTrigger
+} from "gsap/ScrollTrigger";
+
+
+gsap.registerPlugin(
+  ScrollTrigger
+);
+
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+
+/*
+ * First part of Hero = video.
+ * Last part = award-winning statement.
+ *
+ * 0.84 means:
+ * first 84% of Hero scroll controls the video,
+ * final 16% reveals the H1.
+ */
+
+const VIDEO_END_PROGRESS =
+  0.84;
+
+
+/*
+ * Damping controls how tightly the video follows scrolling.
+ *
+ * Higher = faster response.
+ * Lower = heavier / smoother.
+ */
+
+const DESKTOP_DAMPING =
+  10;
+
+
+const MOBILE_DAMPING =
+  5.5;
+
+
+/*
+ * Maximum catch-up speed.
+ *
+ * This is what protects us from a violent mobile swipe.
+ *
+ * Example:
+ * MOBILE_FULL_TRAVEL_SECONDS = 2.8
+ *
+ * Even if scroll jumps from 0 → 100%,
+ * video cannot visually cover its entire duration
+ * in less than roughly 2.8 seconds.
+ */
+
+const DESKTOP_FULL_TRAVEL_SECONDS =
+  1.6;
+
+
+const MOBILE_FULL_TRAVEL_SECONDS =
+  2.8;
+
+
+/*
+ * Don't hammer mobile video decoding at 60/120Hz.
+ *
+ * Desktop ≈ 60 seeks/sec
+ * Mobile ≈ 30 seeks/sec
+ */
+
+const DESKTOP_SEEK_INTERVAL =
+  16;
+
+
+const MOBILE_SEEK_INTERVAL =
+  33;
+
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function clamp(
+  value,
+  min,
+  max
+) {
+
+  return Math.min(
+    Math.max(
+      value,
+      min
+    ),
+    max
+  );
+
+}
+
+
+function smoothstep(
+  value
+) {
+
+  const t =
+    clamp(
+      value,
+      0,
+      1
+    );
+
+
+  return (
+    t *
+    t *
+    (
+      3 -
+      2 * t
+    )
+  );
+
+}
+
+
+
+/* =========================================================
+   INIT HERO
 ========================================================= */
 
 export function initHero() {
 
-  /* =======================================================
-     ELEMENTS
-  ======================================================= */
-
   const hero =
-    document.getElementById("ape-hero");
+    document.getElementById(
+      "ape-hero"
+    )
+    ||
+    document.querySelector(
+      ".ape-hero"
+    );
+
+
+  if (!hero) {
+    return;
+  }
+
+
 
   const stage =
-    document.getElementById("ape-stage");
+    hero.querySelector(
+      ".ape-hero__stage"
+    );
+
 
   const video =
-    document.getElementById("ape-video");
+    hero.querySelector(
+      ".ape-hero__video"
+    );
 
-  const hint =
-    document.getElementById("ape-hint");
 
   const dark =
-    document.getElementById("ape-hero-dark");
+    hero.querySelector(
+      ".ape-hero__dark"
+    );
+
 
   const award =
-    document.getElementById("ape-transition-award");
-
-
-  if (!hero || !stage || !video) {
-
-    console.error(
-      "[APE HERO] Missing required elements."
+    hero.querySelector(
+      ".ape-transition-award"
     );
+
+
+  const hint =
+    hero.querySelector(
+      ".ape-hero__hint"
+    );
+
+
+  if (
+    !stage
+    ||
+    !video
+  ) {
 
     return;
 
@@ -40,985 +203,228 @@ export function initHero() {
 
 
 
-  /* =======================================================
-     SETTINGS
-  ======================================================= */
+  /* =====================================================
+     IMPORTANT:
+     OLD HERO JS USED THESE CLASSES FOR MANUAL FIXING.
+     THEY ARE NOT NEEDED ANYMORE.
+  ===================================================== */
 
-  const DESKTOP_SCROLL_PER_SECOND = 420;
-
-  const MOBILE_SCROLL_PER_SECOND = 900;
-
-
-  /*
-   * Additional scroll distance after the video
-   * reaches its final frame.
-   *
-   * This space is used for:
-   *
-   * 1. Award-winning statement
-   * 2. We Don't Just Create
-   * 3. We Build What's Next
-   */
-
-  const TRANSITION_SCROLL_DISTANCE = 1550;
+  stage.classList.remove(
+    "is-fixed",
+    "is-ended"
+  );
 
 
-  /*
-   * Prevent seeking exactly to the final encoded frame.
-   */
 
-  const END_SAFETY = 0.06;
+  /* =====================================================
+     VIDEO BASICS
+  ===================================================== */
 
-
-  /*
-   * Video smoothing.
-   */
-
-  const BASE_SMOOTHING = 0.16;
-
-  const FAST_SMOOTHING = 0.34;
+  video.muted =
+    true;
 
 
-  /*
-   * Maximum currentTime movement per animation frame.
-   */
+  video.playsInline =
+    true;
 
-  const MAX_STEP = 0.12;
+
+  video.setAttribute(
+    "playsinline",
+    ""
+  );
+
+
+  video.setAttribute(
+    "webkit-playsinline",
+    ""
+  );
+
+
+  video.preload =
+    "auto";
 
 
   /*
-   * Avoid excessive video seek operations.
-   */
+   * We never allow normal playback.
+   * The scroll controls the playhead.
+  */
 
-  const SEEK_THRESHOLD = 0.022;
+  video.pause();
 
-  const MIN_SEEK_INTERVAL = 34;
 
 
-  /*
-   * Helps the video settle after scrolling stops.
-   */
+  /* =====================================================
+     REDUCED MOTION
+  ===================================================== */
 
-  const SETTLE_BOOST = 1.35;
+  const reduceMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
 
+  if (reduceMotion) {
 
-  /* =======================================================
-     STATE
-  ======================================================= */
+    if (dark) {
 
-  let duration = 25;
-
-  let videoScrollDistance = 9500;
-
-  let totalScrollDistance = 12000;
-
-  let heroTop = 0;
-
-  let ready = false;
-
-  let targetTime = 0;
-
-  let displayedTime = 0;
-
-  let rafId = null;
-
-  let scrollQueued = false;
-
-  let lastScrollY =
-    window.scrollY;
-
-  let lastScrollTime =
-    performance.now();
-
-  let scrollVelocity = 0;
-
-  let lastSeekTime = 0;
-
-  let userScrolling = false;
-
-  let scrollStopTimer = null;
-
-
-
-  /* =======================================================
-     HELPERS
-  ======================================================= */
-
-  function clamp(
-    value,
-    min,
-    max
-  ) {
-
-    return Math.min(
-      Math.max(
-        value,
-        min
-      ),
-      max
-    );
-
-  }
-
-
-
-  function smoothStep(value) {
-
-    value =
-      clamp(
-        value,
-        0,
-        1
-      );
-
-
-    return (
-      value *
-      value *
-      (3 - 2 * value)
-    );
-
-  }
-
-
-
-  function range(
-    progress,
-    start,
-    end
-  ) {
-
-    if (end === start) {
-
-      return progress >= end
-        ? 1
-        : 0;
-
-    }
-
-
-    return smoothStep(
-
-      (
-        progress -
-        start
-      )
-
-      /
-
-      (
-        end -
-        start
-      )
-
-    );
-
-  }
-
-
-
-  function isMobile() {
-
-    return (
-      window.innerWidth <= 767
-    );
-
-  }
-
-
-
-  function pixelsPerSecond() {
-
-    return isMobile()
-      ? MOBILE_SCROLL_PER_SECOND
-      : DESKTOP_SCROLL_PER_SECOND;
-
-  }
-
-
-
-  /* =======================================================
-     MEASURE
-  ======================================================= */
-
-  function measure() {
-
-    videoScrollDistance =
-      duration *
-      pixelsPerSecond();
-
-
-    totalScrollDistance =
-      videoScrollDistance +
-      TRANSITION_SCROLL_DISTANCE;
-
-
-    hero.style.height =
-      `${
-        totalScrollDistance +
-        window.innerHeight
-      }px`;
-
-
-    heroTop =
-      hero.getBoundingClientRect().top +
-      window.scrollY;
-
-  }
-
-
-
-  /* =======================================================
-     SCROLL PROGRESS
-  ======================================================= */
-
-  function getLocalScroll() {
-
-    return clamp(
-
-      window.scrollY -
-      heroTop,
-
-      0,
-
-      totalScrollDistance
-
-    );
-
-  }
-
-
-
-  function getVideoProgress() {
-
-    const local =
-      getLocalScroll();
-
-
-    return clamp(
-
-      local /
-      videoScrollDistance,
-
-      0,
-
-      1
-
-    );
-
-  }
-
-
-
-  function getTransitionProgress() {
-
-    const local =
-      getLocalScroll();
-
-
-    if (
-      local <=
-      videoScrollDistance
-    ) {
-
-      return 0;
-
-    }
-
-
-    return clamp(
-
-      (
-        local -
-        videoScrollDistance
-      )
-
-      /
-
-      TRANSITION_SCROLL_DISTANCE,
-
-      0,
-
-      1
-
-    );
-
-  }
-
-
-
-  /* =======================================================
-     PIN / RELEASE HERO
-  ======================================================= */
-
-  function updateStagePosition() {
-
-    const y =
-      window.scrollY;
-
-
-    const heroEnd =
-      heroTop +
-      totalScrollDistance;
-
-
-    /*
-     * Before Hero.
-     */
-
-    if (
-      y < heroTop
-    ) {
-
-      stage.classList.remove(
-        "is-fixed",
-        "is-ended"
-      );
-
-      return;
-
-    }
-
-
-    /*
-     * While inside Hero.
-     */
-
-    if (
-      y <= heroEnd
-    ) {
-
-      stage.classList.add(
-        "is-fixed"
-      );
-
-      stage.classList.remove(
-        "is-ended"
-      );
-
-      return;
-
-    }
-
-
-    /*
-     * After Hero.
-     */
-
-    stage.classList.remove(
-      "is-fixed"
-    );
-
-
-    stage.classList.add(
-      "is-ended"
-    );
-
-  }
-
-
-
-  /* =======================================================
-     SCROLL VELOCITY
-  ======================================================= */
-
-  function updateScrollVelocity() {
-
-    const now =
-      performance.now();
-
-
-    const currentScroll =
-      window.scrollY;
-
-
-    const deltaY =
-      currentScroll -
-      lastScrollY;
-
-
-    const deltaT =
-      Math.max(
-
-        now -
-        lastScrollTime,
-
-        1
-
-      );
-
-
-    const rawVelocity =
-      deltaY /
-      deltaT;
-
-
-    scrollVelocity =
-      scrollVelocity * 0.72 +
-      rawVelocity * 0.28;
-
-
-    lastScrollY =
-      currentScroll;
-
-
-    lastScrollTime =
-      now;
-
-  }
-
-
-
-  /* =======================================================
-     TRANSITION ELEMENT HELPER
-  ======================================================= */
-
-  function setTransitionItem(
-    element,
-    opacity,
-    offset = 24
-  ) {
-
-    if (!element) {
-      return;
-    }
-
-
-    const visibleOpacity =
-      clamp(
-        opacity,
-        0,
-        1
-      );
-
-
-    element.style.opacity =
-      String(
-        visibleOpacity
-      );
-
-
-    element.style.transform =
-      `translate(
-        -50%,
-        calc(
-          -50% +
-          ${
-            offset *
-            (1 - visibleOpacity)
-          }px
-        )
-      )`;
-
-  }
-
-
-  
-
-  /* =========================================================
-    HERO END TRANSITION
-
-    Only one statement now:
-    AWARD-WINNING CREATIVE & DIGITAL AGENCY
-  ========================================================= */
-
-  function updateTransition() {
-
-    const p =
-      getTransitionProgress();
-
-
-
-    /* =====================================================
-      DARKEN THE FINAL VIDEO FRAME
-    ===================================================== */
-
-    if (
-      dark
-    ) {
-
-      dark.style.opacity =
-        String(
-
-          range(
-            p,
-            0.02,
-            0.18
-          )
-
-          *
-
-          0.94
-
-        );
-
-    }
-
-
-
-    /* =====================================================
-      AWARD STATEMENT ENTER
-    ===================================================== */
-
-    const awardIn =
-      range(
-        p,
-        0.08,
-        0.25
-      );
-
-
-
-    /* =====================================================
-      AWARD STATEMENT EXIT
-
-      It remains fully visible through most of the
-      post-video transition.
-    ===================================================== */
-
-    const awardOut =
-      range(
-        p,
-        0.88,
-        0.98
-      );
-
-
-
-    setTransitionItem(
-
-      award,
-
-      awardIn *
-      (
-        1 -
-        awardOut
-      ),
-
-      30
-
-    );
-
-  }
-
-
-
-  /* =======================================================
-     UPDATE TARGET FROM SCROLL
-  ======================================================= */
-
-  function updateTargetFromScroll() {
-
-    if (!ready) {
-      return;
-    }
-
-
-    updateStagePosition();
-
-
-    updateScrollVelocity();
-
-
-    const progress =
-      getVideoProgress();
-
-
-    const maxTime =
-      Math.max(
-
-        0,
-
-        duration -
-        END_SAFETY
-
-      );
-
-
-    targetTime =
-      progress *
-      maxTime;
-
-
-    updateTransition();
-
-
-    /*
-     * Hide initial Scroll To Explore hint
-     * after scrolling begins.
-     */
-
-    if (hint) {
-
-      hint.style.opacity =
-        progress > 0.015
-          ? "0"
-          : "1";
-
-    }
-
-
-    userScrolling =
-      true;
-
-
-    clearTimeout(
-      scrollStopTimer
-    );
-
-
-    scrollStopTimer =
-      setTimeout(
-        () => {
-
-          userScrolling =
-            false;
-
-          startRender();
-
-        },
-        120
-      );
-
-
-    startRender();
-
-  }
-
-
-
-  /* =======================================================
-     ADAPTIVE VIDEO SMOOTHING
-  ======================================================= */
-
-  function getAdaptiveSmoothing(
-    difference
-  ) {
-
-    const distance =
-      Math.abs(
-        difference
-      );
-
-
-    let smoothing =
-
-      BASE_SMOOTHING
-
-      +
-
-      clamp(
-        distance / 2.5,
-        0,
-        1
-      )
-
-      *
-
-      (
-        FAST_SMOOTHING -
-        BASE_SMOOTHING
-      );
-
-
-    if (
-      !userScrolling
-    ) {
-
-      smoothing *=
-        SETTLE_BOOST;
-
-    }
-
-
-    /*
-     * A tiny velocity-based adjustment helps
-     * when users make larger wheel / trackpad moves.
-     */
-
-    const velocityBoost =
-      clamp(
-        Math.abs(scrollVelocity) * 0.015,
-        0,
-        0.04
-      );
-
-
-    smoothing +=
-      velocityBoost;
-
-
-    return clamp(
-      smoothing,
-      0.12,
-      0.42
-    );
-
-  }
-
-
-
-  /* =======================================================
-     RENDER VIDEO FRAME
-  ======================================================= */
-
-  function renderFrame() {
-
-    rafId =
-      null;
-
-
-    if (!ready) {
-      return;
-    }
-
-
-    const difference =
-      targetTime -
-      displayedTime;
-
-
-    const smoothing =
-      getAdaptiveSmoothing(
-        difference
-      );
-
-
-    let step =
-      difference *
-      smoothing;
-
-
-    step =
-      clamp(
-        step,
-        -MAX_STEP,
-        MAX_STEP
-      );
-
-
-    displayedTime +=
-      step;
-
-
-    /*
-     * Snap when extremely close.
-     */
-
-    if (
-      Math.abs(
-        difference
-      ) < 0.004
-    ) {
-
-      displayedTime =
-        targetTime;
-
-    }
-
-
-    const maxTime =
-      Math.max(
-
-        0,
-
-        duration -
-        END_SAFETY
-
-      );
-
-
-    displayedTime =
-      clamp(
-        displayedTime,
-        0,
-        maxTime
-      );
-
-
-    const now =
-      performance.now();
-
-
-    const seekDifference =
-      Math.abs(
-
-        video.currentTime -
-        displayedTime
-
-      );
-
-
-    /*
-     * Seek only when necessary.
-     */
-
-    if (
-      !video.seeking
-      &&
-      now -
-      lastSeekTime >=
-      MIN_SEEK_INTERVAL
-      &&
-      seekDifference >
-      SEEK_THRESHOLD
-    ) {
-
-      try {
-
-        video.currentTime =
-          displayedTime;
-
-
-        lastSeekTime =
-          now;
-
-      }
-
-      catch (error) {
-
-        /*
-         * Ignore temporary seek failures.
-         */
-
-      }
-
-    }
-
-
-
-    /*
-     * Continue rendering while video is catching up.
-     */
-
-    if (
-      Math.abs(
-        targetTime -
-        displayedTime
-      ) > 0.004
-      ||
-      video.seeking
-    ) {
-
-      rafId =
-        requestAnimationFrame(
-          renderFrame
-        );
-
-    }
-
-  }
-
-
-
-  function startRender() {
-
-    if (
-      rafId !== null
-    ) {
-
-      return;
-
-    }
-
-
-    rafId =
-      requestAnimationFrame(
-        renderFrame
-      );
-
-  }
-
-
-
-  /* =======================================================
-     SCROLL EVENT
-  ======================================================= */
-
-  window.addEventListener(
-
-    "scroll",
-
-    () => {
-
-      if (scrollQueued) {
-        return;
-      }
-
-
-      scrollQueued =
-        true;
-
-
-      requestAnimationFrame(
-        () => {
-
-          scrollQueued =
-            false;
-
-
-          updateTargetFromScroll();
-
+      gsap.set(
+        dark,
+        {
+          opacity:
+            0.72
         }
       );
 
-    },
-
-    {
-      passive: true
     }
 
-  );
+
+    if (award) {
+
+      gsap.set(
+        award,
+        {
+          opacity:
+            1,
+
+          y:
+            0
+        }
+      );
+
+    }
+
+
+    if (hint) {
+
+      gsap.set(
+        hint,
+        {
+          opacity:
+            0
+        }
+      );
+
+    }
+
+
+    return;
+
+  }
 
 
 
-  /* =======================================================
-     VIDEO SEEK COMPLETE
-  ======================================================= */
+  /* =====================================================
+     DEVICE MODE
+  ===================================================== */
 
-  video.addEventListener(
+  let isMobile =
+    window.matchMedia(
+      "(max-width: 767px)"
+    ).matches;
 
-    "seeked",
 
-    () => {
 
-      if (
-        Math.abs(
+  /* =====================================================
+     PLAYHEAD STATE
+  ===================================================== */
 
-          targetTime -
-          displayedTime
+  let targetTime =
+    0;
 
-        ) > 0.004
-      ) {
 
-        startRender();
+  let displayedTime =
+    0;
 
+
+  let targetHeroProgress =
+    0;
+
+
+  let displayedHeroProgress =
+    0;
+
+
+  let duration =
+    0;
+
+
+  let lastFrameTime =
+    performance.now();
+
+
+  let lastSeekTime =
+    0;
+
+
+  let rafId =
+    null;
+
+
+  let ready =
+    false;
+
+
+
+  /* =====================================================
+     INITIAL VISUAL STATE
+  ===================================================== */
+
+  if (dark) {
+
+    gsap.set(
+      dark,
+      {
+        opacity:
+          0
       }
+    );
 
-    }
-
-  );
-
+  }
 
 
-  /* =======================================================
-     VIDEO READY
-  ======================================================= */
+  if (award) {
 
-  function videoReady() {
+    gsap.set(
+      award,
+      {
+        opacity:
+          0,
 
-    if (ready) {
-      return;
-    }
+        y:
+          24
+      }
+    );
 
+  }
+
+
+  if (hint) {
+
+    gsap.set(
+      hint,
+      {
+        opacity:
+          1
+      }
+    );
+
+  }
+
+
+
+  /* =====================================================
+     VIDEO METADATA
+  ===================================================== */
+
+  function prepareVideo() {
 
     if (
       !Number.isFinite(
         video.duration
       )
       ||
-      video.duration <= 0
+      video.duration <=
+      0
     ) {
 
       return;
@@ -1030,148 +436,626 @@ export function initHero() {
       video.duration;
 
 
+    displayedTime =
+      clamp(
+        video.currentTime || 0,
+        0,
+        duration
+      );
+
+
+    targetTime =
+      displayedTime;
+
+
     ready =
       true;
 
 
     /*
-     * This video is controlled entirely by scroll.
+     * Helps mobile browsers display a decoded first frame.
      */
 
-    video.pause();
+    if (
+      displayedTime === 0
+    ) {
+
+      try {
+
+        video.currentTime =
+          Math.min(
+            0.01,
+            duration
+          );
+
+      }
+      catch (
+        error
+      ) {
+
+        /*
+         * Safe to ignore.
+         */
+
+      }
+
+    }
 
 
-    measure();
+    ScrollTrigger.refresh();
+
+  }
 
 
-    targetTime =
 
-      getVideoProgress()
+  if (
+    video.readyState >=
+    1
+  ) {
 
-      *
+    prepareVideo();
 
+  }
+  else {
+
+    video.addEventListener(
+      "loadedmetadata",
+      prepareVideo,
+      {
+        once:
+          true
+      }
+    );
+
+  }
+
+
+
+  /* =====================================================
+     SCROLL → TARGET
+
+     NO VIDEO SEEKING HAPPENS HERE.
+
+     This is essential.
+
+     Touch momentum is allowed to move ScrollTrigger
+     however it wants.
+
+     We only record where the user WANTS to be.
+  ===================================================== */
+
+  const heroTrigger =
+    ScrollTrigger.create({
+
+      trigger:
+        hero,
+
+      start:
+        "top top",
+
+      end:
+        "bottom bottom",
+
+      invalidateOnRefresh:
+        true,
+
+
+      onUpdate:
+        function (
+          self
+        ) {
+
+          targetHeroProgress =
+            clamp(
+              self.progress,
+              0,
+              1
+            );
+
+
+          /*
+           * Only first 84% controls video.
+          */
+
+          const videoProgress =
+            clamp(
+
+              targetHeroProgress
+              /
+              VIDEO_END_PROGRESS,
+
+              0,
+
+              1
+
+            );
+
+
+          if (
+            duration >
+            0
+          ) {
+
+            targetTime =
+              videoProgress
+              *
+              duration;
+
+          }
+
+        }
+
+    });
+
+
+
+  /* =====================================================
+     SMOOTH VIDEO ENGINE
+
+     This runs independently from scroll events.
+
+     Different mouse-wheel speed,
+     trackpad speed,
+     touch momentum,
+     60Hz screen,
+     120Hz screen...
+
+     all get normalized here.
+  ===================================================== */
+
+  function tick(
+    now
+  ) {
+
+    const rawDelta =
       (
-        duration -
-        END_SAFETY
-      );
-
-
-    displayedTime =
-      targetTime;
+        now -
+        lastFrameTime
+      )
+      /
+      1000;
 
 
     /*
-     * Prepare initial visible frame.
-     */
+     * Prevent giant delta after tab switching etc.
+    */
 
-    try {
-
-      video.currentTime =
-        Math.max(
-          0.03,
-          targetTime
-        );
-
-    }
-
-    catch (error) {
-
-      /*
-       * Ignore browser-specific initial seek failure.
-       */
-
-    }
-
-
-    updateTargetFromScroll();
-
-  }
-
-
-
-  video.addEventListener(
-    "loadedmetadata",
-    videoReady
-  );
-
-
-  video.addEventListener(
-    "loadeddata",
-    videoReady
-  );
-
-
-  video.addEventListener(
-    "canplay",
-    videoReady
-  );
-
-
-
-  /* =======================================================
-     RESIZE
-  ======================================================= */
-
-  let resizeTimer;
-
-
-  window.addEventListener(
-
-    "resize",
-
-    () => {
-
-      clearTimeout(
-        resizeTimer
+    const delta =
+      Math.min(
+        rawDelta,
+        0.05
       );
 
 
-      resizeTimer =
-        setTimeout(
-          () => {
-
-            if (!ready) {
-              return;
-            }
+    lastFrameTime =
+      now;
 
 
-            measure();
+
+    const damping =
+      isMobile
+        ? MOBILE_DAMPING
+        : DESKTOP_DAMPING;
 
 
-            updateTargetFromScroll();
 
-          },
-          160
+    /*
+     * Frame-rate-independent exponential damping.
+     */
+
+    const smoothing =
+      1 -
+      Math.exp(
+        -damping
+        *
+        delta
+      );
+
+
+
+    /* ===================================================
+       SMOOTH HERO PROGRESS
+    =================================================== */
+
+    displayedHeroProgress +=
+      (
+        targetHeroProgress -
+        displayedHeroProgress
+      )
+      *
+      smoothing;
+
+
+
+    /* ===================================================
+       SMOOTH VIDEO TIME
+    =================================================== */
+
+    if (
+      ready
+      &&
+      duration >
+      0
+    ) {
+
+      const difference =
+        targetTime -
+        displayedTime;
+
+
+
+      let desiredMovement =
+        difference
+        *
+        smoothing;
+
+
+
+      /*
+       * HARD PROTECTION AGAINST FAST MOBILE SWIPES.
+       *
+       * Limit the amount of video-time that may
+       * move during this real-world frame.
+      */
+
+      const fullTravelSeconds =
+        isMobile
+          ? MOBILE_FULL_TRAVEL_SECONDS
+          : DESKTOP_FULL_TRAVEL_SECONDS;
+
+
+
+      const maxVideoSecondsPerSecond =
+        duration
+        /
+        fullTravelSeconds;
+
+
+
+      const maxMovement =
+        maxVideoSecondsPerSecond
+        *
+        delta;
+
+
+
+      desiredMovement =
+        clamp(
+
+          desiredMovement,
+
+          -maxMovement,
+
+          maxMovement
+
+        );
+
+
+
+      displayedTime +=
+        desiredMovement;
+
+
+
+      displayedTime =
+        clamp(
+          displayedTime,
+          0,
+          duration
+        );
+
+
+
+      /* =================================================
+         SEEK THROTTLING
+
+         Mobile gets ≈30 currentTime updates / second.
+
+         This avoids flooding the decoder.
+      ================================================= */
+
+      const seekInterval =
+        isMobile
+          ? MOBILE_SEEK_INTERVAL
+          : DESKTOP_SEEK_INTERVAL;
+
+
+
+      if (
+        (
+          now -
+          lastSeekTime
+        )
+        >=
+        seekInterval
+      ) {
+
+        /*
+         * Don't perform useless microscopic seeks.
+        */
+
+        if (
+          Math.abs(
+            video.currentTime -
+            displayedTime
+          )
+          >
+          0.012
+        ) {
+
+          try {
+
+            video.currentTime =
+              displayedTime;
+
+          }
+          catch (
+            error
+          ) {
+
+            /*
+             * Browser may temporarily reject a seek
+             * while metadata/decode state changes.
+             * Next frame will retry.
+            */
+
+          }
+
+        }
+
+
+        lastSeekTime =
+          now;
+
+      }
+
+    }
+
+
+
+    /* ===================================================
+       FINAL TRANSITION
+
+       Last 16% of Hero.
+    =================================================== */
+
+    const transitionProgress =
+      clamp(
+
+        (
+          displayedHeroProgress -
+          VIDEO_END_PROGRESS
+        )
+        /
+        (
+          1 -
+          VIDEO_END_PROGRESS
+        ),
+
+        0,
+
+        1
+
+      );
+
+
+    const easedTransition =
+      smoothstep(
+        transitionProgress
+      );
+
+
+
+    /* ===================================================
+       DARKEN VIDEO
+    =================================================== */
+
+    if (dark) {
+
+      dark.style.opacity =
+        String(
+          easedTransition
+          *
+          0.92
         );
 
     }
 
+
+
+    /* ===================================================
+       AWARD-WINNING H1
+    =================================================== */
+
+    if (award) {
+
+      /*
+       * Starts slightly after the dark fade begins.
+      */
+
+      const awardProgress =
+        smoothstep(
+
+          clamp(
+
+            (
+              transitionProgress -
+              0.12
+            )
+            /
+            0.58,
+
+            0,
+
+            1
+
+          )
+
+        );
+
+
+      award.style.opacity =
+        String(
+          awardProgress
+        );
+
+
+      award.style.transform =
+        `translate(
+          -50%,
+          calc(
+            -50% +
+            ${
+              (
+                1 -
+                awardProgress
+              )
+              *
+              26
+            }px
+          )
+        )`;
+
+    }
+
+
+
+    /* ===================================================
+       SCROLL HINT
+    =================================================== */
+
+    if (hint) {
+
+      const hintOpacity =
+        clamp(
+
+          1 -
+          displayedHeroProgress
+          *
+          7,
+
+          0,
+
+          1
+
+        );
+
+
+      hint.style.opacity =
+        String(
+          hintOpacity
+        );
+
+    }
+
+
+
+    rafId =
+      requestAnimationFrame(
+        tick
+      );
+
+  }
+
+
+
+  rafId =
+    requestAnimationFrame(
+      tick
+    );
+
+
+
+  /* =====================================================
+     RESIZE / ROTATION
+  ===================================================== */
+
+  function handleResize() {
+
+    isMobile =
+      window.matchMedia(
+        "(max-width: 767px)"
+      ).matches;
+
+
+    ScrollTrigger.refresh();
+
+  }
+
+
+
+  window.addEventListener(
+    "resize",
+    handleResize,
+    {
+      passive:
+        true
+    }
   );
 
 
 
-  /* =======================================================
-     INITIAL LOAD
-  ======================================================= */
+  window.addEventListener(
+    "orientationchange",
+    function () {
 
-  if (
-    video.readyState >= 1
-    &&
-    Number.isFinite(
-      video.duration
-    )
-    &&
-    video.duration > 0
-  ) {
+      window.setTimeout(
+        handleResize,
+        250
+      );
 
-    videoReady();
+    }
+  );
 
-  }
 
-  else {
 
-    video.load();
+  /* =====================================================
+     PAGE VISIBILITY
 
-  }
+     Avoid huge timing jump when returning to tab.
+  ===================================================== */
+
+  document.addEventListener(
+    "visibilitychange",
+    function () {
+
+      if (
+        !document.hidden
+      ) {
+
+        lastFrameTime =
+          performance.now();
+
+      }
+
+    }
+  );
+
+
+
+  /* =====================================================
+     CLEANUP SUPPORT
+  ===================================================== */
+
+  return function destroyHero() {
+
+    heroTrigger.kill();
+
+
+    if (rafId) {
+
+      cancelAnimationFrame(
+        rafId
+      );
+
+    }
+
+
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+
+  };
 
 }
