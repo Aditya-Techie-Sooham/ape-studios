@@ -60,7 +60,7 @@ const VIDEO_END_PROGRESS =
  * about 4.5 seconds of active dragging.
  */
 const MOBILE_MAX_PROGRESS_PER_SECOND =
-  0.22;
+  0.26;
 
 
 /*
