@@ -1,21 +1,10 @@
 /* =========================================================
    APE STUDIO — HERO
-   FINAL SCROLL-SCRUB STRUCTURE
-
-   IMPORTANT:
-   GSAP ScrollTrigger controls the pin.
-
-   DO NOT put:
-   position: sticky
-   position: fixed
-   or position !important
-
-   on .ape-hero__stage.
 ========================================================= */
 
 
 /* =========================================================
-   HERO SCROLL DISTANCE
+   HERO SCROLL AREA
 ========================================================= */
 
 .ape-hero {
@@ -31,25 +20,17 @@
 
   background: #000000;
 
-  /*
-   * The pinned child must not be clipped.
-   */
   overflow: visible;
 
-  /*
-   * Keep native vertical touch scrolling.
-   */
   touch-action: pan-y;
 }
 
 
 /* =========================================================
-   VIDEO STAGE
+   STAGE
 
-   THIS MUST REMAIN RELATIVE.
-
-   ScrollTrigger temporarily changes its position
-   while it is pinned.
+   GSAP controls pinning.
+   DO NOT make this sticky in CSS.
 ========================================================= */
 
 .ape-hero__stage {
@@ -74,7 +55,7 @@
 
 
 /* =========================================================
-   VIDEO
+   DESKTOP VIDEO
 ========================================================= */
 
 .ape-hero__video {
@@ -82,15 +63,13 @@
 
   inset: 0;
 
+  z-index: 0;
+
   display: block;
 
   width: 100%;
 
   height: 100%;
-
-  margin: 0;
-
-  padding: 0;
 
   object-fit: cover;
 
@@ -104,16 +83,59 @@
 
   -webkit-user-select: none;
 
-  backface-visibility: hidden;
-
-  -webkit-backface-visibility: hidden;
-
   transform: translateZ(0);
+
+  backface-visibility: hidden;
 }
 
 
 /* =========================================================
-   DARK TRANSITION
+   MOBILE CANVAS
+
+   Created automatically by hero.js.
+========================================================= */
+
+.ape-hero__canvas {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  opacity: 0;
+
+  background: #000000;
+
+  pointer-events: none;
+
+  transform: translateZ(0);
+
+  backface-visibility: hidden;
+
+  transition: opacity 0.15s linear;
+}
+
+
+.ape-hero__canvas.is-ready {
+  opacity: 1;
+}
+
+
+.ape-hero__video.is-mobile-sequence-hidden {
+  visibility: hidden;
+
+  opacity: 0;
+}
+
+
+/* =========================================================
+   DARK OVERLAY
 ========================================================= */
 
 .ape-hero__dark {
@@ -140,7 +162,7 @@
 
 
 /* =========================================================
-   TRANSITION LAYER
+   TRANSITION
 ========================================================= */
 
 .ape-hero__transition {
@@ -159,12 +181,9 @@
 
 
 /* =========================================================
-   CURRENT AWARD WRAPPER
+   EXISTING AWARD / FINAL HERO CONTENT
 
-   Your current index.html uses:
-   #ape-transition-award
-   .ape-transition-item
-   .ape-transition-award
+   We are NOT redesigning this now.
 ========================================================= */
 
 .ape-transition-item {
@@ -174,31 +193,24 @@
 
   top: 50%;
 
-  width: min(1500px, 92vw);
+  width: min(
+    1500px,
+    92vw
+  );
 
   margin: 0;
 
   opacity: 0;
 
   transform:
-    translate3d(
+    translate(
       -50%,
-      calc(-50% + 26px),
-      0
+      -50%
     );
 
-  will-change:
-    opacity,
-    transform;
+  will-change: opacity;
 }
 
-
-/* =========================================================
-   CURRENT AWARD LAYOUT
-
-   Kept functional.
-   We are not redesigning this section now.
-========================================================= */
 
 .ape-transition-award {
   display: grid;
@@ -209,11 +221,12 @@
 
   align-items: center;
 
-  gap: clamp(
-    30px,
-    5vw,
-    80px
-  );
+  gap:
+    clamp(
+      30px,
+      5vw,
+      80px
+    );
 }
 
 
@@ -271,8 +284,6 @@
     );
 
   margin: 0;
-
-  padding: 0;
 }
 
 
@@ -346,7 +357,7 @@
   (max-width: 1100px) {
 
   .ape-hero {
-    height: 750svh;
+    height: 800svh;
   }
 
 
@@ -374,27 +385,16 @@
       );
   }
 
-
-  .ape-transition-award__visual {
-    width:
-      clamp(
-        140px,
-        17vw,
-        220px
-      );
-  }
-
 }
 
 
 /* =========================================================
    MOBILE
 
-   900svh total Hero height means approximately
-   800svh of actual pinned scrolling because the final
-   viewport-height is occupied by the stage itself.
+   900svh = 9 viewport heights total.
 
-   This deliberately gives touch momentum more room.
+   GSAP pins the 100svh Hero stage and the page
+   supplies ~8 viewports worth of scrolling.
 ========================================================= */
 
 @media
@@ -409,27 +409,16 @@
     width: 100%;
 
     height: 100svh;
-
-    overflow: hidden;
   }
 
 
-  .ape-hero__video {
+  .ape-hero__video,
+  .ape-hero__canvas {
     width: 100%;
 
     height: 100%;
-
-    object-fit: cover;
-
-    object-position: center center;
   }
 
-
-  /* =====================================================
-     CURRENT TRANSITION CONTENT
-
-     Keeping existing markup usable.
-  ===================================================== */
 
   .ape-transition-item {
     width:
@@ -442,10 +431,7 @@
 
   .ape-transition-award {
     grid-template-columns:
-      minmax(
-        0,
-        1fr
-      );
+      minmax(0, 1fr);
 
     justify-items: center;
 
@@ -524,18 +510,6 @@
         11vw,
         44px
       );
-
-    line-height: 0.9;
-  }
-
-
-  .ape-transition-award__visual {
-    width: 96px;
-  }
-
-
-  .ape-hero__hint {
-    font-size: 6px;
   }
 
 }
@@ -550,25 +524,6 @@
 
   .ape-hero {
     height: 650vh;
-  }
-
-
-  .ape-transition-award {
-    width:
-      min(
-        1600px,
-        90vw
-      );
-  }
-
-
-  .ape-transition-award__title {
-    font-size:
-      clamp(
-        115px,
-        7.6vw,
-        155px
-      );
   }
 
 }
@@ -587,8 +542,6 @@
 
 
   .ape-hero__stage {
-    position: relative;
-
     height: 100svh;
   }
 
