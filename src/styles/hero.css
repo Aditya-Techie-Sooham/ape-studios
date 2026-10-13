@@ -4,7 +4,7 @@
 
 
 /* =========================================================
-   HERO SCROLL AREA
+   DESKTOP HERO
 ========================================================= */
 
 .ape-hero {
@@ -18,19 +18,14 @@
 
   padding: 0;
 
-  background: #000000;
-
   overflow: visible;
 
-  touch-action: pan-y;
+  background: #000000;
 }
 
 
 /* =========================================================
-   STAGE
-
-   GSAP controls pinning.
-   DO NOT make this sticky in CSS.
+   HERO STAGE
 ========================================================= */
 
 .ape-hero__stage {
@@ -49,13 +44,11 @@
   background: #000000;
 
   z-index: 10;
-
-  touch-action: pan-y;
 }
 
 
 /* =========================================================
-   DESKTOP VIDEO
+   VIDEO
 ========================================================= */
 
 .ape-hero__video {
@@ -91,8 +84,6 @@
 
 /* =========================================================
    MOBILE CANVAS
-
-   Created automatically by hero.js.
 ========================================================= */
 
 .ape-hero__canvas {
@@ -117,8 +108,6 @@
   transform: translateZ(0);
 
   backface-visibility: hidden;
-
-  transition: opacity 0.15s linear;
 }
 
 
@@ -180,12 +169,6 @@
 }
 
 
-/* =========================================================
-   EXISTING AWARD / FINAL HERO CONTENT
-
-   We are NOT redesigning this now.
-========================================================= */
-
 .ape-transition-item {
   position: absolute;
 
@@ -212,6 +195,11 @@
 }
 
 
+/* =========================================================
+   EXISTING AWARD CONTENT
+   NOT REDESIGNING THIS NOW
+========================================================= */
+
 .ape-transition-award {
   display: grid;
 
@@ -237,8 +225,6 @@
 
 .ape-transition-award__title {
   margin: 0;
-
-  padding: 0;
 
   color: #ffffff;
 
@@ -333,8 +319,6 @@
 
   font-weight: 600;
 
-  line-height: 1;
-
   letter-spacing: 0.20em;
 
   text-transform: uppercase;
@@ -342,8 +326,6 @@
   white-space: nowrap;
 
   pointer-events: none;
-
-  will-change: opacity;
 }
 
 
@@ -352,71 +334,134 @@
 ========================================================= */
 
 @media
-  (min-width: 768px)
+  (min-width: 901px)
   and
   (max-width: 1100px) {
 
   .ape-hero {
-    height: 800svh;
-  }
-
-
-  .ape-hero__stage {
-    height: 100svh;
-  }
-
-
-  .ape-transition-award {
-    width: min(
-      1000px,
-      90vw
-    );
-
-    gap: 30px;
-  }
-
-
-  .ape-transition-award__title {
-    font-size:
-      clamp(
-        54px,
-        8vw,
-        90px
-      );
+    height: 750vh;
   }
 
 }
 
 
 /* =========================================================
-   MOBILE
+   MOBILE / TOUCH
 
-   900svh = 9 viewport heights total.
+   VERY IMPORTANT:
 
-   GSAP pins the 100svh Hero stage and the page
-   supplies ~8 viewports worth of scrolling.
+   The Hero is now ONE viewport only.
+
+   It is NOT 900svh anymore.
+
+   We create animation distance virtually in JavaScript.
 ========================================================= */
 
 @media
-  (max-width: 767px) {
+  (max-width: 900px),
+  (pointer: coarse) {
 
   .ape-hero {
-    height: 900svh;
+    width: 100%;
+
+    height: 100vh;
+
+    height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    min-height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    max-height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    overflow: hidden;
+
+    background: #000000;
   }
 
 
   .ape-hero__stage {
+    position: relative;
+
     width: 100%;
 
-    height: 100svh;
+    height: 100vh;
+
+    height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    min-height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    max-height:
+      var(
+        --ape-mobile-hero-height,
+        100svh
+      );
+
+    overflow: hidden;
+
+    background: #000000;
+  }
+
+
+  /*
+   * Normal state:
+   * browser may vertically scroll.
+   */
+
+  .ape-hero__stage {
+    touch-action:
+      pan-y
+      pinch-zoom;
+  }
+
+
+  /*
+   * HERO ACTIVE:
+   *
+   * disable native vertical panning.
+   *
+   * We still allow:
+   * - horizontal gestures
+   * - pinch zoom
+   */
+
+  .ape-hero.is-gesture-locked
+  .ape-hero__stage {
+
+    touch-action:
+      pan-x
+      pinch-zoom;
+
+    overscroll-behavior:
+      none;
   }
 
 
   .ape-hero__video,
   .ape-hero__canvas {
+
     width: 100%;
 
     height: 100%;
+
   }
 
 
@@ -483,16 +528,31 @@
 
 
 /* =========================================================
-   SMALL PHONES
+   PAGE LOCK WHILE MOBILE HERO IS PLAYING
+
+   THIS IS ESSENTIAL.
+
+   Native document momentum cannot move the page.
+========================================================= */
+
+html.ape-hero-gesture-lock,
+body.ape-hero-gesture-lock {
+
+  overflow:
+    hidden !important;
+
+  overscroll-behavior:
+    none !important;
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
 ========================================================= */
 
 @media
   (max-width: 374px) {
-
-  .ape-hero {
-    height: 950svh;
-  }
-
 
   .ape-transition-item {
     width:
