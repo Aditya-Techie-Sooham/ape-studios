@@ -1,10 +1,90 @@
+/* =========================================================
+   APE STUDIO — GLOBAL ENTRY
+========================================================= */
+
+/*
+ * Primary typeface for the refreshed APE experience.
+ *
+ * Later, if we want maximum performance, we can self-host
+ * the font rather than loading it from Google.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:opsz,wght@14..32,400;500;600;700;800;900&display=swap");
+
+
+/* =========================================================
+   CORE
+========================================================= */
+
 @import "./styles/variables.css";
 @import "./styles/reset.css";
+
+
+/* =========================================================
+   GLOBAL COMPONENTS
+========================================================= */
 
 @import "./styles/hero.css";
 @import "./styles/header.css";
 
+
+/* =========================================================
+   HOME
+========================================================= */
+
 @import "./styles/home.css";
 
 
+/* =========================================================
+   FOOTER
+========================================================= */
+
 @import "./styles/footer.css";
+
+
+/* =========================================================
+   APE DESIGN TOKENS
+========================================================= */
+
+:root {
+  --ape-black: #000000;
+  --ape-violet: #7d35eb;
+  --ape-lime: #c6ff33;
+  --ape-white: #ffffff;
+
+  --ape-font:
+    "Inter Tight",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   HOME TYPOGRAPHY
+========================================================= */
+
+.ape-hero,
+.home {
+  font-family: var(--ape-font);
+}
+
+
+/* =========================================================
+   QUALITY
+========================================================= */
+
+html {
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+}
+
+
+body {
+  overflow-x: hidden;
+}

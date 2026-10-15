@@ -58,7 +58,10 @@
         aria-label="Primary navigation"
       >
 
-        <a href="/" class="is-active">
+        <a
+          href="/"
+          class="is-active"
+        >
           Home
         </a>
 
@@ -121,7 +124,10 @@
     </div>
 
 
-    <!-- MOBILE MENU -->
+
+    <!-- ===================================================
+         MOBILE MENU
+    ==================================================== -->
 
     <div
       id="site-mobile-menu"
@@ -213,110 +219,103 @@
     class="ape-hero"
   >
 
+
+    <!-- BACKGROUND -->
+
     <div
-      id="ape-stage"
-      class="ape-hero__stage"
+      class="ape-hero__backdrop"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- REAR FRAME -->
+
+    <div
+      class="ape-hero__frame ape-hero__frame--back"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- THREE.JS / WEBGL -->
+
+    <div
+      id="ape-hero-webgl"
+      class="ape-hero__webgl"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- FALLBACK IMAGE -->
+
+    <img
+      class="ape-hero__fallback"
+      src="/work/babumoshai/01.jpg"
+      alt=""
+      aria-hidden="true"
     >
 
-      <video
-        id="ape-video"
-        class="ape-hero__video"
-        muted
-        playsinline
-        preload="auto"
+
+    <!-- HERO COPY -->
+
+    <div class="ape-hero__copy">
+
+      <h1 class="ape-hero__title">
+
+        <span>
+          IDEAS
+        </span>
+
+        <span class="is-violet">
+          SHOULDN'T
+        </span>
+
+        <span>
+          SIT STILL.
+        </span>
+
+      </h1>
+
+
+      <a
+        href="/work/"
+        class="ape-hero__action"
       >
 
-        <source
-          src="/videos/apenew-scrub.mp4"
-          type="video/mp4"
-        >
+        EXPLORE WORK
 
-      </video>
+        <i aria-hidden="true">
+          ↗
+        </i>
 
-
-      <div
-        id="ape-hero-dark"
-        class="ape-hero__dark"
-        aria-hidden="true"
-      ></div>
-
-
-      <!-- =====================================================
-          FINAL HERO STATEMENT
-      ====================================================== -->
-
-      <div
-        id="ape-hero-transition"
-        class="ape-hero__transition"
-      >
-
-        <div
-          id="ape-transition-award"
-          class="ape-transition-item ape-transition-award"
-        >
-
-
-          <!-- MAIN H1 -->
-
-          <div class="ape-transition-award__copy">
-
-            <h1 class="ape-transition-award__title">
-
-              <span>
-                AWARD-WINNING
-              </span>
-
-              <span class="ape-transition-award__accent">
-                CREATIVE &amp; DIGITAL
-              </span>
-
-              <span>
-                AGENCY
-              </span>
-
-            </h1>
-
-          </div>
-
-
-
-          <!-- AWARD IMAGE -->
-
-          <figure class="ape-transition-award__visual">
-
-            <img
-              src="/images/home/awardhero.png"
-              alt="Times Brand Icons 2026 recognition for APE Studio"
-              loading="eager"
-              decoding="async"
-            >
-
-          </figure>
-
-
-        </div>
-
-      </div>
-
-
-      <div
-        id="ape-hint"
-        class="ape-hero__hint"
-      >
-        SCROLL TO EXPLORE
-      </div>
+      </a>
 
     </div>
+
+
+    <!-- PROJECT INDICATOR -->
+
+    <div
+      class="ape-hero__project-dots"
+      aria-hidden="true"
+    >
+
+      <span class="is-active"></span>
+
+      <span></span>
+
+      <span></span>
+
+      <span></span>
+
+    </div>
+
 
   </section>
 
 
 
-
-
-
   <!-- =====================================================
-      HOME PROJECT POPUP
+       HOME PROJECT POPUP
   ====================================================== -->
 
   <div
@@ -332,7 +331,6 @@
       class="home-project-popup__backdrop"
       data-popup-close
     ></div>
-
 
 
     <!-- DIALOG -->
@@ -358,7 +356,6 @@
       ></div>
 
 
-
       <!-- CLOSE -->
 
       <button
@@ -370,17 +367,14 @@
       >
 
         <span></span>
-
         <span></span>
 
       </button>
 
 
-
       <!-- CONTENT -->
 
       <div class="home-project-popup__content">
-
 
         <p class="home-project-popup__eyebrow">
           HAVE AN IDEA?
@@ -408,9 +402,6 @@
 
         </p>
 
-
-
-        <!-- ACTIONS -->
 
         <div class="home-project-popup__actions">
 
@@ -442,9 +433,7 @@
 
         </div>
 
-
       </div>
-
 
 
       <!-- LARGE BACKGROUND WORD -->
@@ -458,7 +447,6 @@
 
 
     </div>
-
 
   </div>
 
@@ -474,78 +462,66 @@
   >
 
 
+
     <!-- =====================================================
-         01 — WHO ARE WE
+         01 — WHO
     ====================================================== -->
 
     <section
       id="home-who"
-      class="home-who"
+      class="home-scene home-who"
     >
 
-      <div class="home-who__inner">
+      <div class="home-scene__stage home-who__stage">
 
 
-        <div class="home-who__content">
+        <!-- COPY -->
 
-          <p class="home-who__eyebrow">
-            WHO ARE WE?
-          </p>
+        <div class="home-who__copy">
 
-
-          <h2>
-
-            WE BUILD BRANDS
+          <h2 class="home-who__title">
 
             <span>
-              THAT GET NOTICED,
+              WE BUILD
             </span>
 
-            <span class="home-who__accent">
+            <span>
+              BRANDS THAT
+            </span>
+
+            <span class="is-violet">
+              GET NOTICED,
+            </span>
+
+            <span>
               REMEMBERED
             </span>
 
-            <span>
-              & CHOSEN.
+            <span class="is-outline">
+              &amp; CHOSEN.
             </span>
 
           </h2>
 
 
-          <p class="home-who__description">
-            APE Studio is a creative and digital marketing agency
-            in Kolkata helping ambitious brands build stronger
-            identities, sharper digital presence and meaningful
-            connections with their audiences.
-          </p>
+          <div class="home-who__body">
 
+            <p>
 
-          <div class="home-who__actions">
+              APE Studio is a creative and digital marketing agency
+              in Kolkata helping ambitious brands build stronger
+              identities, sharper digital presence and meaningful
+              connections with their audiences.
+
+            </p>
+
 
             <a
               href="/about/"
-              class="home-button home-button--primary"
+              class="home-action"
             >
 
-              <span>
-                ABOUT APE
-              </span>
-
-              <i aria-hidden="true">
-                ↗
-              </i>
-
-            </a>
-
-
-            <a
-              href="/work/"
-              class="home-button home-button--secondary"
-            >
-
-              <span>
-                VIEW OUR WORK
-              </span>
+              ABOUT APE
 
               <i aria-hidden="true">
                 ↗
@@ -558,7 +534,17 @@
         </div>
 
 
+
+        <!-- VISUAL -->
+
         <div class="home-who__visual">
+
+
+          <div
+            class="home-who__rear"
+            aria-hidden="true"
+          ></div>
+
 
           <figure class="home-who__image">
 
@@ -571,7 +557,15 @@
 
           </figure>
 
+
+          <div
+            class="home-who__disc"
+            aria-hidden="true"
+          ></div>
+
+
         </div>
+
 
       </div>
 
@@ -580,361 +574,464 @@
 
 
     <!-- =====================================================
-         02 — SERVICES MARQUEE
-         NO TOP HEADER ROW
+         02 — SERVICES
     ====================================================== -->
 
     <section
-      id="home-services-strip"
-      class="home-services-strip"
-      aria-label="APE Studio services"
+      id="home-services"
+      class="home-scene home-services"
     >
 
-      <a
-        href="/services/"
-        class="home-services-strip__marquee"
-        aria-label="Explore all APE Studio services"
-      >
+      <div class="home-scene__stage home-services__stage">
 
-        <div class="home-services-strip__track">
 
 
-          <span>
-            SOCIAL MEDIA MARKETING
-          </span>
+        <!-- LEFT -->
 
-          <i aria-hidden="true">✦</i>
+        <div class="home-services__left">
 
 
-          <span>
-            PERFORMANCE MARKETING
-          </span>
+          <h2 class="home-services__title">
 
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            DIGITAL MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            WEBSITE DEVELOPMENT
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            PACKAGING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            BRANDING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            INFLUENCER MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span>
-            REELS & MOTION GRAPHICS
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-
-          <!-- DUPLICATE FOR LOOP -->
-
-          <span aria-hidden="true">
-            SOCIAL MEDIA MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            PERFORMANCE MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            DIGITAL MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            WEBSITE DEVELOPMENT
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            PACKAGING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            BRANDING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            INFLUENCER MARKETING
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-          <span aria-hidden="true">
-            REELS & MOTION GRAPHICS
-          </span>
-
-          <i aria-hidden="true">✦</i>
-
-
-        </div>
-
-      </a>
-
-    </section>
-
-
-
-    
-
-
-
-    <!-- =====================================================
-         04 — WHAT WE'VE DONE
-    ====================================================== -->
-
-    <section
-      id="home-work"
-      class="home-work-new"
-    >
-
-      <div class="home-work-new__inner">
-
-
-        <header class="home-work-new__header">
-
-          <div>
-
-            <p>
-              WHAT WE'VE DONE
-            </p>
-
-
-            <h2>
-
-              IDEAS ARE BETTER
-
-              <span>
-                WHEN YOU CAN SEE THEM.
-              </span>
-
-            </h2>
-
-          </div>
-
-
-          <a href="/work/">
-            VIEW ALL WORK ↗
-          </a>
-
-        </header>
-
-
-
-        <div class="home-work-new__grid">
-
-
-          <!-- PROJECT 01 -->
-
-          <a
-            href="/work/"
-            class="home-work-new__project home-work-new__project--large"
-          >
-
-            <figure>
-
-              <img
-                src="/images/home/work-01.jpg"
-                alt="APE Studio branding project"
-                loading="lazy"
-                decoding="async"
-              >
-
-            </figure>
-
-
-            <div class="home-work-new__project-info">
-
-              <span>
-                BRANDING / CAMPAIGN
-              </span>
-
-              <h3>
-                SELECTED PROJECT 01
-              </h3>
-
-            </div>
-
-          </a>
-
-
-
-          <!-- PROJECT 02 -->
-
-          <a
-            href="/work/"
-            class="home-work-new__project"
-          >
-
-            <figure>
-
-              <img
-                src="/images/home/work-02.jpg"
-                alt="APE Studio digital marketing project"
-                loading="lazy"
-                decoding="async"
-              >
-
-            </figure>
-
-
-            <div class="home-work-new__project-info">
-
-              <span>
-                DIGITAL / PERFORMANCE
-              </span>
-
-              <h3>
-                SELECTED PROJECT 02
-              </h3>
-
-            </div>
-
-          </a>
-
-
-
-          <!-- PROJECT 03 -->
-
-          <a
-            href="/work/"
-            class="home-work-new__project"
-          >
-
-            <figure>
-
-              <img
-                src="/images/home/work-03.jpg"
-                alt="APE Studio film and motion project"
-                loading="lazy"
-                decoding="async"
-              >
-
-            </figure>
-
-
-            <div class="home-work-new__project-info">
-
-              <span>
-                FILM / MOTION
-              </span>
-
-              <h3>
-                SELECTED PROJECT 03
-              </h3>
-
-            </div>
-
-          </a>
-
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         05 — WHO WE WORK WITH
-    ====================================================== -->
-
-    <section
-      id="home-clients"
-      class="home-clients"
-    >
-
-      <div class="home-clients__inner">
-
-
-        <div class="home-clients__heading">
-
-          <p>
-            WHO WE WORK WITH
-          </p>
-
-
-          <h2>
-
-            BRANDS THAT
+            WHAT
 
             <span>
-              TRUST APE.
+              WE DO.
             </span>
 
           </h2>
 
+
+
+          <nav
+            class="home-services__list"
+            aria-label="APE Studio services"
+          >
+
+
+            <!-- DIGITAL MARKETING -->
+
+            <a
+              href="/services/digital-marketing/"
+              class="home-service is-active"
+              data-service="0"
+            >
+
+              <h3>
+                DIGITAL MARKETING
+              </h3>
+
+              <i aria-hidden="true">
+                ↗
+              </i>
+
+            </a>
+
+
+            <!-- PRINTABLES -->
+
+            <a
+              href="/services/printables/"
+              class="home-service"
+              data-service="1"
+            >
+
+              <h3>
+                PRINTABLES
+              </h3>
+
+              <i aria-hidden="true">
+                ↗
+              </i>
+
+            </a>
+
+
+            <!-- BRANDING -->
+
+            <a
+              href="/services/branding/"
+              class="home-service"
+              data-service="2"
+            >
+
+              <h3>
+                BRANDING
+              </h3>
+
+              <i aria-hidden="true">
+                ↗
+              </i>
+
+            </a>
+
+
+            <!-- INFLUENCER -->
+
+            <a
+              href="/services/influencer-marketing/"
+              class="home-service"
+              data-service="3"
+            >
+
+              <h3>
+                INFLUENCER MARKETING
+              </h3>
+
+              <i aria-hidden="true">
+                ↗
+              </i>
+
+            </a>
+
+
+            <!-- VISUAL -->
+
+            <a
+              href="/services/visual-studio/"
+              class="home-service"
+              data-service="4"
+            >
+
+              <h3>
+                VISUAL STUDIO
+              </h3>
+
+              <i aria-hidden="true">
+                ↗
+              </i>
+
+            </a>
+
+
+          </nav>
+
         </div>
 
 
 
-        <!-- =====================================================
-            TWO ROW CLIENT MARQUEE
-        ====================================================== -->
+        <!-- RIGHT VISUAL -->
 
-        <div class="home-clients__logos">
+        <div class="home-services__visual">
 
-
-          <!-- ===================================================
-              ROW 01 — LEFT TO RIGHT
-          ==================================================== -->
 
           <div
-            class="home-clients__marquee home-clients__marquee--forward"
+            class="home-services__back-shape"
+            aria-hidden="true"
+          ></div>
+
+
+
+          <!-- DIGITAL -->
+
+          <figure
+            class="home-service-image is-active"
+            data-image="0"
           >
 
-            <div class="home-clients__track">
+            <img
+              src="/images/services/digital-marketing/social-media-01.jpg"
+              alt="APE Studio digital marketing work"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </figure>
 
 
-              <div class="home-clients__group">
+
+          <!-- PRINTABLES -->
+
+          <figure
+            class="home-service-image"
+            data-image="1"
+          >
+
+            <img
+              src="/images/services/printables/packaging-01.jpg"
+              alt="APE Studio print and packaging work"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </figure>
+
+
+
+          <!-- BRANDING -->
+
+          <figure
+            class="home-service-image"
+            data-image="2"
+          >
+
+            <img
+              src="/images/services/branding/branding-01.jpg"
+              alt="APE Studio branding work"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </figure>
+
+
+
+          <!-- INFLUENCER -->
+
+          <figure
+            class="home-service-image"
+            data-image="3"
+          >
+
+            <img
+              src="/images/services/influencer-marketing/influencer-marketing-01.jpg"
+              alt="APE Studio influencer marketing work"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </figure>
+
+
+
+          <!-- VISUAL STUDIO -->
+
+          <figure
+            class="home-service-image"
+            data-image="4"
+          >
+
+            <img
+              src="/images/services/visual-studio/photography-01.jpg"
+              alt="APE Studio visual production work"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </figure>
+
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         03 — WORK
+    ====================================================== -->
+
+    <section
+      id="home-work"
+      class="home-scene home-work"
+    >
+
+      <div class="home-scene__stage home-work__stage">
+
+
+
+        <!-- HEADING -->
+
+        <div class="home-work__heading">
+
+
+          <h2>
+
+            WORK THAT
+
+            <span>
+              MOVES PEOPLE.
+            </span>
+
+          </h2>
+
+
+          <a
+            href="/work/"
+            class="home-action home-action--light"
+          >
+
+            VIEW ALL WORK
+
+            <i aria-hidden="true">
+              ↗
+            </i>
+
+          </a>
+
+
+        </div>
+
+
+
+        <!-- HORIZONTAL PROJECT VIEWPORT -->
+
+        <div class="home-work__viewport">
+
+          <div class="home-work__track">
+
+
+
+            <!-- BABUMOSHAI -->
+
+            <a
+              href="/work/babumoshai/"
+              class="home-work-card"
+            >
+
+              <figure>
+
+                <img
+                  src="/work/babumoshai/01.jpg"
+                  alt="Babumoshai project by APE Studio"
+                  loading="lazy"
+                  decoding="async"
+                >
+
+              </figure>
+
+
+              <h3>
+                BABUMOSHAI
+              </h3>
+
+            </a>
+
+
+
+            <!-- GRANDLY -->
+
+            <a
+              href="/work/grandly/"
+              class="home-work-card"
+            >
+
+              <figure>
+
+                <img
+                  src="/work/grandly/01.jpg"
+                  alt="Grandly project by APE Studio"
+                  loading="lazy"
+                  decoding="async"
+                >
+
+              </figure>
+
+
+              <h3>
+                GRANDLY
+              </h3>
+
+            </a>
+
+
+
+            <!-- ADITYA ACADEMY -->
+
+            <a
+              href="/work/aditya-academy/"
+              class="home-work-card"
+            >
+
+              <figure>
+
+                <img
+                  src="/work/aditya-academy/01.jpg"
+                  alt="Aditya Academy project by APE Studio"
+                  loading="lazy"
+                  decoding="async"
+                >
+
+              </figure>
+
+
+              <h3>
+                ADITYA ACADEMY
+              </h3>
+
+            </a>
+
+
+
+            <!-- BOHO -->
+
+            <a
+              href="/work/boho/"
+              class="home-work-card"
+            >
+
+              <figure>
+
+                <img
+                  src="/work/boho/01.jpg"
+                  alt="Boho project by APE Studio"
+                  loading="lazy"
+                  decoding="async"
+                >
+
+              </figure>
+
+
+              <h3>
+                BOHO
+              </h3>
+
+            </a>
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         04 — CLIENTS
+    ====================================================== -->
+
+    <section
+      id="home-clients"
+      class="home-scene home-clients"
+    >
+
+      <div class="home-scene__stage home-clients__stage">
+
+
+
+        <h2 class="home-clients__title">
+
+          BRANDS THAT
+
+          <span>
+            TRUST APE.
+          </span>
+
+        </h2>
+
+
+
+        <div class="home-clients__field">
+
+
+
+          <!-- ===============================================
+               ROW 01
+          ================================================ -->
+
+          <div class="home-client-row">
+
+            <div class="home-client-row__track">
+
+
+              <div class="home-client-row__group">
 
 
                 <div class="home-client-logo">
@@ -1042,18 +1139,16 @@
 
 
 
-          <!-- ===================================================
-              ROW 02 — RIGHT TO LEFT
-          ==================================================== -->
+          <!-- ===============================================
+               ROW 02
+          ================================================ -->
 
-          <div
-            class="home-clients__marquee home-clients__marquee--reverse"
-          >
+          <div class="home-client-row">
 
-            <div class="home-clients__track">
+            <div class="home-client-row__track">
 
 
-              <div class="home-clients__group">
+              <div class="home-client-row__group">
 
 
                 <div class="home-client-logo">
@@ -1162,6 +1257,7 @@
 
         </div>
 
+
       </div>
 
     </section>
@@ -1169,18 +1265,21 @@
 
 
     <!-- =====================================================
-         06 — AWARD
+         05 — RECOGNITION
     ====================================================== -->
 
     <section
       id="home-recognition"
-      class="home-recognition"
+      class="home-scene home-recognition"
     >
 
-      <div class="home-recognition__inner">
+      <div class="home-scene__stage home-recognition__stage">
 
 
-        <div class="home-recognition__visual">
+
+        <!-- VISUAL -->
+
+        <figure class="home-recognition__visual">
 
           <img
             src="/images/home/award.jpeg"
@@ -1189,34 +1288,37 @@
             decoding="async"
           >
 
-        </div>
+        </figure>
 
+
+
+        <!-- COPY -->
 
         <div class="home-recognition__content">
 
-          <p class="home-recognition__title">
-            Times Brand Icons 2026
-          </p>
-
-
           <h2>
 
-            Excellence in Creative Branding
+            EXCELLENCE IN
 
             <span>
-              & Digital Marketing
+              CREATIVE BRANDING
             </span>
+
+            &amp; DIGITAL MARKETING.
 
           </h2>
 
 
-          <p class="home-recognition__copy">
-            Times Brand Icons 2026 by the Times of India for
-            APE Studios' Excellence in Creative Branding and
-            Digital Marketing.
+          <p>
+
+            Recognised at Times Brand Icons 2026 by
+            The Times of India for excellence in creative
+            branding and digital marketing.
+
           </p>
 
         </div>
+
 
       </div>
 
@@ -1226,7 +1328,6 @@
 
     <!-- =====================================================
          FOOTER
-         HOME CONTACT CTA REMOVED
     ====================================================== -->
 
     <footer
@@ -1237,7 +1338,11 @@
       <div class="site-footer__container">
 
 
+
+        <!-- FOOTER CTA -->
+
         <div class="site-footer__cta">
+
 
           <div>
 
@@ -1274,12 +1379,18 @@
 
           </a>
 
+
         </div>
 
 
 
+        <!-- FOOTER MAIN -->
+
         <div class="site-footer__main">
 
+
+
+          <!-- BRAND -->
 
           <div class="site-footer__brand-column">
 
@@ -1298,14 +1409,18 @@
 
 
             <p>
+
               Strategy, creativity, digital and production
               brought together to build brands that get noticed,
               remembered and chosen.
+
             </p>
 
           </div>
 
 
+
+          <!-- PAGES -->
 
           <div class="site-footer__column">
 
@@ -1338,6 +1453,8 @@
 
 
 
+          <!-- EXPLORE -->
+
           <div class="site-footer__column">
 
             <p class="site-footer__column-title">
@@ -1364,6 +1481,8 @@
           </div>
 
 
+
+          <!-- CAPABILITIES -->
 
           <div
             class="
@@ -1424,21 +1543,30 @@
 
 
 
+        <!-- FOOTER BOTTOM -->
+
         <div class="site-footer__bottom">
+
 
           <div class="site-footer__copyright">
 
             <span>
+
               ©
+
               <span id="ape-footer-year"></span>
+
               APE STUDIO
+
             </span>
+
 
             <span>
               ALL RIGHTS RESERVED
             </span>
 
           </div>
+
 
 
           <div class="site-footer__bottom-nav">
@@ -1470,6 +1598,7 @@
           </div>
 
 
+
           <a
             href="#"
             class="site-footer__top-link"
@@ -1483,6 +1612,7 @@
 
           </a>
 
+
         </div>
 
 
@@ -1494,6 +1624,10 @@
   </main>
 
 
+
+  <!-- =====================================================
+       APP ENTRY
+  ====================================================== -->
 
   <script
     type="module"
