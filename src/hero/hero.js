@@ -6,7 +6,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* =========================================================
    APE HERO
-   MOBILE-FIRST
 ========================================================= */
 
 export function initHero() {
@@ -92,10 +91,7 @@ export function initHero() {
 
   function isMobile() {
 
-    return (
-      window.innerWidth <
-      768
-    );
+    return window.innerWidth < 768;
 
   }
 
@@ -114,88 +110,51 @@ export function initHero() {
      CAROUSEL STATE
   ========================================================= */
 
-  let activeIndex =
-    0;
+  let activeIndex = 0;
 
+  let carouselAnimating = false;
 
-  let carouselAnimating =
-    false;
+  let autoplayCall = null;
 
+  let hoverCall = null;
 
-  let autoplayCall =
-    null;
-
-
-  let hoverCall =
-    null;
-
-
-  let hoverDirection =
-    0;
+  let hoverDirection = 0;
 
 
   /* =========================================================
      DRAG STATE
   ========================================================= */
 
-  let dragging =
-    false;
+  let dragging = false;
 
+  let horizontalDrag = false;
 
-  let horizontalDrag =
-    false;
+  let blockClick = false;
 
+  let startX = 0;
 
-  let blockClick =
-    false;
+  let startY = 0;
 
+  let currentX = 0;
 
-  let dragDirection =
-    0;
+  let lastX = 0;
 
+  let lastTime = 0;
 
-  let dragProgress =
-    0;
+  let velocityX = 0;
 
-
-  let startX =
-    0;
-
-
-  let startY =
-    0;
-
-
-  let lastX =
-    0;
-
-
-  let lastTime =
-    0;
-
-
-  let velocityX =
-    0;
-
-
-  let capturedPointerId =
-    null;
+  let capturedPointerId = null;
 
 
   /* =========================================================
      TITLE STATE
   ========================================================= */
 
-  const titleChars =
-    [];
+  const titleChars = [];
 
+  let titleTimeline = null;
 
-  let titleTimeline =
-    null;
-
-
-  let scrambleTimer =
-    null;
+  let scrambleTimer = null;
 
 
   const glyphs =
@@ -219,7 +178,7 @@ export function initHero() {
 
 
   /* =========================================================
-     BUILD KINETIC H1
+     KINETIC H1
      WORDS NEVER BREAK
   ========================================================= */
 
@@ -233,21 +192,14 @@ export function initHero() {
     const originalText =
       line.textContent
         .trim()
-        .replace(
-          /\s+/g,
-          " "
-        );
+        .replace(/\s+/g, " ");
 
 
     const words =
-      originalText.split(
-        " "
-      );
+      originalText.split(" ");
 
 
-    line.textContent =
-      "";
-
+    line.textContent = "";
 
     line.style.overflow =
       "visible";
@@ -259,31 +211,29 @@ export function initHero() {
         wordIndex
       ) => {
 
-        const wordWrapper =
+        const wrapper =
           document.createElement(
             "span"
           );
 
 
-        wordWrapper.className =
+        wrapper.className =
           "ape-hero__kinetic-word";
 
 
-        wordWrapper.style.display =
+        wrapper.style.display =
           "inline-block";
 
 
-        wordWrapper.style.whiteSpace =
+        wrapper.style.whiteSpace =
           "nowrap";
 
 
-        wordWrapper.style.verticalAlign =
+        wrapper.style.verticalAlign =
           "bottom";
 
 
-        Array.from(
-          word
-        ).forEach(
+        Array.from(word).forEach(
           character => {
 
             const char =
@@ -320,7 +270,7 @@ export function initHero() {
               "transform, opacity, filter";
 
 
-            wordWrapper.appendChild(
+            wrapper.appendChild(
               char
             );
 
@@ -334,7 +284,7 @@ export function initHero() {
 
 
         line.appendChild(
-          wordWrapper
+          wrapper
         );
 
 
@@ -344,9 +294,7 @@ export function initHero() {
         ) {
 
           line.appendChild(
-            document.createTextNode(
-              " "
-            )
+            document.createTextNode(" ")
           );
 
         }
@@ -363,7 +311,7 @@ export function initHero() {
 
 
   /* =========================================================
-     FINAL TITLE
+     RESTORE TITLE
   ========================================================= */
 
   function restoreTitle() {
@@ -372,8 +320,7 @@ export function initHero() {
       char => {
 
         char.textContent =
-          char.dataset.final ||
-          "";
+          char.dataset.final || "";
 
       }
     );
@@ -382,7 +329,7 @@ export function initHero() {
 
 
   /* =========================================================
-     TITLE SCRAMBLE
+     SCRAMBLE
   ========================================================= */
 
   function stopScramble(
@@ -398,8 +345,7 @@ export function initHero() {
       );
 
 
-      scrambleTimer =
-        null;
+      scrambleTimer = null;
 
     }
 
@@ -415,33 +361,26 @@ export function initHero() {
 
   function startScramble() {
 
-    stopScramble(
-      false
-    );
+    stopScramble(false);
 
 
-    const chance =
+    const probability =
       isMobile()
-        ?
-        0.25
-        :
-        0.34;
+        ? 0.25
+        : 0.34;
 
 
-    const speed =
+    const interval =
       isMobile()
-        ?
-        165
-        :
-        140;
+        ? 165
+        : 140;
 
 
     titleChars.forEach(
       char => {
 
         if (
-          Math.random() <
-          0.45
+          Math.random() < 0.45
         ) {
 
           char.textContent =
@@ -462,7 +401,7 @@ export function initHero() {
 
               if (
                 Math.random() <
-                chance
+                probability
               ) {
 
                 char.textContent =
@@ -474,14 +413,14 @@ export function initHero() {
           );
 
         },
-        speed
+        interval
       );
 
   }
 
 
   /* =========================================================
-     CONTINUOUS H1 LOOP
+     H1 LOOP
   ========================================================= */
 
   function createTitleLoop() {
@@ -494,45 +433,29 @@ export function initHero() {
     }
 
 
-    if (
-      titleTimeline
-    ) {
-
-      titleTimeline.kill();
-
-    }
+    titleTimeline?.kill();
 
 
-    stopScramble(
-      true
-    );
+    stopScramble(true);
 
 
     gsap.set(
       titleChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
-        filter:
-          "blur(0px)"
+        filter: "blur(0px)"
       }
     );
 
 
     titleTimeline =
-      gsap.timeline(
-        {
-          repeat: -1
-        }
-      );
+      gsap.timeline({
+        repeat: -1
+      });
 
 
     titleTimeline.call(
@@ -543,90 +466,60 @@ export function initHero() {
     titleTimeline.fromTo(
       titleChars,
       {
-        x:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ? -6
-                : -10,
+        x: () =>
+          gsap.utils.random(
+            isMobile() ? -6 : -10,
+            isMobile() ? 6 : 10
+          ),
 
-              isMobile()
-                ? 6
-                : 10
-            ),
+        y: () =>
+          gsap.utils.random(
+            isMobile() ? -5 : -8,
+            isMobile() ? 5 : 8
+          ),
 
-        y:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ? -5
-                : -8,
+        rotation: () =>
+          gsap.utils.random(
+            isMobile() ? -4 : -7,
+            isMobile() ? 4 : 7
+          ),
 
-              isMobile()
-                ? 5
-                : 8
-            ),
+        scale: () =>
+          gsap.utils.random(
+            0.95,
+            1.05
+          ),
 
-        rotation:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ? -4
-                : -7,
-
-              isMobile()
-                ? 4
-                : 7
-            ),
-
-        scale:
-          () =>
-            gsap.utils.random(
-              0.95,
-              1.05
-            ),
-
-        opacity:
-          () =>
-            gsap.utils.random(
-              0.65,
-              0.95
-            ),
+        opacity: () =>
+          gsap.utils.random(
+            0.65,
+            0.95
+          ),
 
         filter:
           "blur(2px)"
       },
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)",
 
         duration:
           isMobile()
-            ?
-            2
-            :
-            1.8,
+            ? 2
+            : 1.8,
 
         stagger: {
           each:
             isMobile()
-              ?
-              0.012
-              :
-              0.014,
+              ? 0.012
+              : 0.014,
 
-          from:
-            "random"
+          from: "random"
         },
 
         ease:
@@ -638,17 +531,13 @@ export function initHero() {
     titleTimeline.call(
       () => {
 
-        stopScramble(
-          true
-        );
+        stopScramble(true);
 
       },
       null,
       isMobile()
-        ?
-        1.55
-        :
-        1.4
+        ? 1.55
+        : 1.4
     );
 
 
@@ -656,15 +545,10 @@ export function initHero() {
       titleChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)",
 
@@ -677,8 +561,8 @@ export function initHero() {
 
 
     /*
-     * Correct final title remains
-     * untouched for five seconds.
+     * Final H1 remains readable
+     * for five seconds.
      */
 
     titleTimeline.to(
@@ -692,7 +576,7 @@ export function initHero() {
 
 
   /* =========================================================
-     SUPPORT COPY
+     SUPPORT COPY WORDS
   ========================================================= */
 
   function splitCopyWords(
@@ -705,20 +589,14 @@ export function initHero() {
     const text =
       element.textContent
         .trim()
-        .replace(
-          /\s+/g,
-          " "
-        );
+        .replace(/\s+/g, " ");
 
 
     const words =
-      text.split(
-        " "
-      );
+      text.split(" ");
 
 
-    element.textContent =
-      "";
+    element.textContent = "";
 
 
     words.forEach(
@@ -767,9 +645,7 @@ export function initHero() {
         ) {
 
           element.appendChild(
-            document.createTextNode(
-              " "
-            )
+            document.createTextNode(" ")
           );
 
         }
@@ -786,7 +662,7 @@ export function initHero() {
 
 
   /* =========================================================
-     SUPPORT COPY LOOP
+     SUPPORT COPY ANIMATION
   ========================================================= */
 
   function animateCopy() {
@@ -816,9 +692,7 @@ export function initHero() {
           ),
           {
             yPercent: 105,
-
             opacity: 0,
-
             filter:
               "blur(5px)"
           }
@@ -829,13 +703,10 @@ export function initHero() {
 
 
     const timeline =
-      gsap.timeline(
-        {
-          repeat: -1,
-
-          repeatDelay: 0.55
-        }
-      );
+      gsap.timeline({
+        repeat: -1,
+        repeatDelay: 0.55
+      });
 
 
     copyLines.forEach(
@@ -864,33 +735,25 @@ export function initHero() {
           words,
           {
             yPercent: 105,
-
             opacity: 0,
-
             filter:
               "blur(5px)"
           },
           {
             yPercent: 0,
-
             opacity: 1,
-
             filter:
               "blur(0px)",
 
             duration:
               isMobile()
-                ?
-                0.72
-                :
-                0.62,
+                ? 0.72
+                : 0.62,
 
             stagger:
               isMobile()
-                ?
-                0.052
-                :
-                0.045,
+                ? 0.052
+                : 0.045,
 
             ease:
               "power4.out"
@@ -903,15 +766,11 @@ export function initHero() {
           {
             duration:
               isMobile()
-                ?
-                3.6
-                :
-                index ===
-                copyLines.length - 1
-                  ?
-                  3.5
-                  :
-                  3
+                ? 3.6
+                : index ===
+                  copyLines.length - 1
+                    ? 3.5
+                    : 3
           }
         );
 
@@ -920,9 +779,7 @@ export function initHero() {
           words,
           {
             yPercent: -105,
-
             opacity: 0,
-
             filter:
               "blur(4px)",
 
@@ -930,10 +787,8 @@ export function initHero() {
 
             stagger:
               isMobile()
-                ?
-                0.03
-                :
-                0.023,
+                ? 0.03
+                : 0.023,
 
             ease:
               "power3.in"
@@ -954,10 +809,8 @@ export function initHero() {
           {
             duration:
               isMobile()
-                ?
-                0.8
-                :
-                0.65
+                ? 0.8
+                : 0.65
           }
         );
 
@@ -981,43 +834,32 @@ export function initHero() {
 
     const cardWidth =
       cards[0]
-        ?
-        cards[0]
-          .getBoundingClientRect()
-          .width
-        :
-        0;
+        ? cards[0]
+            .getBoundingClientRect()
+            .width
+        : 0;
 
 
-    let sideScale =
-      0.76;
+    let sideScale = 0.76;
 
 
-    if (
-      isMobile()
-    ) {
+    if (isMobile()) {
 
-      sideScale =
-        0.7;
+      sideScale = 0.7;
 
     }
 
-    else if (
-      isTablet()
-    ) {
+    else if (isTablet()) {
 
-      sideScale =
-        0.73;
+      sideScale = 0.73;
 
     }
 
 
     const edgeGap =
       isMobile()
-        ?
-        10
-        :
-        14;
+        ? 10
+        : 14;
 
 
     const safeShift =
@@ -1035,14 +877,10 @@ export function initHero() {
 
     const preferredShift =
       isMobile()
-        ?
-        cardWidth * 0.48
-        :
-        isTablet()
-          ?
-          cardWidth * 0.55
-          :
-          cardWidth * 0.6;
+        ? cardWidth * 0.48
+        : isTablet()
+          ? cardWidth * 0.55
+          : cardWidth * 0.6;
 
 
     return {
@@ -1059,17 +897,18 @@ export function initHero() {
 
       sideOpacity:
         isMobile()
-          ?
-          0.55
-          :
-          0.6,
+          ? 0.55
+          : 0.6,
 
       sideRotation:
         isMobile()
-          ?
-          2.5
-          :
-          4
+          ? 2.5
+          : 4,
+
+      sideY:
+        isMobile()
+          ? 3
+          : 8
 
     };
 
@@ -1135,6 +974,242 @@ export function initHero() {
 
 
   /* =========================================================
+     CARD STATES
+  ========================================================= */
+
+  function centerState() {
+
+    return {
+      x: 0,
+      y: 0,
+      scale: 1,
+      rotation: 0,
+      rotationY: 0,
+      opacity: 1
+    };
+
+  }
+
+
+  function leftState(
+    layout
+  ) {
+
+    return {
+      x:
+        -layout.sideShift,
+
+      y:
+        layout.sideY,
+
+      scale:
+        layout.sideScale,
+
+      rotation:
+        -layout.sideRotation,
+
+      rotationY:
+        isMobile()
+          ? 0
+          : 4,
+
+      opacity:
+        layout.sideOpacity
+    };
+
+  }
+
+
+  function rightState(
+    layout
+  ) {
+
+    return {
+      x:
+        layout.sideShift,
+
+      y:
+        layout.sideY,
+
+      scale:
+        layout.sideScale,
+
+      rotation:
+        layout.sideRotation,
+
+      rotationY:
+        isMobile()
+          ? 0
+          : -4,
+
+      opacity:
+        layout.sideOpacity
+    };
+
+  }
+
+
+  function offLeftState(
+    layout
+  ) {
+
+    return {
+      x:
+        -layout.sideShift
+        -
+        layout.cardWidth * 0.52,
+
+      y:
+        layout.sideY + 5,
+
+      scale:
+        0.54,
+
+      rotation:
+        -layout.sideRotation - 3,
+
+      rotationY:
+        isMobile()
+          ? 0
+          : 5,
+
+      opacity: 0
+    };
+
+  }
+
+
+  function offRightState(
+    layout
+  ) {
+
+    return {
+      x:
+        layout.sideShift
+        +
+        layout.cardWidth * 0.52,
+
+      y:
+        layout.sideY + 5,
+
+      scale:
+        0.54,
+
+      rotation:
+        layout.sideRotation + 3,
+
+      rotationY:
+        isMobile()
+          ? 0
+          : -5,
+
+      opacity: 0
+    };
+
+  }
+
+
+  /* =========================================================
+     INTERPOLATE STATE
+  ========================================================= */
+
+  function mix(
+    from,
+    to,
+    progressValue
+  ) {
+
+    return {
+
+      x:
+        gsap.utils.interpolate(
+          from.x,
+          to.x,
+          progressValue
+        ),
+
+      y:
+        gsap.utils.interpolate(
+          from.y,
+          to.y,
+          progressValue
+        ),
+
+      scale:
+        gsap.utils.interpolate(
+          from.scale,
+          to.scale,
+          progressValue
+        ),
+
+      rotation:
+        gsap.utils.interpolate(
+          from.rotation,
+          to.rotation,
+          progressValue
+        ),
+
+      rotationY:
+        gsap.utils.interpolate(
+          from.rotationY,
+          to.rotationY,
+          progressValue
+        ),
+
+      opacity:
+        gsap.utils.interpolate(
+          from.opacity,
+          to.opacity,
+          progressValue
+        )
+
+    };
+
+  }
+
+
+  /* =========================================================
+     APPLY STATE
+  ========================================================= */
+
+  function applyState(
+    card,
+    state,
+    zIndex
+  ) {
+
+    gsap.set(
+      card,
+      {
+        xPercent: -50,
+        yPercent: -50,
+
+        x:
+          state.x,
+
+        y:
+          state.y,
+
+        scale:
+          state.scale,
+
+        rotation:
+          state.rotation,
+
+        rotationY:
+          state.rotationY,
+
+        opacity:
+          state.opacity,
+
+        zIndex
+      }
+    );
+
+  }
+
+
+  /* =========================================================
      PROGRESS
   ========================================================= */
 
@@ -1158,8 +1233,7 @@ export function initHero() {
         ease:
           "power3.out",
 
-        overwrite:
-          true
+        overwrite: true
       }
     );
 
@@ -1167,7 +1241,7 @@ export function initHero() {
 
 
   /* =========================================================
-     BASE CAROUSEL
+     BASE STACK
   ========================================================= */
 
   function setBaseStack(
@@ -1198,153 +1272,61 @@ export function initHero() {
 
         let state;
 
+        let zIndex;
 
-        /* CENTER */
 
         if (
           index === center
         ) {
 
-          state = {
+          state =
+            centerState();
 
-            xPercent: -50,
-
-            yPercent: -50,
-
-            x: 0,
-
-            y: 0,
-
-            scale: 1,
-
-            rotation: 0,
-
-            rotationY: 0,
-
-            opacity: 1,
-
-            zIndex: 30
-
-          };
+          zIndex = 30;
 
         }
 
-
-        /* LEFT */
 
         else if (
           index === left
         ) {
 
-          state = {
+          state =
+            leftState(
+              layout
+            );
 
-            xPercent: -50,
-
-            yPercent: -50,
-
-            x:
-              -layout.sideShift,
-
-            y:
-              isMobile()
-                ?
-                3
-                :
-                8,
-
-            scale:
-              layout.sideScale,
-
-            rotation:
-              -layout.sideRotation,
-
-            rotationY:
-              isMobile()
-                ?
-                0
-                :
-                4,
-
-            opacity:
-              layout.sideOpacity,
-
-            zIndex: 15
-
-          };
+          zIndex = 15;
 
         }
 
-
-        /* RIGHT */
 
         else if (
           index === right
         ) {
 
-          state = {
+          state =
+            rightState(
+              layout
+            );
 
-            xPercent: -50,
-
-            yPercent: -50,
-
-            x:
-              layout.sideShift,
-
-            y:
-              isMobile()
-                ?
-                3
-                :
-                8,
-
-            scale:
-              layout.sideScale,
-
-            rotation:
-              layout.sideRotation,
-
-            rotationY:
-              isMobile()
-                ?
-                0
-                :
-                -4,
-
-            opacity:
-              layout.sideOpacity,
-
-            zIndex: 15
-
-          };
+          zIndex = 15;
 
         }
 
 
-        /* HIDDEN */
-
         else {
 
           state = {
-
-            xPercent: -50,
-
-            yPercent: -50,
-
             x: 0,
-
             y: 8,
-
             scale: 0.56,
-
             rotation: 0,
-
             rotationY: 0,
-
-            opacity: 0,
-
-            zIndex: 1
-
+            opacity: 0
           };
+
+          zIndex = 1;
 
         }
 
@@ -1358,17 +1340,20 @@ export function initHero() {
         gsap.to(
           card,
           {
+            xPercent: -50,
+            yPercent: -50,
+
             ...state,
+
+            zIndex,
 
             duration:
               immediate
-                ?
-                0
-                :
-                0.75,
+                ? 0
+                : 0.72,
 
             ease:
-              "power3.inOut",
+              "power3.out",
 
             overwrite:
               true
@@ -1390,16 +1375,9 @@ export function initHero() {
 
   function cancelAutoplay() {
 
-    if (
-      autoplayCall
-    ) {
+    autoplayCall?.kill();
 
-      autoplayCall.kill();
-
-      autoplayCall =
-        null;
-
-    }
+    autoplayCall = null;
 
   }
 
@@ -1423,28 +1401,28 @@ export function initHero() {
     autoplayCall =
       gsap.delayedCall(
         delay,
-        slideNext
+        () => {
+
+          animateStep(
+            1,
+            false
+          );
+
+        }
       );
 
   }
 
 
   /* =========================================================
-     DESKTOP HOVER TIMER
+     HOVER CONTROL
   ========================================================= */
 
   function cancelHoverMove() {
 
-    if (
-      hoverCall
-    ) {
+    hoverCall?.kill();
 
-      hoverCall.kill();
-
-      hoverCall =
-        null;
-
-    }
+    hoverCall = null;
 
   }
 
@@ -1469,21 +1447,10 @@ export function initHero() {
         delay,
         () => {
 
-          if (
-            hoverDirection === 1
-          ) {
-
-            slideNext();
-
-          }
-
-          else if (
-            hoverDirection === -1
-          ) {
-
-            slidePrevious();
-
-          }
+          animateStep(
+            hoverDirection,
+            false
+          );
 
         }
       );
@@ -1492,572 +1459,351 @@ export function initHero() {
 
 
   /* =========================================================
-     SLIDE NEXT
-     EVERYTHING MOVES LEFT
+     LIVE DRAG PREVIEW
+
+     direction:
+      1  = next / finger LEFT
+     -1  = previous / finger RIGHT
   ========================================================= */
 
-  function slideNext() {
-
-    if (
-      carouselAnimating
-    ) {
-      return;
-    }
-
-
-    carouselAnimating =
-      true;
-
-
-    cancelAutoplay();
-
-
-    const layout =
-      getLayout();
-
-
-    const oldLeft =
-      previousIndex();
-
-
-    const oldCenter =
-      activeIndex;
-
-
-    const oldRight =
-      nextIndex();
-
-
-    const incoming =
-      nextNextIndex();
-
-
-    gsap.set(
-      cards[incoming],
-      {
-        xPercent: -50,
-
-        yPercent: -50,
-
-        x:
-          layout.sideShift
-          +
-          layout.cardWidth *
-          0.45,
-
-        y: 8,
-
-        scale: 0.54,
-
-        rotation:
-          layout.sideRotation +
-          2,
-
-        opacity: 0,
-
-        zIndex: 5
-      }
-    );
-
-
-    const timeline =
-      gsap.timeline(
-        {
-
-          defaults: {
-
-            duration:
-              isMobile()
-                ?
-                0.72
-                :
-                0.88,
-
-            ease:
-              "power4.inOut"
-
-          },
-
-
-          onComplete: () => {
-
-            activeIndex =
-              wrapIndex(
-                activeIndex + 1
-              );
-
-
-            carouselAnimating =
-              false;
-
-
-            setBaseStack(
-              true
-            );
-
-
-            if (
-              hoverDirection === 1
-            ) {
-
-              scheduleHoverMove(
-                0.7
-              );
-
-            }
-
-            else {
-
-              scheduleAutoplay(
-                4
-              );
-
-            }
-
-          }
-
-        }
-      );
-
-
-    /* LEFT EXITS */
-
-    timeline.to(
-      cards[oldLeft],
-      {
-        x:
-          -layout.sideShift
-          -
-          layout.cardWidth *
-          0.45,
-
-        scale: 0.54,
-
-        rotation:
-          -layout.sideRotation -
-          2,
-
-        opacity: 0
-      },
-      0
-    );
-
-
-    /* CENTER → LEFT */
-
-    timeline.to(
-      cards[oldCenter],
-      {
-        x:
-          -layout.sideShift,
-
-        y:
-          isMobile()
-            ?
-            3
-            :
-            8,
-
-        scale:
-          layout.sideScale,
-
-        rotation:
-          -layout.sideRotation,
-
-        opacity:
-          layout.sideOpacity,
-
-        zIndex: 15
-      },
-      0
-    );
-
-
-    /* RIGHT → CENTER */
-
-    timeline.to(
-      cards[oldRight],
-      {
-        x: 0,
-
-        y: 0,
-
-        scale: 1,
-
-        rotation: 0,
-
-        rotationY: 0,
-
-        opacity: 1,
-
-        zIndex: 30
-      },
-      0
-    );
-
-
-    /* NEW ENTERS RIGHT */
-
-    timeline.to(
-      cards[incoming],
-      {
-        x:
-          layout.sideShift,
-
-        y:
-          isMobile()
-            ?
-            3
-            :
-            8,
-
-        scale:
-          layout.sideScale,
-
-        rotation:
-          layout.sideRotation,
-
-        opacity:
-          layout.sideOpacity,
-
-        zIndex: 15
-      },
-      0
-    );
-
-  }
-
-
-  /* =========================================================
-     SLIDE PREVIOUS
-     EVERYTHING MOVES RIGHT
-  ========================================================= */
-
-  function slidePrevious() {
-
-    if (
-      carouselAnimating
-    ) {
-      return;
-    }
-
-
-    carouselAnimating =
-      true;
-
-
-    cancelAutoplay();
-
-
-    const layout =
-      getLayout();
-
-
-    const oldLeft =
-      previousIndex();
-
-
-    const oldCenter =
-      activeIndex;
-
-
-    const oldRight =
-      nextIndex();
-
-
-    const incoming =
-      previousPreviousIndex();
-
-
-    gsap.set(
-      cards[incoming],
-      {
-        xPercent: -50,
-
-        yPercent: -50,
-
-        x:
-          -layout.sideShift
-          -
-          layout.cardWidth *
-          0.45,
-
-        y: 8,
-
-        scale: 0.54,
-
-        rotation:
-          -layout.sideRotation -
-          2,
-
-        opacity: 0,
-
-        zIndex: 5
-      }
-    );
-
-
-    const timeline =
-      gsap.timeline(
-        {
-
-          defaults: {
-
-            duration:
-              isMobile()
-                ?
-                0.72
-                :
-                0.88,
-
-            ease:
-              "power4.inOut"
-
-          },
-
-
-          onComplete: () => {
-
-            activeIndex =
-              wrapIndex(
-                activeIndex - 1
-              );
-
-
-            carouselAnimating =
-              false;
-
-
-            setBaseStack(
-              true
-            );
-
-
-            if (
-              hoverDirection === -1
-            ) {
-
-              scheduleHoverMove(
-                0.7
-              );
-
-            }
-
-            else {
-
-              scheduleAutoplay(
-                4
-              );
-
-            }
-
-          }
-
-        }
-      );
-
-
-    /* RIGHT EXITS */
-
-    timeline.to(
-      cards[oldRight],
-      {
-        x:
-          layout.sideShift
-          +
-          layout.cardWidth *
-          0.45,
-
-        scale: 0.54,
-
-        rotation:
-          layout.sideRotation +
-          2,
-
-        opacity: 0
-      },
-      0
-    );
-
-
-    /* CENTER → RIGHT */
-
-    timeline.to(
-      cards[oldCenter],
-      {
-        x:
-          layout.sideShift,
-
-        y:
-          isMobile()
-            ?
-            3
-            :
-            8,
-
-        scale:
-          layout.sideScale,
-
-        rotation:
-          layout.sideRotation,
-
-        opacity:
-          layout.sideOpacity,
-
-        zIndex: 15
-      },
-      0
-    );
-
-
-    /* LEFT → CENTER */
-
-    timeline.to(
-      cards[oldLeft],
-      {
-        x: 0,
-
-        y: 0,
-
-        scale: 1,
-
-        rotation: 0,
-
-        rotationY: 0,
-
-        opacity: 1,
-
-        zIndex: 30
-      },
-      0
-    );
-
-
-    /* NEW ENTERS LEFT */
-
-    timeline.to(
-      cards[incoming],
-      {
-        x:
-          -layout.sideShift,
-
-        y:
-          isMobile()
-            ?
-            3
-            :
-            8,
-
-        scale:
-          layout.sideScale,
-
-        rotation:
-          -layout.sideRotation,
-
-        opacity:
-          layout.sideOpacity,
-
-        zIndex: 15
-      },
-      0
-    );
-
-  }
-
-
-  /* =========================================================
-     LIVE MOBILE DRAG
-     THIS MAKES THE CAROUSEL FOLLOW YOUR FINGER
-  ========================================================= */
-
-  function previewDrag(
-    distance
+  function renderDrag(
+    dx
   ) {
 
     const layout =
       getLayout();
 
 
-    /*
-     * How far the finger has travelled
-     * relative to the card.
-     */
-
-    const dragRange =
+    const range =
       Math.max(
-        layout.cardWidth *
-        0.72,
-
+        layout.cardWidth * 0.72,
         150
       );
 
 
     const limited =
       gsap.utils.clamp(
-        -dragRange,
-
-        dragRange,
-
-        distance
+        -range,
+        range,
+        dx
       );
 
 
     /*
-     * -1 = finger moving LEFT
-     *  1 = finger moving RIGHT
+     * Clear all cards first.
+     * This prevents the wrong incoming
+     * card staying visible when the user
+     * reverses swipe direction.
      */
 
-    const direction =
-      limited < 0
-        ?
-        -1
-        :
-        limited > 0
-          ?
-          1
-          :
-          0;
+    cards.forEach(
+      card => {
 
+        gsap.set(
+          card,
+          {
+            opacity: 0,
+            zIndex: 1
+          }
+        );
 
-    dragDirection =
-      direction;
-
-
-    dragProgress =
-      Math.min(
-        Math.abs(
-          limited
-        )
-        /
-        dragRange,
-
-        1
-      );
-
-
-    const p =
-      dragProgress;
-
-
-    const left =
-      previousIndex();
-
-
-    const center =
-      activeIndex;
-
-
-    const right =
-      nextIndex();
+      }
+    );
 
 
     /* =====================================================
-       SWIPE LEFT
-       NEXT IMAGE ENTERS FROM RIGHT
+       FINGER MOVES LEFT → NEXT PROJECT
     ===================================================== */
 
     if (
-      direction === -1
+      limited < 0
+    ) {
+
+      const p =
+        Math.min(
+          Math.abs(limited) /
+          range,
+          1
+        );
+
+
+      const oldLeft =
+        previousIndex();
+
+
+      const oldCenter =
+        activeIndex;
+
+
+      const oldRight =
+        nextIndex();
+
+
+      const incoming =
+        nextNextIndex();
+
+
+      applyState(
+        cards[oldLeft],
+
+        mix(
+          leftState(layout),
+          offLeftState(layout),
+          p
+        ),
+
+        8
+      );
+
+
+      applyState(
+        cards[oldCenter],
+
+        mix(
+          centerState(),
+          leftState(layout),
+          p
+        ),
+
+        22
+      );
+
+
+      applyState(
+        cards[oldRight],
+
+        mix(
+          rightState(layout),
+          centerState(),
+          p
+        ),
+
+        30
+      );
+
+
+      applyState(
+        cards[incoming],
+
+        mix(
+          offRightState(layout),
+          rightState(layout),
+          p
+        ),
+
+        15
+      );
+
+    }
+
+
+    /* =====================================================
+       FINGER MOVES RIGHT → PREVIOUS PROJECT
+    ===================================================== */
+
+    else if (
+      limited > 0
+    ) {
+
+      const p =
+        Math.min(
+          limited /
+          range,
+          1
+        );
+
+
+      const incoming =
+        previousPreviousIndex();
+
+
+      const oldLeft =
+        previousIndex();
+
+
+      const oldCenter =
+        activeIndex;
+
+
+      const oldRight =
+        nextIndex();
+
+
+      applyState(
+        cards[incoming],
+
+        mix(
+          offLeftState(layout),
+          leftState(layout),
+          p
+        ),
+
+        15
+      );
+
+
+      applyState(
+        cards[oldLeft],
+
+        mix(
+          leftState(layout),
+          centerState(),
+          p
+        ),
+
+        30
+      );
+
+
+      applyState(
+        cards[oldCenter],
+
+        mix(
+          centerState(),
+          rightState(layout),
+          p
+        ),
+
+        22
+      );
+
+
+      applyState(
+        cards[oldRight],
+
+        mix(
+          rightState(layout),
+          offRightState(layout),
+          p
+        ),
+
+        8
+      );
+
+    }
+
+
+    else {
+
+      setBaseStack(true);
+
+    }
+
+  }
+
+
+  /* =========================================================
+     SINGLE TRANSITION ENGINE
+
+     direction:
+       1 = next / move LEFT
+      -1 = previous / move RIGHT
+
+     fromDrag:
+       true means DON'T reset positions.
+       Continue directly from finger position.
+  ========================================================= */
+
+  function animateStep(
+    direction,
+    fromDrag = false
+  ) {
+
+    if (
+      carouselAnimating
+    ) {
+      return;
+    }
+
+
+    carouselAnimating = true;
+
+
+    cancelAutoplay();
+
+    cancelHoverMove();
+
+
+    const layout =
+      getLayout();
+
+
+    const oldLeft =
+      previousIndex();
+
+
+    const oldCenter =
+      activeIndex;
+
+
+    const oldRight =
+      nextIndex();
+
+
+    const duration =
+      fromDrag
+        ? 0.48
+        : isMobile()
+          ? 0.72
+          : 0.88;
+
+
+    const timeline =
+      gsap.timeline({
+
+        defaults: {
+          duration,
+          ease:
+            fromDrag
+              ? "power3.out"
+              : "power4.inOut"
+        },
+
+
+        onComplete: () => {
+
+          activeIndex =
+            wrapIndex(
+              activeIndex +
+              direction
+            );
+
+
+          carouselAnimating =
+            false;
+
+
+          setBaseStack(true);
+
+
+          if (
+            hoverDirection ===
+            direction
+          ) {
+
+            scheduleHoverMove(
+              0.68
+            );
+
+          }
+
+          else {
+
+            scheduleAutoplay(4);
+
+          }
+
+        }
+
+      });
+
+
+    /* =====================================================
+       NEXT — MOVE EVERYTHING LEFT
+    ===================================================== */
+
+    if (
+      direction === 1
     ) {
 
       const incoming =
@@ -2065,444 +1811,144 @@ export function initHero() {
 
 
       /*
-       * Incoming next card becomes visible
-       * while the finger is still moving.
+       * Only prepare incoming position
+       * when this is autoplay/hover.
+       *
+       * During touch drag it is ALREADY
+       * in the correct intermediate position.
        */
 
-      gsap.set(
-        cards[incoming],
+      if (!fromDrag) {
+
+        applyState(
+          cards[incoming],
+          offRightState(layout),
+          5
+        );
+
+      }
+
+
+      timeline.to(
+        cards[oldLeft],
         {
-          xPercent: -50,
+          ...offLeftState(
+            layout
+          ),
 
-          yPercent: -50,
-
-          x:
-            gsap.utils.interpolate(
-              layout.sideShift
-              +
-              layout.cardWidth *
-              0.5,
-
-              layout.sideShift,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              8,
-              3,
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              0.54,
-              layout.sideScale,
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              layout.sideRotation + 3,
-
-              layout.sideRotation,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              0,
-
-              layout.sideOpacity,
-
-              p
-            ),
-
-          zIndex: 10
-        }
+          zIndex: 5
+        },
+        0
       );
 
 
-      /*
-       * Previous left exits left.
-       */
-
-      gsap.set(
-        cards[left],
+      timeline.to(
+        cards[oldCenter],
         {
-          x:
-            gsap.utils.interpolate(
-              -layout.sideShift,
+          ...leftState(
+            layout
+          ),
 
-              -layout.sideShift
-              -
-              layout.cardWidth *
-              0.5,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              layout.sideScale,
-
-              0.54,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              layout.sideOpacity,
-
-              0,
-
-              p
-            )
-        }
+          zIndex: 15
+        },
+        0
       );
 
 
-      /*
-       * Center moves to left.
-       */
-
-      gsap.set(
-        cards[center],
+      timeline.to(
+        cards[oldRight],
         {
-          x:
-            gsap.utils.interpolate(
-              0,
-
-              -layout.sideShift,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              0,
-
-              3,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              1,
-
-              layout.sideScale,
-
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              0,
-
-              -layout.sideRotation,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              1,
-
-              layout.sideOpacity,
-
-              p
-            )
-        }
-      );
-
-
-      /*
-       * Current right becomes center.
-       */
-
-      gsap.set(
-        cards[right],
-        {
-          x:
-            gsap.utils.interpolate(
-              layout.sideShift,
-
-              0,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              3,
-
-              0,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              layout.sideScale,
-
-              1,
-
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              layout.sideRotation,
-
-              0,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              layout.sideOpacity,
-
-              1,
-
-              p
-            ),
+          ...centerState(),
 
           zIndex: 30
-        }
+        },
+        0
+      );
+
+
+      timeline.to(
+        cards[incoming],
+        {
+          ...rightState(
+            layout
+          ),
+
+          zIndex: 15
+        },
+        0
       );
 
     }
 
 
     /* =====================================================
-       SWIPE RIGHT
-       PREVIOUS IMAGE ENTERS FROM LEFT
+       PREVIOUS — MOVE EVERYTHING RIGHT
     ===================================================== */
 
-    else if (
-      direction === 1
-    ) {
+    else {
 
       const incoming =
         previousPreviousIndex();
 
 
-      /*
-       * New previous card enters left.
-       */
+      if (!fromDrag) {
 
-      gsap.set(
-        cards[incoming],
+        applyState(
+          cards[incoming],
+          offLeftState(layout),
+          5
+        );
+
+      }
+
+
+      timeline.to(
+        cards[oldRight],
         {
-          xPercent: -50,
+          ...offRightState(
+            layout
+          ),
 
-          yPercent: -50,
-
-          x:
-            gsap.utils.interpolate(
-              -layout.sideShift
-              -
-              layout.cardWidth *
-              0.5,
-
-              -layout.sideShift,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              8,
-              3,
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              0.54,
-
-              layout.sideScale,
-
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              -layout.sideRotation - 3,
-
-              -layout.sideRotation,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              0,
-
-              layout.sideOpacity,
-
-              p
-            ),
-
-          zIndex: 10
-        }
+          zIndex: 5
+        },
+        0
       );
 
 
-      /*
-       * Current right exits right.
-       */
-
-      gsap.set(
-        cards[right],
+      timeline.to(
+        cards[oldCenter],
         {
-          x:
-            gsap.utils.interpolate(
-              layout.sideShift,
+          ...rightState(
+            layout
+          ),
 
-              layout.sideShift
-              +
-              layout.cardWidth *
-              0.5,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              layout.sideScale,
-
-              0.54,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              layout.sideOpacity,
-
-              0,
-
-              p
-            )
-        }
+          zIndex: 15
+        },
+        0
       );
 
 
-      /*
-       * Center moves right.
-       */
-
-      gsap.set(
-        cards[center],
+      timeline.to(
+        cards[oldLeft],
         {
-          x:
-            gsap.utils.interpolate(
-              0,
-
-              layout.sideShift,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              0,
-
-              3,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              1,
-
-              layout.sideScale,
-
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              0,
-
-              layout.sideRotation,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              1,
-
-              layout.sideOpacity,
-
-              p
-            )
-        }
-      );
-
-
-      /*
-       * Current left becomes center.
-       */
-
-      gsap.set(
-        cards[left],
-        {
-          x:
-            gsap.utils.interpolate(
-              -layout.sideShift,
-
-              0,
-
-              p
-            ),
-
-          y:
-            gsap.utils.interpolate(
-              3,
-
-              0,
-
-              p
-            ),
-
-          scale:
-            gsap.utils.interpolate(
-              layout.sideScale,
-
-              1,
-
-              p
-            ),
-
-          rotation:
-            gsap.utils.interpolate(
-              -layout.sideRotation,
-
-              0,
-
-              p
-            ),
-
-          opacity:
-            gsap.utils.interpolate(
-              layout.sideOpacity,
-
-              1,
-
-              p
-            ),
+          ...centerState(),
 
           zIndex: 30
-        }
+        },
+        0
+      );
+
+
+      timeline.to(
+        cards[incoming],
+        {
+          ...leftState(
+            layout
+          ),
+
+          zIndex: 15
+        },
+        0
       );
 
     }
@@ -2511,48 +1957,25 @@ export function initHero() {
 
 
   /* =========================================================
-     COMPLETE SWIPE
-     CONTINUES FROM CURRENT FINGER POSITION
-  ========================================================= */
-
-  function completeSwipe(
-    direction
-  ) {
-
-    /*
-     * Finger moved left.
-     */
-
-    if (
-      direction === -1
-    ) {
-
-      slideNext();
-
-    }
-
-
-    /*
-     * Finger moved right.
-     */
-
-    else if (
-      direction === 1
-    ) {
-
-      slidePrevious();
-
-    }
-
-  }
-
-
-  /* =========================================================
-     POINTER / TOUCH START
+     POINTER DOWN
   ========================================================= */
 
   deck.style.touchAction =
     "pan-y";
+
+
+  deck.style.overscrollBehaviorX =
+    "contain";
+
+
+  deck.addEventListener(
+    "dragstart",
+    event => {
+
+      event.preventDefault();
+
+    }
+  );
 
 
   deck.addEventListener(
@@ -2571,24 +1994,11 @@ export function initHero() {
       cancelHoverMove();
 
 
-      dragging =
-        true;
+      dragging = true;
 
+      horizontalDrag = false;
 
-      horizontalDrag =
-        false;
-
-
-      blockClick =
-        false;
-
-
-      dragDirection =
-        0;
-
-
-      dragProgress =
-        0;
+      blockClick = false;
 
 
       startX =
@@ -2599,6 +2009,10 @@ export function initHero() {
         event.clientY;
 
 
+      currentX =
+        event.clientX;
+
+
       lastX =
         event.clientX;
 
@@ -2607,8 +2021,7 @@ export function initHero() {
         performance.now();
 
 
-      velocityX =
-        0;
+      velocityX = 0;
 
 
       capturedPointerId =
@@ -2619,12 +2032,31 @@ export function initHero() {
         "is-dragging"
       );
 
+
+      /*
+       * Capture from the beginning so
+       * the swipe doesn't get lost when
+       * finger moves outside the image.
+       */
+
+      try {
+
+        deck.setPointerCapture?.(
+          event.pointerId
+        );
+
+      }
+
+      catch {
+        /* no-op */
+      }
+
     }
   );
 
 
   /* =========================================================
-     POINTER / TOUCH MOVE
+     POINTER MOVE
   ========================================================= */
 
   deck.addEventListener(
@@ -2648,8 +2080,12 @@ export function initHero() {
         startY;
 
 
+      currentX =
+        event.clientX;
+
+
       /* =====================================================
-         DETERMINE USER INTENT
+         DETERMINE SWIPE DIRECTION
       ===================================================== */
 
       if (
@@ -2657,29 +2093,24 @@ export function initHero() {
       ) {
 
         if (
-          Math.abs(dx) < 7
-          &&
-          Math.abs(dy) < 7
+          Math.abs(dx) < 6 &&
+          Math.abs(dy) < 6
         ) {
-
           return;
-
         }
 
 
         /*
-         * Vertical movement means:
-         * user wants to scroll page.
+         * Vertical movement:
+         * let the page scroll.
          */
 
         if (
-          Math.abs(dy)
-          >
-          Math.abs(dx)
+          Math.abs(dy) >
+          Math.abs(dx) * 1.1
         ) {
 
-          dragging =
-            false;
+          dragging = false;
 
 
           deck.classList.remove(
@@ -2687,14 +2118,26 @@ export function initHero() {
           );
 
 
-          setBaseStack(
-            false
-          );
+          setBaseStack(false);
 
 
-          scheduleAutoplay(
-            3
-          );
+          try {
+
+            deck.releasePointerCapture?.(
+              event.pointerId
+            );
+
+          }
+
+          catch {
+            /* no-op */
+          }
+
+
+          capturedPointerId = null;
+
+
+          scheduleAutoplay(3);
 
 
           return;
@@ -2702,40 +2145,16 @@ export function initHero() {
         }
 
 
-        /*
-         * Now we KNOW it's a horizontal swipe.
-         */
+        horizontalDrag = true;
 
-        horizontalDrag =
-          true;
-
-
-        blockClick =
-          true;
-
-
-        try {
-
-          deck.setPointerCapture?.(
-            event.pointerId
-          );
-
-
-          capturedPointerId =
-            event.pointerId;
-
-        }
-
-        catch {
-          /* no-op */
-        }
+        blockClick = true;
 
       }
 
 
       /*
-       * Prevent browser from interpreting
-       * the horizontal gesture as something else.
+       * We now know this is a carousel
+       * gesture, not vertical scrolling.
        */
 
       if (
@@ -2757,9 +2176,7 @@ export function initHero() {
 
       const elapsed =
         Math.max(
-          now -
-          lastTime,
-
+          now - lastTime,
           1
         );
 
@@ -2768,8 +2185,7 @@ export function initHero() {
         (
           event.clientX -
           lastX
-        )
-        /
+        ) /
         elapsed;
 
 
@@ -2782,12 +2198,10 @@ export function initHero() {
 
 
       /* =====================================================
-         LIVE CAROUSEL MOVEMENT
+         LIVE MOVEMENT
       ===================================================== */
 
-      previewDrag(
-        dx
-      );
+      renderDrag(dx);
 
     },
     {
@@ -2797,22 +2211,19 @@ export function initHero() {
 
 
   /* =========================================================
-     END SWIPE
+     END DRAG
   ========================================================= */
 
   function finishDrag(
     event
   ) {
 
-    if (
-      !dragging
-    ) {
+    if (!dragging) {
       return;
     }
 
 
-    dragging =
-      false;
+    dragging = false;
 
 
     deck.classList.remove(
@@ -2821,32 +2232,23 @@ export function initHero() {
 
 
     const dx =
-      event.clientX -
+      currentX -
       startX;
 
 
-    /*
-     * Mobile needs less movement
-     * to commit the slide.
-     */
-
     const distanceThreshold =
       isMobile()
-        ?
-        28
-        :
-        46;
+        ? 34
+        : 48;
 
 
     const velocityThreshold =
       isMobile()
-        ?
-        0.16
-        :
-        0.22;
+        ? 0.18
+        : 0.24;
 
 
-    const strongLeft =
+    const goNext =
       dx <
       -distanceThreshold
       ||
@@ -2854,7 +2256,7 @@ export function initHero() {
       -velocityThreshold;
 
 
-    const strongRight =
+    const goPrevious =
       dx >
       distanceThreshold
       ||
@@ -2863,56 +2265,54 @@ export function initHero() {
 
 
     /* =====================================================
-       COMMIT LEFT SWIPE
+       LEFT SWIPE
+       Continue FROM CURRENT POSITION.
     ===================================================== */
 
     if (
-      strongLeft
+      goNext
     ) {
 
-      completeSwipe(
-        -1
+      animateStep(
+        1,
+        true
       );
 
     }
 
 
     /* =====================================================
-       COMMIT RIGHT SWIPE
+       RIGHT SWIPE
+       Continue FROM CURRENT POSITION.
     ===================================================== */
 
     else if (
-      strongRight
+      goPrevious
     ) {
 
-      completeSwipe(
-        1
+      animateStep(
+        -1,
+        true
       );
 
     }
 
 
     /* =====================================================
-       NOT ENOUGH MOVEMENT → SNAP BACK
+       SMALL MOVEMENT → SNAP BACK
     ===================================================== */
 
     else {
 
-      setBaseStack(
-        false
-      );
+      setBaseStack(false);
 
-
-      scheduleAutoplay(
-        3
-      );
+      scheduleAutoplay(3);
 
     }
 
 
     if (
-      capturedPointerId !==
-      null
+      capturedPointerId !== null
     ) {
 
       try {
@@ -2930,16 +2330,9 @@ export function initHero() {
     }
 
 
-    capturedPointerId =
-      null;
+    capturedPointerId = null;
 
-
-    dragDirection =
-      0;
-
-
-    dragProgress =
-      0;
+    horizontalDrag = false;
 
   }
 
@@ -2952,21 +2345,16 @@ export function initHero() {
 
   deck.addEventListener(
     "pointercancel",
-    event => {
+    () => {
 
-      if (
-        !dragging
-      ) {
+      if (!dragging) {
         return;
       }
 
 
-      dragging =
-        false;
+      dragging = false;
 
-
-      horizontalDrag =
-        false;
+      horizontalDrag = false;
 
 
       deck.classList.remove(
@@ -2974,54 +2362,27 @@ export function initHero() {
       );
 
 
-      setBaseStack(
-        false
-      );
+      setBaseStack(false);
 
 
-      scheduleAutoplay(
-        3
-      );
+      capturedPointerId = null;
 
 
-      if (
-        capturedPointerId !==
-        null
-      ) {
-
-        try {
-
-          deck.releasePointerCapture?.(
-            capturedPointerId
-          );
-
-        }
-
-        catch {
-          /* no-op */
-        }
-
-      }
-
-
-      capturedPointerId =
-        null;
+      scheduleAutoplay(3);
 
     }
   );
 
 
   /* =========================================================
-     PREVENT LINK OPEN AFTER SWIPE
+     PREVENT PROJECT OPEN AFTER SWIPE
   ========================================================= */
 
   deck.addEventListener(
     "click",
     event => {
 
-      if (
-        !blockClick
-      ) {
+      if (!blockClick) {
         return;
       }
 
@@ -3031,8 +2392,7 @@ export function initHero() {
       event.stopPropagation();
 
 
-      blockClick =
-        false;
+      blockClick = false;
 
     },
     true
@@ -3052,40 +2412,36 @@ export function initHero() {
       event => {
 
         if (
-          dragging
+          dragging ||
+          carouselAnimating
         ) {
           return;
         }
 
 
         const rect =
-          gallery
-            .getBoundingClientRect();
+          gallery.getBoundingClientRect();
 
 
         const position =
           (
             event.clientX -
             rect.left
-          )
-          /
+          ) /
           rect.width;
 
 
-        /* LEFT THIRD */
+        /* LEFT */
 
         if (
-          position <
-          0.33
+          position < 0.33
         ) {
 
           if (
-            hoverDirection !==
-            -1
+            hoverDirection !== -1
           ) {
 
-            hoverDirection =
-              -1;
+            hoverDirection = -1;
 
 
             cancelAutoplay();
@@ -3100,20 +2456,17 @@ export function initHero() {
         }
 
 
-        /* RIGHT THIRD */
+        /* RIGHT */
 
         else if (
-          position >
-          0.67
+          position > 0.67
         ) {
 
           if (
-            hoverDirection !==
-            1
+            hoverDirection !== 1
           ) {
 
-            hoverDirection =
-              1;
+            hoverDirection = 1;
 
 
             cancelAutoplay();
@@ -3133,20 +2486,16 @@ export function initHero() {
         else {
 
           if (
-            hoverDirection !==
-            0
+            hoverDirection !== 0
           ) {
 
-            hoverDirection =
-              0;
+            hoverDirection = 0;
 
 
             cancelHoverMove();
 
 
-            scheduleAutoplay(
-              3
-            );
+            scheduleAutoplay(3);
 
           }
 
@@ -3160,16 +2509,13 @@ export function initHero() {
       "pointerleave",
       () => {
 
-        hoverDirection =
-          0;
+        hoverDirection = 0;
 
 
         cancelHoverMove();
 
 
-        scheduleAutoplay(
-          3
-        );
+        scheduleAutoplay(3);
 
       }
     );
@@ -3178,12 +2524,10 @@ export function initHero() {
 
 
   /* =========================================================
-     INITIAL CAROUSEL
+     INITIAL STACK
   ========================================================= */
 
-  setBaseStack(
-    true
-  );
+  setBaseStack(true);
 
 
   /* =========================================================
@@ -3201,15 +2545,10 @@ export function initHero() {
       titleChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)"
       }
@@ -3235,9 +2574,7 @@ export function initHero() {
           ),
         {
           yPercent: 0,
-
           opacity: 1,
-
           filter:
             "blur(0px)"
         }
@@ -3252,7 +2589,7 @@ export function initHero() {
 
 
   /* =========================================================
-     HERO INTRO
+     INTRO
   ========================================================= */
 
   gsap.set(
@@ -3262,17 +2599,13 @@ export function initHero() {
 
       y:
         isMobile()
-          ?
-          28
-          :
-          0,
+          ? 28
+          : 0,
 
       x:
         isMobile()
-          ?
-          0
-          :
-          25,
+          ? 0
+          : 25,
 
       scale: 0.95
     }
@@ -3287,7 +2620,6 @@ export function initHero() {
       actions,
       {
         opacity: 0,
-
         y: 18
       }
     );
@@ -3295,26 +2627,15 @@ export function initHero() {
   }
 
 
-  /* =========================================================
-     TITLE LOOP
-  ========================================================= */
-
   createTitleLoop();
 
-
-  /* =========================================================
-     GALLERY INTRO
-  ========================================================= */
 
   gsap.to(
     gallery,
     {
       opacity: 1,
-
       x: 0,
-
       y: 0,
-
       scale: 1,
 
       duration: 0.95,
@@ -3327,10 +2648,6 @@ export function initHero() {
   );
 
 
-  /* =========================================================
-     CTAs
-  ========================================================= */
-
   if (
     actions
   ) {
@@ -3339,7 +2656,6 @@ export function initHero() {
       actions,
       {
         opacity: 1,
-
         y: 0,
 
         duration: 0.65,
@@ -3354,10 +2670,6 @@ export function initHero() {
   }
 
 
-  /* =========================================================
-     SUPPORTING COPY
-  ========================================================= */
-
   gsap.delayedCall(
     0.75,
     animateCopy
@@ -3370,13 +2682,10 @@ export function initHero() {
 
   ScrollTrigger.create(
     {
-
       trigger: hero,
-
 
       start:
         "top bottom",
-
 
       end:
         "bottom top",
@@ -3401,9 +2710,7 @@ export function initHero() {
         titleTimeline?.pause();
 
 
-        stopScramble(
-          true
-        );
+        stopScramble(true);
 
       },
 
@@ -3413,12 +2720,9 @@ export function initHero() {
         titleTimeline?.pause();
 
 
-        stopScramble(
-          true
-        );
+        stopScramble(true);
 
       }
-
     }
   );
 
@@ -3427,17 +2731,14 @@ export function initHero() {
      AUTOPLAY
   ========================================================= */
 
-  scheduleAutoplay(
-    4
-  );
+  scheduleAutoplay(4);
 
 
   /* =========================================================
-     RESIZE / ORIENTATION CHANGE
+     RESIZE / ORIENTATION
   ========================================================= */
 
-  let resizeTimer =
-    null;
+  let resizeTimer = null;
 
 
   window.addEventListener(
@@ -3453,9 +2754,7 @@ export function initHero() {
         window.setTimeout(
           () => {
 
-            setBaseStack(
-              true
-            );
+            setBaseStack(true);
 
 
             ScrollTrigger.refresh();
@@ -3491,9 +2790,7 @@ export function initHero() {
         titleTimeline?.pause();
 
 
-        stopScramble(
-          true
-        );
+        stopScramble(true);
 
       }
 
@@ -3502,9 +2799,7 @@ export function initHero() {
         titleTimeline?.play();
 
 
-        scheduleAutoplay(
-          2
-        );
+        scheduleAutoplay(2);
 
       }
 
