@@ -1,20 +1,6 @@
 /* =========================================================
    APE STUDIO
-   HOME — WHO / ABOUT APE SECTION
-   ISOLATED SECTION OVERRIDES
-
-   PRIMARY TARGET:
-   CHROME 100%
-
-   ALSO SAFE:
-   CHROME 125%
-   TABLET
-   MOBILE
-========================================================= */
-
-
-/* =========================================================
-   SECTION
+   WHO / ABOUT APE
 ========================================================= */
 
 .home-who {
@@ -30,11 +16,7 @@
   overflow: hidden;
 
   padding:
-    clamp(
-      96px,
-      7vw,
-      122px
-    )
+    clamp(96px, 7vw, 122px)
     5vw;
 
   color:
@@ -51,7 +33,7 @@
 
 
 /* =========================================================
-   REMOVE ALL PREVIOUS DECORATIVE SHAPES
+   REMOVE OLD RECTANGLE / BALL / SHAPES
 ========================================================= */
 
 .home-who__rear,
@@ -65,11 +47,6 @@
 }
 
 
-/*
- * Prevent old pseudo-shape designs
- * from returning behind the image.
- */
-
 .home-who__visual::before,
 .home-who__visual::after {
   content: none !important;
@@ -79,7 +56,7 @@
 
 
 /* =========================================================
-   INNER LAYOUT — 100% DESKTOP
+   DESKTOP LAYOUT
 ========================================================= */
 
 .home-who__inner {
@@ -97,14 +74,8 @@
   display: grid;
 
   grid-template-columns:
-    minmax(
-      0,
-      0.87fr
-    )
-    minmax(
-      480px,
-      1.13fr
-    );
+    minmax(0, 0.87fr)
+    minmax(480px, 1.13fr);
 
   align-items: center;
 
@@ -126,20 +97,19 @@
 
   z-index: 3;
 
-  min-width: 0;
-
   width: 100%;
+
+  min-width: 0;
 }
 
 
 /* =========================================================
-   OPTIONAL EYEBROW
+   EYEBROW
 ========================================================= */
 
 .home-who__eyebrow {
   margin:
-    0 0
-    22px;
+    0 0 22px;
 
   color:
     var(--who-violet);
@@ -190,17 +160,14 @@
 
   line-height: 0.88;
 
-  letter-spacing: -0.064em;
+  letter-spacing:
+    -0.064em;
 
   text-transform: uppercase;
 
   text-wrap: balance;
 }
 
-
-/* =========================================================
-   EXISTING LINE STRUCTURES
-========================================================= */
 
 .home-who__content h2 > span,
 .home-who__title > span,
@@ -210,19 +177,11 @@
 
 
 /* =========================================================
-   GET NOTICED — VIOLET
+   VIOLET LINE
 ========================================================= */
 
 .home-who__content h2
-> span:first-of-type {
-  color:
-    var(--who-violet) !important;
-
-  -webkit-text-stroke:
-    0 !important;
-}
-
-
+> span:first-of-type,
 .home-who__line--violet {
   color:
     var(--who-violet) !important;
@@ -246,7 +205,7 @@
 
 
 /* =========================================================
-   & CHOSEN — OUTLINE
+   OUTLINE LINE
 ========================================================= */
 
 .home-who__content h2
@@ -262,9 +221,7 @@
 
 
 /* =========================================================
-   KINETIC WORD
-
-   WHOLE WORD = UNBREAKABLE
+   KINETIC TEXT
 ========================================================= */
 
 .home-who__kinetic-word {
@@ -275,10 +232,6 @@
   vertical-align: bottom;
 }
 
-
-/* =========================================================
-   KINETIC CHARACTER
-========================================================= */
 
 .home-who__kinetic-char {
   position: relative;
@@ -342,10 +295,6 @@
 }
 
 
-/* =========================================================
-   DESCRIPTION WORD ANIMATION
-========================================================= */
-
 .home-who__description-mask {
   display: inline-block;
 
@@ -382,10 +331,6 @@
 }
 
 
-/* =========================================================
-   CURRENT BUTTON SYSTEM
-========================================================= */
-
 .home-who .home-button,
 .home-who .home-action,
 .home-who__button {
@@ -409,13 +354,12 @@
 }
 
 
-/* =========================================================
-   ABOUT BUTTON
-========================================================= */
-
 .home-who .home-button--primary,
 .home-who__button,
 .home-who .home-action {
+  color:
+    var(--who-black);
+
   border:
     1px solid
     rgba(
@@ -425,22 +369,21 @@
       0.16
     );
 
-  color:
-    var(--who-black);
-
   background:
     rgba(
       255,
       255,
       255,
-      0.86
+      0.88
     );
 }
 
 
-.home-who .home-button--primary i,
+.home-who
+.home-button--primary i,
 .home-who__button i,
-.home-who .home-action i {
+.home-who
+.home-action i {
   color:
     var(--who-black);
 
@@ -448,10 +391,6 @@
     var(--who-lime);
 }
 
-
-/* =========================================================
-   SECONDARY
-========================================================= */
 
 .home-who
 .home-button--secondary {
@@ -472,10 +411,6 @@
 }
 
 
-/* =========================================================
-   BUTTON HOVER
-========================================================= */
-
 @media
 (hover: hover)
 and
@@ -485,16 +420,14 @@ and
   .home-who .home-action:hover,
   .home-who__button:hover {
     transform:
-      translateY(
-        -3px
-      );
+      translateY(-3px);
   }
 
 }
 
 
 /* =========================================================
-   VISUAL
+   360 VISUAL AREA
 ========================================================= */
 
 .home-who__visual {
@@ -511,14 +444,28 @@ and
 
   transform-style:
     preserve-3d;
+
+  cursor: grab;
+
+  touch-action: pan-y;
+
+  user-select: none;
+
+  -webkit-user-select:
+    none;
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+.home-who__visual.is-dragging {
+  cursor: grabbing;
 }
 
 
 /* =========================================================
-   IMAGE FRAME
-
-   IMPORTANT:
-   NO VIOLET RECTANGLE BEHIND IT.
+   360 CARD
 ========================================================= */
 
 .home-who__image {
@@ -549,9 +496,7 @@ and
     #111;
 
   box-shadow:
-    0
-    26px
-    70px
+    0 26px 70px
     rgba(
       23,
       15,
@@ -562,13 +507,16 @@ and
   transform-style:
     preserve-3d;
 
+  transform-origin:
+    center center;
+
   will-change:
     transform;
 }
 
 
 /* =========================================================
-   REMOVE OLD IMAGE BORDERS / SHAPES
+   REMOVE PREVIOUS BORDERS
 ========================================================= */
 
 .home-who__image::before {
@@ -579,47 +527,25 @@ and
 
 
 .home-who__image::after {
-  content: "";
+  content: none !important;
 
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 4;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(
-        255,
-        255,
-        255,
-        0
-      )
-      58%,
-
-      rgba(
-        5,
-        5,
-        8,
-        0.11
-      )
-      100%
-    );
+  display: none !important;
 }
 
 
 /* =========================================================
-   IMAGE
+   360 FRONT + BACK
 ========================================================= */
 
-.home-who__image img,
-.home-who__image-base {
+.home-who__image-front,
+.home-who__image-back {
+  position: absolute;
+
+  inset: 0;
+
   width: 100% !important;
 
-  height: 112% !important;
+  height: 108% !important;
 
   display: block;
 
@@ -628,21 +554,93 @@ and
   object-position:
     center center;
 
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag:
+    none;
+
+  backface-visibility:
+    hidden;
+
+  -webkit-backface-visibility:
+    hidden;
+
+  transform-style:
+    preserve-3d;
+
   will-change:
     transform;
+
+  transition:
+    none !important;
 }
 
 
-/*
- * Hide any duplicate image layer
- * from previous experiments.
- */
+/* FRONT */
 
-.home-who__image-reactive {
-  display: none !important;
+.home-who__image-front {
+  z-index: 2;
 }
 
 
+/* BACK */
+
+.home-who__image-back {
+  z-index: 1;
+}
+
+
+/* =========================================================
+   DARK GLASS OVERLAY
+   ROTATES WITH CARD
+========================================================= */
+
+.home-who__image.is-360-ready::after {
+  content: "";
+
+  display: block !important;
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(
+        0,
+        0,
+        0,
+        0
+      )
+      58%,
+      rgba(
+        0,
+        0,
+        0,
+        0.08
+      )
+      100%
+    );
+
+  transform:
+    translateZ(2px);
+}
+
+
+/* =========================================================
+   REMOVE OLD EXPERIMENTAL LAYERS
+========================================================= */
+
+.home-who__image-reactive,
 .home-who__image-light,
 .home-who__image-border {
   display: none !important;
@@ -650,18 +648,13 @@ and
 
 
 /* =========================================================
-   125% ZOOM SAFETY
-   ALSO SMALLER LAPTOP / IPAD LANDSCAPE
+   125% / TABLET / SMALL LAPTOP SAFETY
 ========================================================= */
 
 @media
-(
-  min-width: 768px
-)
+(min-width: 768px)
 and
-(
-  max-width: 1180px
-) {
+(max-width: 1180px) {
 
   .home-who {
     padding:
@@ -737,18 +730,13 @@ and
 
 
 /* =========================================================
-   SHORT LAPTOP
-   125% HEIGHT SAFETY
+   SHORT DESKTOP / 125% HEIGHT SAFETY
 ========================================================= */
 
 @media
-(
-  min-width: 1024px
-)
+(min-width: 1024px)
 and
-(
-  max-height: 700px
-) {
+(max-height: 700px) {
 
   .home-who {
     padding-top:
@@ -802,9 +790,7 @@ and
 ========================================================= */
 
 @media
-(
-  max-width: 767px
-) {
+(max-width: 767px) {
 
   .home-who {
     padding:
@@ -827,10 +813,6 @@ and
   }
 
 
-  /* =======================================================
-     CONTENT
-  ======================================================= */
-
   .home-who__content {
     width: 100%;
 
@@ -845,10 +827,6 @@ and
     font-size: 8px;
   }
 
-
-  /* =======================================================
-     MOBILE HEADING
-  ======================================================= */
 
   .home-who__content h2,
   .home-who__title {
@@ -874,20 +852,11 @@ and
   }
 
 
-  /*
-   * Allow wrapping BETWEEN words,
-   * never inside a word.
-   */
-
   .home-who__kinetic-word {
     white-space:
       nowrap;
   }
 
-
-  /* =======================================================
-     MOBILE DESCRIPTION
-  ======================================================= */
 
   .home-who__description,
   .home-who__body p {
@@ -906,10 +875,6 @@ and
       1.68;
   }
 
-
-  /* =======================================================
-     MOBILE ACTIONS
-  ======================================================= */
 
   .home-who__actions {
     width: 100%;
@@ -930,7 +895,7 @@ and
 
 
   /* =======================================================
-     MOBILE IMAGE
+     MOBILE 360 IMAGE
   ======================================================= */
 
   .home-who__visual {
@@ -938,7 +903,18 @@ and
 
     margin-top: 2px;
 
-    perspective: none;
+    perspective:
+      1100px;
+
+    cursor: grab;
+
+    touch-action:
+      pan-y;
+  }
+
+
+  .home-who__visual.is-dragging {
+    cursor: grabbing;
   }
 
 
@@ -946,15 +922,13 @@ and
     width: 100% !important;
 
     aspect-ratio:
-      1.1 / 1;
+      1.12 / 1;
 
     border-radius:
       19px !important;
 
     box-shadow:
-      0
-      20px
-      44px
+      0 20px 44px
       rgba(
         23,
         15,
@@ -964,12 +938,10 @@ and
   }
 
 
-  .home-who__image img,
-  .home-who__image-base {
-    height: 108% !important;
-
-    object-position:
-      center center;
+  .home-who__image-front,
+  .home-who__image-back {
+    height:
+      108% !important;
   }
 
 }
@@ -980,9 +952,7 @@ and
 ========================================================= */
 
 @media
-(
-  max-width: 374px
-) {
+(max-width: 374px) {
 
   .home-who {
     padding-left:
@@ -1024,9 +994,7 @@ and
 ========================================================= */
 
 @media
-(
-  min-width: 1600px
-) {
+(min-width: 1600px) {
 
   .home-who__inner {
     max-width:
@@ -1054,12 +1022,6 @@ and
       15px;
   }
 
-
-  .home-who__image {
-    max-height:
-      520px;
-  }
-
 }
 
 
@@ -1068,10 +1030,7 @@ and
 ========================================================= */
 
 @media
-(
-  prefers-reduced-motion:
-  reduce
-) {
+(prefers-reduced-motion: reduce) {
 
   .home-who__kinetic-char,
   .home-who__description-word,

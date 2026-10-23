@@ -11,53 +11,35 @@ gsap.registerPlugin(ScrollTrigger);
 ========================================================= */
 
 export function initHome() {
-
   const reduceMotion =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-
   initFooterYear();
 
-
   if (reduceMotion) {
-
     showHomeContent();
-
     return;
-
   }
 
-
   initWho();
-
   initAbout();
-
   initWork();
-
   initClients();
-
   initRecognition();
 
-
-  requestAnimationFrame(
-    () => {
-
-      ScrollTrigger.refresh();
-
-    }
-  );
-
+  requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+  });
 }
 
 
 /* =========================================================
-   REDUCED MOTION FALLBACK
+   REDUCED MOTION
 ========================================================= */
 
 function showHomeContent() {
-
   gsap.set(
     [
       ".home-who__content",
@@ -73,40 +55,29 @@ function showHomeContent() {
     ],
     {
       opacity: 1,
-
       x: 0,
-
       y: 0,
-
       scale: 1
     }
   );
-
 }
 
 
 /* =========================================================
-   WHO / ABOUT APE SECTION
+   WHO / ABOUT APE
 ========================================================= */
 
 function initWho() {
-
   const section =
-    document.getElementById(
-      "home-who"
-    );
+    document.getElementById("home-who");
 
-
-  if (!section) {
-    return;
-  }
+  if (!section) return;
 
 
   const heading =
     section.querySelector(
       ".home-who__content h2"
-    )
-    ||
+    ) ||
     section.querySelector(
       ".home-who__title"
     );
@@ -115,8 +86,7 @@ function initWho() {
   const description =
     section.querySelector(
       ".home-who__description"
-    )
-    ||
+    ) ||
     section.querySelector(
       ".home-who__body p"
     );
@@ -125,12 +95,10 @@ function initWho() {
   const actions =
     section.querySelector(
       ".home-who__actions"
-    )
-    ||
+    ) ||
     section.querySelector(
       ".home-who__button"
-    )
-    ||
+    ) ||
     section.querySelector(
       ".home-action"
     );
@@ -149,13 +117,7 @@ function initWho() {
 
 
   const image =
-    imageFrame
-      ?
-      imageFrame.querySelector(
-        "img"
-      )
-      :
-      null;
+    imageFrame?.querySelector("img");
 
 
   const reduceMotion =
@@ -176,30 +138,24 @@ function initWho() {
 
 
   /* =========================================================
-     REMOVE OLD DECORATIVE SHAPES
+     REMOVE OLD RECTANGLE / BALL / SHAPES
   ========================================================= */
 
-  const unwantedShapes =
-    section.querySelectorAll(
+  section
+    .querySelectorAll(
       [
         ".home-who__rear",
         ".home-who__disc",
         ".home-who__visual-back"
       ].join(",")
-    );
-
-
-  unwantedShapes.forEach(
-    shape => {
-
-      shape.remove();
-
-    }
-  );
+    )
+    .forEach(element => {
+      element.remove();
+    });
 
 
   /* =========================================================
-     HEADING — PRESERVE EXISTING STYLING / LINE STRUCTURE
+     HEADING SETUP
   ========================================================= */
 
   const headingChars =
@@ -209,7 +165,7 @@ function initWho() {
 
 
   /* =========================================================
-     DESCRIPTION
+     DESCRIPTION SETUP
   ========================================================= */
 
   const descriptionWords =
@@ -218,59 +174,44 @@ function initWho() {
     );
 
 
-  if (
-    reduceMotion
-  ) {
-
+  if (reduceMotion) {
     restoreWhoHeading(
       headingChars
     );
-
 
     gsap.set(
       headingChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)"
       }
     );
-
 
     gsap.set(
       descriptionWords,
       {
         yPercent: 0,
-
         opacity: 1,
-
         filter:
           "blur(0px)"
       }
     );
 
-
     return;
-
   }
 
 
   /* =========================================================
-     H1-STYLE KINETIC HEADING
+     HEADING SCRAMBLE
   ========================================================= */
 
   let headingTimeline =
     null;
-
 
   let scrambleTimer =
     null;
@@ -281,90 +222,57 @@ function initWho() {
 
 
   function randomGlyph() {
-
     return glyphPool[
       Math.floor(
-        Math.random()
-        *
+        Math.random() *
         glyphPool.length
       )
     ];
-
   }
 
 
   function stopHeadingScramble(
     restore = true
   ) {
-
-    if (
-      scrambleTimer
-    ) {
-
+    if (scrambleTimer) {
       window.clearInterval(
         scrambleTimer
       );
 
-
       scrambleTimer =
         null;
-
     }
 
-
-    if (
-      restore
-    ) {
-
+    if (restore) {
       restoreWhoHeading(
         headingChars
       );
-
     }
-
   }
 
 
   function startHeadingScramble() {
+    stopHeadingScramble(false);
 
-    stopHeadingScramble(
-      false
-    );
-
-
-    /*
-     * Mobile remains calmer.
-     */
-
-    const changeChance =
+    const probability =
       isMobile()
-        ?
-        0.22
-        :
-        0.29;
+        ? 0.21
+        : 0.28;
 
-
-    const interval =
+    const speed =
       isMobile()
-        ?
-        170
-        :
-        145;
+        ? 175
+        : 150;
 
 
     headingChars.forEach(
       char => {
-
         if (
-          Math.random() <
-          0.38
+          Math.random() < 0.36
         ) {
-
           char.textContent =
             randomGlyph();
-
         }
-
       }
     );
 
@@ -372,57 +280,39 @@ function initWho() {
     scrambleTimer =
       window.setInterval(
         () => {
-
           headingChars.forEach(
             char => {
-
               if (
                 Math.random() <
-                changeChance
+                probability
               ) {
-
                 char.textContent =
                   randomGlyph();
-
               }
-
             }
           );
-
         },
-        interval
+        speed
       );
-
   }
 
 
   function createHeadingLoop() {
-
-    if (
-      !headingChars.length
-    ) {
+    if (!headingChars.length) {
       return null;
     }
 
-
-    stopHeadingScramble(
-      true
-    );
+    stopHeadingScramble(true);
 
 
     gsap.set(
       headingChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)"
       }
@@ -430,15 +320,10 @@ function initWho() {
 
 
     const timeline =
-      gsap.timeline(
-        {
-          paused: true,
-
-          repeat: -1,
-
-          repeatRefresh: true
-        }
-      );
+      gsap.timeline({
+        paused: true,
+        repeat: -1
+      });
 
 
     timeline.call(
@@ -449,74 +334,56 @@ function initWho() {
     timeline.fromTo(
       headingChars,
       {
-        x:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -5
-                :
-                -9,
+        x: () =>
+          gsap.utils.random(
+            isMobile()
+              ? -5
+              : -9,
 
-              isMobile()
-                ?
-                5
-                :
-                9
-            ),
+            isMobile()
+              ? 5
+              : 9
+          ),
 
-        y:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -4
-                :
-                -7,
+        y: () =>
+          gsap.utils.random(
+            isMobile()
+              ? -4
+              : -7,
 
-              isMobile()
-                ?
-                4
-                :
-                7
-            ),
+            isMobile()
+              ? 4
+              : 7
+          ),
 
-        rotation:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -3
-                :
-                -6,
+        rotation: () =>
+          gsap.utils.random(
+            isMobile()
+              ? -3
+              : -6,
 
-              isMobile()
-                ?
-                3
-                :
-                6
-            ),
+            isMobile()
+              ? 3
+              : 6
+          ),
 
-        scale:
-          () =>
-            gsap.utils.random(
-              0.96,
-              1.045
-            ),
+        scale: () =>
+          gsap.utils.random(
+            0.96,
+            1.045
+          ),
 
-        opacity:
-          () =>
-            gsap.utils.random(
-              0.68,
-              0.94
-            ),
+        opacity: () =>
+          gsap.utils.random(
+            0.7,
+            0.95
+          ),
 
         filter:
           "blur(2px)"
       },
       {
         x: 0,
-
         y: 0,
 
         rotation: 0,
@@ -530,21 +397,16 @@ function initWho() {
 
         duration:
           isMobile()
-            ?
-            1.95
-            :
-            1.8,
+            ? 2
+            : 1.85,
 
         stagger: {
           each:
             isMobile()
-              ?
-              0.011
-              :
-              0.013,
+              ? 0.011
+              : 0.013,
 
-          from:
-            "random"
+          from: "random"
         },
 
         ease:
@@ -555,51 +417,39 @@ function initWho() {
 
     timeline.call(
       () => {
-
         stopHeadingScramble(
           true
         );
-
       },
       null,
       isMobile()
-        ?
-        1.5
-        :
-        1.4
+        ? 1.52
+        : 1.42
     );
 
-
-    /*
-     * Final clean text stays visible.
-     */
 
     timeline.to(
       headingChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)",
 
-        duration: 0.4
+        duration: 0.42,
+
+        ease:
+          "power2.out"
       }
     );
 
 
     /*
-     * Same rhythm as Hero:
-     * wait before shuffling again.
+     * CLEAN READING TIME
      */
-
     timeline.to(
       {},
       {
@@ -609,7 +459,6 @@ function initWho() {
 
 
     return timeline;
-
   }
 
 
@@ -618,7 +467,7 @@ function initWho() {
 
 
   /* =========================================================
-     DESCRIPTION WORD LOOP
+     DESCRIPTION LOOP
   ========================================================= */
 
   const descriptionTimeline =
@@ -629,87 +478,149 @@ function initWho() {
 
 
   /* =========================================================
-     SECTION VISIBILITY
+     IMAGE INTRO
   ========================================================= */
 
-  ScrollTrigger.create(
-    {
-      trigger:
-        section,
-
-      start:
-        "top 82%",
-
-      end:
-        "bottom 12%",
-
-
-      onEnter: () => {
-
-        headingTimeline?.restart();
-
-        descriptionTimeline?.restart();
-
-      },
-
-
-      onEnterBack: () => {
-
-        headingTimeline?.play();
-
-        descriptionTimeline?.play();
-
-      },
-
-
-      onLeave: () => {
-
-        headingTimeline?.pause();
-
-        descriptionTimeline?.pause();
-
-
-        stopHeadingScramble(
-          true
-        );
-
-      },
-
-
-      onLeaveBack: () => {
-
-        headingTimeline?.pause();
-
-        descriptionTimeline?.pause();
-
-
-        stopHeadingScramble(
-          true
-        );
-
-      }
-    }
-  );
-
-
-  /* =========================================================
-     ACTION BUTTON
-  ========================================================= */
-
-  if (
-    actions
-  ) {
-
+  if (visual) {
     gsap.fromTo(
-      actions,
+      visual,
       {
-        y: 18,
+        y:
+          isMobile()
+            ? 30
+            : 42,
 
-        opacity: 0
+        opacity: 0,
+
+        scale: 0.94
       },
       {
         y: 0,
 
+        opacity: 1,
+
+        scale: 1,
+
+        duration: 1,
+
+        ease:
+          "power4.out",
+
+        scrollTrigger: {
+          trigger:
+            visual,
+
+          start:
+            "top 87%",
+
+          once: true
+        }
+      }
+    );
+  }
+
+
+  /* =========================================================
+     TRUE 360° IMAGE SYSTEM
+  ========================================================= */
+
+  const image360 =
+    setupWhoImage360({
+      section,
+      visual,
+      imageFrame,
+      image,
+      finePointer,
+      isMobile
+    });
+
+
+  /* =========================================================
+     SECTION VISIBILITY
+  ========================================================= */
+
+  ScrollTrigger.create({
+    trigger:
+      section,
+
+    start:
+      "top 82%",
+
+    end:
+      "bottom 10%",
+
+
+    onEnter: () => {
+      headingTimeline?.restart();
+
+      descriptionTimeline?.restart();
+
+
+      /*
+       * SHOW THE 360 EFFECT
+       * AS SOON AS SECTION ENTERS.
+       */
+      gsap.delayedCall(
+        0.55,
+        () => {
+          image360?.spin(
+            1,
+            1.65
+          );
+        }
+      );
+    },
+
+
+    onEnterBack: () => {
+      headingTimeline?.play();
+
+      descriptionTimeline?.play();
+
+
+      image360?.spin(
+        -1,
+        1.55
+      );
+    },
+
+
+    onLeave: () => {
+      headingTimeline?.pause();
+
+      descriptionTimeline?.pause();
+
+      stopHeadingScramble(
+        true
+      );
+    },
+
+
+    onLeaveBack: () => {
+      headingTimeline?.pause();
+
+      descriptionTimeline?.pause();
+
+      stopHeadingScramble(
+        true
+      );
+    }
+  });
+
+
+  /* =========================================================
+     CTA
+  ========================================================= */
+
+  if (actions) {
+    gsap.fromTo(
+      actions,
+      {
+        y: 18,
+        opacity: 0
+      },
+      {
+        y: 0,
         opacity: 1,
 
         duration: 0.7,
@@ -724,271 +635,935 @@ function initWho() {
           start:
             "top 74%",
 
-          once:
-            true
+          once: true
         }
       }
     );
+  }
+}
 
+
+/* =========================================================
+   TRUE 360° PICTURE INTERACTION
+========================================================= */
+
+function setupWhoImage360({
+  section,
+  visual,
+  imageFrame,
+  image,
+  finePointer,
+  isMobile
+}) {
+  if (
+    !section ||
+    !visual ||
+    !imageFrame ||
+    !image
+  ) {
+    return null;
   }
 
 
   /* =========================================================
-     IMAGE REVEAL
+     CREATE FRONT + BACK FACES
   ========================================================= */
 
-  if (
-    visual
-  ) {
+  image.classList.add(
+    "home-who__image-front"
+  );
 
-    gsap.fromTo(
-      visual,
-      {
-        y:
-          isMobile()
-            ?
-            32
-            :
-            42,
 
-        opacity: 0,
-
-        scale:
-          0.94
-      },
-      {
-        y: 0,
-
-        opacity: 1,
-
-        scale: 1,
-
-        duration:
-          1.05,
-
-        ease:
-          "power4.out",
-
-        scrollTrigger: {
-          trigger:
-            visual,
-
-          start:
-            "top 86%",
-
-          once:
-            true
-        }
-      }
+  let backImage =
+    imageFrame.querySelector(
+      ".home-who__image-back"
     );
 
+
+  if (!backImage) {
+    backImage =
+      image.cloneNode(true);
+
+    backImage.removeAttribute(
+      "id"
+    );
+
+    backImage.classList.remove(
+      "home-who__image-front"
+    );
+
+    backImage.classList.add(
+      "home-who__image-back"
+    );
+
+    backImage.alt = "";
+
+    backImage.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    imageFrame.appendChild(
+      backImage
+    );
   }
 
 
-  if (
-    image
+  imageFrame.classList.add(
+    "is-360-ready"
+  );
+
+
+  /* =========================================================
+     INITIAL 3D STATE
+  ========================================================= */
+
+  gsap.set(
+    imageFrame,
+    {
+      rotationX: 0,
+      rotationY: 0,
+      rotationZ: 0,
+
+      transformPerspective:
+        1400,
+
+      transformStyle:
+        "preserve-3d",
+
+      transformOrigin:
+        "50% 50%",
+
+      force3D: true
+    }
+  );
+
+
+  gsap.set(
+    image,
+    {
+      rotationY: 0,
+
+      backfaceVisibility:
+        "hidden",
+
+      transformStyle:
+        "preserve-3d",
+
+      scale: 1.04
+    }
+  );
+
+
+  gsap.set(
+    backImage,
+    {
+      rotationY: 180,
+
+      backfaceVisibility:
+        "hidden",
+
+      transformStyle:
+        "preserve-3d",
+
+      scale: 1.04
+    }
+  );
+
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+
+  let tracking =
+    false;
+
+  let horizontalDrag =
+    false;
+
+  let startX =
+    0;
+
+  let startY =
+    0;
+
+  let startRotation =
+    0;
+
+  let currentRotation =
+    0;
+
+  let lastX =
+    0;
+
+  let lastTime =
+    0;
+
+  let velocityX =
+    0;
+
+  let pointerId =
+    null;
+
+  let spinTween =
+    null;
+
+  let lastHoverSpin =
+    0;
+
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  function getRotation() {
+    const value =
+      Number(
+        gsap.getProperty(
+          imageFrame,
+          "rotationY"
+        )
+      );
+
+    return Number.isFinite(value)
+      ? value
+      : 0;
+  }
+
+
+  function nearestFullTurn(
+    value
   ) {
-
-    gsap.fromTo(
-      image,
-      {
-        scale: 1.1,
-
-        yPercent: 4
-      },
-      {
-        scale: 1.02,
-
-        yPercent: 0,
-
-        duration: 1.3,
-
-        ease:
-          "power4.out",
-
-        scrollTrigger: {
-          trigger:
-            visual,
-
-          start:
-            "top 86%",
-
-          once:
-            true
-        }
-      }
+    return (
+      Math.round(
+        value / 360
+      ) * 360
     );
-
-
-    /*
-     * Very light scroll parallax.
-     * Works on mobile as well.
-     */
-
-    gsap.to(
-      image,
-      {
-        yPercent: -5,
-
-        ease:
-          "none",
-
-        scrollTrigger: {
-          trigger:
-            section,
-
-          start:
-            "top bottom",
-
-          end:
-            "bottom top",
-
-          scrub:
-            0.8
-        }
-      }
-    );
-
   }
 
 
   /* =========================================================
-     DESKTOP IMAGE DEPTH
+     360 SPIN
   ========================================================= */
 
-  if (
-    finePointer
-    &&
-    visual
-    &&
-    imageFrame
+  function spin(
+    direction = 1,
+    duration = 1.55
   ) {
+    if (tracking) {
+      return;
+    }
 
-    const rotateX =
-      gsap.quickTo(
-        imageFrame,
-        "rotationX",
-        {
-          duration: 0.55,
 
-          ease:
-            "power3.out"
-        }
+    spinTween?.kill();
+
+
+    const current =
+      getRotation();
+
+
+    const cleanBase =
+      nearestFullTurn(
+        current
       );
 
 
-    const rotateY =
-      gsap.quickTo(
-        imageFrame,
-        "rotationY",
-        {
-          duration: 0.55,
-
-          ease:
-            "power3.out"
-        }
+    const target =
+      cleanBase +
+      (
+        direction >= 0
+          ? 360
+          : -360
       );
 
 
-    const moveX =
-      gsap.quickTo(
+    currentRotation =
+      target;
+
+
+    spinTween =
+      gsap.to(
         imageFrame,
-        "x",
         {
-          duration: 0.6,
+          rotationY:
+            target,
+
+          rotationX: 0,
+
+          rotationZ: 0,
+
+          z: 0,
+
+          duration,
 
           ease:
-            "power3.out"
+            "power4.inOut",
+
+          overwrite:
+            true,
+
+          onComplete: () => {
+            spinTween =
+              null;
+          }
         }
       );
+  }
 
 
-    const moveY =
-      gsap.quickTo(
-        imageFrame,
-        "y",
-        {
-          duration: 0.6,
+  /* =========================================================
+     IMAGE PARALLAX
+  ========================================================= */
 
-          ease:
-            "power3.out"
-        }
-      );
+  gsap.to(
+    [
+      image,
+      backImage
+    ],
+    {
+      yPercent: -4,
+
+      ease:
+        "none",
+
+      scrollTrigger: {
+        trigger:
+          section,
+
+        start:
+          "top bottom",
+
+        end:
+          "bottom top",
+
+        scrub:
+          0.8
+      }
+    }
+  );
 
 
-    visual.addEventListener(
-      "pointermove",
-      event => {
+  /* =========================================================
+     TOUCH BEHAVIOUR
+  ========================================================= */
 
+  visual.style.touchAction =
+    "pan-y";
+
+
+  visual.style.userSelect =
+    "none";
+
+
+  visual.style.webkitUserSelect =
+    "none";
+
+
+  visual.addEventListener(
+    "dragstart",
+    event => {
+      event.preventDefault();
+    }
+  );
+
+
+  /* =========================================================
+     POINTER DOWN
+  ========================================================= */
+
+  visual.addEventListener(
+    "pointerdown",
+    event => {
+      if (
+        event.button !== undefined &&
+        event.button !== 0
+      ) {
+        return;
+      }
+
+
+      spinTween?.kill();
+
+      spinTween =
+        null;
+
+
+      tracking =
+        true;
+
+
+      horizontalDrag =
+        false;
+
+
+      pointerId =
+        event.pointerId;
+
+
+      startX =
+        event.clientX;
+
+
+      startY =
+        event.clientY;
+
+
+      lastX =
+        event.clientX;
+
+
+      lastTime =
+        performance.now();
+
+
+      velocityX =
+        0;
+
+
+      startRotation =
+        getRotation();
+
+
+      currentRotation =
+        startRotation;
+    }
+  );
+
+
+  /* =========================================================
+     POINTER MOVE
+  ========================================================= */
+
+  visual.addEventListener(
+    "pointermove",
+    event => {
+      /*
+       * NORMAL DESKTOP HOVER DEPTH
+       */
+      if (
+        !tracking &&
+        finePointer
+      ) {
         const rect =
           visual.getBoundingClientRect();
 
 
         const nx =
           (
-            event.clientX
-            -
+            event.clientX -
             rect.left
-          )
-          /
-          rect.width
-          -
+          ) /
+          rect.width -
           0.5;
 
 
         const ny =
           (
-            event.clientY
-            -
+            event.clientY -
             rect.top
-          )
-          /
-          rect.height
-          -
+          ) /
+          rect.height -
           0.5;
 
 
-        rotateY(
-          nx * 8
+        gsap.to(
+          imageFrame,
+          {
+            rotationX:
+              ny * -5,
+
+            z: 10,
+
+            y:
+              ny * 5,
+
+            duration: 0.45,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
         );
 
 
-        rotateX(
-          ny * -6
-        );
+        return;
+      }
 
 
-        moveX(
-          nx * 8
-        );
+      if (!tracking) {
+        return;
+      }
 
 
-        moveY(
-          ny * 6
-        );
+      const dx =
+        event.clientX -
+        startX;
 
 
+      const dy =
+        event.clientY -
+        startY;
+
+
+      /* =====================================================
+         DETERMINE HORIZONTAL VS VERTICAL
+      ===================================================== */
+
+      if (!horizontalDrag) {
         if (
-          image
+          Math.abs(dx) < 6 &&
+          Math.abs(dy) < 6
         ) {
-
-          gsap.to(
-            image,
-            {
-              scale: 1.055,
-
-              duration: 0.55,
-
-              ease:
-                "power3.out",
-
-              overwrite:
-                true
-            }
-          );
-
+          return;
         }
 
+
+        /*
+         * MOBILE VERTICAL SCROLL WINS.
+         */
+        if (
+          Math.abs(dy) >
+          Math.abs(dx) *
+          1.15
+        ) {
+          tracking =
+            false;
+
+          horizontalDrag =
+            false;
+
+          pointerId =
+            null;
+
+          return;
+        }
+
+
+        horizontalDrag =
+          true;
+
+
+        visual.classList.add(
+          "is-dragging"
+        );
+
+
+        try {
+          visual.setPointerCapture?.(
+            event.pointerId
+          );
+        }
+
+        catch {
+          /* no-op */
+        }
+      }
+
+
+      if (
+        event.cancelable
+      ) {
+        event.preventDefault();
+      }
+
+
+      /* =====================================================
+         VELOCITY
+      ===================================================== */
+
+      const now =
+        performance.now();
+
+
+      const elapsed =
+        Math.max(
+          now -
+          lastTime,
+          1
+        );
+
+
+      velocityX =
+        (
+          event.clientX -
+          lastX
+        ) /
+        elapsed;
+
+
+      lastX =
+        event.clientX;
+
+
+      lastTime =
+        now;
+
+
+      /* =====================================================
+         FULL 360 DRAG
+
+         ~400px horizontal movement =
+         roughly one full rotation.
+      ===================================================== */
+
+      const sensitivity =
+        isMobile()
+          ? 0.92
+          : 0.78;
+
+
+      currentRotation =
+        startRotation +
+        dx *
+        sensitivity;
+
+
+      const tiltX =
+        gsap.utils.clamp(
+          -5,
+          5,
+          -dy * 0.035
+        );
+
+
+      gsap.set(
+        imageFrame,
+        {
+          rotationY:
+            currentRotation,
+
+          rotationX:
+            tiltX,
+
+          z:
+            horizontalDrag
+              ? 14
+              : 0,
+
+          force3D:
+            true
+        }
+      );
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  /* =========================================================
+     RELEASE
+  ========================================================= */
+
+  function finishRotation(
+    event
+  ) {
+    if (!tracking) {
+      return;
+    }
+
+
+    tracking =
+      false;
+
+
+    visual.classList.remove(
+      "is-dragging"
+    );
+
+
+    const dragDistance =
+      event.clientX -
+      startX;
+
+
+    /*
+     * TAP ON MOBILE:
+     * DO ONE CLEAN FULL 360 SPIN.
+     */
+    if (!horizontalDrag) {
+      if (
+        event.pointerType ===
+        "touch"
+      ) {
+        spin(
+          1,
+          1.45
+        );
+      }
+
+      return;
+    }
+
+
+    /* =====================================================
+       MOMENTUM
+    ===================================================== */
+
+    const momentum =
+      velocityX *
+      (
+        isMobile()
+          ? 190
+          : 160
+      );
+
+
+    const predicted =
+      currentRotation +
+      momentum;
+
+
+    let target =
+      nearestFullTurn(
+        predicted
+      );
+
+
+    const startClean =
+      nearestFullTurn(
+        startRotation
+      );
+
+
+    /*
+     * If user clearly dragged but nearest
+     * snap would return to the same position,
+     * force one full 360° turn.
+     */
+    if (
+      Math.abs(
+        dragDistance
+      ) > 34 &&
+      target ===
+        startClean
+    ) {
+      target +=
+        dragDistance > 0
+          ? 360
+          : -360;
+    }
+
+
+    /*
+     * Direction should follow the swipe.
+     */
+    if (
+      dragDistance > 0 &&
+      target <
+        currentRotation
+    ) {
+      target += 360;
+    }
+
+
+    if (
+      dragDistance < 0 &&
+      target >
+        currentRotation
+    ) {
+      target -= 360;
+    }
+
+
+    const distance =
+      Math.abs(
+        target -
+        currentRotation
+      );
+
+
+    const duration =
+      gsap.utils.clamp(
+        0.5,
+        1.25,
+        distance / 330
+      );
+
+
+    spinTween =
+      gsap.to(
+        imageFrame,
+        {
+          rotationY:
+            target,
+
+          rotationX: 0,
+
+          rotationZ: 0,
+
+          z: 0,
+
+          y: 0,
+
+          duration,
+
+          ease:
+            "power4.out",
+
+          overwrite:
+            true,
+
+          onComplete: () => {
+            currentRotation =
+              target;
+
+            spinTween =
+              null;
+          }
+        }
+      );
+
+
+    if (
+      pointerId !== null
+    ) {
+      try {
+        visual.releasePointerCapture?.(
+          pointerId
+        );
+      }
+
+      catch {
+        /* no-op */
+      }
+    }
+
+
+    pointerId =
+      null;
+
+
+    horizontalDrag =
+      false;
+  }
+
+
+  visual.addEventListener(
+    "pointerup",
+    finishRotation
+  );
+
+
+  visual.addEventListener(
+    "pointercancel",
+    event => {
+      if (!tracking) {
+        return;
+      }
+
+
+      tracking =
+        false;
+
+      horizontalDrag =
+        false;
+
+
+      visual.classList.remove(
+        "is-dragging"
+      );
+
+
+      const clean =
+        nearestFullTurn(
+          getRotation()
+        );
+
+
+      gsap.to(
+        imageFrame,
+        {
+          rotationY:
+            clean,
+
+          rotationX: 0,
+
+          z: 0,
+
+          y: 0,
+
+          duration: 0.65,
+
+          ease:
+            "power3.out"
+        }
+      );
+
+
+      try {
+        visual.releasePointerCapture?.(
+          event.pointerId
+        );
+      }
+
+      catch {
+        /* no-op */
+      }
+
+
+      pointerId =
+        null;
+    }
+  );
+
+
+  /* =========================================================
+     DESKTOP HOVER = FULL 360
+  ========================================================= */
+
+  if (finePointer) {
+    visual.addEventListener(
+      "pointerenter",
+      event => {
+        if (
+          tracking
+        ) {
+          return;
+        }
+
+
+        const now =
+          performance.now();
+
+
+        /*
+         * Prevent repeated spins caused by
+         * tiny pointer re-entries.
+         */
+        if (
+          now -
+          lastHoverSpin <
+          900
+        ) {
+          return;
+        }
+
+
+        lastHoverSpin =
+          now;
+
+
+        const rect =
+          visual.getBoundingClientRect();
+
+
+        const direction =
+          event.clientX <
+          (
+            rect.left +
+            rect.width / 2
+          )
+            ? -1
+            : 1;
+
+
+        spin(
+          direction,
+          1.45
+        );
       }
     );
 
@@ -996,74 +1571,66 @@ function initWho() {
     visual.addEventListener(
       "pointerleave",
       () => {
-
-        rotateX(0);
-
-        rotateY(0);
-
-        moveX(0);
-
-        moveY(0);
-
-
-        if (
-          image
-        ) {
-
-          gsap.to(
-            image,
-            {
-              scale: 1.02,
-
-              duration: 0.7,
-
-              ease:
-                "power3.out",
-
-              overwrite:
-                true
-            }
-          );
-
+        if (tracking) {
+          return;
         }
 
+
+        gsap.to(
+          imageFrame,
+          {
+            rotationX: 0,
+
+            z: 0,
+
+            y: 0,
+
+            duration: 0.55,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
       }
     );
-
   }
 
+
+  return {
+    spin
+  };
 }
 
 
 /* =========================================================
-   PREPARE WHO HEADING
+   PREPARE HEADING
 ========================================================= */
 
 function prepareWhoHeading(
   heading
 ) {
-
   if (!heading) {
     return [];
   }
 
 
   if (
-    heading.dataset.kineticReady ===
+    heading.dataset
+      .kineticReady ===
     "true"
   ) {
-
     return Array.from(
       heading.querySelectorAll(
         ".home-who__kinetic-char"
       )
     );
-
   }
 
 
-  const textNodes =
-    [];
+  const textNodes = [];
 
 
   const walker =
@@ -1082,28 +1649,19 @@ function prepareWhoHeading(
         walker.nextNode()
     )
   ) {
-
     if (
-      node.textContent
-        .trim()
+      node.textContent.trim()
     ) {
-
-      textNodes.push(
-        node
-      );
-
+      textNodes.push(node);
     }
-
   }
 
 
-  const characters =
-    [];
+  const characters = [];
 
 
   textNodes.forEach(
     textNode => {
-
       const text =
         textNode.textContent
           .trim()
@@ -1114,9 +1672,7 @@ function prepareWhoHeading(
 
 
       const words =
-        text.split(
-          " "
-        );
+        text.split(" ");
 
 
       const fragment =
@@ -1128,7 +1684,6 @@ function prepareWhoHeading(
           word,
           wordIndex
         ) => {
-
           const wordWrap =
             document.createElement(
               "span"
@@ -1143,7 +1698,6 @@ function prepareWhoHeading(
             word
           ).forEach(
             character => {
-
               const char =
                 document.createElement(
                   "span"
@@ -1170,7 +1724,6 @@ function prepareWhoHeading(
               characters.push(
                 char
               );
-
             }
           );
 
@@ -1184,56 +1737,47 @@ function prepareWhoHeading(
             wordIndex <
             words.length - 1
           ) {
-
             fragment.appendChild(
               document.createTextNode(
                 " "
               )
             );
-
           }
-
         }
       );
 
 
-      textNode.parentNode.replaceChild(
-        fragment,
-        textNode
-      );
-
+      textNode.parentNode
+        .replaceChild(
+          fragment,
+          textNode
+        );
     }
   );
 
 
-  heading.dataset.kineticReady =
+  heading.dataset
+    .kineticReady =
     "true";
 
 
   return characters;
-
 }
 
 
 /* =========================================================
-   RESTORE WHO HEADING
+   RESTORE HEADING
 ========================================================= */
 
 function restoreWhoHeading(
   characters
 ) {
-
   characters.forEach(
     char => {
-
       char.textContent =
-        char.dataset.final
-        ||
-        "";
-
+        char.dataset.final || "";
     }
   );
-
 }
 
 
@@ -1244,23 +1788,21 @@ function restoreWhoHeading(
 function prepareWhoDescription(
   description
 ) {
-
   if (!description) {
     return [];
   }
 
 
   if (
-    description.dataset.wordsReady ===
+    description.dataset
+      .wordsReady ===
     "true"
   ) {
-
     return Array.from(
       description.querySelectorAll(
         ".home-who__description-word"
       )
     );
-
   }
 
 
@@ -1274,17 +1816,13 @@ function prepareWhoDescription(
 
 
   const words =
-    text.split(
-      " "
-    );
+    text.split(" ");
 
 
-  description.textContent =
-    "";
+  description.textContent = "";
 
 
-  const elements =
-    [];
+  const elements = [];
 
 
   words.forEach(
@@ -1292,7 +1830,6 @@ function prepareWhoDescription(
       word,
       index
     ) => {
-
       const mask =
         document.createElement(
           "span"
@@ -1336,25 +1873,22 @@ function prepareWhoDescription(
         index <
         words.length - 1
       ) {
-
         description.appendChild(
           document.createTextNode(
             " "
           )
         );
-
       }
-
     }
   );
 
 
-  description.dataset.wordsReady =
+  description.dataset
+    .wordsReady =
     "true";
 
 
   return elements;
-
 }
 
 
@@ -1366,22 +1900,16 @@ function createDescriptionLoop(
   words,
   isMobile
 ) {
-
-  if (
-    !words.length
-  ) {
+  if (!words.length) {
     return null;
   }
 
 
   const timeline =
-    gsap.timeline(
-      {
-        paused: true,
-
-        repeat: -1
-      }
-    );
+    gsap.timeline({
+      paused: true,
+      repeat: -1
+    });
 
 
   timeline.set(
@@ -1409,27 +1937,19 @@ function createDescriptionLoop(
 
       duration:
         isMobile()
-          ?
-          0.72
-          :
-          0.62,
+          ? 0.72
+          : 0.62,
 
       stagger:
         isMobile()
-          ?
-          0.035
-          :
-          0.028,
+          ? 0.035
+          : 0.028,
 
       ease:
         "power4.out"
     }
   );
 
-
-  /*
-   * Clean reading time.
-   */
 
   timeline.to(
     {},
@@ -1453,20 +1973,14 @@ function createDescriptionLoop(
 
       stagger:
         isMobile()
-          ?
-          0.018
-          :
-          0.014,
+          ? 0.018
+          : 0.014,
 
       ease:
         "power3.in"
     }
   );
 
-
-  /*
-   * Small empty pause.
-   */
 
   timeline.to(
     {},
@@ -1477,7 +1991,6 @@ function createDescriptionLoop(
 
 
   return timeline;
-
 }
 
 
@@ -1486,12 +1999,10 @@ function createDescriptionLoop(
 ========================================================= */
 
 function initAbout() {
-
   const section =
     document.getElementById(
       "home-about"
     );
-
 
   if (!section) return;
 
@@ -1508,20 +2019,15 @@ function initAbout() {
     );
 
 
-  if (
-    heading
-  ) {
-
+  if (heading) {
     gsap.fromTo(
       heading,
       {
         y: 30,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.8,
@@ -1536,29 +2042,22 @@ function initAbout() {
           start:
             "top 84%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
 
 
-  if (
-    content
-  ) {
-
+  if (content) {
     gsap.fromTo(
       content,
       {
         y: 34,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.85,
@@ -1575,14 +2074,11 @@ function initAbout() {
           start:
             "top 84%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
-
 }
 
 
@@ -1591,12 +2087,10 @@ function initAbout() {
 ========================================================= */
 
 function initWork() {
-
   const section =
     document.getElementById(
       "home-work"
     );
-
 
   if (!section) return;
 
@@ -1613,20 +2107,15 @@ function initWork() {
     );
 
 
-  if (
-    header
-  ) {
-
+  if (header) {
     gsap.fromTo(
       header,
       {
         y: 30,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.8,
@@ -1641,12 +2130,10 @@ function initWork() {
           start:
             "top 88%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
 
 
@@ -1655,17 +2142,14 @@ function initWork() {
       project,
       index
     ) => {
-
       gsap.fromTo(
         project,
         {
           y: 30,
-
           opacity: 0
         },
         {
           y: 0,
-
           opacity: 1,
 
           duration: 0.75,
@@ -1683,15 +2167,12 @@ function initWork() {
             start:
               "top 90%",
 
-            once:
-              true
+            once: true
           }
         }
       );
-
     }
   );
-
 }
 
 
@@ -1700,12 +2181,10 @@ function initWork() {
 ========================================================= */
 
 function initClients() {
-
   const section =
     document.getElementById(
       "home-clients"
     );
-
 
   if (!section) return;
 
@@ -1722,20 +2201,15 @@ function initClients() {
     );
 
 
-  if (
-    heading
-  ) {
-
+  if (heading) {
     gsap.fromTo(
       heading,
       {
         y: 28,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.75,
@@ -1750,29 +2224,22 @@ function initClients() {
           start:
             "top 88%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
 
 
-  if (
-    logos.length
-  ) {
-
+  if (logos.length) {
     gsap.fromTo(
       logos,
       {
         y: 16,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.55,
@@ -1789,14 +2256,11 @@ function initClients() {
           start:
             "top 88%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
-
 }
 
 
@@ -1805,12 +2269,10 @@ function initClients() {
 ========================================================= */
 
 function initRecognition() {
-
   const section =
     document.getElementById(
       "home-recognition"
     );
-
 
   if (!section) return;
 
@@ -1827,20 +2289,15 @@ function initRecognition() {
     );
 
 
-  if (
-    visual
-  ) {
-
+  if (visual) {
     gsap.fromTo(
       visual,
       {
         y: 32,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.85,
@@ -1855,29 +2312,22 @@ function initRecognition() {
           start:
             "top 82%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
 
 
-  if (
-    content
-  ) {
-
+  if (content) {
     gsap.fromTo(
       content,
       {
         y: 32,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.85,
@@ -1894,34 +2344,27 @@ function initRecognition() {
           start:
             "top 82%",
 
-          once:
-            true
+          once: true
         }
       }
     );
-
   }
-
 }
 
 
 /* =========================================================
-   FOOTER YEAR
+   FOOTER
 ========================================================= */
 
 function initFooterYear() {
-
   const year =
     document.getElementById(
       "ape-footer-year"
     );
 
-
   if (!year) return;
-
 
   year.textContent =
     new Date()
       .getFullYear();
-
 }
