@@ -11,55 +11,136 @@ gsap.registerPlugin(ScrollTrigger);
 ========================================================= */
 
 export function initHome() {
-  const reduceMotion =
+
+  initFooterYear();
+
+  cloneLogoRows();
+
+
+  const reduced =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-  initFooterYear();
 
-  if (reduceMotion) {
-    showHomeContent();
+  if (reduced) {
     return;
   }
 
+
+  initScenes();
+
   initWho();
-  initAbout();
+
+  initServices();
+
   initWork();
+
   initClients();
+
   initRecognition();
 
-  requestAnimationFrame(() => {
-    ScrollTrigger.refresh();
-  });
+
+  requestAnimationFrame(
+    () => {
+
+      ScrollTrigger.refresh();
+
+    }
+  );
+
 }
 
 
 /* =========================================================
-   REDUCED MOTION
+   GENERIC HOME SCENE MOTION
 ========================================================= */
 
-function showHomeContent() {
-  gsap.set(
-    [
-      ".home-who__content",
-      ".home-who__visual",
-      ".home-about__heading",
-      ".home-about__content",
-      ".home-work-new__header",
-      ".home-work-new__project",
-      ".home-clients__heading",
-      ".home-client-logo",
-      ".home-recognition__visual",
-      ".home-recognition__content"
-    ],
-    {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      scale: 1
+function initScenes() {
+
+  const scenes =
+    document.querySelectorAll(
+      ".home-scene"
+    );
+
+
+  scenes.forEach(
+    scene => {
+
+      const stage =
+        scene.querySelector(
+          ".home-scene__stage"
+        );
+
+
+      if (!stage) {
+        return;
+      }
+
+
+      gsap.fromTo(
+        stage,
+        {
+          scale: 0.965,
+
+          opacity: 0.62,
+
+          y: 35
+        },
+        {
+          scale: 1,
+
+          opacity: 1,
+
+          y: 0,
+
+          ease: "none",
+
+          scrollTrigger: {
+
+            trigger: scene,
+
+            start:
+              "top 92%",
+
+            end:
+              "top 28%",
+
+            scrub: 0.65
+
+          }
+        }
+      );
+
+
+      gsap.to(
+        stage,
+        {
+          scale: 1.025,
+
+          y: -28,
+
+          ease: "none",
+
+          scrollTrigger: {
+
+            trigger: scene,
+
+            start:
+              "65% top",
+
+            end:
+              "bottom top",
+
+            scrub: 0.7
+
+          }
+        }
+      );
+
     }
   );
+
 }
 
 
@@ -68,16 +149,23 @@ function showHomeContent() {
 ========================================================= */
 
 function initWho() {
-  const section =
-    document.getElementById("home-who");
 
-  if (!section) return;
+  const section =
+    document.getElementById(
+      "home-who"
+    );
+
+
+  if (!section) {
+    return;
+  }
 
 
   const heading =
     section.querySelector(
       ".home-who__content h2"
-    ) ||
+    )
+    ||
     section.querySelector(
       ".home-who__title"
     );
@@ -86,7 +174,8 @@ function initWho() {
   const description =
     section.querySelector(
       ".home-who__description"
-    ) ||
+    )
+    ||
     section.querySelector(
       ".home-who__body p"
     );
@@ -95,10 +184,12 @@ function initWho() {
   const actions =
     section.querySelector(
       ".home-who__actions"
-    ) ||
+    )
+    ||
     section.querySelector(
       ".home-who__button"
-    ) ||
+    )
+    ||
     section.querySelector(
       ".home-action"
     );
@@ -117,13 +208,10 @@ function initWho() {
 
 
   const image =
-    imageFrame?.querySelector("img");
-
-
-  const reduceMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    imageFrame
+      ?.querySelector(
+        "img"
+      );
 
 
   const finePointer =
@@ -138,7 +226,7 @@ function initWho() {
 
 
   /* =========================================================
-     REMOVE OLD RECTANGLE / BALL / SHAPES
+     REMOVE OLD RECTANGLE / BALL
   ========================================================= */
 
   section
@@ -149,13 +237,17 @@ function initWho() {
         ".home-who__visual-back"
       ].join(",")
     )
-    .forEach(element => {
-      element.remove();
-    });
+    .forEach(
+      element => {
+
+        element.remove();
+
+      }
+    );
 
 
   /* =========================================================
-     HEADING SETUP
+     HEADING PREP
   ========================================================= */
 
   const headingChars =
@@ -165,7 +257,7 @@ function initWho() {
 
 
   /* =========================================================
-     DESCRIPTION SETUP
+     PARAGRAPH PREP
   ========================================================= */
 
   const descriptionWords =
@@ -174,44 +266,13 @@ function initWho() {
     );
 
 
-  if (reduceMotion) {
-    restoreWhoHeading(
-      headingChars
-    );
-
-    gsap.set(
-      headingChars,
-      {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        opacity: 1,
-        filter:
-          "blur(0px)"
-      }
-    );
-
-    gsap.set(
-      descriptionWords,
-      {
-        yPercent: 0,
-        opacity: 1,
-        filter:
-          "blur(0px)"
-      }
-    );
-
-    return;
-  }
-
-
   /* =========================================================
      HEADING SCRAMBLE
   ========================================================= */
 
   let headingTimeline =
     null;
+
 
   let scrambleTimer =
     null;
@@ -222,57 +283,84 @@ function initWho() {
 
 
   function randomGlyph() {
+
     return glyphPool[
       Math.floor(
-        Math.random() *
+        Math.random()
+        *
         glyphPool.length
       )
     ];
+
   }
 
 
-  function stopHeadingScramble(
+  function stopScramble(
     restore = true
   ) {
-    if (scrambleTimer) {
+
+    if (
+      scrambleTimer
+    ) {
+
       window.clearInterval(
         scrambleTimer
       );
 
+
       scrambleTimer =
         null;
+
     }
 
+
     if (restore) {
+
       restoreWhoHeading(
         headingChars
       );
+
     }
+
   }
 
 
-  function startHeadingScramble() {
-    stopHeadingScramble(false);
+  function startScramble() {
+
+    stopScramble(
+      false
+    );
+
 
     const probability =
       isMobile()
-        ? 0.21
-        : 0.28;
+        ?
+        0.21
+        :
+        0.28;
+
 
     const speed =
       isMobile()
-        ? 175
-        : 150;
+        ?
+        175
+        :
+        150;
 
 
     headingChars.forEach(
       char => {
+
         if (
-          Math.random() < 0.36
+          Math.random() <
+          0.36
         ) {
+
           char.textContent =
             randomGlyph();
+
         }
+
       }
     );
 
@@ -280,110 +368,120 @@ function initWho() {
     scrambleTimer =
       window.setInterval(
         () => {
+
           headingChars.forEach(
             char => {
+
               if (
                 Math.random() <
                 probability
               ) {
+
                 char.textContent =
                   randomGlyph();
+
               }
+
             }
           );
+
         },
         speed
       );
+
   }
 
 
-  function createHeadingLoop() {
-    if (!headingChars.length) {
-      return null;
-    }
+  if (
+    headingChars.length
+  ) {
 
-    stopHeadingScramble(true);
+    headingTimeline =
+      gsap.timeline(
+        {
+          paused: true,
+
+          repeat: -1
+        }
+      );
 
 
-    gsap.set(
-      headingChars,
-      {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        opacity: 1,
-        filter:
-          "blur(0px)"
-      }
+    headingTimeline.call(
+      startScramble
     );
 
 
-    const timeline =
-      gsap.timeline({
-        paused: true,
-        repeat: -1
-      });
-
-
-    timeline.call(
-      startHeadingScramble
-    );
-
-
-    timeline.fromTo(
+    headingTimeline.fromTo(
       headingChars,
       {
-        x: () =>
-          gsap.utils.random(
-            isMobile()
-              ? -5
-              : -9,
+        x:
+          () =>
+            gsap.utils.random(
+              isMobile()
+                ?
+                -5
+                :
+                -9,
 
-            isMobile()
-              ? 5
-              : 9
-          ),
+              isMobile()
+                ?
+                5
+                :
+                9
+            ),
 
-        y: () =>
-          gsap.utils.random(
-            isMobile()
-              ? -4
-              : -7,
+        y:
+          () =>
+            gsap.utils.random(
+              isMobile()
+                ?
+                -4
+                :
+                -7,
 
-            isMobile()
-              ? 4
-              : 7
-          ),
+              isMobile()
+                ?
+                4
+                :
+                7
+            ),
 
-        rotation: () =>
-          gsap.utils.random(
-            isMobile()
-              ? -3
-              : -6,
+        rotation:
+          () =>
+            gsap.utils.random(
+              isMobile()
+                ?
+                -3
+                :
+                -6,
 
-            isMobile()
-              ? 3
-              : 6
-          ),
+              isMobile()
+                ?
+                3
+                :
+                6
+            ),
 
-        scale: () =>
-          gsap.utils.random(
-            0.96,
-            1.045
-          ),
+        scale:
+          () =>
+            gsap.utils.random(
+              0.96,
+              1.045
+            ),
 
-        opacity: () =>
-          gsap.utils.random(
-            0.7,
-            0.95
-          ),
+        opacity:
+          () =>
+            gsap.utils.random(
+              0.7,
+              0.95
+            ),
 
         filter:
           "blur(2px)"
       },
       {
         x: 0,
+
         y: 0,
 
         rotation: 0,
@@ -397,16 +495,23 @@ function initWho() {
 
         duration:
           isMobile()
-            ? 2
-            : 1.85,
+            ?
+            2
+            :
+            1.85,
 
         stagger: {
+
           each:
             isMobile()
-              ? 0.011
-              : 0.013,
+              ?
+              0.011
+              :
+              0.013,
 
-          from: "random"
+          from:
+            "random"
+
         },
 
         ease:
@@ -415,55 +520,52 @@ function initWho() {
     );
 
 
-    timeline.call(
+    headingTimeline.call(
       () => {
-        stopHeadingScramble(
+
+        stopScramble(
           true
         );
+
       },
       null,
       isMobile()
-        ? 1.52
-        : 1.42
+        ?
+        1.52
+        :
+        1.42
     );
 
 
-    timeline.to(
+    headingTimeline.to(
       headingChars,
       {
         x: 0,
+
         y: 0,
+
         rotation: 0,
+
         scale: 1,
+
         opacity: 1,
+
         filter:
           "blur(0px)",
 
-        duration: 0.42,
-
-        ease:
-          "power2.out"
+        duration: 0.42
       }
     );
 
 
-    /*
-     * CLEAN READING TIME
-     */
-    timeline.to(
+    headingTimeline.to(
       {},
       {
         duration: 5
       }
     );
 
-
-    return timeline;
   }
-
-
-  headingTimeline =
-    createHeadingLoop();
 
 
   /* =========================================================
@@ -478,17 +580,22 @@ function initWho() {
 
 
   /* =========================================================
-     IMAGE INTRO
+     IMAGE REVEAL
   ========================================================= */
 
-  if (visual) {
+  if (
+    visual
+  ) {
+
     gsap.fromTo(
       visual,
       {
         y:
           isMobile()
-            ? 30
-            : 42,
+            ?
+            30
+            :
+            42,
 
         opacity: 0,
 
@@ -507,6 +614,7 @@ function initWho() {
           "power4.out",
 
         scrollTrigger: {
+
           trigger:
             visual,
 
@@ -514,113 +622,141 @@ function initWho() {
             "top 87%",
 
           once: true
+
         }
       }
     );
+
   }
 
 
   /* =========================================================
-     TRUE 360° IMAGE SYSTEM
+     360 IMAGE
   ========================================================= */
 
   const image360 =
-    setupWhoImage360({
-      section,
-      visual,
-      imageFrame,
-      image,
-      finePointer,
-      isMobile
-    });
+    setupWhoImage360(
+      {
+        section,
+        visual,
+        imageFrame,
+        image,
+        finePointer,
+        isMobile
+      }
+    );
 
 
   /* =========================================================
      SECTION VISIBILITY
   ========================================================= */
 
-  ScrollTrigger.create({
-    trigger:
-      section,
+  ScrollTrigger.create(
+    {
 
-    start:
-      "top 82%",
+      trigger:
+        section,
 
-    end:
-      "bottom 10%",
+      start:
+        "top 82%",
 
-
-    onEnter: () => {
-      headingTimeline?.restart();
-
-      descriptionTimeline?.restart();
+      end:
+        "bottom 10%",
 
 
-      /*
-       * SHOW THE 360 EFFECT
-       * AS SOON AS SECTION ENTERS.
-       */
-      gsap.delayedCall(
-        0.55,
-        () => {
-          image360?.spin(
-            1,
-            1.65
-          );
-        }
-      );
-    },
+      onEnter: () => {
+
+        headingTimeline
+          ?.restart();
 
 
-    onEnterBack: () => {
-      headingTimeline?.play();
-
-      descriptionTimeline?.play();
+        descriptionTimeline
+          ?.restart();
 
 
-      image360?.spin(
-        -1,
-        1.55
-      );
-    },
+        gsap.delayedCall(
+          0.55,
+          () => {
+
+            image360
+              ?.spin(
+                1,
+                1.65
+              );
+
+          }
+        );
+
+      },
 
 
-    onLeave: () => {
-      headingTimeline?.pause();
+      onEnterBack: () => {
 
-      descriptionTimeline?.pause();
-
-      stopHeadingScramble(
-        true
-      );
-    },
+        headingTimeline
+          ?.play();
 
 
-    onLeaveBack: () => {
-      headingTimeline?.pause();
+        descriptionTimeline
+          ?.play();
 
-      descriptionTimeline?.pause();
+      },
 
-      stopHeadingScramble(
-        true
-      );
+
+      onLeave: () => {
+
+        headingTimeline
+          ?.pause();
+
+
+        descriptionTimeline
+          ?.pause();
+
+
+        stopScramble(
+          true
+        );
+
+      },
+
+
+      onLeaveBack: () => {
+
+        headingTimeline
+          ?.pause();
+
+
+        descriptionTimeline
+          ?.pause();
+
+
+        stopScramble(
+          true
+        );
+
+      }
+
     }
-  });
+  );
 
 
   /* =========================================================
      CTA
   ========================================================= */
 
-  if (actions) {
+  if (
+    actions
+  ) {
+
     gsap.fromTo(
       actions,
       {
         y: 18,
+
         opacity: 0
       },
       {
         y: 0,
+
         opacity: 1,
 
         duration: 0.7,
@@ -629,6 +765,7 @@ function initWho() {
           "power3.out",
 
         scrollTrigger: {
+
           trigger:
             section,
 
@@ -636,25 +773,31 @@ function initWho() {
             "top 74%",
 
           once: true
+
         }
       }
     );
+
   }
+
 }
 
 
 /* =========================================================
-   TRUE 360° PICTURE INTERACTION
+   TRUE 360 IMAGE
 ========================================================= */
 
-function setupWhoImage360({
-  section,
-  visual,
-  imageFrame,
-  image,
-  finePointer,
-  isMobile
-}) {
+function setupWhoImage360(
+  {
+    section,
+    visual,
+    imageFrame,
+    image,
+    finePointer,
+    isMobile
+  }
+) {
+
   if (
     !section ||
     !visual ||
@@ -664,10 +807,6 @@ function setupWhoImage360({
     return null;
   }
 
-
-  /* =========================================================
-     CREATE FRONT + BACK FACES
-  ========================================================= */
 
   image.classList.add(
     "home-who__image-front"
@@ -680,32 +819,45 @@ function setupWhoImage360({
     );
 
 
-  if (!backImage) {
+  if (
+    !backImage
+  ) {
+
     backImage =
-      image.cloneNode(true);
+      image.cloneNode(
+        true
+      );
+
 
     backImage.removeAttribute(
       "id"
     );
 
+
     backImage.classList.remove(
       "home-who__image-front"
     );
+
 
     backImage.classList.add(
       "home-who__image-back"
     );
 
-    backImage.alt = "";
+
+    backImage.alt =
+      "";
+
 
     backImage.setAttribute(
       "aria-hidden",
       "true"
     );
 
+
     imageFrame.appendChild(
       backImage
     );
+
   }
 
 
@@ -714,15 +866,13 @@ function setupWhoImage360({
   );
 
 
-  /* =========================================================
-     INITIAL 3D STATE
-  ========================================================= */
-
   gsap.set(
     imageFrame,
     {
       rotationX: 0,
+
       rotationY: 0,
+
       rotationZ: 0,
 
       transformPerspective:
@@ -771,109 +921,114 @@ function setupWhoImage360({
   );
 
 
-  /* =========================================================
-     STATE
-  ========================================================= */
-
   let tracking =
     false;
+
 
   let horizontalDrag =
     false;
 
+
   let startX =
     0;
+
 
   let startY =
     0;
 
+
   let startRotation =
     0;
+
 
   let currentRotation =
     0;
 
+
   let lastX =
     0;
+
 
   let lastTime =
     0;
 
+
   let velocityX =
     0;
+
 
   let pointerId =
     null;
 
+
   let spinTween =
     null;
+
 
   let lastHoverSpin =
     0;
 
 
-  /* =========================================================
-     HELPERS
-  ========================================================= */
-
-  function getRotation() {
-    const value =
+  const getRotation =
+    () =>
       Number(
         gsap.getProperty(
           imageFrame,
           "rotationY"
         )
-      );
-
-    return Number.isFinite(value)
-      ? value
-      : 0;
-  }
+      )
+      ||
+      0;
 
 
-  function nearestFullTurn(
-    value
-  ) {
-    return (
+  const nearestFullTurn =
+    value =>
       Math.round(
         value / 360
-      ) * 360
-    );
-  }
+      )
+      *
+      360;
 
 
   /* =========================================================
-     360 SPIN
+     AUTOMATIC 360
   ========================================================= */
 
   function spin(
     direction = 1,
     duration = 1.55
   ) {
-    if (tracking) {
+
+    if (
+      tracking
+    ) {
       return;
     }
 
 
-    spinTween?.kill();
+    spinTween
+      ?.kill();
 
 
     const current =
       getRotation();
 
 
-    const cleanBase =
+    const base =
       nearestFullTurn(
         current
       );
 
 
     const target =
-      cleanBase +
+      base
+      +
       (
         direction >= 0
-          ? 360
-          : -360
+          ?
+          360
+          :
+          -360
       );
 
 
@@ -894,6 +1049,8 @@ function setupWhoImage360({
 
           z: 0,
 
+          y: 0,
+
           duration,
 
           ease:
@@ -903,11 +1060,14 @@ function setupWhoImage360({
             true,
 
           onComplete: () => {
+
             spinTween =
               null;
+
           }
         }
       );
+
   }
 
 
@@ -923,10 +1083,10 @@ function setupWhoImage360({
     {
       yPercent: -4,
 
-      ease:
-        "none",
+      ease: "none",
 
       scrollTrigger: {
+
         trigger:
           section,
 
@@ -936,16 +1096,12 @@ function setupWhoImage360({
         end:
           "bottom top",
 
-        scrub:
-          0.8
+        scrub: 0.8
+
       }
     }
   );
 
-
-  /* =========================================================
-     TOUCH BEHAVIOUR
-  ========================================================= */
 
   visual.style.touchAction =
     "pan-y";
@@ -962,27 +1118,35 @@ function setupWhoImage360({
   visual.addEventListener(
     "dragstart",
     event => {
+
       event.preventDefault();
+
     }
   );
 
 
   /* =========================================================
-     POINTER DOWN
+     START DRAG
   ========================================================= */
 
   visual.addEventListener(
     "pointerdown",
     event => {
+
       if (
-        event.button !== undefined &&
-        event.button !== 0
+        event.button !==
+          undefined
+        &&
+        event.button !==
+          0
       ) {
         return;
       }
 
 
-      spinTween?.kill();
+      spinTween
+        ?.kill();
+
 
       spinTween =
         null;
@@ -1004,12 +1168,12 @@ function setupWhoImage360({
         event.clientX;
 
 
-      startY =
-        event.clientY;
-
-
       lastX =
         event.clientX;
+
+
+      startY =
+        event.clientY;
 
 
       lastTime =
@@ -1026,43 +1190,38 @@ function setupWhoImage360({
 
       currentRotation =
         startRotation;
+
     }
   );
 
 
   /* =========================================================
-     POINTER MOVE
+     MOVE
   ========================================================= */
 
   visual.addEventListener(
     "pointermove",
     event => {
-      /*
-       * NORMAL DESKTOP HOVER DEPTH
-       */
+
       if (
-        !tracking &&
+        !tracking
+        &&
         finePointer
       ) {
+
         const rect =
           visual.getBoundingClientRect();
 
 
-        const nx =
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width -
-          0.5;
-
-
         const ny =
           (
-            event.clientY -
+            event.clientY
+            -
             rect.top
-          ) /
-          rect.height -
+          )
+          /
+          rect.height
+          -
           0.5;
 
 
@@ -1070,14 +1229,11 @@ function setupWhoImage360({
           imageFrame,
           {
             rotationX:
-              ny * -5,
+              ny * -4,
 
-            z: 10,
+            z: 8,
 
-            y:
-              ny * 5,
-
-            duration: 0.45,
+            duration: 0.4,
 
             ease:
               "power3.out",
@@ -1089,55 +1245,60 @@ function setupWhoImage360({
 
 
         return;
+
       }
 
 
-      if (!tracking) {
+      if (
+        !tracking
+      ) {
         return;
       }
 
 
       const dx =
-        event.clientX -
+        event.clientX
+        -
         startX;
 
 
       const dy =
-        event.clientY -
+        event.clientY
+        -
         startY;
 
 
-      /* =====================================================
-         DETERMINE HORIZONTAL VS VERTICAL
-      ===================================================== */
+      if (
+        !horizontalDrag
+      ) {
 
-      if (!horizontalDrag) {
         if (
-          Math.abs(dx) < 6 &&
+          Math.abs(dx) < 6
+          &&
           Math.abs(dy) < 6
         ) {
           return;
         }
 
 
-        /*
-         * MOBILE VERTICAL SCROLL WINS.
-         */
         if (
-          Math.abs(dy) >
-          Math.abs(dx) *
+          Math.abs(dy)
+          >
+          Math.abs(dx)
+          *
           1.15
         ) {
+
           tracking =
             false;
 
-          horizontalDrag =
-            false;
 
           pointerId =
             null;
 
+
           return;
+
         }
 
 
@@ -1151,27 +1312,27 @@ function setupWhoImage360({
 
 
         try {
-          visual.setPointerCapture?.(
-            event.pointerId
-          );
+
+          visual.setPointerCapture
+            ?.(
+              event.pointerId
+            );
+
         }
 
-        catch {
-          /* no-op */
-        }
+        catch {}
+
       }
 
 
       if (
         event.cancelable
       ) {
+
         event.preventDefault();
+
       }
 
-
-      /* =====================================================
-         VELOCITY
-      ===================================================== */
 
       const now =
         performance.now();
@@ -1179,7 +1340,8 @@ function setupWhoImage360({
 
       const elapsed =
         Math.max(
-          now -
+          now
+          -
           lastTime,
           1
         );
@@ -1187,9 +1349,11 @@ function setupWhoImage360({
 
       velocityX =
         (
-          event.clientX -
+          event.clientX
+          -
           lastX
-        ) /
+        )
+        /
         elapsed;
 
 
@@ -1201,31 +1365,20 @@ function setupWhoImage360({
         now;
 
 
-      /* =====================================================
-         FULL 360 DRAG
-
-         ~400px horizontal movement =
-         roughly one full rotation.
-      ===================================================== */
-
       const sensitivity =
         isMobile()
-          ? 0.92
-          : 0.78;
+          ?
+          0.92
+          :
+          0.78;
 
 
       currentRotation =
-        startRotation +
-        dx *
+        startRotation
+        +
+        dx
+        *
         sensitivity;
-
-
-      const tiltX =
-        gsap.utils.clamp(
-          -5,
-          5,
-          -dy * 0.035
-        );
 
 
       gsap.set(
@@ -1235,17 +1388,18 @@ function setupWhoImage360({
             currentRotation,
 
           rotationX:
-            tiltX,
+            gsap.utils.clamp(
+              -5,
+              5,
+              -dy * 0.035
+            ),
 
-          z:
-            horizontalDrag
-              ? 14
-              : 0,
+          z: 14,
 
-          force3D:
-            true
+          force3D: true
         }
       );
+
     },
     {
       passive: false
@@ -1254,13 +1408,16 @@ function setupWhoImage360({
 
 
   /* =========================================================
-     RELEASE
+     END DRAG
   ========================================================= */
 
   function finishRotation(
     event
   ) {
-    if (!tracking) {
+
+    if (
+      !tracking
+    ) {
       return;
     }
 
@@ -1275,44 +1432,33 @@ function setupWhoImage360({
 
 
     const dragDistance =
-      event.clientX -
+      event.clientX
+      -
       startX;
 
 
-    /*
-     * TAP ON MOBILE:
-     * DO ONE CLEAN FULL 360 SPIN.
-     */
-    if (!horizontalDrag) {
-      if (
-        event.pointerType ===
-        "touch"
-      ) {
-        spin(
-          1,
-          1.45
-        );
-      }
-
+    if (
+      !horizontalDrag
+    ) {
       return;
     }
 
 
-    /* =====================================================
-       MOMENTUM
-    ===================================================== */
-
     const momentum =
-      velocityX *
+      velocityX
+      *
       (
         isMobile()
-          ? 190
-          : 160
+          ?
+          190
+          :
+          160
       );
 
 
     const predicted =
-      currentRotation +
+      currentRotation
+      +
       momentum;
 
 
@@ -1328,58 +1474,64 @@ function setupWhoImage360({
       );
 
 
-    /*
-     * If user clearly dragged but nearest
-     * snap would return to the same position,
-     * force one full 360° turn.
-     */
     if (
       Math.abs(
         dragDistance
-      ) > 34 &&
+      )
+      >
+      34
+      &&
       target ===
         startClean
     ) {
+
       target +=
         dragDistance > 0
-          ? 360
-          : -360;
+          ?
+          360
+          :
+          -360;
+
     }
 
 
-    /*
-     * Direction should follow the swipe.
-     */
     if (
-      dragDistance > 0 &&
+      dragDistance > 0
+      &&
       target <
         currentRotation
     ) {
-      target += 360;
+
+      target +=
+        360;
+
     }
 
 
     if (
-      dragDistance < 0 &&
+      dragDistance < 0
+      &&
       target >
         currentRotation
     ) {
-      target -= 360;
+
+      target -=
+        360;
+
     }
-
-
-    const distance =
-      Math.abs(
-        target -
-        currentRotation
-      );
 
 
     const duration =
       gsap.utils.clamp(
         0.5,
-        1.25,
-        distance / 330
+        1.2,
+        Math.abs(
+          target
+          -
+          currentRotation
+        )
+        /
+        330
       );
 
 
@@ -1407,28 +1559,35 @@ function setupWhoImage360({
             true,
 
           onComplete: () => {
+
             currentRotation =
               target;
 
+
             spinTween =
               null;
+
           }
         }
       );
 
 
     if (
-      pointerId !== null
+      pointerId !==
+      null
     ) {
+
       try {
-        visual.releasePointerCapture?.(
-          pointerId
-        );
+
+        visual.releasePointerCapture
+          ?.(
+            pointerId
+          );
+
       }
 
-      catch {
-        /* no-op */
-      }
+      catch {}
+
     }
 
 
@@ -1438,6 +1597,7 @@ function setupWhoImage360({
 
     horizontalDrag =
       false;
+
   }
 
 
@@ -1449,14 +1609,18 @@ function setupWhoImage360({
 
   visual.addEventListener(
     "pointercancel",
-    event => {
-      if (!tracking) {
+    () => {
+
+      if (
+        !tracking
+      ) {
         return;
       }
 
 
       tracking =
         false;
+
 
       horizontalDrag =
         false;
@@ -1467,17 +1631,13 @@ function setupWhoImage360({
       );
 
 
-      const clean =
-        nearestFullTurn(
-          getRotation()
-        );
-
-
       gsap.to(
         imageFrame,
         {
           rotationY:
-            clean,
+            nearestFullTurn(
+              getRotation()
+            ),
 
           rotationX: 0,
 
@@ -1485,7 +1645,7 @@ function setupWhoImage360({
 
           y: 0,
 
-          duration: 0.65,
+          duration: 0.6,
 
           ease:
             "power3.out"
@@ -1493,31 +1653,25 @@ function setupWhoImage360({
       );
 
 
-      try {
-        visual.releasePointerCapture?.(
-          event.pointerId
-        );
-      }
-
-      catch {
-        /* no-op */
-      }
-
-
       pointerId =
         null;
+
     }
   );
 
 
   /* =========================================================
-     DESKTOP HOVER = FULL 360
+     DESKTOP HOVER SPIN
   ========================================================= */
 
-  if (finePointer) {
+  if (
+    finePointer
+  ) {
+
     visual.addEventListener(
       "pointerenter",
       event => {
+
         if (
           tracking
         ) {
@@ -1529,13 +1683,11 @@ function setupWhoImage360({
           performance.now();
 
 
-        /*
-         * Prevent repeated spins caused by
-         * tiny pointer re-entries.
-         */
         if (
-          now -
-          lastHoverSpin <
+          now
+          -
+          lastHoverSpin
+          <
           900
         ) {
           return;
@@ -1550,20 +1702,20 @@ function setupWhoImage360({
           visual.getBoundingClientRect();
 
 
-        const direction =
-          event.clientX <
-          (
-            rect.left +
-            rect.width / 2
-          )
-            ? -1
-            : 1;
-
-
         spin(
-          direction,
+          event.clientX
+          <
+          rect.left
+          +
+          rect.width / 2
+            ?
+            -1
+            :
+            1,
+
           1.45
         );
+
       }
     );
 
@@ -1571,7 +1723,10 @@ function setupWhoImage360({
     visual.addEventListener(
       "pointerleave",
       () => {
-        if (tracking) {
+
+        if (
+          tracking
+        ) {
           return;
         }
 
@@ -1585,7 +1740,7 @@ function setupWhoImage360({
 
             y: 0,
 
-            duration: 0.55,
+            duration: 0.5,
 
             ease:
               "power3.out",
@@ -1594,25 +1749,31 @@ function setupWhoImage360({
               "auto"
           }
         );
+
       }
     );
+
   }
 
 
   return {
     spin
   };
+
 }
 
 
 /* =========================================================
-   PREPARE HEADING
+   WHO HEADING PREP
 ========================================================= */
 
 function prepareWhoHeading(
   heading
 ) {
-  if (!heading) {
+
+  if (
+    !heading
+  ) {
     return [];
   }
 
@@ -1622,15 +1783,18 @@ function prepareWhoHeading(
       .kineticReady ===
     "true"
   ) {
+
     return Array.from(
       heading.querySelectorAll(
         ".home-who__kinetic-char"
       )
     );
+
   }
 
 
-  const textNodes = [];
+  const textNodes =
+    [];
 
 
   const walker =
@@ -1649,30 +1813,38 @@ function prepareWhoHeading(
         walker.nextNode()
     )
   ) {
+
     if (
-      node.textContent.trim()
+      node.textContent
+        .trim()
     ) {
-      textNodes.push(node);
+
+      textNodes.push(
+        node
+      );
+
     }
+
   }
 
 
-  const characters = [];
+  const characters =
+    [];
 
 
   textNodes.forEach(
     textNode => {
-      const text =
+
+      const words =
         textNode.textContent
           .trim()
           .replace(
             /\s+/g,
             " "
+          )
+          .split(
+            " "
           );
-
-
-      const words =
-        text.split(" ");
 
 
       const fragment =
@@ -1684,6 +1856,7 @@ function prepareWhoHeading(
           word,
           wordIndex
         ) => {
+
           const wordWrap =
             document.createElement(
               "span"
@@ -1698,6 +1871,7 @@ function prepareWhoHeading(
             word
           ).forEach(
             character => {
+
               const char =
                 document.createElement(
                   "span"
@@ -1724,6 +1898,7 @@ function prepareWhoHeading(
               characters.push(
                 char
               );
+
             }
           );
 
@@ -1734,15 +1909,19 @@ function prepareWhoHeading(
 
 
           if (
-            wordIndex <
+            wordIndex
+            <
             words.length - 1
           ) {
+
             fragment.appendChild(
               document.createTextNode(
                 " "
               )
             );
+
           }
+
         }
       );
 
@@ -1752,6 +1931,7 @@ function prepareWhoHeading(
           fragment,
           textNode
         );
+
     }
   );
 
@@ -1762,33 +1942,43 @@ function prepareWhoHeading(
 
 
   return characters;
+
 }
 
 
 /* =========================================================
-   RESTORE HEADING
+   RESTORE WHO HEADING
 ========================================================= */
 
 function restoreWhoHeading(
   characters
 ) {
+
   characters.forEach(
     char => {
+
       char.textContent =
-        char.dataset.final || "";
+        char.dataset.final
+        ||
+        "";
+
     }
   );
+
 }
 
 
 /* =========================================================
-   PREPARE DESCRIPTION
+   WHO PARAGRAPH PREP
 ========================================================= */
 
 function prepareWhoDescription(
   description
 ) {
-  if (!description) {
+
+  if (
+    !description
+  ) {
     return [];
   }
 
@@ -1798,31 +1988,34 @@ function prepareWhoDescription(
       .wordsReady ===
     "true"
   ) {
+
     return Array.from(
       description.querySelectorAll(
         ".home-who__description-word"
       )
     );
+
   }
 
 
-  const text =
+  const words =
     description.textContent
       .trim()
       .replace(
         /\s+/g,
         " "
+      )
+      .split(
+        " "
       );
 
 
-  const words =
-    text.split(" ");
+  description.textContent =
+    "";
 
 
-  description.textContent = "";
-
-
-  const elements = [];
+  const elements =
+    [];
 
 
   words.forEach(
@@ -1830,6 +2023,7 @@ function prepareWhoDescription(
       word,
       index
     ) => {
+
       const mask =
         document.createElement(
           "span"
@@ -1873,12 +2067,15 @@ function prepareWhoDescription(
         index <
         words.length - 1
       ) {
+
         description.appendChild(
           document.createTextNode(
             " "
           )
         );
+
       }
+
     }
   );
 
@@ -1889,27 +2086,34 @@ function prepareWhoDescription(
 
 
   return elements;
+
 }
 
 
 /* =========================================================
-   DESCRIPTION LOOP
+   WHO DESCRIPTION LOOP
 ========================================================= */
 
 function createDescriptionLoop(
   words,
   isMobile
 ) {
-  if (!words.length) {
+
+  if (
+    !words.length
+  ) {
     return null;
   }
 
 
   const timeline =
-    gsap.timeline({
-      paused: true,
-      repeat: -1
-    });
+    gsap.timeline(
+      {
+        paused: true,
+
+        repeat: -1
+      }
+    );
 
 
   timeline.set(
@@ -1937,13 +2141,17 @@ function createDescriptionLoop(
 
       duration:
         isMobile()
-          ? 0.72
-          : 0.62,
+          ?
+          0.72
+          :
+          0.62,
 
       stagger:
         isMobile()
-          ? 0.035
-          : 0.028,
+          ?
+          0.035
+          :
+          0.028,
 
       ease:
         "power4.out"
@@ -1973,8 +2181,10 @@ function createDescriptionLoop(
 
       stagger:
         isMobile()
-          ? 0.018
-          : 0.014,
+          ?
+          0.018
+          :
+          0.014,
 
       ease:
         "power3.in"
@@ -1991,290 +2201,978 @@ function createDescriptionLoop(
 
 
   return timeline;
+
 }
 
 
 /* =========================================================
-   ABOUT
+   SERVICES — RESTORED + IMPROVED
 ========================================================= */
 
-function initAbout() {
+function initServices() {
+
   const section =
     document.getElementById(
-      "home-about"
-    );
-
-  if (!section) return;
-
-
-  const heading =
-    section.querySelector(
-      ".home-about__heading"
+      "home-services"
     );
 
 
-  const content =
-    section.querySelector(
-      ".home-about__content"
-    );
-
-
-  if (heading) {
-    gsap.fromTo(
-      heading,
-      {
-        y: 30,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-
-        duration: 0.8,
-
-        ease:
-          "power3.out",
-
-        scrollTrigger: {
-          trigger:
-            section,
-
-          start:
-            "top 84%",
-
-          once: true
-        }
-      }
-    );
+  if (!section) {
+    return;
   }
 
 
-  if (content) {
-    gsap.fromTo(
-      content,
-      {
-        y: 34,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
+  const rows =
+    Array.from(
+      section.querySelectorAll(
+        ".home-service"
+      )
+    );
 
-        duration: 0.85,
 
-        delay: 0.07,
+  const images =
+    Array.from(
+      section.querySelectorAll(
+        ".home-service-image"
+      )
+    );
 
-        ease:
-          "power3.out",
 
-        scrollTrigger: {
-          trigger:
-            section,
+  const visual =
+    section.querySelector(
+      ".home-services__visual"
+    );
 
-          start:
-            "top 84%",
 
-          once: true
+  if (
+    !rows.length ||
+    !images.length ||
+    !visual
+  ) {
+    return;
+  }
+
+
+  let current =
+    rows.findIndex(
+      row =>
+        row.classList.contains(
+          "is-active"
+        )
+    );
+
+
+  if (
+    current < 0
+  ) {
+    current = 0;
+  }
+
+
+  let changing =
+    false;
+
+
+  /* =========================================================
+     INITIAL IMAGE STATE
+  ========================================================= */
+
+  images.forEach(
+    (
+      image,
+      index
+    ) => {
+
+      gsap.set(
+        image,
+        {
+          autoAlpha:
+            index === current
+              ?
+              1
+              :
+              0,
+
+          zIndex:
+            index === current
+              ?
+              3
+              :
+              1,
+
+          xPercent: 0,
+
+          y: 0,
+
+          scale: 1,
+
+          rotation: 0,
+
+          clipPath:
+            "inset(0 0 0 0 round 26px)"
         }
+      );
+
+    }
+  );
+
+
+  rows.forEach(
+    (
+      row,
+      index
+    ) => {
+
+      row.classList.toggle(
+        "is-active",
+        index === current
+      );
+
+    }
+  );
+
+
+  /* =========================================================
+     ACTIVATE SERVICE
+  ========================================================= */
+
+  function activate(
+    index,
+    direction = 1
+  ) {
+
+    if (
+      index < 0
+      ||
+      index >=
+        rows.length
+      ||
+      index ===
+        current
+      ||
+      changing
+    ) {
+      return;
+    }
+
+
+    const oldIndex =
+      current;
+
+
+    const oldImage =
+      images[
+        oldIndex
+      ];
+
+
+    const newImage =
+      images[
+        index
+      ];
+
+
+    if (
+      !oldImage ||
+      !newImage
+    ) {
+      return;
+    }
+
+
+    changing =
+      true;
+
+
+    current =
+      index;
+
+
+    rows.forEach(
+      (
+        row,
+        rowIndex
+      ) => {
+
+        row.classList.toggle(
+          "is-active",
+          rowIndex ===
+            index
+        );
+
       }
     );
+
+
+    gsap.killTweensOf(
+      [
+        oldImage,
+        newImage
+      ]
+    );
+
+
+    const inDirection =
+      direction >= 0
+        ?
+        1
+        :
+        -1;
+
+
+    const outDirection =
+      -inDirection;
+
+
+    /* NEW IMAGE */
+
+    gsap.set(
+      newImage,
+      {
+        autoAlpha: 1,
+
+        zIndex: 3,
+
+        xPercent:
+          7
+          *
+          inDirection,
+
+        y: 18,
+
+        scale: 0.94,
+
+        rotation:
+          1.8
+          *
+          inDirection,
+
+        clipPath:
+          direction >= 0
+            ?
+            "inset(0 0 100% 0 round 26px)"
+            :
+            "inset(100% 0 0 0 round 26px)"
+      }
+    );
+
+
+    /* OLD IMAGE */
+
+    gsap.set(
+      oldImage,
+      {
+        autoAlpha: 1,
+
+        zIndex: 2
+      }
+    );
+
+
+    /* HIDE OTHER IMAGES */
+
+    images.forEach(
+      (
+        image,
+        imageIndex
+      ) => {
+
+        if (
+          imageIndex !==
+            oldIndex
+          &&
+          imageIndex !==
+            index
+        ) {
+
+          gsap.set(
+            image,
+            {
+              autoAlpha: 0,
+
+              zIndex: 1
+            }
+          );
+
+
+          image.classList.remove(
+            "is-active"
+          );
+
+        }
+
+      }
+    );
+
+
+    const timeline =
+      gsap.timeline(
+        {
+          defaults: {
+            ease:
+              "power4.inOut"
+          },
+
+          onComplete: () => {
+
+            oldImage.classList.remove(
+              "is-active"
+            );
+
+
+            newImage.classList.add(
+              "is-active"
+            );
+
+
+            gsap.set(
+              oldImage,
+              {
+                autoAlpha: 0,
+
+                xPercent: 0,
+
+                y: 0,
+
+                scale: 1,
+
+                rotation: 0,
+
+                clipPath:
+                  "inset(0 0 0 0 round 26px)"
+              }
+            );
+
+
+            gsap.set(
+              newImage,
+              {
+                autoAlpha: 1,
+
+                xPercent: 0,
+
+                y: 0,
+
+                scale: 1,
+
+                rotation: 0,
+
+                clipPath:
+                  "inset(0 0 0 0 round 26px)"
+              }
+            );
+
+
+            changing =
+              false;
+
+          }
+        }
+      );
+
+
+    timeline.to(
+      oldImage,
+      {
+        autoAlpha: 0,
+
+        xPercent:
+          5
+          *
+          outDirection,
+
+        scale: 0.96,
+
+        rotation:
+          -1.2
+          *
+          inDirection,
+
+        duration: 0.48
+      },
+      0
+    );
+
+
+    timeline.to(
+      newImage,
+      {
+        xPercent: 0,
+
+        y: 0,
+
+        scale: 1,
+
+        rotation: 0,
+
+        clipPath:
+          "inset(0 0 0 0 round 26px)",
+
+        duration: 0.72
+      },
+      0.04
+    );
+
   }
+
+
+  /* =========================================================
+     DESKTOP HOVER
+  ========================================================= */
+
+  rows.forEach(
+    (
+      row,
+      index
+    ) => {
+
+      row.addEventListener(
+        "pointerenter",
+        () => {
+
+          activate(
+            index,
+            index >=
+              current
+              ?
+              1
+              :
+              -1
+          );
+
+        }
+      );
+
+
+      row.addEventListener(
+        "focus",
+        () => {
+
+          activate(
+            index,
+            index >=
+              current
+              ?
+              1
+              :
+              -1
+          );
+
+        }
+      );
+
+
+      /*
+       * Tablet/mobile tap.
+       */
+
+      row.addEventListener(
+        "click",
+        () => {
+
+          activate(
+            index,
+            index >=
+              current
+              ?
+              1
+              :
+              -1
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  /* =========================================================
+     MOBILE / TOUCH SCROLL ACTIVATION
+  ========================================================= */
+
+  ScrollTrigger.create(
+    {
+
+      trigger:
+        section,
+
+      start:
+        "top 82%",
+
+      end:
+        "bottom 18%",
+
+
+      onUpdate(
+        self
+      ) {
+
+        /*
+         * Desktop already has hover.
+         */
+
+        if (
+          window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+          ).matches
+        ) {
+          return;
+        }
+
+
+        const index =
+          Math.min(
+            rows.length - 1,
+
+            Math.floor(
+              self.progress
+              *
+              rows.length
+            )
+          );
+
+
+        if (
+          index !==
+            current
+          &&
+          !changing
+        ) {
+
+          activate(
+            index,
+            index >=
+              current
+              ?
+              1
+              :
+              -1
+          );
+
+        }
+
+      }
+
+    }
+  );
+
+
+  /* =========================================================
+     VISUAL PARALLAX
+  ========================================================= */
+
+  gsap.fromTo(
+    visual,
+    {
+      rotate: -4,
+
+      scale: 0.88,
+
+      y: 55
+    },
+    {
+      rotate: 3,
+
+      scale: 1.03,
+
+      y: -30,
+
+      ease: "none",
+
+      scrollTrigger: {
+
+        trigger:
+          section,
+
+        start:
+          "top bottom",
+
+        end:
+          "bottom top",
+
+        scrub: 0.9
+
+      }
+    }
+  );
+
+
+  initTilt(
+    visual,
+    5
+  );
+
 }
 
 
 /* =========================================================
-   WORK
+   WORK — ORIGINAL MOTION RESTORED
 ========================================================= */
 
 function initWork() {
+
   const section =
     document.getElementById(
       "home-work"
     );
 
-  if (!section) return;
 
-
-  const header =
-    section.querySelector(
-      ".home-work-new__header"
-    );
-
-
-  const projects =
-    section.querySelectorAll(
-      ".home-work-new__project"
-    );
-
-
-  if (header) {
-    gsap.fromTo(
-      header,
-      {
-        y: 30,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-
-        duration: 0.8,
-
-        ease:
-          "power3.out",
-
-        scrollTrigger: {
-          trigger:
-            header,
-
-          start:
-            "top 88%",
-
-          once: true
-        }
-      }
-    );
+  if (!section) {
+    return;
   }
 
 
-  projects.forEach(
+  const viewport =
+    section.querySelector(
+      ".home-work__viewport"
+    );
+
+
+  const track =
+    section.querySelector(
+      ".home-work__track"
+    );
+
+
+  const cards =
+    Array.from(
+      section.querySelectorAll(
+        ".home-work-card"
+      )
+    );
+
+
+  if (
+    !viewport ||
+    !track
+  ) {
+    return;
+  }
+
+
+  function distance() {
+
+    return Math.max(
+      0,
+
+      track.scrollWidth
+      -
+      viewport.clientWidth
+    );
+
+  }
+
+
+  gsap.fromTo(
+    track,
+    {
+      x: 0
+    },
+    {
+      x:
+        () =>
+          -distance(),
+
+      ease: "none",
+
+      scrollTrigger: {
+
+        trigger:
+          section,
+
+        start:
+          "top 86%",
+
+        end:
+          "bottom 14%",
+
+        scrub: 0.85,
+
+        invalidateOnRefresh:
+          true
+
+      }
+    }
+  );
+
+
+  cards.forEach(
     (
-      project,
+      card,
       index
     ) => {
+
+      const image =
+        card.querySelector(
+          "img"
+        );
+
+
       gsap.fromTo(
-        project,
+        card,
         {
-          y: 30,
-          opacity: 0
+          rotate:
+            index % 2 === 0
+              ?
+              -4
+              :
+              4,
+
+          y:
+            index % 2 === 0
+              ?
+              40
+              :
+              -20
         },
         {
-          y: 0,
-          opacity: 1,
+          rotate:
+            index % 2 === 0
+              ?
+              2
+              :
+              -2,
 
-          duration: 0.75,
+          y:
+            index % 2 === 0
+              ?
+              -20
+              :
+              35,
 
-          delay:
-            index * 0.06,
-
-          ease:
-            "power3.out",
+          ease: "none",
 
           scrollTrigger: {
+
             trigger:
-              project,
+              section,
 
             start:
-              "top 90%",
+              "top bottom",
 
-            once: true
+            end:
+              "bottom top",
+
+            scrub: 1
+
           }
         }
       );
+
+
+      if (
+        image
+      ) {
+
+        gsap.fromTo(
+          image,
+          {
+            scale: 1.13
+          },
+          {
+            scale: 1.02,
+
+            ease: "none",
+
+            scrollTrigger: {
+
+              trigger:
+                section,
+
+              start:
+                "top bottom",
+
+              end:
+                "bottom top",
+
+              scrub: 1
+
+            }
+          }
+        );
+
+      }
+
+
+      initTilt(
+        card,
+        3
+      );
+
     }
   );
+
 }
 
 
 /* =========================================================
-   CLIENTS
+   CLIENT LOGO CLONING RESTORED
+========================================================= */
+
+function cloneLogoRows() {
+
+  document
+    .querySelectorAll(
+      ".home-client-row__group"
+    )
+    .forEach(
+      group => {
+
+        const track =
+          group.parentElement;
+
+
+        if (
+          !track
+          ||
+          track.querySelector(
+            "[aria-hidden='true']"
+          )
+        ) {
+          return;
+        }
+
+
+        const copy =
+          group.cloneNode(
+            true
+          );
+
+
+        copy.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+        copy
+          .querySelectorAll(
+            "img"
+          )
+          .forEach(
+            image => {
+
+              image.alt =
+                "";
+
+            }
+          );
+
+
+        track.appendChild(
+          copy
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   CLIENTS — ORIGINAL MOTION RESTORED
 ========================================================= */
 
 function initClients() {
+
   const section =
     document.getElementById(
       "home-clients"
     );
 
-  if (!section) return;
+
+  if (!section) {
+    return;
+  }
 
 
-  const heading =
-    section.querySelector(
-      ".home-clients__heading"
-    );
-
-
-  const logos =
+  const tracks =
     section.querySelectorAll(
+      ".home-client-row__track"
+    );
+
+
+  tracks.forEach(
+    (
+      track,
+      index
+    ) => {
+
+      gsap.fromTo(
+        track,
+        {
+          xPercent:
+            index === 0
+              ?
+              -2
+              :
+              -18
+        },
+        {
+          xPercent:
+            index === 0
+              ?
+              -18
+              :
+              -2,
+
+          ease: "none",
+
+          scrollTrigger: {
+
+            trigger:
+              section,
+
+            start:
+              "top bottom",
+
+            end:
+              "bottom top",
+
+            scrub: 1
+
+          }
+        }
+      );
+
+    }
+  );
+
+
+  section
+    .querySelectorAll(
       ".home-client-logo"
-    );
+    )
+    .forEach(
+      logo => {
 
+        initTilt(
+          logo,
+          4
+        );
 
-  if (heading) {
-    gsap.fromTo(
-      heading,
-      {
-        y: 28,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-
-        duration: 0.75,
-
-        ease:
-          "power3.out",
-
-        scrollTrigger: {
-          trigger:
-            heading,
-
-          start:
-            "top 88%",
-
-          once: true
-        }
       }
     );
-  }
 
-
-  if (logos.length) {
-    gsap.fromTo(
-      logos,
-      {
-        y: 16,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-
-        duration: 0.55,
-
-        stagger: 0.035,
-
-        ease:
-          "power2.out",
-
-        scrollTrigger: {
-          trigger:
-            ".home-clients__logos",
-
-          start:
-            "top 88%",
-
-          once: true
-        }
-      }
-    );
-  }
 }
 
 
 /* =========================================================
-   RECOGNITION
+   RECOGNITION — ORIGINAL MOTION RESTORED
 ========================================================= */
 
 function initRecognition() {
+
   const section =
     document.getElementById(
       "home-recognition"
     );
 
-  if (!section) return;
+
+  if (!section) {
+    return;
+  }
 
 
   const visual =
@@ -2283,72 +3181,274 @@ function initRecognition() {
     );
 
 
+  const image =
+    visual
+      ?.querySelector(
+        "img"
+      );
+
+
   const content =
     section.querySelector(
       ".home-recognition__content"
     );
 
 
-  if (visual) {
+  if (
+    visual
+  ) {
+
     gsap.fromTo(
       visual,
       {
-        y: 32,
-        opacity: 0
+        clipPath:
+          "inset(16% 15% 16% 15% round 44px)",
+
+        rotate: -5,
+
+        scale: 0.85
       },
       {
-        y: 0,
-        opacity: 1,
+        clipPath:
+          "inset(0% 0% 0% 0% round 28px)",
 
-        duration: 0.85,
+        rotate: 2,
 
-        ease:
-          "power3.out",
+        scale: 1,
+
+        ease: "none",
 
         scrollTrigger: {
+
           trigger:
             section,
 
           start:
-            "top 82%",
+            "top bottom",
 
-          once: true
+          end:
+            "top 25%",
+
+          scrub: 0.8
+
         }
       }
     );
+
   }
 
 
-  if (content) {
+  if (
+    image
+  ) {
+
+    gsap.fromTo(
+      image,
+      {
+        scale: 1.15,
+
+        yPercent: -7
+      },
+      {
+        scale: 1.03,
+
+        yPercent: 7,
+
+        ease: "none",
+
+        scrollTrigger: {
+
+          trigger:
+            section,
+
+          start:
+            "top bottom",
+
+          end:
+            "bottom top",
+
+          scrub: 1
+
+        }
+      }
+    );
+
+  }
+
+
+  if (
+    content
+  ) {
+
     gsap.fromTo(
       content,
       {
-        y: 32,
+        x: 70,
+
         opacity: 0
       },
       {
-        y: 0,
+        x: 0,
+
         opacity: 1,
 
-        duration: 0.85,
-
-        delay: 0.08,
-
-        ease:
-          "power3.out",
+        ease: "none",
 
         scrollTrigger: {
+
           trigger:
             section,
 
           start:
             "top 82%",
 
-          once: true
+          end:
+            "top 36%",
+
+          scrub: 0.65
+
         }
       }
     );
+
   }
+
+
+  initTilt(
+    visual,
+    3
+  );
+
+}
+
+
+/* =========================================================
+   POINTER DEPTH
+========================================================= */
+
+function initTilt(
+  element,
+  amount
+) {
+
+  if (
+    !element
+    ||
+    !window.matchMedia(
+      "(pointer: fine)"
+    ).matches
+  ) {
+    return;
+  }
+
+
+  gsap.set(
+    element,
+    {
+      transformPerspective:
+        1200,
+
+      transformStyle:
+        "preserve-3d"
+    }
+  );
+
+
+  const rotateX =
+    gsap.quickTo(
+      element,
+      "rotationX",
+      {
+        duration: 0.45,
+
+        ease:
+          "power3.out"
+      }
+    );
+
+
+  const rotateY =
+    gsap.quickTo(
+      element,
+      "rotationY",
+      {
+        duration: 0.45,
+
+        ease:
+          "power3.out"
+      }
+    );
+
+
+  element.addEventListener(
+    "pointermove",
+    event => {
+
+      const rect =
+        element.getBoundingClientRect();
+
+
+      const x =
+        (
+          event.clientX
+          -
+          rect.left
+        )
+        /
+        rect.width;
+
+
+      const y =
+        (
+          event.clientY
+          -
+          rect.top
+        )
+        /
+        rect.height;
+
+
+      rotateY(
+        (
+          x - 0.5
+        )
+        *
+        amount
+        *
+        2
+      );
+
+
+      rotateX(
+        (
+          0.5 - y
+        )
+        *
+        amount
+        *
+        2
+      );
+
+    }
+  );
+
+
+  element.addEventListener(
+    "pointerleave",
+    () => {
+
+      rotateX(
+        0
+      );
+
+
+      rotateY(
+        0
+      );
+
+    }
+  );
+
 }
 
 
@@ -2357,14 +3457,21 @@ function initRecognition() {
 ========================================================= */
 
 function initFooterYear() {
+
   const year =
     document.getElementById(
       "ape-footer-year"
     );
 
-  if (!year) return;
 
-  year.textContent =
-    new Date()
-      .getFullYear();
+  if (
+    year
+  ) {
+
+    year.textContent =
+      new Date()
+        .getFullYear();
+
+  }
+
 }
