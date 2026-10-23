@@ -2,7 +2,7 @@
    APE STUDIO
    BRANDS THAT TRUST APE
    SINGLE STRIP CAROUSEL
-   LESS WHITE / MORE PALETTE
+   FULL RESPONSIVE VERSION
 ========================================================= */
 
 .home-clients {
@@ -15,19 +15,33 @@
   --clients-bg-1: #ece8f4;
   --clients-bg-2: #e8e7ef;
   --clients-bg-3: #eef1e6;
+
   --clients-card-1: rgba(241, 237, 248, 0.92);
   --clients-card-2: rgba(233, 239, 224, 0.76);
-  --clients-card-active-1: rgba(246, 243, 252, 0.96);
-  --clients-card-active-2: rgba(236, 245, 221, 0.84);
+
+  --clients-card-active-1: rgba(246, 243, 252, 0.97);
+  --clients-card-active-2: rgba(236, 245, 221, 0.86);
 
   position: relative !important;
+
   width: 100%;
+
+  height: auto !important;
+
+  min-height: 0 !important;
+
+  box-sizing: border-box;
+
   padding:
     clamp(92px, 8vw, 132px)
     0
-    clamp(86px, 7vw, 118px) !important;
+    clamp(82px, 7vw, 112px) !important;
+
   overflow: hidden !important;
-  color: var(--clients-black);
+
+  color:
+    var(--clients-black);
+
   background:
     radial-gradient(
       circle at 18% 18%,
@@ -49,38 +63,51 @@
 
 
 /* =========================================================
-   PREMIUM GLOW BLOBS
+   AMBIENT BACKGROUND GLOW
 ========================================================= */
 
 .home-clients::before,
 .home-clients::after {
   content: "";
+
   position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(70px);
+
   z-index: 0;
-  opacity: 0.7;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter:
+    blur(70px);
+
+  opacity: 0.62;
 }
+
 
 .home-clients::before {
   width: 320px;
   height: 320px;
+
   left: -120px;
-  top: 80px;
+  top: 70px;
+
   background:
     radial-gradient(
       circle,
-      rgba(125, 53, 235, 0.20) 0%,
+      rgba(125, 53, 235, 0.22) 0%,
       rgba(125, 53, 235, 0) 70%
     );
 }
 
+
 .home-clients::after {
-  width: 360px;
-  height: 360px;
-  right: -100px;
+  width: 340px;
+  height: 340px;
+
+  right: -110px;
   bottom: 20px;
+
   background:
     radial-gradient(
       circle,
@@ -91,7 +118,7 @@
 
 
 /* =========================================================
-   REMOVE OLD BACKGROUND WORD / DECORATIVE THINGS
+   REMOVE OLD BACKGROUND TEXT / OLD DECOR
 ========================================================= */
 
 .home-clients__stage::before,
@@ -103,8 +130,10 @@
 .home-clients__logos::before,
 .home-clients__logos::after {
   content: none !important;
+
   display: none !important;
 }
+
 
 .home-clients__background,
 .home-clients__background-word,
@@ -113,8 +142,10 @@
 .home-clients__decor,
 .home-clients__outline-word {
   display: none !important;
-  opacity: 0 !important;
+
   visibility: hidden !important;
+
+  opacity: 0 !important;
 }
 
 
@@ -125,16 +156,27 @@
 .home-clients__stage,
 .home-clients__inner {
   position: relative;
+
   z-index: 1;
+
   width: 100% !important;
+
   max-width: none !important;
+
   height: auto !important;
+
   min-height: 0 !important;
+
   margin: 0 !important;
+
   padding: 0 !important;
+
   display: block !important;
+
   overflow: visible !important;
-  background: transparent !important;
+
+  background:
+    transparent !important;
 }
 
 
@@ -144,53 +186,93 @@
 
 .home-clients__title,
 .home-clients__heading {
-  width: min(1500px, 90%) !important;
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      1500px,
+      90%
+    ) !important;
+
   margin:
     0
     auto
-    clamp(46px, 5vw, 70px) !important;
+    clamp(44px, 5vw, 68px) !important;
 }
+
 
 .home-clients__heading h2,
 .home-clients__title {
-  color: var(--clients-black);
+  margin: 0;
+
+  color:
+    var(--clients-black);
+
   font-family:
     var(--ape-font),
     "Inter Tight",
     Arial,
     Helvetica,
     sans-serif;
-  font-size: clamp(58px, 6.4vw, 102px) !important;
+
+  font-size:
+    clamp(
+      58px,
+      6.4vw,
+      102px
+    ) !important;
+
   font-weight: 950;
-  line-height: 0.80;
-  letter-spacing: -0.07em;
-  text-transform: uppercase;
+
+  line-height: 0.8;
+
+  letter-spacing:
+    -0.07em;
+
+  text-transform:
+    uppercase;
 }
 
-.home-clients__heading h2 {
-  margin: 0;
-}
 
 .home-clients__title span,
 .home-clients__heading h2 span {
   display: block;
+
   margin-top: 4px;
-  color: transparent !important;
-  -webkit-text-stroke: 1.6px var(--clients-violet) !important;
+
+  color:
+    transparent !important;
+
+  -webkit-text-stroke:
+    1.6px
+    var(--clients-violet) !important;
 }
 
+
 .home-clients__heading p {
-  margin: 0 0 16px;
-  color: var(--clients-violet);
+  margin:
+    0
+    0
+    16px;
+
+  color:
+    var(--clients-violet);
+
   font-size: 9px;
+
   font-weight: 800;
+
   letter-spacing: 0.16em;
-  text-transform: uppercase;
+
+  text-transform:
+    uppercase;
 }
 
 
 /* =========================================================
-   HIDE OLD GRID / OLD ROWS
+   REMOVE OLD CLIENT LAYOUT
 ========================================================= */
 
 .home-clients__field,
@@ -202,13 +284,20 @@
 
 
 /* =========================================================
-   NEW CAROUSEL
+   CAROUSEL
 ========================================================= */
 
 .home-clients-carousel {
   position: relative;
-  z-index: 1;
+
+  z-index: 2;
+
   width: 100%;
+
+  height: auto !important;
+
+  min-height: 0 !important;
+
   outline: none;
 }
 
@@ -219,52 +308,85 @@
 
 .home-clients-carousel__viewport {
   position: relative;
+
   width: 100%;
+
+  height: auto !important;
+
+  min-height: 0 !important;
+
   overflow: hidden;
+
   cursor: grab;
-  touch-action: pan-y;
+
+  touch-action:
+    pan-y;
+
   user-select: none;
-  -webkit-user-select: none;
-  overscroll-behavior-x: contain;
-  -webkit-tap-highlight-color: transparent;
+
+  -webkit-user-select:
+    none;
+
+  overscroll-behavior-x:
+    contain;
+
+  -webkit-tap-highlight-color:
+    transparent;
 }
+
 
 .home-clients-carousel__viewport.is-dragging {
   cursor: grabbing;
 }
 
 
-/* softer colored edge fade */
+/* =========================================================
+   EDGE FADES
+========================================================= */
 
 .home-clients-carousel__viewport::before,
 .home-clients-carousel__viewport::after {
   content: "";
+
   position: absolute;
+
   z-index: 10;
+
   top: 0;
   bottom: 0;
-  width: clamp(36px, 7vw, 110px);
+
+  width:
+    clamp(
+      34px,
+      6vw,
+      100px
+    );
+
   pointer-events: none;
 }
 
+
 .home-clients-carousel__viewport::before {
   left: 0;
+
   background:
     linear-gradient(
       90deg,
-      rgba(235, 231, 243, 1) 0%,
-      rgba(235, 231, 243, 0.92) 28%,
+      rgba(235, 231, 243, 0.96) 0%,
+      rgba(235, 231, 243, 0.78) 35%,
       rgba(235, 231, 243, 0) 100%
     );
 }
 
+
 .home-clients-carousel__viewport::after {
   right: 0;
+
   background:
     linear-gradient(
       270deg,
-      rgba(236, 239, 229, 1) 0%,
-      rgba(236, 239, 229, 0.92) 28%,
+      rgba(236, 239, 229, 0.96) 0%,
+      rgba(236, 239, 229, 0.78) 35%,
       rgba(236, 239, 229, 0) 100%
     );
 }
@@ -275,13 +397,36 @@
 ========================================================= */
 
 .home-clients-carousel__track {
-  width: max-content;
+  width:
+    max-content;
+
+  height: auto;
+
   display: flex;
+
   align-items: center;
-  gap: clamp(18px, 1.8vw, 28px);
-  padding: 18px 0 28px;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
+
+  gap:
+    clamp(
+      18px,
+      1.8vw,
+      28px
+    );
+
+  padding:
+    16px
+    0
+    26px;
+
+  will-change:
+    transform;
+
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
 }
 
 
@@ -291,50 +436,136 @@
 
 .home-client-logo--carousel {
   position: relative;
-  flex: 0 0 clamp(255px, 23vw, 360px) !important;
-  width: clamp(255px, 23vw, 360px) !important;
-  height: clamp(152px, 13.5vw, 192px) !important;
+
+  flex:
+    0 0
+    clamp(
+      255px,
+      23vw,
+      360px
+    ) !important;
+
+  width:
+    clamp(
+      255px,
+      23vw,
+      360px
+    ) !important;
+
+  height:
+    clamp(
+      152px,
+      13.5vw,
+      192px
+    ) !important;
+
   min-width: 0 !important;
+
   min-height: 0 !important;
+
   margin: 0 !important;
-  padding: clamp(28px, 2.6vw, 40px) !important;
-  box-sizing: border-box;
-  display: grid !important;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(125, 53, 235, 0.16) !important;
-  border-radius: 26px !important;
+
+  padding:
+    clamp(
+      27px,
+      2.5vw,
+      40px
+    ) !important;
+
+  box-sizing:
+    border-box;
+
+  display:
+    grid !important;
+
+  place-items:
+    center;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgba(125, 53, 235, 0.15) !important;
+
+  border-radius:
+    26px !important;
+
   background:
     linear-gradient(
       145deg,
       var(--clients-card-1) 0%,
       var(--clients-card-2) 100%
     ) !important;
+
   box-shadow:
-    0 16px 40px rgba(45, 28, 77, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  will-change: transform, opacity;
+    0
+    16px
+    40px
+    rgba(
+      45,
+      28,
+      77,
+      0.08
+    ),
+    inset
+    0
+    1px
+    0
+    rgba(
+      255,
+      255,
+      255,
+      0.45
+    );
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  transform-style:
+    preserve-3d;
+
+  transform-origin:
+    center center;
+
+  will-change:
+    transform,
+    opacity;
+
   transition:
-    border-color 0.4s ease,
-    box-shadow 0.45s ease,
-    background 0.4s ease !important;
+    border-color
+    0.4s
+    ease,
+    box-shadow
+    0.45s
+    ease,
+    background
+    0.4s
+    ease !important;
 }
 
 
-/* top premium line */
+/* =========================================================
+   CARD TOP ACCENT
+========================================================= */
 
 .home-client-logo--carousel::before {
   content: "";
+
   position: absolute;
+
   top: 0;
+
   left: 14%;
   right: 14%;
+
   height: 2px;
+
   opacity: 0;
+
   background:
     linear-gradient(
       90deg,
@@ -343,53 +574,101 @@
       var(--clients-lime),
       transparent
     );
-  transform: scaleX(0.45);
+
+  transform:
+    scaleX(0.45);
+
   transition:
-    opacity 0.4s ease,
-    transform 0.5s cubic-bezier(.16,1,.3,1);
+    opacity
+    0.4s
+    ease,
+    transform
+    0.5s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
 }
 
 
-/* subtle internal glow */
+/* =========================================================
+   CARD GLOW
+========================================================= */
 
 .home-client-logo--carousel::after {
   content: "";
+
   position: absolute;
+
   width: 150px;
   height: 150px;
+
   right: -30px;
   bottom: -52px;
+
   border-radius: 50%;
+
   background:
     radial-gradient(
       circle,
       rgba(125, 53, 235, 0.12) 0%,
       rgba(125, 53, 235, 0) 72%
     );
+
   pointer-events: none;
 }
 
 
 /* =========================================================
-   ACTIVE / CENTER CARD
+   ACTIVE CARD
 ========================================================= */
 
 .home-client-logo--carousel.is-current {
-  border-color: rgba(125, 53, 235, 0.28) !important;
+  border-color:
+    rgba(
+      125,
+      53,
+      235,
+      0.28
+    ) !important;
+
   background:
     linear-gradient(
       145deg,
       var(--clients-card-active-1) 0%,
       var(--clients-card-active-2) 100%
     ) !important;
+
   box-shadow:
-    0 22px 60px rgba(76, 32, 125, 0.16),
-    0 0 0 1px rgba(198, 255, 51, 0.26);
+    0
+    22px
+    60px
+    rgba(
+      76,
+      32,
+      125,
+      0.16
+    ),
+    0
+    0
+    0
+    1px
+    rgba(
+      198,
+      255,
+      51,
+      0.24
+    );
 }
+
 
 .home-client-logo--carousel.is-current::before {
   opacity: 1;
-  transform: scaleX(1);
+
+  transform:
+    scaleX(1);
 }
 
 
@@ -398,144 +677,394 @@
 ========================================================= */
 
 .home-client-logo--carousel img {
+  position: relative;
+
+  z-index: 3;
+
   width: auto !important;
+
   height: auto !important;
-  max-width: 86% !important;
-  max-height: 88px !important;
-  object-fit: contain;
-  filter: grayscale(0.02);
+
+  max-width:
+    86% !important;
+
+  max-height:
+    88px !important;
+
+  object-fit:
+    contain;
+
+  filter:
+    grayscale(0.02);
+
   opacity: 0.96;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+  -webkit-user-drag:
+    none;
+
   transition:
-    filter 0.4s ease,
-    opacity 0.4s ease,
-    transform 0.5s cubic-bezier(.16,1,.3,1);
+    filter
+    0.4s
+    ease,
+    opacity
+    0.4s
+    ease,
+    transform
+    0.5s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
 }
 
+
 .home-client-logo--carousel.is-current img {
-  filter: grayscale(0);
+  filter:
+    grayscale(0);
+
   opacity: 1;
-  transform: scale(1.14);
+
+  transform:
+    scale(1.14);
 }
 
 
 /* =========================================================
-   FOOTER
+   FOOTER / CONTROLS AREA
 ========================================================= */
 
 .home-clients-carousel__footer {
-  width: min(1500px, 90%);
-  margin: 18px auto 0;
+  width:
+    min(
+      1500px,
+      90%
+    );
+
+  height: auto;
+
+  min-height: 0;
+
+  margin:
+    14px
+    auto
+    0;
+
   display: flex;
+
   align-items: center;
-  justify-content: space-between;
+
+  justify-content:
+    space-between;
+
   gap: 24px;
 }
 
 
 /* =========================================================
-   PROGRESS
+   PROGRESS BAR
 ========================================================= */
 
 .home-clients-carousel__progress {
   position: relative;
-  width: min(430px, 42vw);
+
+  width:
+    min(
+      430px,
+      42vw
+    );
+
   height: 3px;
+
   overflow: hidden;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.12);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.12
+    );
 }
+
 
 .home-clients-carousel__progress span {
   position: absolute;
+
   inset: 0;
+
   background:
     linear-gradient(
       90deg,
       var(--clients-violet),
       var(--clients-lime)
     );
-  transform: scaleX(0);
-  transform-origin: left center;
-  will-change: transform;
+
+  transform:
+    scaleX(0);
+
+  transform-origin:
+    left center;
+
+  will-change:
+    transform;
 }
 
 
 /* =========================================================
-   CONTROLS
+   BUTTONS
 ========================================================= */
 
 .home-clients-carousel__controls {
   display: flex;
+
+  align-items: center;
+
   gap: 9px;
 }
 
+
 .home-clients-carousel__button {
   width: 48px;
+
   height: 48px;
+
   padding: 0;
+
+  flex:
+    0 0
+    48px;
+
   display: grid;
-  place-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  border-radius: 50%;
-  color: var(--clients-black);
-  background: rgba(243, 240, 249, 0.92);
+
+  place-items:
+    center;
+
+  border:
+    1px solid
+    rgba(
+      0,
+      0,
+      0,
+      0.10
+    );
+
+  border-radius:
+    50%;
+
+  color:
+    var(--clients-black);
+
+  background:
+    rgba(
+      243,
+      240,
+      249,
+      0.92
+    );
+
   font-size: 17px;
+
   cursor: pointer;
+
   transition:
-    transform .35s cubic-bezier(.16,1,.3,1),
-    background .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
+    transform
+    0.35s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    ),
+    background
+    0.3s
+    ease,
+    border-color
+    0.3s
+    ease,
+    box-shadow
+    0.3s
+    ease;
 }
+
 
 .home-clients-carousel__button:last-child {
-  color: #0a0a0a;
-  border-color: rgba(198, 255, 51, 0.9);
-  background: var(--clients-lime);
+  color:
+    #0a0a0a;
+
+  border-color:
+    rgba(
+      198,
+      255,
+      51,
+      0.9
+    );
+
+  background:
+    var(--clients-lime);
 }
 
-@media (hover: hover) and (pointer: fine) {
+
+@media
+(hover: hover)
+and
+(pointer: fine) {
+
   .home-clients-carousel__button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    transform:
+      translateY(
+        -3px
+      );
+
+    box-shadow:
+      0
+      12px
+      24px
+      rgba(
+        0,
+        0,
+        0,
+        0.08
+      );
   }
+
 }
 
 
 /* =========================================================
-   125% / SMALL LAPTOP
+   TABLET / 125% CHROME SAFETY
 ========================================================= */
 
-@media (min-width: 768px) and (max-width: 1180px) {
+@media
+(min-width: 768px)
+and
+(max-width: 1180px) {
+
   .home-clients {
-    padding: 78px 0 76px !important;
+    padding:
+      76px
+      0
+      70px !important;
   }
+
 
   .home-clients__title,
   .home-clients__heading {
-    margin-bottom: 38px !important;
+    margin-bottom:
+      36px !important;
   }
+
 
   .home-clients__heading h2,
   .home-clients__title {
-    font-size: clamp(47px, 6.4vw, 68px) !important;
+    font-size:
+      clamp(
+        47px,
+        6.4vw,
+        68px
+      ) !important;
   }
+
 
   .home-client-logo--carousel {
-    flex-basis: clamp(225px, 28vw, 300px) !important;
-    width: clamp(225px, 28vw, 300px) !important;
-    height: 152px !important;
-    border-radius: 22px !important;
-    padding: 28px !important;
+    flex-basis:
+      clamp(
+        225px,
+        28vw,
+        300px
+      ) !important;
+
+    width:
+      clamp(
+        225px,
+        28vw,
+        300px
+      ) !important;
+
+    height:
+      150px !important;
+
+    border-radius:
+      22px !important;
+
+    padding:
+      27px !important;
   }
 
+
   .home-client-logo--carousel img {
-    max-width: 84% !important;
-    max-height: 74px !important;
+    max-width:
+      84% !important;
+
+    max-height:
+      74px !important;
   }
+
+
+  .home-clients-carousel__footer {
+    margin-top:
+      10px;
+  }
+
+}
+
+
+/* =========================================================
+   SHORT DESKTOP
+========================================================= */
+
+@media
+(min-width: 1024px)
+and
+(max-height: 720px) {
+
+  .home-clients {
+    padding:
+      68px
+      0
+      62px !important;
+  }
+
+
+  .home-clients__title,
+  .home-clients__heading {
+    margin-bottom:
+      30px !important;
+  }
+
+
+  .home-clients__heading h2,
+  .home-clients__title {
+    font-size:
+      clamp(
+        44px,
+        5.4vw,
+        64px
+      ) !important;
+  }
+
+
+  .home-client-logo--carousel {
+    height:
+      142px !important;
+  }
+
+
+  .home-clients-carousel__track {
+    padding-bottom:
+      18px;
+  }
+
 }
 
 
@@ -543,123 +1072,424 @@
    MOBILE
 ========================================================= */
 
-@media (max-width: 767px) {
+@media
+(max-width: 767px) {
+
+  /* =======================================================
+     IMPORTANT:
+     REMOVE DESKTOP HEIGHT / SPACING BEHAVIOUR
+  ======================================================= */
+
   .home-clients {
-    padding: 66px 0 64px !important;
+    height:
+      auto !important;
+
+    min-height:
+      0 !important;
+
+    padding:
+      48px
+      0
+      38px !important;
+
+    overflow:
+      hidden !important;
+
     background:
       radial-gradient(
-        circle at 20% 18%,
-        rgba(125, 53, 235, 0.18),
-        transparent 28%
+        circle at 18% 13%,
+        rgba(125, 53, 235, 0.14),
+        transparent 26%
       ),
       radial-gradient(
-        circle at 82% 84%,
-        rgba(198, 255, 51, 0.15),
-        transparent 24%
+        circle at 84% 86%,
+        rgba(198, 255, 51, 0.10),
+        transparent 22%
       ),
       linear-gradient(
         135deg,
         #ece8f4 0%,
-        #e9e7ef 55%,
+        #e9e7ef 56%,
         #eef1e6 100%
       ) !important;
   }
 
+
   .home-clients::before {
-    width: 220px;
-    height: 220px;
-    left: -90px;
-    top: 120px;
+    width: 170px;
+
+    height: 170px;
+
+    left: -70px;
+
+    top: 50px;
+
+    filter:
+      blur(42px);
+
+    opacity: 0.42;
   }
 
+
   .home-clients::after {
-    width: 240px;
-    height: 240px;
-    right: -80px;
-    bottom: 40px;
+    width: 180px;
+
+    height: 180px;
+
+    right: -70px;
+
+    bottom: -20px;
+
+    filter:
+      blur(44px);
+
+    opacity: 0.38;
   }
+
+
+  .home-clients__stage,
+  .home-clients__inner,
+  .home-clients-carousel,
+  .home-clients-carousel__viewport {
+    height:
+      auto !important;
+
+    min-height:
+      0 !important;
+
+    max-height:
+      none !important;
+  }
+
+
+  /* =======================================================
+     MOBILE HEADING
+  ======================================================= */
 
   .home-clients__title,
   .home-clients__heading {
-    width: calc(100% - 32px) !important;
-    margin: 0 auto 30px !important;
+    width:
+      calc(
+        100% - 28px
+      ) !important;
+
+    margin:
+      0
+      auto
+      20px !important;
   }
+
 
   .home-clients__heading h2,
   .home-clients__title {
-    font-size: clamp(42px, 12vw, 54px) !important;
-    line-height: 0.82;
+    font-size:
+      clamp(
+        34px,
+        9.4vw,
+        46px
+      ) !important;
+
+    line-height:
+      0.88;
+
+    letter-spacing:
+      -0.055em;
   }
 
+
+  .home-clients__title span,
+  .home-clients__heading h2 span {
+    margin-top: 2px;
+
+    -webkit-text-stroke:
+      1.15px
+      var(--clients-violet) !important;
+  }
+
+
   .home-clients__heading p {
-    margin-bottom: 12px;
+    margin-bottom:
+      10px;
+
     font-size: 8px;
   }
 
+
+  /* =======================================================
+     MOBILE CAROUSEL
+  ======================================================= */
+
   .home-clients-carousel__track {
-    gap: 14px;
-    padding: 12px 0 20px;
+    gap: 11px;
+
+    padding:
+      7px
+      0
+      12px;
   }
+
+
+  /*
+   * One strong central card +
+   * enough side preview to communicate swipe.
+   */
 
   .home-client-logo--carousel {
-    flex-basis: 72vw !important;
-    width: 72vw !important;
-    max-width: 310px;
-    height: 148px !important;
-    padding: 24px !important;
-    border-radius: 20px !important;
+    flex:
+      0 0
+      calc(
+        100vw - 92px
+      ) !important;
+
+    width:
+      calc(
+        100vw - 92px
+      ) !important;
+
+    max-width:
+      270px;
+
+    height:
+      110px !important;
+
+    padding:
+      17px !important;
+
+    border-radius:
+      17px !important;
   }
 
+
   .home-client-logo--carousel img {
-    max-width: 84% !important;
-    max-height: 66px !important;
+    max-width:
+      84% !important;
+
+    max-height:
+      52px !important;
   }
+
+
+  .home-client-logo--carousel.is-current img {
+    transform:
+      scale(1.1);
+  }
+
+
+  /* =======================================================
+     MOBILE EDGE FADES
+  ======================================================= */
 
   .home-clients-carousel__viewport::before,
   .home-clients-carousel__viewport::after {
-    width: 24px;
+    width: 14px;
   }
+
+
+  /* =======================================================
+     MOBILE FOOTER
+  ======================================================= */
 
   .home-clients-carousel__footer {
-    width: calc(100% - 32px);
-    margin-top: 12px;
+    width:
+      calc(
+        100% - 28px
+      );
+
+    height:
+      auto;
+
+    min-height: 0;
+
+    margin:
+      4px
+      auto
+      0;
+
+    gap: 10px;
   }
+
 
   .home-clients-carousel__progress {
-    width: calc(100% - 114px);
+    width:
+      calc(
+        100% - 82px
+      );
+
+    height: 2px;
   }
 
-  .home-clients-carousel__button {
-    width: 42px;
-    height: 42px;
+
+  .home-clients-carousel__controls {
+    gap: 6px;
   }
+
+
+  .home-clients-carousel__button {
+    width: 32px;
+
+    height: 32px;
+
+    flex-basis:
+      32px;
+
+    font-size: 13px;
+  }
+
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   PIXEL / SMALL MOBILE
 ========================================================= */
 
-@media (max-width: 374px) {
+@media
+(max-width: 430px) {
+
+  .home-clients {
+    padding:
+      44px
+      0
+      34px !important;
+  }
+
+
+  .home-clients__title,
+  .home-clients__heading {
+    margin-bottom:
+      18px !important;
+  }
+
+
   .home-clients__heading h2,
   .home-clients__title {
-    font-size: 39px !important;
+    font-size:
+      clamp(
+        33px,
+        9.3vw,
+        40px
+      ) !important;
   }
+
 
   .home-client-logo--carousel {
-    flex-basis: 76vw !important;
-    width: 76vw !important;
-    height: 136px !important;
+    flex-basis:
+      calc(
+        100vw - 100px
+      ) !important;
+
+    width:
+      calc(
+        100vw - 100px
+      ) !important;
+
+    max-width:
+      260px;
+
+    height:
+      106px !important;
   }
+
 
   .home-client-logo--carousel img {
-    max-height: 60px !important;
+    max-height:
+      49px !important;
   }
 
-  .home-clients-carousel__button {
-    width: 39px;
-    height: 39px;
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media
+(max-width: 374px) {
+
+  .home-clients {
+    padding:
+      40px
+      0
+      30px !important;
   }
+
+
+  .home-clients__title,
+  .home-clients__heading {
+    width:
+      calc(
+        100% - 24px
+      ) !important;
+
+    margin-bottom:
+      16px !important;
+  }
+
+
+  .home-clients__heading h2,
+  .home-clients__title {
+    font-size:
+      31px !important;
+
+    line-height:
+      0.9;
+  }
+
+
+  .home-client-logo--carousel {
+    flex-basis:
+      calc(
+        100vw - 86px
+      ) !important;
+
+    width:
+      calc(
+        100vw - 86px
+      ) !important;
+
+    max-width:
+      248px;
+
+    height:
+      100px !important;
+
+    padding:
+      15px !important;
+  }
+
+
+  .home-client-logo--carousel img {
+    max-height:
+      45px !important;
+  }
+
+
+  .home-clients-carousel__footer {
+    width:
+      calc(
+        100% - 22px
+      );
+  }
+
+
+  .home-clients-carousel__button {
+    width: 30px;
+
+    height: 30px;
+
+    flex-basis:
+      30px;
+
+    font-size: 12px;
+  }
+
+
+  .home-clients-carousel__progress {
+    width:
+      calc(
+        100% - 74px
+      );
+  }
+
 }
 
 
@@ -667,22 +1497,36 @@
    LARGE DESKTOP
 ========================================================= */
 
-@media (min-width: 1600px) {
+@media
+(min-width: 1600px) {
+
   .home-clients__title,
   .home-clients__heading {
-    max-width: 1600px;
+    max-width:
+      1600px;
   }
+
 
   .home-client-logo--carousel {
-    flex-basis: 370px !important;
-    width: 370px !important;
-    height: 198px !important;
+    flex-basis:
+      370px !important;
+
+    width:
+      370px !important;
+
+    height:
+      198px !important;
   }
 
+
   .home-client-logo--carousel img {
-    max-width: 86% !important;
-    max-height: 92px !important;
+    max-width:
+      86% !important;
+
+    max-height:
+      92px !important;
   }
+
 }
 
 
@@ -690,11 +1534,17 @@
    REDUCED MOTION
 ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media
+(prefers-reduced-motion: reduce) {
+
   .home-client-logo--carousel,
   .home-client-logo--carousel img,
   .home-clients-carousel__button {
-    transition: none !important;
-    animation: none !important;
+    transition:
+      none !important;
+
+    animation:
+      none !important;
   }
+
 }
