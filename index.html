@@ -217,98 +217,234 @@
   <section
     id="ape-hero"
     class="ape-hero"
+    aria-labelledby="ape-hero-title"
   >
 
-
-    <!-- BACKGROUND -->
-
     <div
-      class="ape-hero__backdrop"
+      class="ape-hero__background"
       aria-hidden="true"
     ></div>
 
 
-    <!-- REAR FRAME -->
+    <div class="ape-hero__inner">
 
-    <div
-      class="ape-hero__frame ape-hero__frame--back"
-      aria-hidden="true"
-    ></div>
+      <!-- =========================================
+          HERO CONTENT
+      ========================================== -->
 
+      <div class="ape-hero__content">
 
-    <!-- THREE.JS / WEBGL -->
+        <h1
+          id="ape-hero-title"
+          class="ape-hero__title"
+        >
+          <span class="ape-hero__title-line">
+            We Build Brands That
+          </span>
 
-    <div
-      id="ape-hero-webgl"
-      class="ape-hero__webgl"
-      aria-hidden="true"
-    ></div>
+          <span class="ape-hero__title-line ape-hero__title-line--violet">
+            Get Noticed,
+          </span>
 
-
-    <!-- FALLBACK IMAGE -->
-
-    <img
-      class="ape-hero__fallback"
-      src="/work/babumoshai/01.jpg"
-      alt=""
-      aria-hidden="true"
-    >
-
-
-    <!-- HERO COPY -->
-
-    <div class="ape-hero__copy">
-
-      <h1 class="ape-hero__title">
-
-        <span>
-          IDEAS
-        </span>
-
-        <span class="is-violet">
-          SHOULDN'T
-        </span>
-
-        <span>
-          SIT STILL.
-        </span>
-
-      </h1>
+          <span class="ape-hero__title-line">
+            Remembered &amp; Chosen.
+          </span>
+        </h1>
 
 
-      <a
-        href="/work/"
-        class="ape-hero__action"
+        <!--
+          Full supporting copy remains in HTML for SEO.
+          Visually hidden because the animated version below
+          is what visitors see.
+        -->
+
+        <p class="ape-hero__seo-copy">
+          APE Studio is a creative and digital marketing agency in Kolkata helping ambitious brands build a stronger presence through strategy, branding, content, social media, performance marketing and digital experiences. From the first idea to the final campaign, we bring strategy, creativity and execution together to turn businesses into brands people remember.
+        </p>
+
+
+        <!-- =========================================
+            ANIMATED SUPPORTING COPY
+        ========================================== -->
+
+        <div
+          class="ape-hero__copy-stage"
+          aria-hidden="true"
+        >
+
+          <p class="ape-hero__copy-line">
+            APE Studio is a creative and digital marketing agency in Kolkata.
+          </p>
+
+          <p class="ape-hero__copy-line">
+            Helping ambitious brands build a stronger presence through strategy, branding and content.
+          </p>
+
+          <p class="ape-hero__copy-line">
+            Social media, performance marketing and digital experiences.
+          </p>
+
+          <p class="ape-hero__copy-line">
+            From the first idea to the final campaign, we turn businesses into brands people remember.
+          </p>
+
+        </div>
+
+
+        <!-- =========================================
+            CTAs
+        ========================================== -->
+
+        <div class="ape-hero__actions">
+
+          <a
+            href="/contact/#contact-form"
+            class="ape-hero__cta ape-hero__cta--primary"
+          >
+            <span>
+              Start a Project
+            </span>
+
+            <i aria-hidden="true">
+              ↗
+            </i>
+          </a>
+
+
+          <a
+            href="/work/"
+            class="ape-hero__cta ape-hero__cta--secondary"
+          >
+            <span>
+              Explore Our Work
+            </span>
+
+            <i aria-hidden="true">
+              →
+            </i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================================
+          7 PROJECT IMAGES
+          NO TEXT
+          NO NUMBERING
+      ========================================== -->
+
+      <div
+        class="ape-hero__gallery"
+        aria-label="Selected APE Studio work"
       >
 
-        EXPLORE WORK
+        <div class="ape-hero__deck">
 
-        <i aria-hidden="true">
-          ↗
-        </i>
+          <a
+            href="/work/babumoshai/"
+            class="ape-hero-card"
+            aria-label="View Babumoshai project"
+          >
+            <img
+              src="/work/babumoshai/01.jpg"
+              alt="Babumoshai creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
 
-      </a>
+
+          <a
+            href="/work/grandly/"
+            class="ape-hero-card"
+            aria-label="View Grandly project"
+          >
+            <img
+              src="/work/grandly/01.jpg"
+              alt="Grandly creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+
+          <a
+            href="/work/aditya-academy/"
+            class="ape-hero-card"
+            aria-label="View Aditya Academy project"
+          >
+            <img
+              src="/work/aditya-academy/01.jpg"
+              alt="Aditya Academy creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+
+          <a
+            href="/work/boho/"
+            class="ape-hero-card"
+            aria-label="View Boho project"
+          >
+            <img
+              src="/work/boho/01.jpg"
+              alt="Boho creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+
+          <a
+            href="/work/baraf/"
+            class="ape-hero-card"
+            aria-label="View Baraf project"
+          >
+            <img
+              src="/work/baraf/01.jpg"
+              alt="Baraf creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+
+          <a
+            href="/work/noodle-oodle/"
+            class="ape-hero-card"
+            aria-label="View Noodle Oodle project"
+          >
+            <img
+              src="/work/noodle-oodle/01.jpg"
+              alt="Noodle Oodle creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+
+          <a
+            href="/work/shopnamo/"
+            class="ape-hero-card"
+            aria-label="View Shop Namo project"
+          >
+            <img
+              src="/work/shopnamo/01.jpg"
+              alt="Shop Namo creative project by APE Studio"
+              draggable="false"
+            >
+          </a>
+
+        </div>
+
+
+        <div
+          class="ape-hero__progress"
+          aria-hidden="true"
+        >
+          <span></span>
+        </div>
+
+      </div>
 
     </div>
-
-
-    <!-- PROJECT INDICATOR -->
-
-    <div
-      class="ape-hero__project-dots"
-      aria-hidden="true"
-    >
-
-      <span class="is-active"></span>
-
-      <span></span>
-
-      <span></span>
-
-      <span></span>
-
-    </div>
-
 
   </section>
 

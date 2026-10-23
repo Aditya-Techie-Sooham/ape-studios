@@ -1,27 +1,35 @@
 /* =========================================================
-   APE — HERO
-   3 CARD KINETIC DECK
+   APE HERO
+   MOBILE-FIRST
 ========================================================= */
 
 .ape-hero {
-  --black: #000000;
-  --white: #ffffff;
-  --violet: #7d35eb;
-  --lime: #c6ff33;
+  --hero-violet: #7d35eb;
+  --hero-lime: #c6ff33;
+  --hero-white: #ffffff;
 
   position: relative;
 
   width: 100%;
 
-  height: 100svh;
-
-  min-height: 620px;
+  min-height: 100svh;
 
   overflow: hidden;
 
-  color: var(--white);
+  color: var(--hero-white);
 
-  background: var(--black);
+  background:
+    radial-gradient(
+      circle at 78% 32%,
+      rgba(125, 53, 235, 0.16),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      #121018 0%,
+      #181322 52%,
+      #101118 100%
+    );
 
   isolation: isolate;
 }
@@ -38,279 +46,340 @@
 
   z-index: 0;
 
-  overflow: hidden;
-
   pointer-events: none;
 }
 
 
-.ape-hero__background::after {
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 72% 47%,
-      rgba(125,53,235,.18),
-      transparent 37%
-    );
-}
-
-
 /* =========================================================
-   GRID
+   MOBILE INNER
 ========================================================= */
 
-.ape-hero__grid {
-  position: absolute;
+.ape-hero__inner {
+  position: relative;
 
-  inset: 0;
+  z-index: 2;
 
-  opacity: .11;
+  width: 100%;
 
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.1) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.1) 1px,
-      transparent 1px
-    );
-
-  background-size:
-    80px 80px;
-
-  mask-image:
-    linear-gradient(
-      to bottom,
-      transparent,
-      #000 20%,
-      #000 82%,
-      transparent
-    );
-}
-
-
-/* =========================================================
-   LARGE APE
-========================================================= */
-
-.ape-hero__word {
-  position: absolute;
-
-  left: -2vw;
-
-  top: 21%;
-
-  color: transparent;
-
-  -webkit-text-stroke:
-    1px
-    rgba(125,53,235,.28);
-
-  font-family:
-    var(--ape-font, Arial, sans-serif);
-
-  font-size:
-    clamp(
-      260px,
-      43vw,
-      700px
-    );
-
-  font-weight: 900;
-
-  line-height: .7;
-
-  letter-spacing: -.1em;
-
-  user-select: none;
-}
-
-
-/* =========================================================
-   NON-CIRCULAR GEOMETRY
-========================================================= */
-
-.ape-hero__outline {
-  position: absolute;
-
-  border:
-    1px solid
-    rgba(125,53,235,.35);
-
-  pointer-events: none;
-}
-
-
-.ape-hero__outline--one {
-  width: 25vw;
-
-  height: 58vh;
-
-  right: 5%;
-
-  top: 17%;
-
-  transform:
-    rotate(3deg);
-
-  border-radius:
-    4px;
-}
-
-
-.ape-hero__outline--two {
-  width: 15vw;
-
-  height: 34vh;
-
-  left: 38%;
-
-  bottom: 8%;
-
-  transform:
-    rotate(-7deg);
-
-  border-color:
-    rgba(198,255,51,.2);
-}
-
-
-.ape-hero__accent-line {
-  position: absolute;
-
-  left: 5%;
-
-  right: 5%;
-
-  bottom: 18%;
-
-  height: 1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(198,255,51,.7),
-      rgba(125,53,235,.3),
-      transparent
-    );
-
-  transform-origin:
-    left center;
-}
-
-
-/* =========================================================
-   COPY
-========================================================= */
-
-.ape-hero__copy {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 18px;
-
-  top: 17%;
-
-  width:
-    calc(100% - 36px);
-}
-
-
-.ape-hero__title {
-  margin: 0;
-
-  width:
-    min(95vw, 580px);
-
-  font-family:
-    var(--ape-font, Arial, sans-serif);
-
-  font-size:
-    clamp(
-      50px,
-      15vw,
-      76px
-    );
-
-  font-weight: 900;
-
-  line-height: .76;
-
-  letter-spacing: -.078em;
-
-  text-transform: uppercase;
-}
-
-
-.ape-hero__title > span {
-  display: block;
-
-  width: fit-content;
-
-  overflow: hidden;
-}
-
-
-.ape-hero__title .is-violet {
-  color: var(--violet);
-}
-
-
-/* =========================================================
-   CTA
-========================================================= */
-
-.ape-hero__action {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  min-height: 44px;
-
-  margin-top: 22px;
+  box-sizing: border-box;
 
   padding:
-    4px 5px
-    4px 17px;
+    100px
+    16px
+    28px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.25);
+  display: flex;
 
-  border-radius: 999px;
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.ape-hero__content {
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   H1
+========================================================= */
+
+.ape-hero__title {
+  width: 100%;
+
+  max-width: 100%;
+
+  margin: 0;
 
   color: #fff;
 
-  background:
-    rgba(255,255,255,.025);
-
   font-family:
-    var(--ape-font, Arial, sans-serif);
+    var(--ape-font),
+    "Inter Tight",
+    Arial,
+    Helvetica,
+    sans-serif;
 
-  font-size: 9px;
+  font-size:
+    clamp(
+      45px,
+      12.1vw,
+      55px
+    );
 
-  font-weight: 800;
+  font-weight: 900;
 
-  letter-spacing: .06em;
+  line-height: 0.91;
 
-  text-decoration: none;
+  letter-spacing: -0.062em;
+
+  text-wrap: balance;
 }
 
 
-.ape-hero__action i {
-  width: 33px;
+/* =========================================================
+   TITLE LINES
+========================================================= */
 
-  height: 33px;
+.ape-hero__title-line {
+  display: block;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  overflow: visible;
+}
+
+
+.ape-hero__title-line--violet {
+  color: var(--hero-violet);
+}
+
+
+/* =========================================================
+   KINETIC WORD
+   CRITICAL:
+   NEVER BREAK INSIDE WORD
+========================================================= */
+
+.ape-hero__kinetic-word {
+  display: inline-block;
+
+  white-space: nowrap;
+
+  vertical-align: bottom;
+}
+
+
+/* =========================================================
+   KINETIC CHARACTER
+========================================================= */
+
+.ape-hero__kinetic-char {
+  display: inline-block;
+
+  position: relative;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+/* =========================================================
+   OLD TITLE WORD CLASSES
+   SAFE FALLBACK
+========================================================= */
+
+.ape-hero__title-word-mask {
+  display: inline-block;
+
+  vertical-align: bottom;
+}
+
+
+.ape-hero__title-word {
+  display: inline-block;
+}
+
+
+/* =========================================================
+   SEO COPY
+========================================================= */
+
+.ape-hero__seo-copy {
+  position: absolute !important;
+
+  width: 1px !important;
+
+  height: 1px !important;
+
+  padding: 0 !important;
+
+  margin: -1px !important;
+
+  overflow: hidden !important;
+
+  clip: rect(0, 0, 0, 0) !important;
+
+  white-space: nowrap !important;
+
+  border: 0 !important;
+}
+
+
+/* =========================================================
+   SUPPORTING COPY
+========================================================= */
+
+.ape-hero__copy-stage {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  height: 112px;
+
+  margin-top: 24px;
+
+  overflow: hidden;
+}
+
+
+.ape-hero__copy-line {
+  position: absolute;
+
+  inset:
+    0
+    0
+    auto
+    0;
+
+  width: 100%;
+
+  margin: 0;
+
+  color:
+    rgba(255,255,255,.7);
+
+  font-family:
+    var(--ape-font),
+    "Inter Tight",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  line-height: 1.65;
+
+  letter-spacing: -0.012em;
+
+  visibility: hidden;
+
+  opacity: 0;
+}
+
+
+/* =========================================================
+   SUPPORT COPY WORD
+========================================================= */
+
+.ape-hero__word-mask {
+  display: inline-block;
+
+  overflow: hidden;
+
+  vertical-align: bottom;
+}
+
+
+.ape-hero__word {
+  display: inline-block;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+/* =========================================================
+   MOBILE CTAs
+========================================================= */
+
+.ape-hero__actions {
+  width: 100%;
+
+  margin-top: 8px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+
+.ape-hero__cta {
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 50px;
+
+  padding:
+    5px
+    5px
+    5px
+    14px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+  border-radius: 999px;
+
+  font-family:
+    var(--ape-font),
+    "Inter Tight",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 850;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.02em;
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+.ape-hero__cta span {
+  min-width: 0;
+}
+
+
+.ape-hero__cta i {
+  width: 38px;
+
+  height: 38px;
+
+  flex:
+    0
+    0
+    38px;
 
   display: grid;
 
@@ -318,20 +387,89 @@
 
   border-radius: 50%;
 
-  color: #000;
-
-  background: var(--lime);
+  font-size: 13px;
 
   font-style: normal;
-
-  transition:
-    transform .35s
-    cubic-bezier(.16,1,.3,1);
 }
 
 
-.ape-hero__action:hover i {
-  transform: rotate(45deg);
+/* =========================================================
+   PRIMARY
+========================================================= */
+
+.ape-hero__cta--primary {
+  color: #111;
+
+  border:
+    1px solid
+    var(--hero-lime);
+
+  background:
+    var(--hero-lime);
+}
+
+
+.ape-hero__cta--primary i {
+  color: #fff;
+
+  background: #17131f;
+}
+
+
+/* =========================================================
+   SECONDARY
+========================================================= */
+
+.ape-hero__cta--secondary {
+  color: #fff;
+
+  border:
+    1px solid
+    rgba(255,255,255,.22);
+
+  background:
+    rgba(255,255,255,.035);
+}
+
+
+.ape-hero__cta--secondary i {
+  color:
+    var(--hero-lime);
+
+  background:
+    rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   MOBILE GALLERY
+========================================================= */
+
+.ape-hero__gallery {
+  position: relative;
+
+  width: 100%;
+
+  height:
+    clamp(
+      300px,
+      78vw,
+      345px
+    );
+
+  margin-top: 4px;
+
+  overflow: hidden;
+
+  perspective: 1400px;
+
+  transform-style:
+    preserve-3d;
+
+  flex:
+    0
+    0
+    auto;
 }
 
 
@@ -342,28 +480,32 @@
 .ape-hero__deck {
   position: absolute;
 
-  z-index: 7;
+  inset: 0;
 
-  left: 2.5vw;
+  overflow: hidden;
 
-  right: 2.5vw;
+  touch-action: pan-y;
 
-  bottom: 1.5%;
+  user-select: none;
 
-  height: 50svh;
+  -webkit-user-select: none;
 
-  min-height: 320px;
+  cursor: grab;
 
-  perspective: 1600px;
+  perspective: 1400px;
 
-  transform-style: preserve-3d;
+  transform-style:
+    preserve-3d;
+}
 
-  pointer-events: none;
+
+.ape-hero__deck.is-dragging {
+  cursor: grabbing;
 }
 
 
 /* =========================================================
-   CARD
+   MOBILE CARD
 ========================================================= */
 
 .ape-hero-card {
@@ -371,55 +513,73 @@
 
   left: 50%;
 
-  top: 50%;
+  top: 47%;
 
-  width: 58%;
+  width:
+    min(
+      71vw,
+      310px
+    );
 
   height:
     min(
-      43svh,
-      400px
+      74vw,
+      325px
     );
+
+  display: block;
 
   overflow: hidden;
 
   border:
     1px solid
-    rgba(125,53,235,.65);
+    rgba(125,53,235,.48);
 
-  border-radius: 24px;
+  border-radius: 23px;
 
-  color: #fff;
-
-  background: #111;
+  background:
+    #15131a;
 
   box-shadow:
-    0 28px 70px
-    rgba(0,0,0,.48);
+    0
+    24px
+    55px
+    rgba(0,0,0,.28);
 
   text-decoration: none;
 
-  transform-style: preserve-3d;
+  transform-style:
+    preserve-3d;
 
   will-change:
     transform,
     opacity;
 
-  pointer-events: auto;
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 
 .ape-hero-card.is-active {
   border-color:
-    var(--lime);
+    rgba(198,255,51,.82);
 
   box-shadow:
-    0 0 0 1px
-    rgba(198,255,51,.12),
-    0 32px 85px
-    rgba(0,0,0,.58);
+    0
+    28px
+    65px
+    rgba(0,0,0,.38),
+    0
+    0
+    0
+    1px
+    rgba(198,255,51,.05);
 }
 
+
+/* =========================================================
+   CARD IMAGE
+========================================================= */
 
 .ape-hero-card img {
   width: 100%;
@@ -434,128 +594,132 @@
 
   user-select: none;
 
+  -webkit-user-drag: none;
+
+  transform:
+    scale(1.025);
+
   transition:
-    transform .9s
+    transform
+    .8s
     cubic-bezier(.16,1,.3,1);
 }
 
 
 .ape-hero-card.is-active img {
-  transform: scale(1.035);
+  transform:
+    scale(1.05);
 }
 
 
-.ape-hero-card::after {
-  content: "";
+/* =========================================================
+   MOBILE PROGRESS
+========================================================= */
 
+.ape-hero__progress {
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 2px;
+
+  width: 46%;
+
+  max-width: 200px;
+
+  height: 2px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,.15);
+
+  transform:
+    translateX(-50%);
+}
+
+
+.ape-hero__progress span {
   position: absolute;
 
   inset: 0;
 
   background:
-    linear-gradient(
-      180deg,
-      transparent 58%,
-      rgba(0,0,0,.82)
-    );
+    var(--hero-lime);
 
-  pointer-events: none;
+  transform:
+    scaleX(.142857);
+
+  transform-origin:
+    left center;
+
+  will-change:
+    transform;
 }
 
 
 /* =========================================================
-   CARD LABELS
+   VERY SMALL MOBILE
 ========================================================= */
 
-.ape-hero-card__index {
-  position: absolute;
+@media (max-width: 360px) {
 
-  z-index: 5;
+  .ape-hero__inner {
+    padding:
+      94px
+      14px
+      24px;
 
-  left: 15px;
-
-  top: 14px;
-
-  color:
-    rgba(255,255,255,.72);
-
-  font-family:
-    var(--ape-font, Arial, sans-serif);
-
-  font-size: 8px;
-
-  font-weight: 800;
-
-  letter-spacing: .08em;
-}
+    gap: 18px;
+  }
 
 
-.ape-hero-card__name {
-  position: absolute;
-
-  z-index: 5;
-
-  left: 15px;
-
-  right: 15px;
-
-  bottom: 14px;
-
-  font-family:
-    var(--ape-font, Arial, sans-serif);
-
-  font-size: 13px;
-
-  font-weight: 850;
-
-  letter-spacing: -.025em;
-
-  text-transform: uppercase;
-}
+  .ape-hero__title {
+    font-size:
+      clamp(
+        40px,
+        12vw,
+        44px
+      );
+  }
 
 
-/* =========================================================
-   DOTS
-========================================================= */
+  .ape-hero__copy-stage {
+    height: 122px;
 
-.ape-hero__dots {
-  position: absolute;
-
-  z-index: 25;
-
-  right: 18px;
-
-  bottom: 17px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-}
+    margin-top: 20px;
+  }
 
 
-.ape-hero__dots span {
-  width: 6px;
-
-  height: 6px;
-
-  border-radius: 999px;
-
-  background:
-    rgba(255,255,255,.25);
-
-  transition:
-    width .4s
-    cubic-bezier(.16,1,.3,1),
-    background .3s ease;
-}
+  .ape-hero__copy-line {
+    font-size: 13px;
+  }
 
 
-.ape-hero__dots span.is-active {
-  width: 29px;
+  .ape-hero__actions {
+    grid-template-columns: 1fr;
+  }
 
-  background: var(--lime);
+
+  .ape-hero__cta {
+    min-height: 48px;
+
+    font-size: 9px;
+  }
+
+
+  .ape-hero__gallery {
+    height: 275px;
+  }
+
+
+  .ape-hero-card {
+    width: 69vw;
+
+    height: 255px;
+
+    border-radius: 20px;
+  }
 }
 
 
@@ -563,198 +727,327 @@
    TABLET
 ========================================================= */
 
-@media
-(
-  min-width: 768px
-) {
+@media (min-width: 768px) {
 
-  .ape-hero__copy {
-    left: 5vw;
+  .ape-hero__inner {
+    padding:
+      125px
+      5vw
+      42px;
 
-    top: 50%;
-
-    width: 39vw;
-
-    transform:
-      translateY(-50%);
+    gap: 32px;
   }
 
 
   .ape-hero__title {
+    max-width: 760px;
+
     font-size:
       clamp(
         60px,
-        7vw,
-        94px
+        7.4vw,
+        78px
       );
   }
 
 
-  .ape-hero__deck {
-    left: auto;
+  .ape-hero__copy-stage {
+    max-width: 640px;
 
-    right: 2.5vw;
+    height: 105px;
 
-    top: 50%;
+    margin-top: 30px;
+  }
 
-    bottom: auto;
 
-    width: 58vw;
+  .ape-hero__copy-line {
+    font-size: 15px;
+  }
 
-    height: 68svh;
 
-    transform:
-      translateY(-50%);
+  .ape-hero__actions {
+    width: auto;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+
+  .ape-hero__cta {
+    width: auto;
+
+    min-width: 180px;
+
+    padding-left: 18px;
+
+    font-size: 10px;
+  }
+
+
+  .ape-hero__gallery {
+    height:
+      clamp(
+        380px,
+        49vw,
+        480px
+      );
+
+    margin-top: 4px;
   }
 
 
   .ape-hero-card {
-    width: 44%;
+    width:
+      min(
+        38vw,
+        355px
+      );
 
     height:
       min(
-        57svh,
-        540px
+        43vw,
+        410px
+      );
+
+    border-radius: 28px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP — 100% CHROME PRIMARY
+========================================================= */
+
+@media (min-width: 1024px) {
+
+  .ape-hero {
+    min-height: 680px;
+
+    height: 100svh;
+  }
+
+
+  .ape-hero__inner {
+    width: 100%;
+
+    height: 100%;
+
+    padding:
+      125px
+      4.5vw
+      38px;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(400px, .86fr)
+      minmax(520px, 1.14fr);
+
+    align-items: center;
+
+    gap:
+      clamp(
+        36px,
+        4vw,
+        72px
+      );
+  }
+
+
+  .ape-hero__content {
+    max-width: 660px;
+  }
+
+
+  .ape-hero__title {
+    max-width: 650px;
+
+    font-size:
+      clamp(
+        56px,
+        4.75vw,
+        80px
+      );
+
+    line-height: .89;
+  }
+
+
+  .ape-hero__copy-stage {
+    max-width: 570px;
+
+    height: 105px;
+
+    margin-top: 32px;
+  }
+
+
+  .ape-hero__copy-line {
+    font-size:
+      clamp(
+        13px,
+        1vw,
+        15px
+      );
+
+    line-height: 1.68;
+  }
+
+
+  .ape-hero__actions {
+    margin-top: 12px;
+  }
+
+
+  .ape-hero__gallery {
+    width: 100%;
+
+    max-width: 780px;
+
+    height:
+      min(
+        59vh,
+        510px
+      );
+
+    min-height: 390px;
+
+    margin-top: 0;
+
+    justify-self: center;
+  }
+
+
+  .ape-hero-card {
+    top: 50%;
+
+    width:
+      min(
+        28vw,
+        395px
+      );
+
+    height:
+      min(
+        53vh,
+        460px
       );
 
     border-radius: 30px;
   }
 
 
-  .ape-hero__dots {
-    right: 4vw;
-
-    bottom: 5vh;
+  .ape-hero__progress {
+    width:
+      min(
+        280px,
+        48%
+      );
   }
-
 }
 
 
 /* =========================================================
-   DESKTOP
+   LARGE DESKTOP
 ========================================================= */
 
-@media
-(
-  min-width: 1200px
-) {
+@media (min-width: 1500px) {
 
-  .ape-hero__copy {
-    left: 5vw;
+  .ape-hero__inner {
+    max-width: 1800px;
 
-    width: 36vw;
+    margin:
+      0 auto;
+
+    padding-left: 70px;
+
+    padding-right: 70px;
   }
 
 
   .ape-hero__title {
     font-size:
       clamp(
-        70px,
-        min(6.5vw,9.6vh),
-        108px
+        68px,
+        4.4vw,
+        92px
       );
   }
 
 
-  .ape-hero__deck {
-    right: 2vw;
-
-    width: 59vw;
-
-    height: 73vh;
+  .ape-hero__gallery {
+    max-width: 850px;
   }
 
 
   .ape-hero-card {
-    width: 44%;
+    width: 410px;
 
-    height:
-      min(
-        64vh,
-        570px
-      );
+    height: 480px;
   }
-
 }
 
 
 /* =========================================================
-   SHORT LAPTOP / 125%
+   125% / SHORT DESKTOP SAFETY
 ========================================================= */
 
 @media
-(
-  min-width: 1000px
-)
-and
-(
-  max-height: 760px
-) {
+  (min-width: 1024px)
+  and
+  (max-height: 700px) {
 
   .ape-hero {
-    min-height: 0;
+    min-height: 620px;
+  }
+
+
+  .ape-hero__inner {
+    padding-top: 105px;
+
+    padding-bottom: 22px;
   }
 
 
   .ape-hero__title {
     font-size:
-      min(
-        5.7vw,
-        8.3vh
+      clamp(
+        48px,
+        4.35vw,
+        64px
       );
   }
 
 
-  .ape-hero__deck {
-    height: 66vh;
+  .ape-hero__copy-stage {
+    height: 90px;
+
+    margin-top: 22px;
+  }
+
+
+  .ape-hero__copy-line {
+    font-size: 12px;
+  }
+
+
+  .ape-hero__gallery {
+    height: 420px;
+
+    min-height: 0;
   }
 
 
   .ape-hero-card {
     height:
       min(
-        57vh,
-        420px
+        50vh,
+        365px
       );
   }
-
-}
-
-
-/* =========================================================
-   SHORT PHONE
-========================================================= */
-
-@media
-(
-  max-width: 390px
-)
-and
-(
-  max-height: 720px
-) {
-
-  .ape-hero__copy {
-    top: 15%;
-  }
-
-
-  .ape-hero__title {
-    font-size: 43px;
-  }
-
-
-  .ape-hero__deck {
-    height: 45vh;
-
-    min-height: 275px;
-  }
-
-
-  .ape-hero-card {
-    height: 36vh;
-  }
-
 }
 
 
@@ -763,17 +1056,22 @@ and
 ========================================================= */
 
 @media
-(
-  prefers-reduced-motion:
-  reduce
-) {
+  (prefers-reduced-motion: reduce) {
 
   .ape-hero *,
   .ape-hero *::before,
   .ape-hero *::after {
-    animation: none !important;
+    animation:
+      none !important;
 
-    transition: none !important;
+    transition:
+      none !important;
   }
 
+
+  .ape-hero__copy-line:first-child {
+    visibility: visible;
+
+    opacity: 1;
+  }
 }
