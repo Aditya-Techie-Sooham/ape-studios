@@ -3,107 +3,45 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
-/* =========================================================
-   APE HERO
-========================================================= */
-
 export function initHero() {
-
-  const hero =
-    document.getElementById("ape-hero");
-
+  const hero = document.getElementById("ape-hero");
   if (!hero) return;
 
+  const titleLines = Array.from(
+    hero.querySelectorAll(".ape-hero__title-line")
+  );
 
-  const titleLines =
-    Array.from(
-      hero.querySelectorAll(
-        ".ape-hero__title-line"
-      )
-    );
+  const copyLines = Array.from(
+    hero.querySelectorAll(".ape-hero__copy-line")
+  );
 
+  const actions = hero.querySelector(".ape-hero__actions");
+  const gallery = hero.querySelector(".ape-hero__gallery");
+  const deck = hero.querySelector(".ape-hero__deck");
 
-  const copyLines =
-    Array.from(
-      hero.querySelectorAll(
-        ".ape-hero__copy-line"
-      )
-    );
+  const cards = Array.from(
+    hero.querySelectorAll(".ape-hero-card")
+  );
 
+  const progress = hero.querySelector(
+    ".ape-hero__progress span"
+  );
 
-  const actions =
-    hero.querySelector(
-      ".ape-hero__actions"
-    );
+  if (!gallery || !deck || !cards.length) return;
 
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  const gallery =
-    hero.querySelector(
-      ".ape-hero__gallery"
-    );
+  const finePointer = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
 
+  const isMobile = () => window.innerWidth < 768;
 
-  const deck =
-    hero.querySelector(
-      ".ape-hero__deck"
-    );
-
-
-  const cards =
-    Array.from(
-      hero.querySelectorAll(
-        ".ape-hero-card"
-      )
-    );
-
-
-  const progress =
-    hero.querySelector(
-      ".ape-hero__progress span"
-    );
-
-
-  if (
-    !gallery ||
-    !deck ||
-    !cards.length
-  ) {
-    return;
-  }
-
-
-  const reducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-
-  const finePointer =
-    window.matchMedia(
-      "(hover: hover) and (pointer: fine)"
-    ).matches;
-
-
-  /* =========================================================
-     RESPONSIVE
-  ========================================================= */
-
-  function isMobile() {
-
-    return window.innerWidth < 768;
-
-  }
-
-
-  function isTablet() {
-
-    return (
-      window.innerWidth >= 768 &&
-      window.innerWidth < 1200
-    );
-
-  }
+  const isTablet = () =>
+    window.innerWidth >= 768 &&
+    window.innerWidth < 1200;
 
 
   /* =========================================================
@@ -112,13 +50,12 @@ export function initHero() {
 
   let activeIndex = 0;
 
-  let carouselAnimating = false;
-
   let autoplayCall = null;
-
   let hoverCall = null;
-
   let hoverDirection = 0;
+
+  let transitionTween = null;
+  let transitionRunning = false;
 
 
   /* =========================================================
@@ -126,22 +63,19 @@ export function initHero() {
   ========================================================= */
 
   let dragging = false;
-
   let horizontalDrag = false;
-
   let blockClick = false;
 
   let startX = 0;
-
   let startY = 0;
 
-  let currentX = 0;
-
   let lastX = 0;
-
   let lastTime = 0;
 
   let velocityX = 0;
+
+  let dragDirection = 0;
+  let dragProgress = 0;
 
   let capturedPointerId = null;
 
@@ -153,9 +87,7 @@ export function initHero() {
   const titleChars = [];
 
   let titleTimeline = null;
-
   let scrambleTimer = null;
-
 
   const glyphs =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#%&+?";
@@ -166,125 +98,101 @@ export function initHero() {
   ========================================================= */
 
   function randomGlyph() {
-
     return glyphs[
       Math.floor(
         Math.random() *
         glyphs.length
       )
     ];
-
   }
 
 
   /* =========================================================
-     KINETIC H1
-     WORDS NEVER BREAK
+     KINETIC TITLE
   ========================================================= */
 
-  function buildTitleLine(
-    line
-  ) {
-
+  function buildTitleLine(line) {
     if (!line) return;
 
+    const text = line.textContent
+      .trim()
+      .replace(/\s+/g, " ");
 
-    const originalText =
-      line.textContent
-        .trim()
-        .replace(/\s+/g, " ");
-
-
-    const words =
-      originalText.split(" ");
-
+    const words = text.split(" ");
 
     line.textContent = "";
-
-    line.style.overflow =
-      "visible";
+    line.style.overflow = "visible";
 
 
     words.forEach(
-      (
-        word,
-        wordIndex
-      ) => {
+      (word, wordIndex) => {
+        const wordWrap =
+          document.createElement("span");
 
-        const wrapper =
-          document.createElement(
-            "span"
-          );
-
-
-        wrapper.className =
+        wordWrap.className =
           "ape-hero__kinetic-word";
 
+        Object.assign(
+          wordWrap.style,
+          {
+            display:
+              "inline-block",
 
-        wrapper.style.display =
-          "inline-block";
+            whiteSpace:
+              "nowrap",
 
-
-        wrapper.style.whiteSpace =
-          "nowrap";
-
-
-        wrapper.style.verticalAlign =
-          "bottom";
+            verticalAlign:
+              "bottom"
+          }
+        );
 
 
         Array.from(word).forEach(
           character => {
-
             const char =
               document.createElement(
                 "span"
               );
 
-
             char.className =
               "ape-hero__kinetic-char";
-
 
             char.dataset.final =
               character;
 
-
             char.textContent =
               character;
 
+            Object.assign(
+              char.style,
+              {
+                display:
+                  "inline-block",
 
-            char.style.display =
-              "inline-block";
+                position:
+                  "relative",
 
+                transformOrigin:
+                  "50% 50%",
 
-            char.style.position =
-              "relative";
-
-
-            char.style.transformOrigin =
-              "50% 50%";
-
-
-            char.style.willChange =
-              "transform, opacity, filter";
-
-
-            wrapper.appendChild(
-              char
+                willChange:
+                  "transform, opacity, filter"
+              }
             );
 
+            wordWrap.appendChild(
+              char
+            );
 
             titleChars.push(
               char
             );
-
           }
         );
 
 
         line.appendChild(
-          wrapper
+          wordWrap
         );
 
 
@@ -292,16 +200,14 @@ export function initHero() {
           wordIndex <
           words.length - 1
         ) {
-
           line.appendChild(
-            document.createTextNode(" ")
+            document.createTextNode(
+              " "
+            )
           );
-
         }
-
       }
     );
-
   }
 
 
@@ -315,16 +221,12 @@ export function initHero() {
   ========================================================= */
 
   function restoreTitle() {
-
     titleChars.forEach(
       char => {
-
         char.textContent =
           char.dataset.final || "";
-
       }
     );
-
   }
 
 
@@ -335,40 +237,27 @@ export function initHero() {
   function stopScramble(
     restore = true
   ) {
-
-    if (
-      scrambleTimer
-    ) {
-
+    if (scrambleTimer) {
       window.clearInterval(
         scrambleTimer
       );
 
-
       scrambleTimer = null;
-
     }
-
 
     if (restore) {
-
       restoreTitle();
-
     }
-
   }
 
 
   function startScramble() {
-
     stopScramble(false);
 
-
-    const probability =
+    const chance =
       isMobile()
         ? 0.25
         : 0.34;
-
 
     const interval =
       isMobile()
@@ -378,16 +267,13 @@ export function initHero() {
 
     titleChars.forEach(
       char => {
-
         if (
-          Math.random() < 0.45
+          Math.random() <
+          0.45
         ) {
-
           char.textContent =
             randomGlyph();
-
         }
-
       }
     );
 
@@ -395,36 +281,28 @@ export function initHero() {
     scrambleTimer =
       window.setInterval(
         () => {
-
           titleChars.forEach(
             char => {
-
               if (
                 Math.random() <
-                probability
+                chance
               ) {
-
                 char.textContent =
                   randomGlyph();
-
               }
-
             }
           );
-
         },
         interval
       );
-
   }
 
 
   /* =========================================================
-     H1 LOOP
+     TITLE LOOP
   ========================================================= */
 
   function createTitleLoop() {
-
     if (
       reducedMotion ||
       !titleChars.length
@@ -432,9 +310,7 @@ export function initHero() {
       return;
     }
 
-
     titleTimeline?.kill();
-
 
     stopScramble(true);
 
@@ -444,10 +320,15 @@ export function initHero() {
       {
         x: 0,
         y: 0,
+
         rotation: 0,
+
         scale: 1,
+
         opacity: 1,
-        filter: "blur(0px)"
+
+        filter:
+          "blur(0px)"
       }
     );
 
@@ -468,20 +349,35 @@ export function initHero() {
       {
         x: () =>
           gsap.utils.random(
-            isMobile() ? -6 : -10,
-            isMobile() ? 6 : 10
+            isMobile()
+              ? -6
+              : -10,
+
+            isMobile()
+              ? 6
+              : 10
           ),
 
         y: () =>
           gsap.utils.random(
-            isMobile() ? -5 : -8,
-            isMobile() ? 5 : 8
+            isMobile()
+              ? -5
+              : -8,
+
+            isMobile()
+              ? 5
+              : 8
           ),
 
         rotation: () =>
           gsap.utils.random(
-            isMobile() ? -4 : -7,
-            isMobile() ? 4 : 7
+            isMobile()
+              ? -4
+              : -7,
+
+            isMobile()
+              ? 4
+              : 7
           ),
 
         scale: () =>
@@ -502,9 +398,13 @@ export function initHero() {
       {
         x: 0,
         y: 0,
+
         rotation: 0,
+
         scale: 1,
+
         opacity: 1,
+
         filter:
           "blur(0px)",
 
@@ -519,7 +419,8 @@ export function initHero() {
               ? 0.012
               : 0.014,
 
-          from: "random"
+          from:
+            "random"
         },
 
         ease:
@@ -529,11 +430,8 @@ export function initHero() {
 
 
     titleTimeline.call(
-      () => {
-
-        stopScramble(true);
-
-      },
+      () =>
+        stopScramble(true),
       null,
       isMobile()
         ? 1.55
@@ -546,9 +444,13 @@ export function initHero() {
       {
         x: 0,
         y: 0,
+
         rotation: 0,
+
         scale: 1,
+
         opacity: 1,
+
         filter:
           "blur(0px)",
 
@@ -560,56 +462,41 @@ export function initHero() {
     );
 
 
-    /*
-     * Final H1 remains readable
-     * for five seconds.
-     */
-
     titleTimeline.to(
       {},
       {
         duration: 5
       }
     );
-
   }
 
 
   /* =========================================================
-     SUPPORT COPY WORDS
+     SUPPORTING COPY
   ========================================================= */
 
   function splitCopyWords(
     element
   ) {
-
     if (!element) return;
-
 
     const text =
       element.textContent
         .trim()
         .replace(/\s+/g, " ");
 
-
     const words =
       text.split(" ");
-
 
     element.textContent = "";
 
 
     words.forEach(
-      (
-        word,
-        index
-      ) => {
-
+      (word, index) => {
         const mask =
           document.createElement(
             "span"
           );
-
 
         mask.className =
           "ape-hero__word-mask";
@@ -620,10 +507,8 @@ export function initHero() {
             "span"
           );
 
-
         wordElement.className =
           "ape-hero__word";
-
 
         wordElement.textContent =
           word;
@@ -632,7 +517,6 @@ export function initHero() {
         mask.appendChild(
           wordElement
         );
-
 
         element.appendChild(
           mask
@@ -643,16 +527,14 @@ export function initHero() {
           index <
           words.length - 1
         ) {
-
           element.appendChild(
-            document.createTextNode(" ")
+            document.createTextNode(
+              " "
+            )
           );
-
         }
-
       }
     );
-
   }
 
 
@@ -661,12 +543,7 @@ export function initHero() {
   );
 
 
-  /* =========================================================
-     SUPPORT COPY ANIMATION
-  ========================================================= */
-
   function animateCopy() {
-
     if (
       reducedMotion ||
       !copyLines.length
@@ -677,7 +554,6 @@ export function initHero() {
 
     copyLines.forEach(
       line => {
-
         gsap.set(
           line,
           {
@@ -685,19 +561,19 @@ export function initHero() {
           }
         );
 
-
         gsap.set(
           line.querySelectorAll(
             ".ape-hero__word"
           ),
           {
             yPercent: 105,
+
             opacity: 0,
+
             filter:
               "blur(5px)"
           }
         );
-
       }
     );
 
@@ -705,16 +581,13 @@ export function initHero() {
     const timeline =
       gsap.timeline({
         repeat: -1,
+
         repeatDelay: 0.55
       });
 
 
     copyLines.forEach(
-      (
-        line,
-        index
-      ) => {
-
+      (line, index) => {
         const words =
           Array.from(
             line.querySelectorAll(
@@ -735,13 +608,17 @@ export function initHero() {
           words,
           {
             yPercent: 105,
+
             opacity: 0,
+
             filter:
               "blur(5px)"
           },
           {
             yPercent: 0,
+
             opacity: 1,
+
             filter:
               "blur(0px)",
 
@@ -779,7 +656,9 @@ export function initHero() {
           words,
           {
             yPercent: -105,
+
             opacity: 0,
+
             filter:
               "blur(4px)",
 
@@ -813,10 +692,8 @@ export function initHero() {
                 : 0.65
           }
         );
-
       }
     );
-
   }
 
 
@@ -825,7 +702,6 @@ export function initHero() {
   ========================================================= */
 
   function getLayout() {
-
     const deckWidth =
       deck
         .getBoundingClientRect()
@@ -840,19 +716,18 @@ export function initHero() {
         : 0;
 
 
-    let sideScale = 0.76;
+    let sideScale =
+      0.76;
 
 
     if (isMobile()) {
-
-      sideScale = 0.7;
-
+      sideScale =
+        0.7;
     }
 
     else if (isTablet()) {
-
-      sideScale = 0.73;
-
+      sideScale =
+        0.73;
     }
 
 
@@ -868,8 +743,12 @@ export function initHero() {
 
         deckWidth / 2
         -
-        cardWidth *
-        sideScale / 2
+        (
+          cardWidth *
+          sideScale
+        )
+        /
+        2
         -
         edgeGap
       );
@@ -884,7 +763,6 @@ export function initHero() {
 
 
     return {
-
       cardWidth,
 
       sideScale,
@@ -909,9 +787,7 @@ export function initHero() {
         isMobile()
           ? 3
           : 8
-
     };
-
   }
 
 
@@ -919,10 +795,7 @@ export function initHero() {
      INDEX HELPERS
   ========================================================= */
 
-  function wrapIndex(
-    index
-  ) {
-
+  function wrapIndex(index) {
     return (
       (
         index %
@@ -933,68 +806,59 @@ export function initHero() {
     )
     %
     cards.length;
-
   }
 
 
-  function previousIndex() {
+  function indices() {
+    return {
+      pp:
+        wrapIndex(
+          activeIndex - 2
+        ),
 
-    return wrapIndex(
-      activeIndex - 1
-    );
+      p:
+        wrapIndex(
+          activeIndex - 1
+        ),
 
-  }
+      c:
+        activeIndex,
 
+      n:
+        wrapIndex(
+          activeIndex + 1
+        ),
 
-  function nextIndex() {
-
-    return wrapIndex(
-      activeIndex + 1
-    );
-
-  }
-
-
-  function nextNextIndex() {
-
-    return wrapIndex(
-      activeIndex + 2
-    );
-
-  }
-
-
-  function previousPreviousIndex() {
-
-    return wrapIndex(
-      activeIndex - 2
-    );
-
+      nn:
+        wrapIndex(
+          activeIndex + 2
+        )
+    };
   }
 
 
   /* =========================================================
-     CARD STATES
+     CAROUSEL STATES
   ========================================================= */
 
   function centerState() {
-
     return {
       x: 0,
       y: 0,
+
       scale: 1,
+
       rotation: 0,
       rotationY: 0,
+
       opacity: 1
     };
-
   }
 
 
   function leftState(
     layout
   ) {
-
     return {
       x:
         -layout.sideShift,
@@ -1016,14 +880,12 @@ export function initHero() {
       opacity:
         layout.sideOpacity
     };
-
   }
 
 
   function rightState(
     layout
   ) {
-
     return {
       x:
         layout.sideShift,
@@ -1045,25 +907,23 @@ export function initHero() {
       opacity:
         layout.sideOpacity
     };
-
   }
 
 
   function offLeftState(
     layout
   ) {
-
     return {
       x:
         -layout.sideShift
         -
-        layout.cardWidth * 0.52,
+        layout.cardWidth *
+        0.56,
 
       y:
-        layout.sideY + 5,
+        layout.sideY + 4,
 
-      scale:
-        0.54,
+      scale: 0.54,
 
       rotation:
         -layout.sideRotation - 3,
@@ -1075,25 +935,23 @@ export function initHero() {
 
       opacity: 0
     };
-
   }
 
 
   function offRightState(
     layout
   ) {
-
     return {
       x:
         layout.sideShift
         +
-        layout.cardWidth * 0.52,
+        layout.cardWidth *
+        0.56,
 
       y:
-        layout.sideY + 5,
+        layout.sideY + 4,
 
-      scale:
-        0.54,
+      scale: 0.54,
 
       rotation:
         layout.sideRotation + 3,
@@ -1105,66 +963,61 @@ export function initHero() {
 
       opacity: 0
     };
-
   }
 
 
   /* =========================================================
-     INTERPOLATE STATE
+     INTERPOLATE STATES
   ========================================================= */
 
-  function mix(
+  function mixState(
     from,
     to,
-    progressValue
+    t
   ) {
-
     return {
-
       x:
         gsap.utils.interpolate(
           from.x,
           to.x,
-          progressValue
+          t
         ),
 
       y:
         gsap.utils.interpolate(
           from.y,
           to.y,
-          progressValue
+          t
         ),
 
       scale:
         gsap.utils.interpolate(
           from.scale,
           to.scale,
-          progressValue
+          t
         ),
 
       rotation:
         gsap.utils.interpolate(
           from.rotation,
           to.rotation,
-          progressValue
+          t
         ),
 
       rotationY:
         gsap.utils.interpolate(
           from.rotationY,
           to.rotationY,
-          progressValue
+          t
         ),
 
       opacity:
         gsap.utils.interpolate(
           from.opacity,
           to.opacity,
-          progressValue
+          t
         )
-
     };
-
   }
 
 
@@ -1175,13 +1028,13 @@ export function initHero() {
   function applyState(
     card,
     state,
-    zIndex
+    zIndex = 1
   ) {
-
     gsap.set(
       card,
       {
         xPercent: -50,
+
         yPercent: -50,
 
         x:
@@ -1205,16 +1058,14 @@ export function initHero() {
         zIndex
       }
     );
-
   }
 
 
   /* =========================================================
-     PROGRESS
+     PROGRESS BAR
   ========================================================= */
 
   function updateProgress() {
-
     if (!progress) return;
 
 
@@ -1228,7 +1079,7 @@ export function initHero() {
           /
           cards.length,
 
-        duration: 0.5,
+        duration: 0.45,
 
         ease:
           "power3.out",
@@ -1236,7 +1087,6 @@ export function initHero() {
         overwrite: true
       }
     );
-
   }
 
 
@@ -1245,23 +1095,18 @@ export function initHero() {
   ========================================================= */
 
   function setBaseStack(
-    immediate = false
+    immediate = true
   ) {
-
     const layout =
       getLayout();
 
 
-    const left =
-      previousIndex();
-
-
-    const center =
-      activeIndex;
-
-
-    const right =
-      nextIndex();
+    const {
+      p,
+      c,
+      n
+    } =
+      indices();
 
 
     cards.forEach(
@@ -1269,103 +1114,269 @@ export function initHero() {
         card,
         index
       ) => {
+        let state = {
+          x: 0,
+          y: 8,
 
-        let state;
+          scale: 0.56,
 
-        let zIndex;
+          rotation: 0,
+          rotationY: 0,
+
+          opacity: 0
+        };
+
+
+        let zIndex = 1;
 
 
         if (
-          index === center
+          index === c
         ) {
-
           state =
             centerState();
 
           zIndex = 30;
-
         }
 
 
         else if (
-          index === left
+          index === p
         ) {
-
           state =
             leftState(
               layout
             );
 
           zIndex = 15;
-
         }
 
 
         else if (
-          index === right
+          index === n
         ) {
-
           state =
             rightState(
               layout
             );
 
           zIndex = 15;
-
-        }
-
-
-        else {
-
-          state = {
-            x: 0,
-            y: 8,
-            scale: 0.56,
-            rotation: 0,
-            rotationY: 0,
-            opacity: 0
-          };
-
-          zIndex = 1;
-
         }
 
 
         card.classList.toggle(
           "is-active",
-          index === center
+          index === c
         );
 
 
-        gsap.to(
-          card,
-          {
-            xPercent: -50,
-            yPercent: -50,
+        if (immediate) {
+          applyState(
+            card,
+            state,
+            zIndex
+          );
+        }
 
-            ...state,
 
-            zIndex,
+        else {
+          gsap.to(
+            card,
+            {
+              xPercent: -50,
 
-            duration:
-              immediate
-                ? 0
-                : 0.72,
+              yPercent: -50,
 
-            ease:
-              "power3.out",
+              ...state,
 
-            overwrite:
-              true
-          }
-        );
+              zIndex,
 
+              duration: 0.35,
+
+              ease:
+                "power3.out",
+
+              overwrite:
+                true
+            }
+          );
+        }
       }
     );
 
 
     updateProgress();
+  }
 
+
+  /* =========================================================
+     LIVE TRANSITION RENDER
+
+     direction 1  = NEXT
+     direction -1 = PREVIOUS
+  ========================================================= */
+
+  function renderTransition(
+    direction,
+    t
+  ) {
+    const layout =
+      getLayout();
+
+
+    const {
+      pp,
+      p,
+      c,
+      n,
+      nn
+    } =
+      indices();
+
+
+    /*
+     * Hide all first.
+     */
+    cards.forEach(
+      card => {
+        gsap.set(
+          card,
+          {
+            opacity: 0,
+
+            zIndex: 1
+          }
+        );
+      }
+    );
+
+
+    /* =====================================================
+       NEXT
+       EVERYTHING MOVES LEFT
+    ===================================================== */
+
+    if (
+      direction === 1
+    ) {
+      applyState(
+        cards[p],
+
+        mixState(
+          leftState(layout),
+          offLeftState(layout),
+          t
+        ),
+
+        8
+      );
+
+
+      applyState(
+        cards[c],
+
+        mixState(
+          centerState(),
+          leftState(layout),
+          t
+        ),
+
+        t > 0.55
+          ? 18
+          : 30
+      );
+
+
+      applyState(
+        cards[n],
+
+        mixState(
+          rightState(layout),
+          centerState(),
+          t
+        ),
+
+        t > 0.45
+          ? 30
+          : 18
+      );
+
+
+      applyState(
+        cards[nn],
+
+        mixState(
+          offRightState(layout),
+          rightState(layout),
+          t
+        ),
+
+        15
+      );
+    }
+
+
+    /* =====================================================
+       PREVIOUS
+       EVERYTHING MOVES RIGHT
+    ===================================================== */
+
+    else {
+      applyState(
+        cards[pp],
+
+        mixState(
+          offLeftState(layout),
+          leftState(layout),
+          t
+        ),
+
+        15
+      );
+
+
+      applyState(
+        cards[p],
+
+        mixState(
+          leftState(layout),
+          centerState(),
+          t
+        ),
+
+        t > 0.45
+          ? 30
+          : 18
+      );
+
+
+      applyState(
+        cards[c],
+
+        mixState(
+          centerState(),
+          rightState(layout),
+          t
+        ),
+
+        t > 0.55
+          ? 18
+          : 30
+      );
+
+
+      applyState(
+        cards[n],
+
+        mixState(
+          rightState(layout),
+          offRightState(layout),
+          t
+        ),
+
+        8
+      );
+    }
   }
 
 
@@ -1374,18 +1385,15 @@ export function initHero() {
   ========================================================= */
 
   function cancelAutoplay() {
-
     autoplayCall?.kill();
 
     autoplayCall = null;
-
   }
 
 
   function scheduleAutoplay(
     delay = 4
   ) {
-
     cancelAutoplay();
 
 
@@ -1401,42 +1409,37 @@ export function initHero() {
     autoplayCall =
       gsap.delayedCall(
         delay,
-        () => {
-
-          animateStep(
+        () =>
+          animateTransition(
             1,
-            false
-          );
-
-        }
+            0,
+            true
+          )
       );
-
   }
 
 
   /* =========================================================
-     HOVER CONTROL
+     HOVER
   ========================================================= */
 
   function cancelHoverMove() {
-
     hoverCall?.kill();
 
     hoverCall = null;
-
   }
 
 
   function scheduleHoverMove(
     delay = 0.7
   ) {
-
     cancelHoverMove();
 
 
     if (
       dragging ||
-      hoverDirection === 0
+      hoverDirection === 0 ||
+      transitionRunning
     ) {
       return;
     }
@@ -1445,278 +1448,36 @@ export function initHero() {
     hoverCall =
       gsap.delayedCall(
         delay,
-        () => {
-
-          animateStep(
+        () =>
+          animateTransition(
             hoverDirection,
-            false
-          );
-
-        }
+            0,
+            true
+          )
       );
-
   }
 
 
   /* =========================================================
-     LIVE DRAG PREVIEW
+     ONE SINGLE TRANSITION ENGINE
 
-     direction:
-      1  = next / finger LEFT
-     -1  = previous / finger RIGHT
+     This is the important fix.
   ========================================================= */
 
-  function renderDrag(
-    dx
-  ) {
-
-    const layout =
-      getLayout();
-
-
-    const range =
-      Math.max(
-        layout.cardWidth * 0.72,
-        150
-      );
-
-
-    const limited =
-      gsap.utils.clamp(
-        -range,
-        range,
-        dx
-      );
-
-
-    /*
-     * Clear all cards first.
-     * This prevents the wrong incoming
-     * card staying visible when the user
-     * reverses swipe direction.
-     */
-
-    cards.forEach(
-      card => {
-
-        gsap.set(
-          card,
-          {
-            opacity: 0,
-            zIndex: 1
-          }
-        );
-
-      }
-    );
-
-
-    /* =====================================================
-       FINGER MOVES LEFT → NEXT PROJECT
-    ===================================================== */
-
-    if (
-      limited < 0
-    ) {
-
-      const p =
-        Math.min(
-          Math.abs(limited) /
-          range,
-          1
-        );
-
-
-      const oldLeft =
-        previousIndex();
-
-
-      const oldCenter =
-        activeIndex;
-
-
-      const oldRight =
-        nextIndex();
-
-
-      const incoming =
-        nextNextIndex();
-
-
-      applyState(
-        cards[oldLeft],
-
-        mix(
-          leftState(layout),
-          offLeftState(layout),
-          p
-        ),
-
-        8
-      );
-
-
-      applyState(
-        cards[oldCenter],
-
-        mix(
-          centerState(),
-          leftState(layout),
-          p
-        ),
-
-        22
-      );
-
-
-      applyState(
-        cards[oldRight],
-
-        mix(
-          rightState(layout),
-          centerState(),
-          p
-        ),
-
-        30
-      );
-
-
-      applyState(
-        cards[incoming],
-
-        mix(
-          offRightState(layout),
-          rightState(layout),
-          p
-        ),
-
-        15
-      );
-
-    }
-
-
-    /* =====================================================
-       FINGER MOVES RIGHT → PREVIOUS PROJECT
-    ===================================================== */
-
-    else if (
-      limited > 0
-    ) {
-
-      const p =
-        Math.min(
-          limited /
-          range,
-          1
-        );
-
-
-      const incoming =
-        previousPreviousIndex();
-
-
-      const oldLeft =
-        previousIndex();
-
-
-      const oldCenter =
-        activeIndex;
-
-
-      const oldRight =
-        nextIndex();
-
-
-      applyState(
-        cards[incoming],
-
-        mix(
-          offLeftState(layout),
-          leftState(layout),
-          p
-        ),
-
-        15
-      );
-
-
-      applyState(
-        cards[oldLeft],
-
-        mix(
-          leftState(layout),
-          centerState(),
-          p
-        ),
-
-        30
-      );
-
-
-      applyState(
-        cards[oldCenter],
-
-        mix(
-          centerState(),
-          rightState(layout),
-          p
-        ),
-
-        22
-      );
-
-
-      applyState(
-        cards[oldRight],
-
-        mix(
-          rightState(layout),
-          offRightState(layout),
-          p
-        ),
-
-        8
-      );
-
-    }
-
-
-    else {
-
-      setBaseStack(true);
-
-    }
-
-  }
-
-
-  /* =========================================================
-     SINGLE TRANSITION ENGINE
-
-     direction:
-       1 = next / move LEFT
-      -1 = previous / move RIGHT
-
-     fromDrag:
-       true means DON'T reset positions.
-       Continue directly from finger position.
-  ========================================================= */
-
-  function animateStep(
+  function animateTransition(
     direction,
-    fromDrag = false
+    fromT = 0,
+    commit = true
   ) {
-
     if (
-      carouselAnimating
+      transitionRunning
     ) {
       return;
     }
 
 
-    carouselAnimating = true;
+    transitionRunning =
+      true;
 
 
     cancelAutoplay();
@@ -1724,240 +1485,109 @@ export function initHero() {
     cancelHoverMove();
 
 
-    const layout =
-      getLayout();
+    transitionTween?.kill();
 
 
-    const oldLeft =
-      previousIndex();
+    const proxy = {
+      t: fromT
+    };
 
 
-    const oldCenter =
-      activeIndex;
+    const target =
+      commit
+        ? 1
+        : 0;
 
 
-    const oldRight =
-      nextIndex();
+    const remaining =
+      Math.abs(
+        target - fromT
+      );
 
 
     const duration =
-      fromDrag
-        ? 0.48
-        : isMobile()
-          ? 0.72
-          : 0.88;
+      commit
+        ? gsap.utils.clamp(
+            0.18,
+            0.46,
+            remaining * 0.46
+          )
+        : gsap.utils.clamp(
+            0.18,
+            0.34,
+            remaining * 0.34
+          );
 
 
-    const timeline =
-      gsap.timeline({
+    transitionTween =
+      gsap.to(
+        proxy,
+        {
+          t:
+            target,
 
-        defaults: {
           duration,
+
           ease:
-            fromDrag
+            commit
               ? "power3.out"
-              : "power4.inOut"
-        },
+              : "power2.out",
 
 
-        onComplete: () => {
+          onUpdate: () => {
+            renderTransition(
+              direction,
+              proxy.t
+            );
+          },
 
-          activeIndex =
-            wrapIndex(
-              activeIndex +
+
+          onComplete: () => {
+            if (commit) {
+              activeIndex =
+                wrapIndex(
+                  activeIndex +
+                  direction
+                );
+            }
+
+
+            transitionRunning =
+              false;
+
+
+            transitionTween =
+              null;
+
+
+            setBaseStack(
+              true
+            );
+
+
+            if (
+              hoverDirection ===
               direction
-            );
+            ) {
+              scheduleHoverMove(
+                0.65
+              );
+            }
 
 
-          carouselAnimating =
-            false;
-
-
-          setBaseStack(true);
-
-
-          if (
-            hoverDirection ===
-            direction
-          ) {
-
-            scheduleHoverMove(
-              0.68
-            );
-
+            else {
+              scheduleAutoplay(
+                4
+              );
+            }
           }
-
-          else {
-
-            scheduleAutoplay(4);
-
-          }
-
         }
-
-      });
-
-
-    /* =====================================================
-       NEXT — MOVE EVERYTHING LEFT
-    ===================================================== */
-
-    if (
-      direction === 1
-    ) {
-
-      const incoming =
-        nextNextIndex();
-
-
-      /*
-       * Only prepare incoming position
-       * when this is autoplay/hover.
-       *
-       * During touch drag it is ALREADY
-       * in the correct intermediate position.
-       */
-
-      if (!fromDrag) {
-
-        applyState(
-          cards[incoming],
-          offRightState(layout),
-          5
-        );
-
-      }
-
-
-      timeline.to(
-        cards[oldLeft],
-        {
-          ...offLeftState(
-            layout
-          ),
-
-          zIndex: 5
-        },
-        0
       );
-
-
-      timeline.to(
-        cards[oldCenter],
-        {
-          ...leftState(
-            layout
-          ),
-
-          zIndex: 15
-        },
-        0
-      );
-
-
-      timeline.to(
-        cards[oldRight],
-        {
-          ...centerState(),
-
-          zIndex: 30
-        },
-        0
-      );
-
-
-      timeline.to(
-        cards[incoming],
-        {
-          ...rightState(
-            layout
-          ),
-
-          zIndex: 15
-        },
-        0
-      );
-
-    }
-
-
-    /* =====================================================
-       PREVIOUS — MOVE EVERYTHING RIGHT
-    ===================================================== */
-
-    else {
-
-      const incoming =
-        previousPreviousIndex();
-
-
-      if (!fromDrag) {
-
-        applyState(
-          cards[incoming],
-          offLeftState(layout),
-          5
-        );
-
-      }
-
-
-      timeline.to(
-        cards[oldRight],
-        {
-          ...offRightState(
-            layout
-          ),
-
-          zIndex: 5
-        },
-        0
-      );
-
-
-      timeline.to(
-        cards[oldCenter],
-        {
-          ...rightState(
-            layout
-          ),
-
-          zIndex: 15
-        },
-        0
-      );
-
-
-      timeline.to(
-        cards[oldLeft],
-        {
-          ...centerState(),
-
-          zIndex: 30
-        },
-        0
-      );
-
-
-      timeline.to(
-        cards[incoming],
-        {
-          ...leftState(
-            layout
-          ),
-
-          zIndex: 15
-        },
-        0
-      );
-
-    }
-
   }
 
 
   /* =========================================================
-     POINTER DOWN
+     TOUCH CONFIG
   ========================================================= */
 
   deck.style.touchAction =
@@ -1971,19 +1601,20 @@ export function initHero() {
   deck.addEventListener(
     "dragstart",
     event => {
-
       event.preventDefault();
-
     }
   );
 
 
+  /* =========================================================
+     POINTER DOWN
+  ========================================================= */
+
   deck.addEventListener(
     "pointerdown",
     event => {
-
       if (
-        carouselAnimating
+        transitionRunning
       ) {
         return;
       }
@@ -1993,12 +1624,27 @@ export function initHero() {
 
       cancelHoverMove();
 
+      transitionTween?.kill();
 
-      dragging = true;
 
-      horizontalDrag = false;
+      dragging =
+        true;
 
-      blockClick = false;
+
+      horizontalDrag =
+        false;
+
+
+      blockClick =
+        false;
+
+
+      dragDirection =
+        0;
+
+
+      dragProgress =
+        0;
 
 
       startX =
@@ -2009,10 +1655,6 @@ export function initHero() {
         event.clientY;
 
 
-      currentX =
-        event.clientX;
-
-
       lastX =
         event.clientX;
 
@@ -2021,7 +1663,8 @@ export function initHero() {
         performance.now();
 
 
-      velocityX = 0;
+      velocityX =
+        0;
 
 
       capturedPointerId =
@@ -2033,24 +1676,15 @@ export function initHero() {
       );
 
 
-      /*
-       * Capture from the beginning so
-       * the swipe doesn't get lost when
-       * finger moves outside the image.
-       */
-
       try {
-
         deck.setPointerCapture?.(
           event.pointerId
         );
-
       }
 
       catch {
         /* no-op */
       }
-
     }
   );
 
@@ -2062,10 +1696,7 @@ export function initHero() {
   deck.addEventListener(
     "pointermove",
     event => {
-
-      if (
-        !dragging
-      ) {
+      if (!dragging) {
         return;
       }
 
@@ -2080,18 +1711,13 @@ export function initHero() {
         startY;
 
 
-      currentX =
-        event.clientX;
-
-
       /* =====================================================
-         DETERMINE SWIPE DIRECTION
+         DETERMINE USER INTENT
       ===================================================== */
 
       if (
         !horizontalDrag
       ) {
-
         if (
           Math.abs(dx) < 6 &&
           Math.abs(dy) < 6
@@ -2101,16 +1727,15 @@ export function initHero() {
 
 
         /*
-         * Vertical movement:
-         * let the page scroll.
+         * Vertical gesture =
+         * normal page scrolling.
          */
-
         if (
           Math.abs(dy) >
           Math.abs(dx) * 1.1
         ) {
-
-          dragging = false;
+          dragging =
+            false;
 
 
           deck.classList.remove(
@@ -2118,15 +1743,15 @@ export function initHero() {
           );
 
 
-          setBaseStack(false);
+          setBaseStack(
+            false
+          );
 
 
           try {
-
             deck.releasePointerCapture?.(
               event.pointerId
             );
-
           }
 
           catch {
@@ -2134,35 +1759,32 @@ export function initHero() {
           }
 
 
-          capturedPointerId = null;
+          capturedPointerId =
+            null;
 
 
-          scheduleAutoplay(3);
+          scheduleAutoplay(
+            3
+          );
 
 
           return;
-
         }
 
 
-        horizontalDrag = true;
+        horizontalDrag =
+          true;
 
-        blockClick = true;
 
+        blockClick =
+          true;
       }
 
-
-      /*
-       * We now know this is a carousel
-       * gesture, not vertical scrolling.
-       */
 
       if (
         event.cancelable
       ) {
-
         event.preventDefault();
-
       }
 
 
@@ -2176,7 +1798,8 @@ export function initHero() {
 
       const elapsed =
         Math.max(
-          now - lastTime,
+          now -
+          lastTime,
           1
         );
 
@@ -2185,7 +1808,8 @@ export function initHero() {
         (
           event.clientX -
           lastX
-        ) /
+        )
+        /
         elapsed;
 
 
@@ -2198,11 +1822,44 @@ export function initHero() {
 
 
       /* =====================================================
-         LIVE MOVEMENT
+         CONVERT FINGER DISTANCE → TRANSITION PROGRESS
       ===================================================== */
 
-      renderDrag(dx);
+      const layout =
+        getLayout();
 
+
+      const range =
+        Math.max(
+          layout.cardWidth *
+          0.72,
+
+          150
+        );
+
+
+      dragDirection =
+        dx < 0
+          ? 1
+          : -1;
+
+
+      dragProgress =
+        Math.min(
+          Math.abs(dx) /
+          range,
+
+          1
+        );
+
+
+      /*
+       * Cards now follow finger directly.
+       */
+      renderTransition(
+        dragDirection,
+        dragProgress
+      );
     },
     {
       passive: false
@@ -2211,19 +1868,19 @@ export function initHero() {
 
 
   /* =========================================================
-     END DRAG
+     FINISH DRAG
   ========================================================= */
 
   function finishDrag(
     event
   ) {
-
     if (!dragging) {
       return;
     }
 
 
-    dragging = false;
+    dragging =
+      false;
 
 
     deck.classList.remove(
@@ -2232,108 +1889,85 @@ export function initHero() {
 
 
     const dx =
-      currentX -
+      event.clientX -
       startX;
 
 
     const distanceThreshold =
       isMobile()
-        ? 34
-        : 48;
+        ? 30
+        : 46;
 
 
     const velocityThreshold =
       isMobile()
-        ? 0.18
-        : 0.24;
+        ? 0.16
+        : 0.22;
 
 
-    const goNext =
-      dx <
-      -distanceThreshold
+    const shouldCommit =
+      Math.abs(dx) >=
+        distanceThreshold
       ||
-      velocityX <
-      -velocityThreshold;
+      Math.abs(
+        velocityX
+      ) >=
+        velocityThreshold;
 
 
-    const goPrevious =
-      dx >
-      distanceThreshold
-      ||
-      velocityX >
-      velocityThreshold;
-
-
-    /* =====================================================
-       LEFT SWIPE
-       Continue FROM CURRENT POSITION.
-    ===================================================== */
-
+    /*
+     * KEY FIX:
+     * Continue from EXACT current
+     * drag progress.
+     *
+     * No reposition first.
+     */
     if (
-      goNext
+      horizontalDrag &&
+      dragDirection !== 0
     ) {
-
-      animateStep(
-        1,
-        true
+      animateTransition(
+        dragDirection,
+        dragProgress,
+        shouldCommit
       );
-
     }
 
-
-    /* =====================================================
-       RIGHT SWIPE
-       Continue FROM CURRENT POSITION.
-    ===================================================== */
-
-    else if (
-      goPrevious
-    ) {
-
-      animateStep(
-        -1,
-        true
-      );
-
-    }
-
-
-    /* =====================================================
-       SMALL MOVEMENT → SNAP BACK
-    ===================================================== */
 
     else {
+      setBaseStack(
+        false
+      );
 
-      setBaseStack(false);
 
-      scheduleAutoplay(3);
-
+      scheduleAutoplay(
+        3
+      );
     }
 
 
     if (
-      capturedPointerId !== null
+      capturedPointerId !==
+      null
     ) {
-
       try {
-
         deck.releasePointerCapture?.(
           capturedPointerId
         );
-
       }
 
       catch {
         /* no-op */
       }
-
     }
 
 
-    capturedPointerId = null;
+    capturedPointerId =
+      null;
 
-    horizontalDrag = false;
 
+    horizontalDrag =
+      false;
   }
 
 
@@ -2343,18 +1977,24 @@ export function initHero() {
   );
 
 
+  /* =========================================================
+     POINTER CANCEL
+  ========================================================= */
+
   deck.addEventListener(
     "pointercancel",
     () => {
-
       if (!dragging) {
         return;
       }
 
 
-      dragging = false;
+      dragging =
+        false;
 
-      horizontalDrag = false;
+
+      horizontalDrag =
+        false;
 
 
       deck.classList.remove(
@@ -2362,27 +2002,46 @@ export function initHero() {
       );
 
 
-      setBaseStack(false);
+      if (
+        dragDirection !== 0 &&
+        dragProgress > 0
+      ) {
+        animateTransition(
+          dragDirection,
+          dragProgress,
+          false
+        );
+      }
 
 
-      capturedPointerId = null;
+      else {
+        setBaseStack(
+          false
+        );
 
 
-      scheduleAutoplay(3);
+        scheduleAutoplay(
+          3
+        );
+      }
 
+
+      capturedPointerId =
+        null;
     }
   );
 
 
   /* =========================================================
-     PREVENT PROJECT OPEN AFTER SWIPE
+     PREVENT LINK CLICK AFTER DRAG
   ========================================================= */
 
   deck.addEventListener(
     "click",
     event => {
-
-      if (!blockClick) {
+      if (
+        !blockClick
+      ) {
         return;
       }
 
@@ -2392,8 +2051,8 @@ export function initHero() {
       event.stopPropagation();
 
 
-      blockClick = false;
-
+      blockClick =
+        false;
     },
     true
   );
@@ -2403,45 +2062,42 @@ export function initHero() {
      DESKTOP HOVER
   ========================================================= */
 
-  if (
-    finePointer
-  ) {
-
+  if (finePointer) {
     gallery.addEventListener(
       "pointermove",
       event => {
-
         if (
           dragging ||
-          carouselAnimating
+          transitionRunning
         ) {
           return;
         }
 
 
         const rect =
-          gallery.getBoundingClientRect();
+          gallery
+            .getBoundingClientRect();
 
 
         const position =
           (
             event.clientX -
             rect.left
-          ) /
+          )
+          /
           rect.width;
 
 
-        /* LEFT */
-
         if (
-          position < 0.33
+          position <
+          0.33
         ) {
-
           if (
-            hoverDirection !== -1
+            hoverDirection !==
+            -1
           ) {
-
-            hoverDirection = -1;
+            hoverDirection =
+              -1;
 
 
             cancelAutoplay();
@@ -2450,23 +2106,20 @@ export function initHero() {
             scheduleHoverMove(
               0.22
             );
-
           }
-
         }
 
-
-        /* RIGHT */
 
         else if (
-          position > 0.67
+          position >
+          0.67
         ) {
-
           if (
-            hoverDirection !== 1
+            hoverDirection !==
+            1
           ) {
-
-            hoverDirection = 1;
+            hoverDirection =
+              1;
 
 
             cancelAutoplay();
@@ -2475,32 +2128,24 @@ export function initHero() {
             scheduleHoverMove(
               0.22
             );
-
           }
-
         }
 
 
-        /* CENTER */
-
-        else {
-
-          if (
-            hoverDirection !== 0
-          ) {
-
-            hoverDirection = 0;
+        else if (
+          hoverDirection !== 0
+        ) {
+          hoverDirection =
+            0;
 
 
-            cancelHoverMove();
+          cancelHoverMove();
 
 
-            scheduleAutoplay(3);
-
-          }
-
+          scheduleAutoplay(
+            3
+          );
         }
-
       }
     );
 
@@ -2508,18 +2153,18 @@ export function initHero() {
     gallery.addEventListener(
       "pointerleave",
       () => {
-
-        hoverDirection = 0;
+        hoverDirection =
+          0;
 
 
         cancelHoverMove();
 
 
-        scheduleAutoplay(3);
-
+        scheduleAutoplay(
+          3
+        );
       }
     );
-
   }
 
 
@@ -2527,17 +2172,16 @@ export function initHero() {
      INITIAL STACK
   ========================================================= */
 
-  setBaseStack(true);
+  setBaseStack(
+    true
+  );
 
 
   /* =========================================================
      REDUCED MOTION
   ========================================================= */
 
-  if (
-    reducedMotion
-  ) {
-
+  if (reducedMotion) {
     restoreTitle();
 
 
@@ -2546,9 +2190,13 @@ export function initHero() {
       {
         x: 0,
         y: 0,
+
         rotation: 0,
+
         scale: 1,
+
         opacity: 1,
+
         filter:
           "blur(0px)"
       }
@@ -2558,7 +2206,6 @@ export function initHero() {
     if (
       copyLines[0]
     ) {
-
       gsap.set(
         copyLines[0],
         {
@@ -2574,17 +2221,17 @@ export function initHero() {
           ),
         {
           yPercent: 0,
+
           opacity: 1,
+
           filter:
             "blur(0px)"
         }
       );
-
     }
 
 
     return;
-
   }
 
 
@@ -2612,18 +2259,15 @@ export function initHero() {
   );
 
 
-  if (
-    actions
-  ) {
-
+  if (actions) {
     gsap.set(
       actions,
       {
         opacity: 0,
+
         y: 18
       }
     );
-
   }
 
 
@@ -2634,8 +2278,10 @@ export function initHero() {
     gallery,
     {
       opacity: 1,
+
       x: 0,
       y: 0,
+
       scale: 1,
 
       duration: 0.95,
@@ -2648,14 +2294,12 @@ export function initHero() {
   );
 
 
-  if (
-    actions
-  ) {
-
+  if (actions) {
     gsap.to(
       actions,
       {
         opacity: 1,
+
         y: 0,
 
         duration: 0.65,
@@ -2666,7 +2310,6 @@ export function initHero() {
           "power3.out"
       }
     );
-
   }
 
 
@@ -2680,71 +2323,55 @@ export function initHero() {
      HERO VISIBILITY
   ========================================================= */
 
-  ScrollTrigger.create(
-    {
-      trigger: hero,
+  ScrollTrigger.create({
+    trigger: hero,
 
-      start:
-        "top bottom",
+    start:
+      "top bottom",
 
-      end:
-        "bottom top",
+    end:
+      "bottom top",
 
+    onEnter: () =>
+      titleTimeline?.play(),
 
-      onEnter: () => {
+    onEnterBack: () =>
+      titleTimeline?.play(),
 
-        titleTimeline?.play();
+    onLeave: () => {
+      titleTimeline?.pause();
 
-      },
+      stopScramble(true);
+    },
 
+    onLeaveBack: () => {
+      titleTimeline?.pause();
 
-      onEnterBack: () => {
-
-        titleTimeline?.play();
-
-      },
-
-
-      onLeave: () => {
-
-        titleTimeline?.pause();
-
-
-        stopScramble(true);
-
-      },
-
-
-      onLeaveBack: () => {
-
-        titleTimeline?.pause();
-
-
-        stopScramble(true);
-
-      }
+      stopScramble(true);
     }
-  );
+  });
 
 
   /* =========================================================
      AUTOPLAY
   ========================================================= */
 
-  scheduleAutoplay(4);
+  scheduleAutoplay(
+    4
+  );
 
 
   /* =========================================================
-     RESIZE / ORIENTATION
+     RESIZE
   ========================================================= */
 
-  let resizeTimer = null;
+  let resizeTimer =
+    null;
 
 
   window.addEventListener(
     "resize",
     () => {
-
       window.clearTimeout(
         resizeTimer
       );
@@ -2753,16 +2380,21 @@ export function initHero() {
       resizeTimer =
         window.setTimeout(
           () => {
+            transitionTween?.kill();
 
-            setBaseStack(true);
+            transitionRunning =
+              false;
+
+
+            setBaseStack(
+              true
+            );
 
 
             ScrollTrigger.refresh();
-
           },
           120
         );
-
     },
     {
       passive: true
@@ -2777,33 +2409,26 @@ export function initHero() {
   document.addEventListener(
     "visibilitychange",
     () => {
-
       if (
         document.hidden
       ) {
-
         cancelAutoplay();
 
         cancelHoverMove();
 
-
         titleTimeline?.pause();
 
-
         stopScramble(true);
-
       }
+
 
       else {
-
         titleTimeline?.play();
 
-
-        scheduleAutoplay(2);
-
+        scheduleAutoplay(
+          2
+        );
       }
-
     }
   );
-
 }
