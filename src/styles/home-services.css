@@ -1,0 +1,1061 @@
+/* =========================================================
+   APE STUDIO
+   SERVICES — PINNED SCROLL SECTION
+========================================================= */
+
+.home-services {
+  --services-black: #050506;
+  --services-white: #ffffff;
+  --services-violet: #7d35eb;
+  --services-lime: #c6ff33;
+
+  position: relative;
+
+  width: 100%;
+
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  color:
+    var(--services-white);
+
+  background:
+    linear-gradient(
+      145deg,
+      #050506 0%,
+      #09080d 54%,
+      #0d0a12 100%
+    );
+}
+
+
+/* =========================================================
+   ABSOLUTELY NO PURPLE CIRCLE / SHAPE
+========================================================= */
+
+.home-services__back-shape,
+.home-services__shape {
+  display: none !important;
+
+  visibility: hidden !important;
+
+  opacity: 0 !important;
+}
+
+
+.home-services__visual::before,
+.home-services__visual::after {
+  content: none !important;
+
+  display: none !important;
+}
+
+
+/* =========================================================
+   PINNED SCREEN
+========================================================= */
+
+.home-services__stage {
+  position: relative;
+
+  width: 100%;
+
+  height: 100svh;
+
+  min-height: 650px;
+
+  box-sizing: border-box;
+
+  padding:
+    clamp(
+      108px,
+      12vh,
+      138px
+    )
+    5vw
+    clamp(
+      34px,
+      5vh,
+      56px
+    );
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(
+      350px,
+      0.88fr
+    )
+    minmax(
+      480px,
+      1.12fr
+    );
+
+  align-items: center;
+
+  gap:
+    clamp(
+      54px,
+      6vw,
+      100px
+    );
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.home-services__left {
+  position: relative;
+
+  z-index: 5;
+
+  width: 100%;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.home-services__title {
+  margin:
+    0
+    0
+    clamp(
+      25px,
+      4vh,
+      42px
+    );
+
+  color: #ffffff;
+
+  font-family:
+    var(--ape-font),
+    "Inter Tight",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size:
+    clamp(
+      56px,
+      5.3vw,
+      86px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.82;
+
+  letter-spacing:
+    -0.065em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.home-services__title span {
+  display: block;
+
+  color:
+    var(--services-violet);
+}
+
+
+/* =========================================================
+   SERVICE LIST
+========================================================= */
+
+.home-services__list {
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  border-top:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.15
+    );
+}
+
+
+/* =========================================================
+   SERVICE ROW
+========================================================= */
+
+.home-service {
+  position: relative;
+
+  width: 100%;
+
+  min-height:
+    clamp(
+      53px,
+      7.2vh,
+      68px
+    );
+
+  box-sizing:
+    border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 18px;
+
+  padding:
+    0
+    0;
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.14
+    );
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.29
+    );
+
+  text-decoration:
+    none;
+
+  transition:
+    color
+    0.35s
+    ease,
+    padding
+    0.45s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+.home-service h3 {
+  margin: 0;
+
+  font-family:
+    var(--ape-font),
+    "Inter Tight",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size:
+    clamp(
+      20px,
+      2.25vw,
+      34px
+    );
+
+  font-weight: 850;
+
+  line-height: 1;
+
+  letter-spacing:
+    -0.045em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* =========================================================
+   ACTIVE DASH
+========================================================= */
+
+.home-service::before {
+  content: "";
+
+  width: 0;
+
+  height: 2px;
+
+  flex:
+    0
+    0
+    auto;
+
+  background:
+    var(--services-lime);
+
+  opacity: 0;
+
+  transition:
+    width
+    0.45s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    ),
+    opacity
+    0.3s
+    ease;
+}
+
+
+.home-service.is-active::before {
+  width: 9px;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.home-service i {
+  width: 38px;
+
+  height: 38px;
+
+  flex:
+    0
+    0
+    38px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: #050506;
+
+  background:
+    var(--services-lime);
+
+  font-size: 13px;
+
+  font-style: normal;
+
+  opacity: 0;
+
+  transform:
+    scale(0.65)
+    rotate(-35deg);
+
+  transition:
+    opacity
+    0.35s
+    ease,
+    transform
+    0.5s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+/* =========================================================
+   ACTIVE SERVICE
+========================================================= */
+
+.home-service.is-active {
+  padding-left: 0;
+
+  color: #ffffff;
+}
+
+
+.home-service.is-active i {
+  opacity: 1;
+
+  transform:
+    scale(1)
+    rotate(0deg);
+}
+
+
+/* =========================================================
+   VISUAL
+========================================================= */
+
+.home-services__visual {
+  position: relative;
+
+  width: 100%;
+
+  height:
+    min(
+      60vh,
+      560px
+    );
+
+  min-height:
+    400px;
+
+  overflow: hidden;
+
+  border-radius:
+    28px;
+
+  background:
+    #101014;
+
+  perspective:
+    1400px;
+
+  transform-style:
+    preserve-3d;
+
+  box-shadow:
+    0
+    28px
+    80px
+    rgba(
+      0,
+      0,
+      0,
+      0.28
+    );
+
+  will-change:
+    transform;
+}
+
+
+/* =========================================================
+   SERVICE IMAGE PANELS
+========================================================= */
+
+.home-service-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(
+      198,
+      255,
+      51,
+      0.36
+    );
+
+  border-radius:
+    28px;
+
+  background:
+    #101014;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  /*
+   * IMPORTANT:
+   * GSAP OWNS ALL TRANSITION MOTION.
+   */
+  transition:
+    none !important;
+
+  will-change:
+    transform,
+    opacity,
+    clip-path;
+}
+
+
+.home-service-image.is-active {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.home-service-image img {
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position:
+    center center;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag:
+    none;
+
+  will-change:
+    transform;
+}
+
+
+/* =========================================================
+   DESKTOP HOVER
+========================================================= */
+
+@media
+(hover: hover)
+and
+(pointer: fine) {
+
+  .home-service:hover {
+    color:
+      rgba(
+        255,
+        255,
+        255,
+        0.72
+      );
+  }
+
+
+  .home-service.is-active:hover {
+    color:
+      #ffffff;
+  }
+
+}
+
+
+/* =========================================================
+   125% / SMALL LAPTOP / TABLET LANDSCAPE
+========================================================= */
+
+@media
+(min-width: 768px)
+and
+(max-width: 1180px) {
+
+  .home-services__stage {
+    min-height:
+      600px;
+
+    padding:
+      92px
+      4vw
+      28px;
+
+    grid-template-columns:
+      minmax(
+        290px,
+        0.92fr
+      )
+      minmax(
+        360px,
+        1.08fr
+      );
+
+    gap:
+      clamp(
+        28px,
+        4vw,
+        46px
+      );
+  }
+
+
+  .home-services__title {
+    margin-bottom:
+      22px;
+
+    font-size:
+      clamp(
+        45px,
+        6vw,
+        60px
+      );
+  }
+
+
+  .home-service {
+    min-height:
+      clamp(
+        46px,
+        6.5vh,
+        56px
+      );
+  }
+
+
+  .home-service h3 {
+    font-size:
+      clamp(
+        18px,
+        2.4vw,
+        27px
+      );
+  }
+
+
+  .home-service i {
+    width: 33px;
+
+    height: 33px;
+
+    flex-basis:
+      33px;
+  }
+
+
+  .home-services__visual {
+    height:
+      min(
+        56vh,
+        455px
+      );
+
+    min-height:
+      340px;
+
+    border-radius:
+      22px;
+  }
+
+
+  .home-service-image {
+    border-radius:
+      22px;
+  }
+
+}
+
+
+/* =========================================================
+   SHORT DESKTOP
+   IMPORTANT FOR 125% CHROME HEIGHT
+========================================================= */
+
+@media
+(min-width: 1024px)
+and
+(max-height: 720px) {
+
+  .home-services__stage {
+    min-height:
+      560px;
+
+    padding-top:
+      88px;
+
+    padding-bottom:
+      22px;
+  }
+
+
+  .home-services__title {
+    margin-bottom:
+      18px;
+
+    font-size:
+      clamp(
+        43px,
+        4.7vw,
+        58px
+      );
+  }
+
+
+  .home-service {
+    min-height:
+      45px;
+  }
+
+
+  .home-service h3 {
+    font-size:
+      clamp(
+        17px,
+        2vw,
+        26px
+      );
+  }
+
+
+  .home-services__visual {
+    height:
+      min(
+        54vh,
+        390px
+      );
+
+    min-height:
+      310px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(max-width: 767px) {
+
+  .home-services {
+    min-height:
+      100svh;
+  }
+
+
+  .home-services__stage {
+    width: 100%;
+
+    height:
+      100svh;
+
+    min-height:
+      570px;
+
+    padding:
+      76px
+      16px
+      16px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    justify-content:
+      flex-start;
+
+    gap: 14px;
+  }
+
+
+  /* =======================================================
+     MOBILE LEFT CONTENT
+  ======================================================= */
+
+  .home-services__left {
+    display: flex;
+
+    flex-direction: column;
+
+    flex:
+      0
+      0
+      auto;
+  }
+
+
+  .home-services__title {
+    margin:
+      0
+      0
+      13px;
+
+    font-size:
+      clamp(
+        39px,
+        11vw,
+        49px
+      );
+
+    line-height:
+      0.84;
+  }
+
+
+  /* =======================================================
+     MOBILE LIST
+  ======================================================= */
+
+  .home-services__list {
+    border-top:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.12
+      );
+  }
+
+
+  .home-service {
+    min-height:
+      clamp(
+        35px,
+        5.1svh,
+        44px
+      );
+
+    gap: 8px;
+  }
+
+
+  .home-service h3 {
+    font-size:
+      clamp(
+        16px,
+        4.85vw,
+        21px
+      );
+
+    line-height:
+      1;
+  }
+
+
+  .home-service::before {
+    height: 1.5px;
+  }
+
+
+  .home-service.is-active::before {
+    width: 6px;
+  }
+
+
+  .home-service i {
+    width: 28px;
+
+    height: 28px;
+
+    flex-basis:
+      28px;
+
+    font-size: 10px;
+  }
+
+
+  /* =======================================================
+     MOBILE VISUAL
+  ======================================================= */
+
+  .home-services__visual {
+    width: 100%;
+
+    height:
+      clamp(
+        205px,
+        31svh,
+        295px
+      );
+
+    min-height: 0;
+
+    flex:
+      1
+      1
+      auto;
+
+    margin-top: 1px;
+
+    border-radius:
+      18px;
+
+    box-shadow:
+      0
+      18px
+      45px
+      rgba(
+        0,
+        0,
+        0,
+        0.28
+      );
+
+    perspective: none;
+  }
+
+
+  .home-service-image {
+    border-radius:
+      18px;
+
+    border-width:
+      1px;
+  }
+
+
+  .home-service-image img {
+    object-fit: cover;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media
+(max-width: 374px) {
+
+  .home-services__stage {
+    min-height:
+      550px;
+
+    padding:
+      70px
+      14px
+      14px;
+
+    gap: 11px;
+  }
+
+
+  .home-services__title {
+    margin-bottom:
+      10px;
+
+    font-size:
+      clamp(
+        35px,
+        10.5vw,
+        42px
+      );
+  }
+
+
+  .home-service {
+    min-height:
+      34px;
+  }
+
+
+  .home-service h3 {
+    font-size:
+      clamp(
+        15px,
+        4.6vw,
+        18px
+      );
+  }
+
+
+  .home-service i {
+    width: 26px;
+
+    height: 26px;
+
+    flex-basis:
+      26px;
+  }
+
+
+  .home-services__visual {
+    height:
+      clamp(
+        185px,
+        29svh,
+        230px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media
+(min-width: 1600px) {
+
+  .home-services__stage {
+    max-width:
+      1800px;
+
+    margin:
+      0 auto;
+
+    padding-left:
+      70px;
+
+    padding-right:
+      70px;
+  }
+
+
+  .home-services__visual {
+    max-height:
+      620px;
+  }
+
+
+  .home-services__title {
+    font-size:
+      clamp(
+        74px,
+        4.8vw,
+        94px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(prefers-reduced-motion: reduce) {
+
+  .home-service,
+  .home-service i,
+  .home-service-image,
+  .home-service-image img {
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
+
+}

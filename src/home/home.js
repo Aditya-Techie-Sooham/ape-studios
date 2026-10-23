@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../styles/home-who.css";
+import "../styles/home-services.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,136 +12,114 @@ gsap.registerPlugin(ScrollTrigger);
 ========================================================= */
 
 export function initHome() {
-
   initFooterYear();
-
   cloneLogoRows();
-
 
   const reduced =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-
   if (reduced) {
     return;
   }
 
-
   initScenes();
-
   initWho();
-
   initServices();
-
   initWork();
-
   initClients();
-
   initRecognition();
 
-
-  requestAnimationFrame(
-    () => {
-
-      ScrollTrigger.refresh();
-
-    }
-  );
-
+  requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+  });
 }
 
 
 /* =========================================================
-   GENERIC HOME SCENE MOTION
+   GENERIC HOME SCENES
 ========================================================= */
 
 function initScenes() {
-
   const scenes =
     document.querySelectorAll(
       ".home-scene"
     );
 
-
-  scenes.forEach(
-    scene => {
-
-      const stage =
-        scene.querySelector(
-          ".home-scene__stage"
-        );
-
-
-      if (!stage) {
-        return;
-      }
-
-
-      gsap.fromTo(
-        stage,
-        {
-          scale: 0.965,
-
-          opacity: 0.62,
-
-          y: 35
-        },
-        {
-          scale: 1,
-
-          opacity: 1,
-
-          y: 0,
-
-          ease: "none",
-
-          scrollTrigger: {
-
-            trigger: scene,
-
-            start:
-              "top 92%",
-
-            end:
-              "top 28%",
-
-            scrub: 0.65
-
-          }
-        }
-      );
-
-
-      gsap.to(
-        stage,
-        {
-          scale: 1.025,
-
-          y: -28,
-
-          ease: "none",
-
-          scrollTrigger: {
-
-            trigger: scene,
-
-            start:
-              "65% top",
-
-            end:
-              "bottom top",
-
-            scrub: 0.7
-
-          }
-        }
-      );
-
+  scenes.forEach(scene => {
+    /*
+     * SERVICES HAS ITS OWN PINNED
+     * SCROLL SYSTEM.
+     *
+     * DO NOT TRANSFORM ITS STAGE HERE.
+     */
+    if (
+      scene.id ===
+      "home-services"
+    ) {
+      return;
     }
-  );
 
+    const stage =
+      scene.querySelector(
+        ".home-scene__stage"
+      );
+
+    if (!stage) {
+      return;
+    }
+
+    gsap.fromTo(
+      stage,
+      {
+        scale: 0.965,
+        opacity: 0.62,
+        y: 35
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+
+        ease: "none",
+
+        scrollTrigger: {
+          trigger: scene,
+
+          start:
+            "top 92%",
+
+          end:
+            "top 28%",
+
+          scrub: 0.65
+        }
+      }
+    );
+
+    gsap.to(
+      stage,
+      {
+        scale: 1.025,
+        y: -28,
+
+        ease: "none",
+
+        scrollTrigger: {
+          trigger: scene,
+
+          start:
+            "65% top",
+
+          end:
+            "bottom top",
+
+          scrub: 0.7
+        }
+      }
+    );
+  });
 }
 
 
@@ -149,17 +128,14 @@ function initScenes() {
 ========================================================= */
 
 function initWho() {
-
   const section =
     document.getElementById(
       "home-who"
     );
 
-
   if (!section) {
     return;
   }
-
 
   const heading =
     section.querySelector(
@@ -170,7 +146,6 @@ function initWho() {
       ".home-who__title"
     );
 
-
   const description =
     section.querySelector(
       ".home-who__description"
@@ -179,7 +154,6 @@ function initWho() {
     section.querySelector(
       ".home-who__body p"
     );
-
 
   const actions =
     section.querySelector(
@@ -194,40 +168,33 @@ function initWho() {
       ".home-action"
     );
 
-
   const visual =
     section.querySelector(
       ".home-who__visual"
     );
-
 
   const imageFrame =
     section.querySelector(
       ".home-who__image"
     );
 
-
   const image =
     imageFrame
-      ?.querySelector(
-        "img"
-      );
-
+      ?.querySelector("img");
 
   const finePointer =
     window.matchMedia(
       "(hover: hover) and (pointer: fine)"
     ).matches;
 
-
   const isMobile =
     () =>
       window.innerWidth < 768;
 
 
-  /* =========================================================
-     REMOVE OLD RECTANGLE / BALL
-  ========================================================= */
+  /* =======================================================
+     REMOVE OLD SHAPES
+  ======================================================= */
 
   section
     .querySelectorAll(
@@ -237,281 +204,177 @@ function initWho() {
         ".home-who__visual-back"
       ].join(",")
     )
-    .forEach(
-      element => {
-
-        element.remove();
-
-      }
-    );
+    .forEach(element => {
+      element.remove();
+    });
 
 
-  /* =========================================================
-     HEADING PREP
-  ========================================================= */
+  /* =======================================================
+     HEADING
+  ======================================================= */
 
   const headingChars =
     prepareWhoHeading(
       heading
     );
 
-
-  /* =========================================================
-     PARAGRAPH PREP
-  ========================================================= */
-
   const descriptionWords =
     prepareWhoDescription(
       description
     );
 
-
-  /* =========================================================
-     HEADING SCRAMBLE
-  ========================================================= */
-
   let headingTimeline =
     null;
 
-
   let scrambleTimer =
     null;
-
 
   const glyphPool =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#%&+?";
 
 
   function randomGlyph() {
-
     return glyphPool[
       Math.floor(
-        Math.random()
-        *
+        Math.random() *
         glyphPool.length
       )
     ];
-
   }
 
 
   function stopScramble(
     restore = true
   ) {
-
-    if (
-      scrambleTimer
-    ) {
-
+    if (scrambleTimer) {
       window.clearInterval(
         scrambleTimer
       );
 
-
       scrambleTimer =
         null;
-
     }
 
-
     if (restore) {
-
       restoreWhoHeading(
         headingChars
       );
-
     }
-
   }
 
 
   function startScramble() {
-
-    stopScramble(
-      false
-    );
-
+    stopScramble(false);
 
     const probability =
       isMobile()
-        ?
-        0.21
-        :
-        0.28;
-
+        ? 0.21
+        : 0.28;
 
     const speed =
       isMobile()
-        ?
-        175
-        :
-        150;
+        ? 175
+        : 150;
 
-
-    headingChars.forEach(
-      char => {
-
-        if (
-          Math.random() <
-          0.36
-        ) {
-
-          char.textContent =
-            randomGlyph();
-
-        }
-
+    headingChars.forEach(char => {
+      if (
+        Math.random() < 0.36
+      ) {
+        char.textContent =
+          randomGlyph();
       }
-    );
-
+    });
 
     scrambleTimer =
       window.setInterval(
         () => {
-
           headingChars.forEach(
             char => {
-
               if (
                 Math.random() <
                 probability
               ) {
-
                 char.textContent =
                   randomGlyph();
-
               }
-
             }
           );
-
         },
         speed
       );
-
   }
 
 
   if (
     headingChars.length
   ) {
-
     headingTimeline =
-      gsap.timeline(
-        {
-          paused: true,
-
-          repeat: -1
-        }
-      );
-
+      gsap.timeline({
+        paused: true,
+        repeat: -1
+      });
 
     headingTimeline.call(
       startScramble
     );
 
-
     headingTimeline.fromTo(
       headingChars,
       {
-        x:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -5
-                :
-                -9,
+        x: () =>
+          gsap.utils.random(
+            isMobile() ? -5 : -9,
+            isMobile() ? 5 : 9
+          ),
 
-              isMobile()
-                ?
-                5
-                :
-                9
-            ),
+        y: () =>
+          gsap.utils.random(
+            isMobile() ? -4 : -7,
+            isMobile() ? 4 : 7
+          ),
 
-        y:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -4
-                :
-                -7,
+        rotation: () =>
+          gsap.utils.random(
+            isMobile() ? -3 : -6,
+            isMobile() ? 3 : 6
+          ),
 
-              isMobile()
-                ?
-                4
-                :
-                7
-            ),
+        scale: () =>
+          gsap.utils.random(
+            0.96,
+            1.045
+          ),
 
-        rotation:
-          () =>
-            gsap.utils.random(
-              isMobile()
-                ?
-                -3
-                :
-                -6,
-
-              isMobile()
-                ?
-                3
-                :
-                6
-            ),
-
-        scale:
-          () =>
-            gsap.utils.random(
-              0.96,
-              1.045
-            ),
-
-        opacity:
-          () =>
-            gsap.utils.random(
-              0.7,
-              0.95
-            ),
+        opacity: () =>
+          gsap.utils.random(
+            0.7,
+            0.95
+          ),
 
         filter:
           "blur(2px)"
       },
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)",
 
         duration:
           isMobile()
-            ?
-            2
-            :
-            1.85,
+            ? 2
+            : 1.85,
 
         stagger: {
-
           each:
             isMobile()
-              ?
-              0.011
-              :
-              0.013,
+              ? 0.011
+              : 0.013,
 
-          from:
-            "random"
-
+          from: "random"
         },
 
         ease:
@@ -519,37 +382,24 @@ function initWho() {
       }
     );
 
-
     headingTimeline.call(
       () => {
-
-        stopScramble(
-          true
-        );
-
+        stopScramble(true);
       },
       null,
       isMobile()
-        ?
-        1.52
-        :
-        1.42
+        ? 1.52
+        : 1.42
     );
-
 
     headingTimeline.to(
       headingChars,
       {
         x: 0,
-
         y: 0,
-
         rotation: 0,
-
         scale: 1,
-
         opacity: 1,
-
         filter:
           "blur(0px)",
 
@@ -557,20 +407,14 @@ function initWho() {
       }
     );
 
-
     headingTimeline.to(
       {},
       {
         duration: 5
       }
     );
-
   }
 
-
-  /* =========================================================
-     DESCRIPTION LOOP
-  ========================================================= */
 
   const descriptionTimeline =
     createDescriptionLoop(
@@ -579,23 +423,18 @@ function initWho() {
     );
 
 
-  /* =========================================================
-     IMAGE REVEAL
-  ========================================================= */
+  /* =======================================================
+     IMAGE ENTRANCE
+  ======================================================= */
 
-  if (
-    visual
-  ) {
-
+  if (visual) {
     gsap.fromTo(
       visual,
       {
         y:
           isMobile()
-            ?
-            30
-            :
-            42,
+            ? 30
+            : 42,
 
         opacity: 0,
 
@@ -603,9 +442,7 @@ function initWho() {
       },
       {
         y: 0,
-
         opacity: 1,
-
         scale: 1,
 
         duration: 1,
@@ -614,149 +451,83 @@ function initWho() {
           "power4.out",
 
         scrollTrigger: {
-
-          trigger:
-            visual,
+          trigger: visual,
 
           start:
             "top 87%",
 
           once: true
-
         }
       }
     );
-
   }
 
 
-  /* =========================================================
-     360 IMAGE
-  ========================================================= */
-
   const image360 =
-    setupWhoImage360(
-      {
-        section,
-        visual,
-        imageFrame,
-        image,
-        finePointer,
-        isMobile
-      }
-    );
+    setupWhoImage360({
+      section,
+      visual,
+      imageFrame,
+      image,
+      finePointer,
+      isMobile
+    });
 
 
-  /* =========================================================
-     SECTION VISIBILITY
-  ========================================================= */
+  ScrollTrigger.create({
+    trigger: section,
 
-  ScrollTrigger.create(
-    {
+    start:
+      "top 82%",
 
-      trigger:
-        section,
+    end:
+      "bottom 10%",
 
-      start:
-        "top 82%",
+    onEnter: () => {
+      headingTimeline?.restart();
+      descriptionTimeline?.restart();
 
-      end:
-        "bottom 10%",
+      gsap.delayedCall(
+        0.55,
+        () => {
+          image360?.spin(
+            1,
+            1.65
+          );
+        }
+      );
+    },
 
+    onEnterBack: () => {
+      headingTimeline?.play();
+      descriptionTimeline?.play();
+    },
 
-      onEnter: () => {
+    onLeave: () => {
+      headingTimeline?.pause();
+      descriptionTimeline?.pause();
 
-        headingTimeline
-          ?.restart();
+      stopScramble(true);
+    },
 
+    onLeaveBack: () => {
+      headingTimeline?.pause();
+      descriptionTimeline?.pause();
 
-        descriptionTimeline
-          ?.restart();
-
-
-        gsap.delayedCall(
-          0.55,
-          () => {
-
-            image360
-              ?.spin(
-                1,
-                1.65
-              );
-
-          }
-        );
-
-      },
-
-
-      onEnterBack: () => {
-
-        headingTimeline
-          ?.play();
-
-
-        descriptionTimeline
-          ?.play();
-
-      },
-
-
-      onLeave: () => {
-
-        headingTimeline
-          ?.pause();
-
-
-        descriptionTimeline
-          ?.pause();
-
-
-        stopScramble(
-          true
-        );
-
-      },
-
-
-      onLeaveBack: () => {
-
-        headingTimeline
-          ?.pause();
-
-
-        descriptionTimeline
-          ?.pause();
-
-
-        stopScramble(
-          true
-        );
-
-      }
-
+      stopScramble(true);
     }
-  );
+  });
 
 
-  /* =========================================================
-     CTA
-  ========================================================= */
-
-  if (
-    actions
-  ) {
-
+  if (actions) {
     gsap.fromTo(
       actions,
       {
         y: 18,
-
         opacity: 0
       },
       {
         y: 0,
-
         opacity: 1,
 
         duration: 0.7,
@@ -765,39 +536,31 @@ function initWho() {
           "power3.out",
 
         scrollTrigger: {
-
-          trigger:
-            section,
+          trigger: section,
 
           start:
             "top 74%",
 
           once: true
-
         }
       }
     );
-
   }
-
 }
 
 
 /* =========================================================
-   TRUE 360 IMAGE
+   WHO 360 IMAGE
 ========================================================= */
 
-function setupWhoImage360(
-  {
-    section,
-    visual,
-    imageFrame,
-    image,
-    finePointer,
-    isMobile
-  }
-) {
-
+function setupWhoImage360({
+  section,
+  visual,
+  imageFrame,
+  image,
+  finePointer,
+  isMobile
+}) {
   if (
     !section ||
     !visual ||
@@ -807,72 +570,50 @@ function setupWhoImage360(
     return null;
   }
 
-
   image.classList.add(
     "home-who__image-front"
   );
-
 
   let backImage =
     imageFrame.querySelector(
       ".home-who__image-back"
     );
 
-
-  if (
-    !backImage
-  ) {
-
+  if (!backImage) {
     backImage =
-      image.cloneNode(
-        true
-      );
+      image.cloneNode(true);
 
-
-    backImage.removeAttribute(
-      "id"
-    );
-
+    backImage.removeAttribute("id");
 
     backImage.classList.remove(
       "home-who__image-front"
     );
 
-
     backImage.classList.add(
       "home-who__image-back"
     );
 
-
-    backImage.alt =
-      "";
-
+    backImage.alt = "";
 
     backImage.setAttribute(
       "aria-hidden",
       "true"
     );
 
-
     imageFrame.appendChild(
       backImage
     );
-
   }
-
 
   imageFrame.classList.add(
     "is-360-ready"
   );
 
-
   gsap.set(
     imageFrame,
     {
       rotationX: 0,
-
       rotationY: 0,
-
       rotationZ: 0,
 
       transformPerspective:
@@ -888,7 +629,6 @@ function setupWhoImage360(
     }
   );
 
-
   gsap.set(
     image,
     {
@@ -903,7 +643,6 @@ function setupWhoImage360(
       scale: 1.04
     }
   );
-
 
   gsap.set(
     backImage,
@@ -921,52 +660,25 @@ function setupWhoImage360(
   );
 
 
-  let tracking =
-    false;
+  let tracking = false;
+  let horizontalDrag = false;
 
+  let startX = 0;
+  let startY = 0;
 
-  let horizontalDrag =
-    false;
+  let startRotation = 0;
+  let currentRotation = 0;
 
+  let lastX = 0;
+  let lastTime = 0;
 
-  let startX =
-    0;
+  let velocityX = 0;
 
+  let pointerId = null;
 
-  let startY =
-    0;
+  let spinTween = null;
 
-
-  let startRotation =
-    0;
-
-
-  let currentRotation =
-    0;
-
-
-  let lastX =
-    0;
-
-
-  let lastTime =
-    0;
-
-
-  let velocityX =
-    0;
-
-
-  let pointerId =
-    null;
-
-
-  let spinTween =
-    null;
-
-
-  let lastHoverSpin =
-    0;
+  let lastHoverSpin = 0;
 
 
   const getRotation =
@@ -985,56 +697,38 @@ function setupWhoImage360(
     value =>
       Math.round(
         value / 360
-      )
-      *
+      ) *
       360;
 
-
-  /* =========================================================
-     AUTOMATIC 360
-  ========================================================= */
 
   function spin(
     direction = 1,
     duration = 1.55
   ) {
-
-    if (
-      tracking
-    ) {
+    if (tracking) {
       return;
     }
 
-
-    spinTween
-      ?.kill();
-
+    spinTween?.kill();
 
     const current =
       getRotation();
-
 
     const base =
       nearestFullTurn(
         current
       );
 
-
     const target =
-      base
-      +
+      base +
       (
         direction >= 0
-          ?
-          360
-          :
-          -360
+          ? 360
+          : -360
       );
-
 
     currentRotation =
       target;
-
 
     spinTween =
       gsap.to(
@@ -1044,11 +738,9 @@ function setupWhoImage360(
             target,
 
           rotationX: 0,
-
           rotationZ: 0,
 
           z: 0,
-
           y: 0,
 
           duration,
@@ -1060,20 +752,13 @@ function setupWhoImage360(
             true,
 
           onComplete: () => {
-
             spinTween =
               null;
-
           }
         }
       );
-
   }
 
-
-  /* =========================================================
-     IMAGE PARALLAX
-  ========================================================= */
 
   gsap.to(
     [
@@ -1086,9 +771,7 @@ function setupWhoImage360(
       ease: "none",
 
       scrollTrigger: {
-
-        trigger:
-          section,
+        trigger: section,
 
         start:
           "top bottom",
@@ -1097,7 +780,6 @@ function setupWhoImage360(
           "bottom top",
 
         scrub: 0.8
-
       }
     }
   );
@@ -1106,10 +788,8 @@ function setupWhoImage360(
   visual.style.touchAction =
     "pan-y";
 
-
   visual.style.userSelect =
     "none";
-
 
   visual.style.webkitUserSelect =
     "none";
@@ -1118,112 +798,72 @@ function setupWhoImage360(
   visual.addEventListener(
     "dragstart",
     event => {
-
       event.preventDefault();
-
     }
   );
 
-
-  /* =========================================================
-     START DRAG
-  ========================================================= */
 
   visual.addEventListener(
     "pointerdown",
     event => {
-
       if (
-        event.button !==
-          undefined
-        &&
-        event.button !==
-          0
+        event.button !== undefined &&
+        event.button !== 0
       ) {
         return;
       }
 
+      spinTween?.kill();
 
-      spinTween
-        ?.kill();
+      spinTween = null;
 
-
-      spinTween =
-        null;
-
-
-      tracking =
-        true;
-
-
-      horizontalDrag =
-        false;
-
+      tracking = true;
+      horizontalDrag = false;
 
       pointerId =
         event.pointerId;
 
-
       startX =
         event.clientX;
-
 
       lastX =
         event.clientX;
 
-
       startY =
         event.clientY;
-
 
       lastTime =
         performance.now();
 
-
-      velocityX =
-        0;
-
+      velocityX = 0;
 
       startRotation =
         getRotation();
 
-
       currentRotation =
         startRotation;
-
     }
   );
 
 
-  /* =========================================================
-     MOVE
-  ========================================================= */
-
   visual.addEventListener(
     "pointermove",
     event => {
-
       if (
-        !tracking
-        &&
+        !tracking &&
         finePointer
       ) {
-
         const rect =
           visual.getBoundingClientRect();
 
-
         const ny =
           (
-            event.clientY
-            -
+            event.clientY -
             rect.top
           )
           /
-          rect.height
-          -
+          rect.height -
           0.5;
-
 
         gsap.to(
           imageFrame,
@@ -1243,143 +883,91 @@ function setupWhoImage360(
           }
         );
 
-
-        return;
-
-      }
-
-
-      if (
-        !tracking
-      ) {
         return;
       }
 
+      if (!tracking) {
+        return;
+      }
 
       const dx =
-        event.clientX
-        -
+        event.clientX -
         startX;
 
-
       const dy =
-        event.clientY
-        -
+        event.clientY -
         startY;
 
-
-      if (
-        !horizontalDrag
-      ) {
-
+      if (!horizontalDrag) {
         if (
-          Math.abs(dx) < 6
-          &&
+          Math.abs(dx) < 6 &&
           Math.abs(dy) < 6
         ) {
           return;
         }
 
-
         if (
-          Math.abs(dy)
-          >
-          Math.abs(dx)
-          *
-          1.15
+          Math.abs(dy) >
+          Math.abs(dx) * 1.15
         ) {
+          tracking = false;
 
-          tracking =
-            false;
-
-
-          pointerId =
-            null;
-
+          pointerId = null;
 
           return;
-
         }
 
-
-        horizontalDrag =
-          true;
-
+        horizontalDrag = true;
 
         visual.classList.add(
           "is-dragging"
         );
 
-
         try {
-
-          visual.setPointerCapture
-            ?.(
-              event.pointerId
-            );
-
-        }
-
-        catch {}
-
+          visual.setPointerCapture?.(
+            event.pointerId
+          );
+        } catch {}
       }
-
 
       if (
         event.cancelable
       ) {
-
         event.preventDefault();
-
       }
-
 
       const now =
         performance.now();
 
-
       const elapsed =
         Math.max(
-          now
-          -
-          lastTime,
+          now - lastTime,
           1
         );
 
-
       velocityX =
         (
-          event.clientX
-          -
+          event.clientX -
           lastX
         )
         /
         elapsed;
 
-
       lastX =
         event.clientX;
-
 
       lastTime =
         now;
 
-
       const sensitivity =
         isMobile()
-          ?
-          0.92
-          :
-          0.78;
-
+          ? 0.92
+          : 0.78;
 
       currentRotation =
-        startRotation
-        +
-        dx
-        *
+        startRotation +
+        dx *
         sensitivity;
-
 
       gsap.set(
         imageFrame,
@@ -1399,7 +987,6 @@ function setupWhoImage360(
           force3D: true
         }
       );
-
     },
     {
       passive: false
@@ -1407,133 +994,88 @@ function setupWhoImage360(
   );
 
 
-  /* =========================================================
-     END DRAG
-  ========================================================= */
-
   function finishRotation(
     event
   ) {
-
-    if (
-      !tracking
-    ) {
+    if (!tracking) {
       return;
     }
 
-
-    tracking =
-      false;
-
+    tracking = false;
 
     visual.classList.remove(
       "is-dragging"
     );
 
-
     const dragDistance =
-      event.clientX
-      -
+      event.clientX -
       startX;
 
-
-    if (
-      !horizontalDrag
-    ) {
+    if (!horizontalDrag) {
       return;
     }
 
-
     const momentum =
-      velocityX
-      *
+      velocityX *
       (
         isMobile()
-          ?
-          190
-          :
-          160
+          ? 190
+          : 160
       );
 
-
     const predicted =
-      currentRotation
-      +
+      currentRotation +
       momentum;
-
 
     let target =
       nearestFullTurn(
         predicted
       );
 
-
     const startClean =
       nearestFullTurn(
         startRotation
       );
 
-
     if (
       Math.abs(
         dragDistance
-      )
-      >
-      34
-      &&
-      target ===
-        startClean
+      ) > 34 &&
+      target === startClean
     ) {
-
       target +=
         dragDistance > 0
-          ?
-          360
-          :
-          -360;
-
+          ? 360
+          : -360;
     }
 
-
     if (
-      dragDistance > 0
-      &&
+      dragDistance > 0 &&
       target <
-        currentRotation
+      currentRotation
     ) {
-
-      target +=
-        360;
-
+      target += 360;
     }
-
 
     if (
-      dragDistance < 0
-      &&
+      dragDistance < 0 &&
       target >
-        currentRotation
+      currentRotation
     ) {
-
-      target -=
-        360;
-
+      target -= 360;
     }
-
 
     const duration =
       gsap.utils.clamp(
         0.5,
         1.2,
         Math.abs(
-          target
-          -
+          target -
           currentRotation
         )
         /
         330
       );
-
 
     spinTween =
       gsap.to(
@@ -1543,11 +1085,9 @@ function setupWhoImage360(
             target,
 
           rotationX: 0,
-
           rotationZ: 0,
 
           z: 0,
-
           y: 0,
 
           duration,
@@ -1559,45 +1099,27 @@ function setupWhoImage360(
             true,
 
           onComplete: () => {
-
             currentRotation =
               target;
 
-
             spinTween =
               null;
-
           }
         }
       );
 
-
     if (
-      pointerId !==
-      null
+      pointerId !== null
     ) {
-
       try {
-
-        visual.releasePointerCapture
-          ?.(
-            pointerId
-          );
-
-      }
-
-      catch {}
-
+        visual.releasePointerCapture?.(
+          pointerId
+        );
+      } catch {}
     }
 
-
-    pointerId =
-      null;
-
-
-    horizontalDrag =
-      false;
-
+    pointerId = null;
+    horizontalDrag = false;
   }
 
 
@@ -1610,26 +1132,16 @@ function setupWhoImage360(
   visual.addEventListener(
     "pointercancel",
     () => {
-
-      if (
-        !tracking
-      ) {
+      if (!tracking) {
         return;
       }
 
-
-      tracking =
-        false;
-
-
-      horizontalDrag =
-        false;
-
+      tracking = false;
+      horizontalDrag = false;
 
       visual.classList.remove(
         "is-dragging"
       );
-
 
       gsap.to(
         imageFrame,
@@ -1642,7 +1154,6 @@ function setupWhoImage360(
           rotationX: 0,
 
           z: 0,
-
           y: 0,
 
           duration: 0.6,
@@ -1652,84 +1163,54 @@ function setupWhoImage360(
         }
       );
 
-
-      pointerId =
-        null;
-
+      pointerId = null;
     }
   );
 
 
-  /* =========================================================
-     DESKTOP HOVER SPIN
-  ========================================================= */
-
-  if (
-    finePointer
-  ) {
-
+  if (finePointer) {
     visual.addEventListener(
       "pointerenter",
       event => {
-
-        if (
-          tracking
-        ) {
+        if (tracking) {
           return;
         }
-
 
         const now =
           performance.now();
 
-
         if (
-          now
-          -
-          lastHoverSpin
-          <
+          now -
+          lastHoverSpin <
           900
         ) {
           return;
         }
 
-
         lastHoverSpin =
           now;
-
 
         const rect =
           visual.getBoundingClientRect();
 
-
         spin(
-          event.clientX
-          <
-          rect.left
-          +
+          event.clientX <
+          rect.left +
           rect.width / 2
-            ?
-            -1
-            :
-            1,
+            ? -1
+            : 1,
 
           1.45
         );
-
       }
     );
-
 
     visual.addEventListener(
       "pointerleave",
       () => {
-
-        if (
-          tracking
-        ) {
+        if (tracking) {
           return;
         }
-
 
         gsap.to(
           imageFrame,
@@ -1737,7 +1218,6 @@ function setupWhoImage360(
             rotationX: 0,
 
             z: 0,
-
             y: 0,
 
             duration: 0.5,
@@ -1749,17 +1229,13 @@ function setupWhoImage360(
               "auto"
           }
         );
-
       }
     );
-
   }
-
 
   return {
     spin
   };
-
 }
 
 
@@ -1770,32 +1246,23 @@ function setupWhoImage360(
 function prepareWhoHeading(
   heading
 ) {
-
-  if (
-    !heading
-  ) {
+  if (!heading) {
     return [];
   }
-
 
   if (
     heading.dataset
       .kineticReady ===
     "true"
   ) {
-
     return Array.from(
       heading.querySelectorAll(
         ".home-who__kinetic-char"
       )
     );
-
   }
 
-
-  const textNodes =
-    [];
-
+  const textNodes = [];
 
   const walker =
     document.createTreeWalker(
@@ -1803,9 +1270,7 @@ function prepareWhoHeading(
       NodeFilter.SHOW_TEXT
     );
 
-
   let node;
-
 
   while (
     (
@@ -1813,28 +1278,17 @@ function prepareWhoHeading(
         walker.nextNode()
     )
   ) {
-
     if (
-      node.textContent
-        .trim()
+      node.textContent.trim()
     ) {
-
-      textNodes.push(
-        node
-      );
-
+      textNodes.push(node);
     }
-
   }
 
-
-  const characters =
-    [];
-
+  const characters = [];
 
   textNodes.forEach(
     textNode => {
-
       const words =
         textNode.textContent
           .trim()
@@ -1842,107 +1296,81 @@ function prepareWhoHeading(
             /\s+/g,
             " "
           )
-          .split(
-            " "
-          );
-
+          .split(" ");
 
       const fragment =
         document.createDocumentFragment();
-
 
       words.forEach(
         (
           word,
           wordIndex
         ) => {
-
           const wordWrap =
             document.createElement(
               "span"
             );
 
-
           wordWrap.className =
             "home-who__kinetic-word";
 
+          Array.from(word)
+            .forEach(
+              character => {
+                const char =
+                  document.createElement(
+                    "span"
+                  );
 
-          Array.from(
-            word
-          ).forEach(
-            character => {
+                char.className =
+                  "home-who__kinetic-char";
 
-              const char =
-                document.createElement(
-                  "span"
+                char.dataset.final =
+                  character;
+
+                char.textContent =
+                  character;
+
+                wordWrap.appendChild(
+                  char
                 );
 
-
-              char.className =
-                "home-who__kinetic-char";
-
-
-              char.dataset.final =
-                character;
-
-
-              char.textContent =
-                character;
-
-
-              wordWrap.appendChild(
-                char
-              );
-
-
-              characters.push(
-                char
-              );
-
-            }
-          );
-
+                characters.push(
+                  char
+                );
+              }
+            );
 
           fragment.appendChild(
             wordWrap
           );
 
-
           if (
-            wordIndex
-            <
+            wordIndex <
             words.length - 1
           ) {
-
             fragment.appendChild(
               document.createTextNode(
                 " "
               )
             );
-
           }
-
         }
       );
-
 
       textNode.parentNode
         .replaceChild(
           fragment,
           textNode
         );
-
     }
   );
-
 
   heading.dataset
     .kineticReady =
     "true";
 
-
   return characters;
-
 }
 
 
@@ -1953,50 +1381,37 @@ function prepareWhoHeading(
 function restoreWhoHeading(
   characters
 ) {
-
   characters.forEach(
     char => {
-
       char.textContent =
-        char.dataset.final
-        ||
-        "";
-
+        char.dataset.final || "";
     }
   );
-
 }
 
 
 /* =========================================================
-   WHO PARAGRAPH PREP
+   WHO DESCRIPTION PREP
 ========================================================= */
 
 function prepareWhoDescription(
   description
 ) {
-
-  if (
-    !description
-  ) {
+  if (!description) {
     return [];
   }
-
 
   if (
     description.dataset
       .wordsReady ===
     "true"
   ) {
-
     return Array.from(
       description.querySelectorAll(
         ".home-who__description-word"
       )
     );
-
   }
-
 
   const words =
     description.textContent
@@ -2005,88 +1420,66 @@ function prepareWhoDescription(
         /\s+/g,
         " "
       )
-      .split(
-        " "
-      );
+      .split(" ");
 
+  description.textContent = "";
 
-  description.textContent =
-    "";
-
-
-  const elements =
-    [];
-
+  const elements = [];
 
   words.forEach(
     (
       word,
       index
     ) => {
-
       const mask =
         document.createElement(
           "span"
         );
 
-
       mask.className =
         "home-who__description-mask";
-
 
       const span =
         document.createElement(
           "span"
         );
 
-
       span.className =
         "home-who__description-word";
 
-
       span.textContent =
         word;
-
 
       mask.appendChild(
         span
       );
 
-
       description.appendChild(
         mask
       );
-
 
       elements.push(
         span
       );
 
-
       if (
         index <
         words.length - 1
       ) {
-
         description.appendChild(
           document.createTextNode(
             " "
           )
         );
-
       }
-
     }
   );
-
 
   description.dataset
     .wordsReady =
     "true";
 
-
   return elements;
-
 }
 
 
@@ -2098,23 +1491,15 @@ function createDescriptionLoop(
   words,
   isMobile
 ) {
-
-  if (
-    !words.length
-  ) {
+  if (!words.length) {
     return null;
   }
 
-
   const timeline =
-    gsap.timeline(
-      {
-        paused: true,
-
-        repeat: -1
-      }
-    );
-
+    gsap.timeline({
+      paused: true,
+      repeat: -1
+    });
 
   timeline.set(
     words,
@@ -2128,7 +1513,6 @@ function createDescriptionLoop(
     }
   );
 
-
   timeline.to(
     words,
     {
@@ -2141,23 +1525,18 @@ function createDescriptionLoop(
 
       duration:
         isMobile()
-          ?
-          0.72
-          :
-          0.62,
+          ? 0.72
+          : 0.62,
 
       stagger:
         isMobile()
-          ?
-          0.035
-          :
-          0.028,
+          ? 0.035
+          : 0.028,
 
       ease:
         "power4.out"
     }
   );
-
 
   timeline.to(
     {},
@@ -2165,7 +1544,6 @@ function createDescriptionLoop(
       duration: 5
     }
   );
-
 
   timeline.to(
     words,
@@ -2181,16 +1559,13 @@ function createDescriptionLoop(
 
       stagger:
         isMobile()
-          ?
-          0.018
-          :
-          0.014,
+          ? 0.018
+          : 0.014,
 
       ease:
         "power3.in"
     }
   );
-
 
   timeline.to(
     {},
@@ -2199,28 +1574,29 @@ function createDescriptionLoop(
     }
   );
 
-
   return timeline;
-
 }
 
 
 /* =========================================================
-   SERVICES — RESTORED + IMPROVED
+   SERVICES
+   PINNED SCROLL EXPERIENCE
 ========================================================= */
 
 function initServices() {
-
   const section =
     document.getElementById(
       "home-services"
     );
 
-
   if (!section) {
     return;
   }
 
+  const stage =
+    section.querySelector(
+      ".home-services__stage"
+    );
 
   const rows =
     Array.from(
@@ -2229,7 +1605,6 @@ function initServices() {
       )
     );
 
-
   const images =
     Array.from(
       section.querySelectorAll(
@@ -2237,14 +1612,24 @@ function initServices() {
       )
     );
 
-
   const visual =
     section.querySelector(
       ".home-services__visual"
     );
 
+  const title =
+    section.querySelector(
+      ".home-services__title"
+    );
+
+  const list =
+    section.querySelector(
+      ".home-services__list"
+    );
+
 
   if (
+    !stage ||
     !rows.length ||
     !images.length ||
     !visual
@@ -2253,393 +1638,560 @@ function initServices() {
   }
 
 
-  let current =
-    rows.findIndex(
-      row =>
-        row.classList.contains(
-          "is-active"
-        )
-    );
+  /* =======================================================
+     REMOVE VIOLET CIRCLE / SHAPE
+  ======================================================= */
+
+  section
+    .querySelectorAll(
+      [
+        ".home-services__back-shape",
+        ".home-services__shape"
+      ].join(",")
+    )
+    .forEach(element => {
+      element.remove();
+    });
 
 
-  if (
-    current < 0
-  ) {
-    current = 0;
-  }
+  /* =======================================================
+     STATE
+  ======================================================= */
+
+  let currentIndex = 0;
+
+  let scrollIndex = 0;
+
+  let lastDirection = 1;
 
 
-  let changing =
-    false;
+  /* =======================================================
+     INITIAL IMAGE STATES
+  ======================================================= */
 
+  rows.forEach(
+    (
+      row,
+      index
+    ) => {
+      row.classList.toggle(
+        "is-active",
+        index === 0
+      );
+    }
+  );
 
-  /* =========================================================
-     INITIAL IMAGE STATE
-  ========================================================= */
 
   images.forEach(
     (
       image,
       index
     ) => {
+      image.classList.toggle(
+        "is-active",
+        index === 0
+      );
 
       gsap.set(
         image,
         {
           autoAlpha:
-            index === current
-              ?
-              1
-              :
-              0,
+            index === 0
+              ? 1
+              : 0,
 
-          zIndex:
-            index === current
-              ?
-              3
-              :
-              1,
+          scale:
+            index === 0
+              ? 1
+              : 0.94,
 
-          xPercent: 0,
+          yPercent:
+            index === 0
+              ? 0
+              : 8,
 
-          y: 0,
-
-          scale: 1,
-
-          rotation: 0,
+          rotation:
+            index === 0
+              ? 0
+              : 1.5,
 
           clipPath:
-            "inset(0 0 0 0 round 26px)"
+            index === 0
+              ?
+              "inset(0% 0% 0% 0% round 26px)"
+              :
+              "inset(100% 0% 0% 0% round 26px)",
+
+          zIndex:
+            index === 0
+              ? 5
+              : 1
         }
       );
-
     }
   );
 
 
-  rows.forEach(
-    (
-      row,
-      index
-    ) => {
-
-      row.classList.toggle(
-        "is-active",
-        index === current
-      );
-
-    }
-  );
-
-
-  /* =========================================================
-     ACTIVATE SERVICE
-  ========================================================= */
+  /* =======================================================
+     SERVICE IMAGE TRANSITION
+  ======================================================= */
 
   function activate(
-    index,
+    nextIndex,
     direction = 1
   ) {
+    const index =
+      gsap.utils.clamp(
+        0,
+        rows.length - 1,
+        nextIndex
+      );
 
     if (
-      index < 0
-      ||
-      index >=
-        rows.length
-      ||
-      index ===
-        current
-      ||
-      changing
+      index === currentIndex
     ) {
       return;
     }
 
+    const previousIndex =
+      currentIndex;
 
-    const oldIndex =
-      current;
-
-
-    const oldImage =
+    const previousImage =
       images[
-        oldIndex
+        previousIndex
       ];
 
-
-    const newImage =
+    const nextImage =
       images[
         index
       ];
 
-
     if (
-      !oldImage ||
-      !newImage
+      !previousImage ||
+      !nextImage
     ) {
       return;
     }
 
+    const forward =
+      direction >= 0;
 
-    changing =
-      true;
-
-
-    current =
+    currentIndex =
       index;
 
+
+    /* ROW STATE */
 
     rows.forEach(
       (
         row,
         rowIndex
       ) => {
-
         row.classList.toggle(
           "is-active",
-          rowIndex ===
-            index
+          rowIndex === index
         );
-
       }
     );
 
 
+    /* STOP OLD TWEENS */
+
     gsap.killTweensOf(
       [
-        oldImage,
-        newImage
+        previousImage,
+        nextImage
       ]
     );
 
 
-    const inDirection =
-      direction >= 0
-        ?
-        1
-        :
-        -1;
-
-
-    const outDirection =
-      -inDirection;
-
-
-    /* NEW IMAGE */
+    /* NEW IMAGE START */
 
     gsap.set(
-      newImage,
+      nextImage,
       {
         autoAlpha: 1,
 
-        zIndex: 3,
+        zIndex: 6,
 
-        xPercent:
-          7
-          *
-          inDirection,
-
-        y: 18,
+        yPercent:
+          forward
+            ? 8
+            : -8,
 
         scale: 0.94,
 
         rotation:
-          1.8
-          *
-          inDirection,
+          forward
+            ? 1.5
+            : -1.5,
 
         clipPath:
-          direction >= 0
+          forward
             ?
-            "inset(0 0 100% 0 round 26px)"
+            "inset(100% 0% 0% 0% round 26px)"
             :
-            "inset(100% 0 0 0 round 26px)"
+            "inset(0% 0% 100% 0% round 26px)"
       }
     );
 
 
-    /* OLD IMAGE */
+    const tl =
+      gsap.timeline({
+        defaults: {
+          overwrite:
+            true
+        },
 
-    gsap.set(
-      oldImage,
-      {
-        autoAlpha: 1,
-
-        zIndex: 2
-      }
-    );
-
-
-    /* HIDE OTHER IMAGES */
-
-    images.forEach(
-      (
-        image,
-        imageIndex
-      ) => {
-
-        if (
-          imageIndex !==
-            oldIndex
-          &&
-          imageIndex !==
-            index
-        ) {
-
-          gsap.set(
-            image,
-            {
-              autoAlpha: 0,
-
-              zIndex: 1
-            }
-          );
-
-
-          image.classList.remove(
+        onComplete: () => {
+          previousImage.classList.remove(
             "is-active"
           );
 
+          nextImage.classList.add(
+            "is-active"
+          );
+
+          gsap.set(
+            previousImage,
+            {
+              autoAlpha: 0,
+              zIndex: 1,
+
+              yPercent: 0,
+              scale: 1,
+              rotation: 0
+            }
+          );
+
+          gsap.set(
+            nextImage,
+            {
+              autoAlpha: 1,
+              zIndex: 5,
+
+              yPercent: 0,
+              scale: 1,
+              rotation: 0,
+
+              clipPath:
+                "inset(0% 0% 0% 0% round 26px)"
+            }
+          );
         }
-
-      }
-    );
+      });
 
 
-    const timeline =
-      gsap.timeline(
-        {
-          defaults: {
-            ease:
-              "power4.inOut"
-          },
+    /* OLD IMAGE LEAVES */
 
-          onComplete: () => {
-
-            oldImage.classList.remove(
-              "is-active"
-            );
-
-
-            newImage.classList.add(
-              "is-active"
-            );
-
-
-            gsap.set(
-              oldImage,
-              {
-                autoAlpha: 0,
-
-                xPercent: 0,
-
-                y: 0,
-
-                scale: 1,
-
-                rotation: 0,
-
-                clipPath:
-                  "inset(0 0 0 0 round 26px)"
-              }
-            );
-
-
-            gsap.set(
-              newImage,
-              {
-                autoAlpha: 1,
-
-                xPercent: 0,
-
-                y: 0,
-
-                scale: 1,
-
-                rotation: 0,
-
-                clipPath:
-                  "inset(0 0 0 0 round 26px)"
-              }
-            );
-
-
-            changing =
-              false;
-
-          }
-        }
-      );
-
-
-    timeline.to(
-      oldImage,
+    tl.to(
+      previousImage,
       {
         autoAlpha: 0,
 
-        xPercent:
-          5
-          *
-          outDirection,
+        yPercent:
+          forward
+            ? -6
+            : 6,
 
-        scale: 0.96,
+        scale: 0.965,
 
-        rotation:
-          -1.2
-          *
-          inDirection,
+        duration: 0.48,
 
-        duration: 0.48
+        ease:
+          "power3.inOut"
       },
       0
     );
 
 
-    timeline.to(
-      newImage,
-      {
-        xPercent: 0,
+    /* NEW IMAGE ARRIVES */
 
-        y: 0,
+    tl.to(
+      nextImage,
+      {
+        yPercent: 0,
 
         scale: 1,
 
         rotation: 0,
 
         clipPath:
-          "inset(0 0 0 0 round 26px)",
+          "inset(0% 0% 0% 0% round 26px)",
 
-        duration: 0.72
+        duration: 0.72,
+
+        ease:
+          "power4.inOut"
       },
-      0.04
+      0.03
     );
 
+
+    /* IMAGE ITSELF GETS SMALL PUSH */
+
+    const nextImg =
+      nextImage.querySelector(
+        "img"
+      );
+
+    if (nextImg) {
+      gsap.fromTo(
+        nextImg,
+        {
+          scale: 1.1
+        },
+        {
+          scale: 1.02,
+
+          duration: 0.9,
+
+          ease:
+            "power4.out"
+        }
+      );
+    }
   }
 
 
-  /* =========================================================
+  /* =======================================================
+     INITIAL SECTION REVEAL
+  ======================================================= */
+
+  if (title) {
+    gsap.fromTo(
+      title,
+      {
+        y: 28,
+        opacity: 0
+      },
+      {
+        y: 0,
+        opacity: 1,
+
+        duration: 0.8,
+
+        ease:
+          "power3.out",
+
+        scrollTrigger: {
+          trigger: section,
+
+          start:
+            "top 82%",
+
+          once: true
+        }
+      }
+    );
+  }
+
+
+  if (list) {
+    gsap.fromTo(
+      rows,
+      {
+        x: -20,
+        opacity: 0
+      },
+      {
+        x: 0,
+        opacity: 1,
+
+        duration: 0.65,
+
+        stagger: 0.055,
+
+        ease:
+          "power3.out",
+
+        scrollTrigger: {
+          trigger: section,
+
+          start:
+            "top 78%",
+
+          once: true
+        }
+      }
+    );
+  }
+
+
+  gsap.fromTo(
+    visual,
+    {
+      y: 28,
+
+      scale: 0.94,
+
+      opacity: 0
+    },
+    {
+      y: 0,
+
+      scale: 1,
+
+      opacity: 1,
+
+      duration: 0.9,
+
+      ease:
+        "power4.out",
+
+      scrollTrigger: {
+        trigger: section,
+
+        start:
+          "top 82%",
+
+        once: true
+      }
+    }
+  );
+
+
+  /* =======================================================
+     PINNED SCROLL
+  ======================================================= */
+
+  function getScrollDistance() {
+    const mobile =
+      window.innerWidth <
+      768;
+
+    const tablet =
+      window.innerWidth >=
+        768
+      &&
+      window.innerWidth <
+        1180;
+
+    const multiplier =
+      mobile
+        ? 0.54
+        : tablet
+          ? 0.62
+          : 0.68;
+
+    return Math.max(
+      window.innerHeight *
+      (
+        rows.length - 1
+      )
+      *
+      multiplier,
+
+      mobile
+        ? 1100
+        : 1500
+    );
+  }
+
+
+  ScrollTrigger.create({
+    trigger: section,
+
+    start:
+      "top top",
+
+    end: () =>
+      `+=${getScrollDistance()}`,
+
+    pin: true,
+
+    pinSpacing: true,
+
+    anticipatePin: 1,
+
+    invalidateOnRefresh: true,
+
+    onUpdate(self) {
+      const raw =
+        self.progress *
+        (
+          rows.length - 1
+        );
+
+      const nextIndex =
+        Math.round(raw);
+
+      scrollIndex =
+        gsap.utils.clamp(
+          0,
+          rows.length - 1,
+          nextIndex
+        );
+
+      lastDirection =
+        self.direction >= 0
+          ? 1
+          : -1;
+
+      if (
+        scrollIndex !==
+        currentIndex
+      ) {
+        activate(
+          scrollIndex,
+          lastDirection
+        );
+      }
+    },
+
+    onEnter() {
+      activate(
+        0,
+        1
+      );
+    },
+
+    onLeaveBack() {
+      scrollIndex = 0;
+
+      if (
+        currentIndex !== 0
+      ) {
+        activate(
+          0,
+          -1
+        );
+      }
+    }
+  });
+
+
+  /* =======================================================
      DESKTOP HOVER
-  ========================================================= */
+  ======================================================= */
+
+  const finePointer =
+    window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    );
+
 
   rows.forEach(
     (
       row,
       index
     ) => {
-
       row.addEventListener(
         "pointerenter",
         () => {
+          if (
+            !finePointer.matches
+          ) {
+            return;
+          }
 
           activate(
             index,
             index >=
-              current
-              ?
-              1
-              :
-              -1
+              currentIndex
+              ? 1
+              : -1
           );
-
         }
       );
 
@@ -2647,193 +2199,83 @@ function initServices() {
       row.addEventListener(
         "focus",
         () => {
-
           activate(
             index,
             index >=
-              current
-              ?
-              1
-              :
-              -1
+              currentIndex
+              ? 1
+              : -1
           );
-
         }
       );
 
 
       /*
-       * Tablet/mobile tap.
+       * MOBILE TAP:
+       * visual can still be manually selected.
+       *
+       * preventDefault is intentionally NOT used,
+       * so normal service links still work.
        */
-
       row.addEventListener(
-        "click",
+        "touchstart",
         () => {
+          if (
+            finePointer.matches
+          ) {
+            return;
+          }
 
           activate(
             index,
             index >=
-              current
-              ?
-              1
-              :
-              -1
+              currentIndex
+              ? 1
+              : -1
           );
-
+        },
+        {
+          passive: true
         }
       );
-
     }
   );
 
 
-  /* =========================================================
-     MOBILE / TOUCH SCROLL ACTIVATION
-  ========================================================= */
-
-  ScrollTrigger.create(
-    {
-
-      trigger:
-        section,
-
-      start:
-        "top 82%",
-
-      end:
-        "bottom 18%",
-
-
-      onUpdate(
-        self
-      ) {
-
-        /*
-         * Desktop already has hover.
-         */
-
-        if (
-          window.matchMedia(
-            "(hover: hover) and (pointer: fine)"
-          ).matches
-        ) {
-          return;
-        }
-
-
-        const index =
-          Math.min(
-            rows.length - 1,
-
-            Math.floor(
-              self.progress
-              *
-              rows.length
-            )
-          );
-
-
-        if (
-          index !==
-            current
-          &&
-          !changing
-        ) {
-
-          activate(
-            index,
-            index >=
-              current
-              ?
-              1
-              :
-              -1
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     VISUAL PARALLAX
-  ========================================================= */
-
-  gsap.fromTo(
-    visual,
-    {
-      rotate: -4,
-
-      scale: 0.88,
-
-      y: 55
-    },
-    {
-      rotate: 3,
-
-      scale: 1.03,
-
-      y: -30,
-
-      ease: "none",
-
-      scrollTrigger: {
-
-        trigger:
-          section,
-
-        start:
-          "top bottom",
-
-        end:
-          "bottom top",
-
-        scrub: 0.9
-
-      }
-    }
-  );
-
+  /* =======================================================
+     DESKTOP POINTER DEPTH
+  ======================================================= */
 
   initTilt(
     visual,
-    5
+    3.5
   );
-
 }
 
 
 /* =========================================================
-   WORK — ORIGINAL MOTION RESTORED
+   WORK
 ========================================================= */
 
 function initWork() {
-
   const section =
     document.getElementById(
       "home-work"
     );
 
-
   if (!section) {
     return;
   }
-
 
   const viewport =
     section.querySelector(
       ".home-work__viewport"
     );
 
-
   const track =
     section.querySelector(
       ".home-work__track"
     );
-
 
   const cards =
     Array.from(
@@ -2842,7 +2284,6 @@ function initWork() {
       )
     );
 
-
   if (
     !viewport ||
     !track
@@ -2850,19 +2291,14 @@ function initWork() {
     return;
   }
 
-
   function distance() {
-
     return Math.max(
       0,
 
-      track.scrollWidth
-      -
+      track.scrollWidth -
       viewport.clientWidth
     );
-
   }
-
 
   gsap.fromTo(
     track,
@@ -2870,16 +2306,13 @@ function initWork() {
       x: 0
     },
     {
-      x:
-        () =>
-          -distance(),
+      x: () =>
+        -distance(),
 
       ease: "none",
 
       scrollTrigger: {
-
-        trigger:
-          section,
+        trigger: section,
 
         start:
           "top 86%",
@@ -2891,62 +2324,48 @@ function initWork() {
 
         invalidateOnRefresh:
           true
-
       }
     }
   );
-
 
   cards.forEach(
     (
       card,
       index
     ) => {
-
       const image =
         card.querySelector(
           "img"
         );
-
 
       gsap.fromTo(
         card,
         {
           rotate:
             index % 2 === 0
-              ?
-              -4
-              :
-              4,
+              ? -4
+              : 4,
 
           y:
             index % 2 === 0
-              ?
-              40
-              :
-              -20
+              ? 40
+              : -20
         },
         {
           rotate:
             index % 2 === 0
-              ?
-              2
-              :
-              -2,
+              ? 2
+              : -2,
 
           y:
             index % 2 === 0
-              ?
-              -20
-              :
-              35,
+              ? -20
+              : 35,
 
           ease: "none",
 
           scrollTrigger: {
-
-            trigger:
-              section,
+            trigger: section,
 
             start:
               "top bottom",
@@ -2955,16 +2374,11 @@ function initWork() {
               "bottom top",
 
             scrub: 1
-
           }
         }
       );
 
-
-      if (
-        image
-      ) {
-
+      if (image) {
         gsap.fromTo(
           image,
           {
@@ -2976,9 +2390,7 @@ function initWork() {
             ease: "none",
 
             scrollTrigger: {
-
-              trigger:
-                section,
+              trigger: section,
 
               start:
                 "top bottom",
@@ -2987,45 +2399,36 @@ function initWork() {
                 "bottom top",
 
               scrub: 1
-
             }
           }
         );
-
       }
-
 
       initTilt(
         card,
         3
       );
-
     }
   );
-
 }
 
 
 /* =========================================================
-   CLIENT LOGO CLONING RESTORED
+   CLIENT LOGO CLONING
 ========================================================= */
 
 function cloneLogoRows() {
-
   document
     .querySelectorAll(
       ".home-client-row__group"
     )
     .forEach(
       group => {
-
         const track =
           group.parentElement;
 
-
         if (
-          !track
-          ||
+          !track ||
           track.querySelector(
             "[aria-hidden='true']"
           )
@@ -3033,96 +2436,74 @@ function cloneLogoRows() {
           return;
         }
 
-
         const copy =
           group.cloneNode(
             true
           );
-
 
         copy.setAttribute(
           "aria-hidden",
           "true"
         );
 
-
         copy
-          .querySelectorAll(
-            "img"
-          )
+          .querySelectorAll("img")
           .forEach(
             image => {
-
-              image.alt =
-                "";
-
+              image.alt = "";
             }
           );
-
 
         track.appendChild(
           copy
         );
-
       }
     );
-
 }
 
 
 /* =========================================================
-   CLIENTS — ORIGINAL MOTION RESTORED
+   CLIENTS
 ========================================================= */
 
 function initClients() {
-
   const section =
     document.getElementById(
       "home-clients"
     );
 
-
   if (!section) {
     return;
   }
-
 
   const tracks =
     section.querySelectorAll(
       ".home-client-row__track"
     );
 
-
   tracks.forEach(
     (
       track,
       index
     ) => {
-
       gsap.fromTo(
         track,
         {
           xPercent:
             index === 0
-              ?
-              -2
-              :
-              -18
+              ? -2
+              : -18
         },
         {
           xPercent:
             index === 0
-              ?
-              -18
-              :
-              -2,
+              ? -18
+              : -2,
 
           ease: "none",
 
           scrollTrigger: {
-
-            trigger:
-              section,
+            trigger: section,
 
             start:
               "top bottom",
@@ -3131,14 +2512,11 @@ function initClients() {
               "bottom top",
 
             scrub: 1
-
           }
         }
       );
-
     }
   );
-
 
   section
     .querySelectorAll(
@@ -3146,58 +2524,45 @@ function initClients() {
     )
     .forEach(
       logo => {
-
         initTilt(
           logo,
           4
         );
-
       }
     );
-
 }
 
 
 /* =========================================================
-   RECOGNITION — ORIGINAL MOTION RESTORED
+   RECOGNITION
 ========================================================= */
 
 function initRecognition() {
-
   const section =
     document.getElementById(
       "home-recognition"
     );
 
-
   if (!section) {
     return;
   }
-
 
   const visual =
     section.querySelector(
       ".home-recognition__visual"
     );
 
-
   const image =
-    visual
-      ?.querySelector(
-        "img"
-      );
-
+    visual?.querySelector(
+      "img"
+    );
 
   const content =
     section.querySelector(
       ".home-recognition__content"
     );
 
-
-  if (
-    visual
-  ) {
-
+  if (visual) {
     gsap.fromTo(
       visual,
       {
@@ -3219,9 +2584,7 @@ function initRecognition() {
         ease: "none",
 
         scrollTrigger: {
-
-          trigger:
-            section,
+          trigger: section,
 
           start:
             "top bottom",
@@ -3230,18 +2593,12 @@ function initRecognition() {
             "top 25%",
 
           scrub: 0.8
-
         }
       }
     );
-
   }
 
-
-  if (
-    image
-  ) {
-
+  if (image) {
     gsap.fromTo(
       image,
       {
@@ -3257,9 +2614,7 @@ function initRecognition() {
         ease: "none",
 
         scrollTrigger: {
-
-          trigger:
-            section,
+          trigger: section,
 
           start:
             "top bottom",
@@ -3268,18 +2623,12 @@ function initRecognition() {
             "bottom top",
 
           scrub: 1
-
         }
       }
     );
-
   }
 
-
-  if (
-    content
-  ) {
-
+  if (content) {
     gsap.fromTo(
       content,
       {
@@ -3295,9 +2644,7 @@ function initRecognition() {
         ease: "none",
 
         scrollTrigger: {
-
-          trigger:
-            section,
+          trigger: section,
 
           start:
             "top 82%",
@@ -3306,19 +2653,15 @@ function initRecognition() {
             "top 36%",
 
           scrub: 0.65
-
         }
       }
     );
-
   }
-
 
   initTilt(
     visual,
     3
   );
-
 }
 
 
@@ -3330,17 +2673,14 @@ function initTilt(
   element,
   amount
 ) {
-
   if (
-    !element
-    ||
+    !element ||
     !window.matchMedia(
       "(pointer: fine)"
     ).matches
   ) {
     return;
   }
-
 
   gsap.set(
     element,
@@ -3352,7 +2692,6 @@ function initTilt(
         "preserve-3d"
     }
   );
-
 
   const rotateX =
     gsap.quickTo(
@@ -3366,7 +2705,6 @@ function initTilt(
       }
     );
 
-
   const rotateY =
     gsap.quickTo(
       element,
@@ -3379,34 +2717,27 @@ function initTilt(
       }
     );
 
-
   element.addEventListener(
     "pointermove",
     event => {
-
       const rect =
         element.getBoundingClientRect();
 
-
       const x =
         (
-          event.clientX
-          -
+          event.clientX -
           rect.left
         )
         /
         rect.width;
 
-
       const y =
         (
-          event.clientY
-          -
+          event.clientY -
           rect.top
         )
         /
         rect.height;
-
 
       rotateY(
         (
@@ -3418,7 +2749,6 @@ function initTilt(
         2
       );
 
-
       rotateX(
         (
           0.5 - y
@@ -3428,27 +2758,16 @@ function initTilt(
         *
         2
       );
-
     }
   );
-
 
   element.addEventListener(
     "pointerleave",
     () => {
-
-      rotateX(
-        0
-      );
-
-
-      rotateY(
-        0
-      );
-
+      rotateX(0);
+      rotateY(0);
     }
   );
-
 }
 
 
@@ -3457,21 +2776,14 @@ function initTilt(
 ========================================================= */
 
 function initFooterYear() {
-
   const year =
     document.getElementById(
       "ape-footer-year"
     );
 
-
-  if (
-    year
-  ) {
-
+  if (year) {
     year.textContent =
       new Date()
         .getFullYear();
-
   }
-
 }
