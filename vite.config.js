@@ -5,7 +5,7 @@ import {
 
 import {
   resolve
-} from "path";
+} from "node:path";
 
 
 
@@ -112,116 +112,167 @@ const serviceDetailInputs =
 
 
 /* =========================================================
-   VITE
+   BLOG ARTICLES
+========================================================= */
+
+const BLOG_ARTICLES = [
+
+  "why-brand-consistency-matters",
+
+  "creativity-and-performance",
+
+  "digital-experiences-that-people-remember"
+
+];
+
+
+
+const blogArticleInputs =
+  Object.fromEntries(
+
+    BLOG_ARTICLES.map(
+      function (
+        slug
+      ) {
+
+        return [
+
+          `blog-${slug}`,
+
+          resolve(
+            process.cwd(),
+            `blog/${slug}/index.html`
+          )
+
+        ];
+
+      }
+    )
+
+  );
+
+
+
+/* =========================================================
+   VITE 8
 ========================================================= */
 
 export default defineConfig({
 
-  build: {
-
-    rollupOptions: {
-
-      input: {
+  input: {
 
 
-        /* =================================================
-           HOME
-        ================================================= */
+    /* =====================================================
+       HOME
+    ====================================================== */
 
-        home:
-          resolve(
-            process.cwd(),
-            "index.html"
-          ),
+    home:
+      resolve(
+        process.cwd(),
+        "index.html"
+      ),
 
 
 
-        /* =================================================
-           ABOUT
-        ================================================= */
+    /* =====================================================
+       ABOUT
+    ====================================================== */
 
-        about:
-          resolve(
-            process.cwd(),
-            "about/index.html"
-          ),
-
-
-
-        /* =================================================
-           SERVICES
-        ================================================= */
-
-        services:
-          resolve(
-            process.cwd(),
-            "services/index.html"
-          ),
-
-
-        ...serviceDetailInputs,
+    about:
+      resolve(
+        process.cwd(),
+        "about/index.html"
+      ),
 
 
 
-        /* =================================================
-           WORK
-        ================================================= */
+    /* =====================================================
+       SERVICES
+    ====================================================== */
 
-        work:
-          resolve(
-            process.cwd(),
-            "work/index.html"
-          ),
-
-
-        ...workProjectInputs,
+    services:
+      resolve(
+        process.cwd(),
+        "services/index.html"
+      ),
 
 
-
-        /* =================================================
-           BLOG
-        ================================================= */
-
-        blog:
-          resolve(
-            process.cwd(),
-            "blog/index.html"
-          ),
-
-
-        blogRead:
-          resolve(
-            process.cwd(),
-            "blog/read/index.html"
-          ),
+    ...serviceDetailInputs,
 
 
 
-        /* =================================================
-           FAQ
-        ================================================= */
+    /* =====================================================
+       WORK
+    ====================================================== */
 
-        faq:
-          resolve(
-            process.cwd(),
-            "faq/index.html"
-          ),
+    work:
+      resolve(
+        process.cwd(),
+        "work/index.html"
+      ),
+
+
+    ...workProjectInputs,
 
 
 
-        /* =================================================
-           CONTACT
-        ================================================= */
+    /* =====================================================
+       BLOG
+    ====================================================== */
 
-        contact:
-          resolve(
-            process.cwd(),
-            "contact/index.html"
-          )
+    blog:
+      resolve(
+        process.cwd(),
+        "blog/index.html"
+      ),
 
-      }
 
-    }
+    ...blogArticleInputs,
+
+
+
+    /* =====================================================
+       LEGACY BLOG READER
+
+       Keep this temporarily so old URLs like:
+
+       /blog/read/?slug=why-brand-consistency-matters
+
+       still load.
+
+       The updated blog-read.js canonicalizes those pages
+       to the new clean article URLs.
+    ====================================================== */
+
+    blogRead:
+      resolve(
+        process.cwd(),
+        "blog/read/index.html"
+      ),
+
+
+
+    /* =====================================================
+       FAQ
+    ====================================================== */
+
+    faq:
+      resolve(
+        process.cwd(),
+        "faq/index.html"
+      ),
+
+
+
+    /* =====================================================
+       CONTACT
+    ====================================================== */
+
+    contact:
+      resolve(
+        process.cwd(),
+        "contact/index.html"
+      )
 
   }
 

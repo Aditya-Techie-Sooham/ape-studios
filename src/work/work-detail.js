@@ -2,19 +2,11 @@
    APE STUDIO — WORK DETAIL
 ========================================================= */
 
-
 import gsap from "gsap";
 
 import {
   ScrollTrigger
 } from "gsap/ScrollTrigger";
-
-
-import "../styles/variables.css";
-import "../styles/reset.css";
-import "../styles/header.css";
-import "../styles/footer.css";
-import "../styles/work-detail.css";
 
 
 import {
@@ -32,6 +24,21 @@ gsap.registerPlugin(
   ScrollTrigger
 );
 
+
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+
+const finePointer =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
 
 
 /* =========================================================
@@ -65,7 +72,7 @@ function renderShell() {
           <a
             href="/"
             class="site-header__brand"
-            aria-label="APE Studio Home"
+            aria-label="APE Studio home"
           >
 
             <img
@@ -125,7 +132,7 @@ function renderShell() {
               Let's Talk
             </span>
 
-            <span>
+            <span aria-hidden="true">
               ↗
             </span>
 
@@ -136,12 +143,13 @@ function renderShell() {
             id="site-menu-toggle"
             class="site-menu-toggle"
             type="button"
-            aria-label="Open menu"
+            aria-label="Open navigation menu"
             aria-expanded="false"
+            aria-controls="site-mobile-menu"
           >
 
-            <span></span>
-            <span></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
 
           </button>
 
@@ -162,20 +170,33 @@ function renderShell() {
           </div>
 
 
-          <nav class="site-mobile-menu__links">
+          <div class="site-mobile-menu__top">
+
+            <span>
+              NAVIGATION
+            </span>
+
+            <span>
+              KOLKATA / INDIA
+            </span>
+
+          </div>
+
+
+          <nav
+            class="site-mobile-menu__links"
+            aria-label="Mobile navigation"
+          >
 
             <a href="/">
-              <small>01</small>
               <span>Home</span>
             </a>
 
             <a href="/about/">
-              <small>02</small>
               <span>About</span>
             </a>
 
             <a href="/services/">
-              <small>03</small>
               <span>Services</span>
             </a>
 
@@ -183,36 +204,43 @@ function renderShell() {
               href="/work/"
               class="is-active"
             >
-              <small>04</small>
               <span>Work</span>
             </a>
 
             <a href="/blog/">
-              <small>05</small>
               <span>Blog</span>
             </a>
 
             <a href="/faq/">
-              <small>06</small>
               <span>FAQ</span>
             </a>
 
             <a href="/contact/">
-              <small>07</small>
               <span>Contact</span>
             </a>
 
           </nav>
+
+
+          <div class="site-mobile-menu__footer">
+
+            <a href="/contact/">
+              START A PROJECT ↗
+            </a>
+
+          </div>
 
         </div>
 
       </header>
 
 
+
       <main
         id="work-detail-page"
         class="work-detail-page"
       ></main>
+
 
 
       <footer
@@ -230,6 +258,7 @@ function renderShell() {
               <p class="site-footer__eyebrow">
                 READY TO MAKE A MOVE?
               </p>
+
 
               <h2>
 
@@ -253,13 +282,14 @@ function renderShell() {
                 LET'S TALK
               </span>
 
-              <i>
+              <i aria-hidden="true">
                 ↗
               </i>
 
             </a>
 
           </div>
+
 
 
           <div class="site-footer__main">
@@ -270,6 +300,7 @@ function renderShell() {
               <a
                 href="/"
                 class="site-footer__logo"
+                aria-label="APE Studio home"
               >
 
                 <img
@@ -279,13 +310,16 @@ function renderShell() {
 
               </a>
 
+
               <p>
-                Strategy, creativity, digital and production
-                brought together to build brands that get noticed,
-                remembered and chosen.
+                APE Studio is a performance-driven creative and
+                digital marketing agency helping brands build stronger
+                identities, sharper digital presence and meaningful
+                connections with their audiences.
               </p>
 
             </div>
+
 
 
             <div class="site-footer__column">
@@ -294,7 +328,8 @@ function renderShell() {
                 PAGES
               </p>
 
-              <nav>
+
+              <nav aria-label="Footer pages">
 
                 <a href="/">
                   Home
@@ -317,13 +352,15 @@ function renderShell() {
             </div>
 
 
+
             <div class="site-footer__column">
 
               <p class="site-footer__column-title">
                 EXPLORE
               </p>
 
-              <nav>
+
+              <nav aria-label="Footer explore navigation">
 
                 <a href="/blog/">
                   Blog
@@ -342,33 +379,48 @@ function renderShell() {
             </div>
 
 
+
             <div
-              class="
-                site-footer__column
-                site-footer__column--services
-              "
+              class="site-footer__column site-footer__column--services"
             >
 
               <p class="site-footer__column-title">
                 CAPABILITIES
               </p>
 
-              <nav>
 
-                <a href="/services/">
+              <nav aria-label="APE Studio services">
+
+                <a href="/services/digital-marketing/#social-media-marketing">
                   Social Media
                 </a>
 
-                <a href="/services/">
+                <a href="/services/digital-marketing/#performance-marketing">
                   Performance Marketing
                 </a>
 
-                <a href="/services/">
+                <a href="/services/digital-marketing/">
+                  Digital Marketing
+                </a>
+
+                <a href="/services/digital-marketing/#website-development">
+                  Website Development
+                </a>
+
+                <a href="/services/printables/#packaging">
+                  Packaging
+                </a>
+
+                <a href="/services/branding/">
                   Branding
                 </a>
 
-                <a href="/services/">
-                  Website Development
+                <a href="/services/influencer-marketing/">
+                  Influencer Marketing
+                </a>
+
+                <a href="/services/visual-studio/#reels">
+                  Reels & Motion
                 </a>
 
               </nav>
@@ -379,7 +431,9 @@ function renderShell() {
           </div>
 
 
+
           <div class="site-footer__divider"></div>
+
 
 
           <div class="site-footer__bottom">
@@ -398,6 +452,7 @@ function renderShell() {
               </span>
 
             </div>
+
 
 
             <div class="site-footer__bottom-nav">
@@ -429,14 +484,15 @@ function renderShell() {
             </div>
 
 
+
             <a
-              href="#"
+              href="#work-detail-page"
               class="site-footer__top-link"
             >
 
               BACK TO TOP
 
-              <span>
+              <span aria-hidden="true">
                 ↑
               </span>
 
@@ -453,7 +509,6 @@ function renderShell() {
     `;
 
 }
-
 
 
 /* =========================================================
@@ -488,10 +543,8 @@ function getCurrentSlug() {
 }
 
 
-
 /* =========================================================
    HERO
-   NO PROJECT NUMBER / CATEGORY META
 ========================================================= */
 
 function createHero(
@@ -504,43 +557,122 @@ function createHero(
     );
 
 
+  section.id =
+    "work-detail-hero";
+
+
   section.className =
     "work-detail-hero";
+
+
+  section.setAttribute(
+    "aria-labelledby",
+    "work-detail-title"
+  );
 
 
   section.innerHTML =
     `
 
+      <div
+        class="
+          work-detail-hero__glow
+          work-detail-hero__glow--violet
+        "
+        aria-hidden="true"
+      ></div>
+
+
+      <div
+        class="
+          work-detail-hero__glow
+          work-detail-hero__glow--lime
+        "
+        aria-hidden="true"
+      ></div>
+
+
       <div class="work-detail-hero__inner">
 
 
-        <a
-          href="/work/"
-          class="work-detail__back"
-        >
-          ← All Work
-        </a>
+        <div class="work-detail-hero__copy">
 
 
-        <h1>
-          ${project.name}
-        </h1>
+          <a
+            href="/work/"
+            class="work-detail__back"
+          >
+            ← All Work
+          </a>
 
 
-        <div class="work-detail__intro">
+          <p class="work-detail__eyebrow">
 
+            APE STUDIO
 
-          <p class="work-detail__lead">
-            ${project.intro}
+            <span aria-hidden="true"></span>
+
+            ${project.categoryLabel}
+
           </p>
 
 
-          <p class="work-detail__description">
-            ${project.description}
-          </p>
+          <h1 id="work-detail-title">
+            ${project.name}
+          </h1>
+
+
+          <div class="work-detail__intro">
+
+
+            <p class="work-detail__lead">
+              ${project.intro}
+            </p>
+
+
+            <p class="work-detail__description">
+              ${project.description}
+            </p>
+
+
+          </div>
 
 
         </div>
+
+
+
+        <button
+          type="button"
+          class="work-detail__ape"
+          aria-label="Make the APE Studio mascot react"
+        >
+
+          <span
+            class="work-detail__ape-aura"
+            aria-hidden="true"
+          ></span>
+
+
+          <span class="work-detail__ape-world">
+
+            <span class="work-detail__ape-rig">
+
+              <span class="work-detail__ape-float">
+
+                <img
+                  src="/mascot/ape-camera.webp"
+                  alt=""
+                  draggable="false"
+                >
+
+              </span>
+
+            </span>
+
+          </span>
+
+        </button>
 
 
       </div>
@@ -553,13 +685,8 @@ function createHero(
 }
 
 
-
 /* =========================================================
    GALLERY
-
-   NO 01
-   NO BRAND NAME CAPTION
-   JUST THE WORK.
 ========================================================= */
 
 function createGallery(
@@ -576,6 +703,12 @@ function createGallery(
     "work-gallery-section";
 
 
+  section.setAttribute(
+    "aria-label",
+    `${project.name} project gallery`
+  );
+
+
   const inner =
     document.createElement(
       "div"
@@ -585,6 +718,32 @@ function createGallery(
   inner.className =
     "work-gallery-section__inner";
 
+
+  const header =
+    document.createElement(
+      "div"
+    );
+
+
+  header.className =
+    "work-gallery__header";
+
+
+  header.innerHTML =
+    `
+
+      <p
+        role="heading"
+        aria-level="2"
+      >
+        PROJECT VISUALS
+      </p>
+
+      <span>
+        APE STUDIO
+      </span>
+
+    `;
 
 
   const gallery =
@@ -597,7 +756,6 @@ function createGallery(
     "work-gallery";
 
 
-
   for (
     let index = 1;
     index <= 10;
@@ -606,7 +764,7 @@ function createGallery(
 
     const item =
       document.createElement(
-        "article"
+        "div"
       );
 
 
@@ -626,12 +784,8 @@ function createGallery(
                 project.slug,
                 index
               )}"
-              alt="${project.name} project visual"
-              loading="${
-                index <= 3
-                  ? "eager"
-                  : "lazy"
-              }"
+              alt="${project.name} ${project.categoryLabel.toLowerCase()} creative work by APE Studio"
+              loading="lazy"
               decoding="async"
             >
 
@@ -667,7 +821,8 @@ function createGallery(
   }
 
 
-  inner.appendChild(
+  inner.append(
+    header,
     gallery
   );
 
@@ -681,6 +836,53 @@ function createGallery(
 
 }
 
+
+/* =========================================================
+   CANONICAL FALLBACK
+
+   Each project HTML owns its title, description,
+   Open Graph metadata and breadcrumb markup.
+
+   This function only creates a clean canonical URL
+   if an older project HTML file does not have one yet.
+========================================================= */
+
+function ensureCanonical(
+  project
+) {
+
+  const existing =
+    document.querySelector(
+      'link[rel="canonical"]'
+    );
+
+
+  if (existing) {
+
+    return;
+
+  }
+
+
+  const canonical =
+    document.createElement(
+      "link"
+    );
+
+
+  canonical.rel =
+    "canonical";
+
+
+  canonical.href =
+    `https://apeindia.in/work/${project.slug}/`;
+
+
+  document.head.appendChild(
+    canonical
+  );
+
+}
 
 
 /* =========================================================
@@ -715,16 +917,20 @@ function buildProjectPage() {
 
           <div class="work-detail-hero__inner">
 
-            <a
-              href="/work/"
-              class="work-detail__back"
-            >
-              ← All Work
-            </a>
+            <div class="work-detail-hero__copy">
 
-            <h1>
-              Project Not Found.
-            </h1>
+              <a
+                href="/work/"
+                class="work-detail__back"
+              >
+                ← All Work
+              </a>
+
+              <h1>
+                Project Not Found.
+              </h1>
+
+            </div>
 
           </div>
 
@@ -738,28 +944,12 @@ function buildProjectPage() {
   }
 
 
-  document.title =
-    `${project.name} | Work | APE Studio`;
-
-
-  const description =
-    document.querySelector(
-      'meta[name="description"]'
-    );
-
-
-  if (description) {
-
-    description.setAttribute(
-      "content",
-      project.intro
-    );
-
-  }
+  ensureCanonical(
+    project
+  );
 
 
   main.append(
-
     createHero(
       project
     ),
@@ -767,95 +957,555 @@ function buildProjectPage() {
     createGallery(
       project
     )
-
   );
 
 }
 
 
-
 /* =========================================================
-   MOTION
+   HERO MOTION
 ========================================================= */
 
-function initMotion() {
+function initHeroMotion() {
 
-  const reduced =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-
-  if (reduced) {
+  if (reduceMotion) {
     return;
   }
 
 
-  gsap
-    .timeline({
-
+  const timeline =
+    gsap.timeline({
       defaults: {
         ease:
           "power4.out"
       }
+    });
 
-    })
+
+  timeline
 
     .fromTo(
-
       ".work-detail__back",
-
       {
-        opacity: 0,
-        y: 16
+        autoAlpha:
+          0,
+
+        y:
+          14
       },
-
       {
-        opacity: 1,
-        y: 0,
-        duration: .4
+        autoAlpha:
+          1,
+
+        y:
+          0,
+
+        duration:
+          0.4
       }
-
     )
 
     .fromTo(
+      ".work-detail__eyebrow",
+      {
+        autoAlpha:
+          0,
 
+        y:
+          15
+      },
+      {
+        autoAlpha:
+          1,
+
+        y:
+          0,
+
+        duration:
+          0.45
+      },
+      "-=0.2"
+    )
+
+    .fromTo(
       ".work-detail-hero h1",
-
       {
-        opacity: 0,
-        y: 60
-      },
+        autoAlpha:
+          0,
 
+        y:
+          65,
+
+        rotationX:
+          -17
+      },
       {
-        opacity: 1,
-        y: 0,
-        duration: .8
+        autoAlpha:
+          1,
+
+        y:
+          0,
+
+        rotationX:
+          0,
+
+        duration:
+          0.9
       },
-
-      "-=.2"
-
+      "-=0.2"
     )
 
     .fromTo(
-
       ".work-detail__intro",
-
       {
-        opacity: 0,
-        y: 25
-      },
+        autoAlpha:
+          0,
 
+        y:
+          24
+      },
       {
-        opacity: 1,
-        y: 0,
-        duration: .6
+        autoAlpha:
+          1,
+
+        y:
+          0,
+
+        duration:
+          0.6
       },
+      "-=0.4"
+    )
 
-      "-=.38"
+    .fromTo(
+      ".work-detail__ape",
+      {
+        autoAlpha:
+          0,
 
+        x:
+          90,
+
+        y:
+          65,
+
+        scale:
+          0.7,
+
+        rotation:
+          6
+      },
+      {
+        autoAlpha:
+          1,
+
+        x:
+          0,
+
+        y:
+          0,
+
+        scale:
+          1,
+
+        rotation:
+          0,
+
+        duration:
+          1,
+
+        ease:
+          "back.out(1.6)"
+      },
+      "-=0.68"
     );
 
+
+  gsap.to(
+    ".work-detail__ape",
+    {
+      yPercent:
+        -7,
+
+      ease:
+        "none",
+
+      scrollTrigger: {
+        trigger:
+          ".work-detail-hero",
+
+        start:
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub:
+          0.9
+      }
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HERO APE
+========================================================= */
+
+function initHeroApe() {
+
+  const ape =
+    document.querySelector(
+      ".work-detail__ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".work-detail__ape-world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".work-detail__ape-rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".work-detail__ape-float"
+    );
+
+
+  const aura =
+    document.querySelector(
+      ".work-detail__ape-aura"
+    );
+
+
+  if (
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+    return;
+  }
+
+
+  if (!reduceMotion) {
+
+    gsap.to(
+      float,
+      {
+        y:
+          -7,
+
+        rotation:
+          1.5,
+
+        duration:
+          1.7,
+
+        repeat:
+          -1,
+
+        yoyo:
+          true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+  }
+
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 20,
+
+            y:
+              y * 12,
+
+            duration:
+              0.35,
+
+            ease:
+              "power3.out"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 11,
+
+            rotationX:
+              y * -7,
+
+            scale:
+              1.05,
+
+            duration:
+              0.32,
+
+            ease:
+              "power3.out"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x:
+              0,
+
+            y:
+              0,
+
+            duration:
+              0.55,
+
+            ease:
+              "elastic.out(1,0.5)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationX:
+              0,
+
+            rotationY:
+              0,
+
+            rotation:
+              0,
+
+            scale:
+              1,
+
+            duration:
+              0.45,
+
+            ease:
+              "back.out(1.6)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      if (reduceMotion) {
+        return;
+      }
+
+
+      gsap.killTweensOf(
+        rig
+      );
+
+
+      gsap.timeline()
+
+        .to(
+          rig,
+          {
+            y:
+              -21,
+
+            rotation:
+              -6,
+
+            scale:
+              1.08,
+
+            duration:
+              0.16
+          }
+        )
+
+        .to(
+          rig,
+          {
+            rotation:
+              6,
+
+            duration:
+              0.13
+          }
+        )
+
+        .to(
+          rig,
+          {
+            rotationY:
+              "+=360",
+
+            duration:
+              0.48,
+
+            ease:
+              "power3.inOut"
+          }
+        )
+
+        .to(
+          rig,
+          {
+            y:
+              0,
+
+            rotation:
+              0,
+
+            rotationY:
+              0,
+
+            scale:
+              1,
+
+            duration:
+              0.4,
+
+            ease:
+              "bounce.out"
+          }
+        );
+
+
+      if (aura) {
+
+        gsap.fromTo(
+          aura,
+          {
+            scale:
+              0.8
+          },
+          {
+            scale:
+              1.35,
+
+            duration:
+              0.55,
+
+            ease:
+              "power3.out"
+          }
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   GALLERY MOTION
+========================================================= */
+
+function initGalleryMotion() {
+
+  if (reduceMotion) {
+    return;
+  }
+
+
+  gsap.fromTo(
+    ".work-gallery__header",
+    {
+      autoAlpha:
+        0,
+
+      y:
+        25
+    },
+    {
+      autoAlpha:
+        1,
+
+      y:
+        0,
+
+      duration:
+        0.65,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+        trigger:
+          ".work-gallery__header",
+
+        start:
+          "top 88%",
+
+        once:
+          true
+      }
+    }
+  );
 
 
   gsap.utils
@@ -868,45 +1518,202 @@ function initMotion() {
       ) {
 
         gsap.fromTo(
-
           item,
-
           {
-            opacity: 0,
-            y: 35
+            autoAlpha:
+              0,
+
+            y:
+              35,
+
+            scale:
+              0.98
           },
-
           {
-            opacity: 1,
-            y: 0,
+            autoAlpha:
+              1,
 
-            duration: .65,
+            y:
+              0,
+
+            scale:
+              1,
+
+            duration:
+              0.68,
 
             ease:
               "power3.out",
 
             scrollTrigger: {
-
               trigger:
                 item,
 
               start:
-                "top 92%",
+                "top 91%",
 
               once:
                 true
-
             }
-
           }
-
         );
+
+
+        const image =
+          item.querySelector(
+            "img"
+          );
+
+
+        if (image) {
+
+          gsap.fromTo(
+            image,
+            {
+              yPercent:
+                -2
+            },
+            {
+              yPercent:
+                2,
+
+              ease:
+                "none",
+
+              scrollTrigger: {
+                trigger:
+                  item,
+
+                start:
+                  "top bottom",
+
+                end:
+                  "bottom top",
+
+                scrub:
+                  1
+              }
+            }
+          );
+
+        }
 
       }
     );
 
 }
 
+
+/* =========================================================
+   GALLERY POINTER DEPTH
+========================================================= */
+
+function initGalleryPointerMotion() {
+
+  if (
+    !finePointer ||
+    reduceMotion
+  ) {
+    return;
+  }
+
+
+  const images =
+    document.querySelectorAll(
+      ".work-gallery__image"
+    );
+
+
+  images.forEach(
+    function (
+      frame
+    ) {
+
+      frame.addEventListener(
+        "pointermove",
+        function (
+          event
+        ) {
+
+          const rect =
+            frame.getBoundingClientRect();
+
+
+          const x =
+            (
+              event.clientX -
+              rect.left
+            )
+            /
+            rect.width -
+            0.5;
+
+
+          const y =
+            (
+              event.clientY -
+              rect.top
+            )
+            /
+            rect.height -
+            0.5;
+
+
+          gsap.to(
+            frame,
+            {
+              rotationY:
+                x * 2.5,
+
+              rotationX:
+                y * -2.5,
+
+              y:
+                -3,
+
+              duration:
+                0.3,
+
+              ease:
+                "power3.out"
+            }
+          );
+
+        }
+      );
+
+
+      frame.addEventListener(
+        "pointerleave",
+        function () {
+
+          gsap.to(
+            frame,
+            {
+              rotationX:
+                0,
+
+              rotationY:
+                0,
+
+              y:
+                0,
+
+              duration:
+                0.45,
+
+              ease:
+                "back.out(1.5)"
+            }
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
 
 
 /* =========================================================
@@ -924,8 +1731,10 @@ function initFooter() {
   if (year) {
 
     year.textContent =
-      new Date()
-        .getFullYear();
+      String(
+        new Date()
+          .getFullYear()
+      );
 
   }
 
@@ -951,19 +1760,19 @@ function initFooter() {
 
 
       window.scrollTo({
-
-        top: 0,
+        top:
+          0,
 
         behavior:
-          "smooth"
-
+          reduceMotion
+            ? "auto"
+            : "smooth"
       });
 
     }
   );
 
 }
-
 
 
 /* =========================================================
@@ -986,7 +1795,13 @@ document.addEventListener(
     requestAnimationFrame(
       function () {
 
-        initMotion();
+        initHeroMotion();
+
+        initHeroApe();
+
+        initGalleryMotion();
+
+        initGalleryPointerMotion();
 
         ScrollTrigger.refresh();
 

@@ -10,13 +10,6 @@ import {
 } from "gsap/ScrollTrigger";
 
 
-import "../styles/variables.css";
-import "../styles/reset.css";
-import "../styles/header.css";
-import "../styles/footer.css";
-import "../styles/services-page.css";
-
-
 import {
   initHeader
 } from "../header/header.js";
@@ -32,29 +25,48 @@ gsap.registerPlugin(
 );
 
 
-
 /* =========================================================
-   ORDER
+   ENVIRONMENT
 ========================================================= */
 
-const SERVICE_ORDER = [
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  "digital-marketing",
 
-  "printables",
-
-  "branding",
-
-  "influencer-marketing",
-
-  "visual-studio"
-
-];
-
+const finePointer =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
 
 
 /* =========================================================
-   GET COVER IMAGE
+   SERVICE PREVIEW LABELS
+========================================================= */
+
+const PREVIEW_LABELS = {
+
+  "digital-marketing":
+    "DIGITAL / PERFORMANCE / CONTENT",
+
+  "printables":
+    "PRINT / PACKAGING / OFFLINE",
+
+  "branding":
+    "IDENTITY / POSITIONING / SYSTEMS",
+
+  "influencer-marketing":
+    "CREATORS / REACH / RELEVANCE",
+
+  "visual-studio":
+    "PHOTO / FILM / REELS"
+
+};
+
+
+/* =========================================================
+   COVER IMAGE
 ========================================================= */
 
 function getCoverImage(
@@ -70,157 +82,47 @@ function getCoverImage(
 }
 
 
-
 /* =========================================================
-   BUILD 5 SERVICE ROWS
-
-   IMPORTANT:
-   NO SUB SERVICES
-   NO DESCRIPTION
-   NO NUMBERS
+   PRELOAD PREVIEW IMAGES
 ========================================================= */
 
-function buildServiceDirectory() {
+function preloadImages() {
 
-  const list =
-    document.querySelector(
-      ".capability-list"
-    );
+  Object
+    .values(
+      SERVICE_PAGES
+    )
+    .forEach(
+      function (
+        service
+      ) {
 
-
-  if (!list) {
-    return;
-  }
-
-
-  list.innerHTML =
-    "";
-
-
-
-  SERVICE_ORDER.forEach(
-    function (
-      slug,
-      index
-    ) {
-
-      const service =
-        SERVICE_PAGES[slug];
+        const src =
+          getCoverImage(
+            service
+          );
 
 
-      if (!service) {
-        return;
+        if (!src) {
+          return;
+        }
+
+
+        const image =
+          new Image();
+
+
+        image.src =
+          src;
+
       }
-
-
-
-      const article =
-        document.createElement(
-          "article"
-        );
-
-
-      article.className =
-        `
-          capability-row
-          ${
-            index === 0
-              ? "is-active"
-              : ""
-          }
-        `;
-
-
-      article.dataset.service =
-        slug;
-
-
-      article.tabIndex =
-        0;
-
-
-
-      article.innerHTML =
-        `
-
-          <div class="capability-row__top">
-
-
-            <h3>
-              ${service.navLabel}
-            </h3>
-
-
-            <a
-              href="/services/${service.slug}/"
-              class="capability-row__arrow"
-              aria-label="View ${service.navLabel}"
-            >
-              ↗
-            </a>
-
-
-          </div>
-
-        `;
-
-
-
-      list.appendChild(
-        article
-      );
-
-    }
-  );
+    );
 
 }
 
 
-
 /* =========================================================
-   INITIAL PREVIEW
-========================================================= */
-
-function initialisePreview() {
-
-  const service =
-    SERVICE_PAGES[
-      SERVICE_ORDER[0]
-    ];
-
-
-  const image =
-    document.getElementById(
-      "service-preview-image"
-    );
-
-
-  if (
-    !service
-    ||
-    !image
-  ) {
-
-    return;
-
-  }
-
-
-  image.src =
-    getCoverImage(
-      service
-    );
-
-
-  image.alt =
-    `${service.navLabel} work by APE Studio`;
-
-}
-
-
-
-/* =========================================================
-   DESKTOP INTERACTION
+   CAPABILITY PREVIEW
 ========================================================= */
 
 function initCapabilities() {
@@ -239,25 +141,40 @@ function initCapabilities() {
     );
 
 
+  const title =
+    document.getElementById(
+      "service-preview-title"
+    );
+
+
+  const eyebrow =
+    document.getElementById(
+      "service-preview-eyebrow"
+    );
+
+
   const frame =
     document.getElementById(
       "capability-preview-frame"
     );
 
 
-  if (!rows.length) {
+  if (
+    !rows.length ||
+    !image
+  ) {
+
     return;
+
   }
 
 
-
   let activeSlug =
-    SERVICE_ORDER[0];
+    "";
 
 
-  let timeline =
+  let imageTimeline =
     null;
-
 
 
   function activate(
@@ -277,7 +194,6 @@ function initCapabilities() {
     }
 
 
-
     rows.forEach(
       function (
         current
@@ -292,30 +208,7 @@ function initCapabilities() {
     );
 
 
-
-    /*
-     * MOBILE
-     * only visual active state.
-     * Arrow handles navigation.
-    */
-
     if (
-      window.innerWidth <=
-      767
-    ) {
-
-      activeSlug =
-        slug;
-
-      return;
-
-    }
-
-
-
-    if (
-      !image
-      ||
       slug === activeSlug
     ) {
 
@@ -328,87 +221,112 @@ function initCapabilities() {
       slug;
 
 
+    if (
+      title
+    ) {
 
-    if (timeline) {
-
-      timeline.kill();
+      title.textContent =
+        service.navLabel;
 
     }
 
 
+    if (
+      eyebrow
+    ) {
 
-    timeline =
+      eyebrow.textContent =
+        PREVIEW_LABELS[slug]
+        ||
+        service.eyebrow
+        ||
+        service.navLabel;
+
+    }
+
+
+    const nextImage =
+      getCoverImage(
+        service
+      );
+
+
+    if (
+      imageTimeline
+    ) {
+
+      imageTimeline.kill();
+
+    }
+
+
+    if (
+      reduceMotion
+    ) {
+
+      image.src =
+        nextImage;
+
+
+      image.alt =
+        `${service.navLabel} work by APE Studio`;
+
+
+      return;
+
+    }
+
+
+    imageTimeline =
       gsap.timeline();
 
 
+    imageTimeline
 
-    timeline.to(
+      .to(
+        image,
+        {
+          opacity: 0,
+          scale: 1.035,
 
-      image,
+          duration: 0.16,
 
-      {
-        opacity:
-          0,
+          ease:
+            "power2.in",
 
-        scale:
-          1.04,
+          onComplete:
+            function () {
 
-        duration:
-          0.18,
-
-        ease:
-          "power2.in",
-
-        onComplete:
-          function () {
-
-            image.src =
-              getCoverImage(
-                service
-              );
+              image.src =
+                nextImage;
 
 
-            image.alt =
-              `${service.navLabel} work by APE Studio`;
+              image.alt =
+                `${service.navLabel} work by APE Studio`;
 
-          }
-
-      }
-
-    );
+            }
+        }
+      )
 
 
+      .fromTo(
+        image,
+        {
+          opacity: 0,
+          scale: 1.07
+        },
+        {
+          opacity: 1,
+          scale: 1,
 
-    timeline.fromTo(
+          duration: 0.58,
 
-      image,
-
-      {
-        opacity:
-          0,
-
-        scale:
-          1.055
-      },
-
-      {
-        opacity:
-          1,
-
-        scale:
-          1,
-
-        duration:
-          0.55,
-
-        ease:
-          "power3.out"
-      }
-
-    );
+          ease:
+            "power3.out"
+        }
+      );
 
   }
-
 
 
   rows.forEach(
@@ -421,9 +339,7 @@ function initCapabilities() {
         function () {
 
           if (
-            window.matchMedia(
-              "(hover: hover) and (pointer: fine)"
-            ).matches
+            finePointer
           ) {
 
             activate(
@@ -434,7 +350,6 @@ function initCapabilities() {
 
         }
       );
-
 
 
       row.addEventListener(
@@ -449,17 +364,11 @@ function initCapabilities() {
       );
 
 
-
       row.addEventListener(
         "click",
         function (
           event
         ) {
-
-          /*
-           * If arrow clicked,
-           * do not interfere.
-          */
 
           if (
             event.target.closest(
@@ -472,16 +381,9 @@ function initCapabilities() {
           }
 
 
-          if (
-            window.innerWidth <=
-            767
-          ) {
-
-            activate(
-              row
-            );
-
-          }
+          activate(
+            row
+          );
 
         }
       );
@@ -490,28 +392,26 @@ function initCapabilities() {
   );
 
 
+  activate(
+    rows[0]
+  );
+
 
   /* =====================================================
-     IMAGE TILT
+     PREVIEW TILT
   ===================================================== */
 
-  if (frame) {
+  if (
+    frame &&
+    finePointer &&
+    !reduceMotion
+  ) {
 
     frame.addEventListener(
       "pointermove",
       function (
         event
       ) {
-
-        if (
-          window.innerWidth <=
-          767
-        ) {
-
-          return;
-
-        }
-
 
         const rect =
           frame.getBoundingClientRect();
@@ -523,7 +423,8 @@ function initCapabilities() {
             rect.left
           )
           /
-          rect.width;
+          rect.width -
+          0.5;
 
 
         const y =
@@ -532,45 +433,34 @@ function initCapabilities() {
             rect.top
           )
           /
-          rect.height;
+          rect.height -
+          0.5;
 
 
         gsap.to(
-
           frame,
-
           {
-            rotateY:
-              (
-                x -
-                0.5
-              )
-              *
-              2.5,
+            rotationY:
+              x * 4,
 
-            rotateX:
-              (
-                0.5 -
-                y
-              )
-              *
-              2.5,
+            rotationX:
+              y * -4,
+
+            y: -3,
 
             duration:
-              0.4,
+              0.35,
 
             ease:
               "power3.out",
 
             overwrite:
-              true
+              "auto"
           }
-
         );
 
       }
     );
-
 
 
     frame.addEventListener(
@@ -578,20 +468,18 @@ function initCapabilities() {
       function () {
 
         gsap.to(
-
           frame,
-
           {
-            rotateX: 0,
-            rotateY: 0,
+            rotationX: 0,
+            rotationY: 0,
+            y: 0,
 
             duration:
-              0.45,
+              0.5,
 
             ease:
-              "power3.out"
+              "back.out(1.4)"
           }
-
         );
 
       }
@@ -602,17 +490,528 @@ function initCapabilities() {
 }
 
 
+/* =========================================================
+   APE DANCE
+========================================================= */
+
+function danceApe(
+  rig,
+  aura,
+  pulse
+) {
+
+  if (
+    !rig ||
+    reduceMotion
+  ) {
+
+    return;
+
+  }
+
+
+  gsap.killTweensOf(
+    rig
+  );
+
+
+  gsap.timeline()
+
+    .to(
+      rig,
+      {
+        y: -27,
+        x: -10,
+        rotation: -7,
+        scale: 1.08,
+
+        duration: 0.15
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 12,
+        rotation: 8,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: -9,
+        rotation: -6,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 0,
+
+        rotationY:
+          "+=360",
+
+        duration: 0.5,
+
+        ease:
+          "power3.inOut"
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 0,
+        y: 0,
+
+        rotation: 0,
+        rotationX: 0,
+        rotationY: 0,
+
+        scale: 1,
+
+        duration: 0.38,
+
+        ease:
+          "bounce.out"
+      }
+    );
+
+
+  if (
+    aura
+  ) {
+
+    gsap.fromTo(
+      aura,
+      {
+        scale: 0.78,
+        opacity: 0.9
+      },
+      {
+        scale: 1.35,
+        opacity: 0.45,
+
+        duration: 0.55,
+
+        ease:
+          "power2.out"
+      }
+    );
+
+  }
+
+
+  if (
+    pulse
+  ) {
+
+    gsap.fromTo(
+      pulse,
+      {
+        scale: 0.7,
+        opacity: 0.7
+      },
+      {
+        scale: 1.4,
+        opacity: 0,
+
+        duration: 0.58,
+
+        ease:
+          "power2.out"
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HERO APE
+========================================================= */
+
+function initHeroApe() {
+
+  const ape =
+    document.querySelector(
+      ".services-hero__ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".services-hero__ape-world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".services-hero__ape-rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".services-hero__ape-float"
+    );
+
+
+  const aura =
+    document.querySelector(
+      ".services-hero__ape-aura"
+    );
+
+
+  const pulse =
+    document.querySelector(
+      ".services-hero__ape-pulse"
+    );
+
+
+  if (
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    !reduceMotion
+  ) {
+
+    gsap.to(
+      float,
+      {
+        y: -8,
+        rotation: 1.4,
+
+        duration: 1.7,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+
+    gsap.to(
+      ".services-hero__visual",
+      {
+        yPercent: -4,
+
+        ease: "none",
+
+        scrollTrigger: {
+          trigger:
+            ".services-hero",
+
+          start:
+            "top top",
+
+          end:
+            "bottom top",
+
+          scrub:
+            0.8
+        }
+      }
+    );
+
+  }
+
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 21,
+
+            y:
+              y * 12,
+
+            duration: 0.34,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 12,
+
+            rotationX:
+              y * -7,
+
+            rotation:
+              x * 2,
+
+            scale: 1.045,
+
+            duration: 0.32,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x: 0,
+            y: 0,
+
+            duration: 0.55,
+
+            ease:
+              "elastic.out(1,0.45)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotation: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+
+            duration: 0.48,
+
+            ease:
+              "back.out(1.6)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      danceApe(
+        rig,
+        aura,
+        pulse
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HERO BACKGROUND POINTER
+========================================================= */
+
+function initHeroPointer() {
+
+  if (
+    !finePointer ||
+    reduceMotion
+  ) {
+
+    return;
+
+  }
+
+
+  const hero =
+    document.querySelector(
+      ".services-hero"
+    );
+
+
+  const violet =
+    document.querySelector(
+      ".services-hero__glow--violet"
+    );
+
+
+  const lime =
+    document.querySelector(
+      ".services-hero__glow--lime"
+    );
+
+
+  if (
+    !hero
+  ) {
+
+    return;
+
+  }
+
+
+  hero.addEventListener(
+    "pointermove",
+    function (
+      event
+    ) {
+
+      const rect =
+        hero.getBoundingClientRect();
+
+
+      const x =
+        (
+          event.clientX -
+          rect.left
+        )
+        /
+        rect.width -
+        0.5;
+
+
+      const y =
+        (
+          event.clientY -
+          rect.top
+        )
+        /
+        rect.height -
+        0.5;
+
+
+      if (
+        violet
+      ) {
+
+        gsap.to(
+          violet,
+          {
+            x:
+              x * -30,
+
+            y:
+              y * -20,
+
+            duration: 1,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+
+
+      if (
+        lime
+      ) {
+
+        gsap.to(
+          lime,
+          {
+            x:
+              x * 25,
+
+            y:
+              y * 16,
+
+            duration: 1.1,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+
+    }
+  );
+
+}
+
 
 /* =========================================================
    HERO MOTION
 ========================================================= */
 
-function initHero() {
+function initHeroMotion() {
 
   if (
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
+    reduceMotion
   ) {
 
     return;
@@ -620,110 +1019,165 @@ function initHero() {
   }
 
 
+  gsap.timeline({
 
-  gsap
-    .timeline({
+    defaults: {
+      ease:
+        "power4.out"
+    }
 
-      defaults: {
-        ease:
-          "power4.out"
-      }
-
-    })
+  })
 
     .fromTo(
-
       ".services-hero__eyebrow",
-
       {
-        opacity:
-          0,
-
-        y:
-          14
+        opacity: 0,
+        y: 14
       },
-
       {
-        opacity:
-          1,
+        opacity: 1,
+        y: 0,
 
-        y:
-          0,
-
-        duration:
-          0.4
+        duration: 0.45
       }
-
     )
 
+
     .fromTo(
-
-      ".services-hero h1",
-
+      ".services-hero__title-line",
       {
-        opacity:
-          0,
-
-        y:
-          48
+        opacity: 0,
+        y: 55,
+        rotationX: -12
       },
-
       {
-        opacity:
-          1,
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
 
-        y:
-          0,
+        duration: 0.78,
 
-        duration:
-          0.8
+        stagger: 0.08
       },
-
       "-=0.18"
-
     )
 
+
     .fromTo(
-
-      ".services-hero__bottom",
-
+      ".services-hero__copy",
       {
-        opacity:
-          0,
-
-        y:
-          20
+        opacity: 0,
+        y: 22
       },
-
       {
-        opacity:
-          1,
+        opacity: 1,
+        y: 0,
 
-        y:
-          0,
-
-        duration:
-          0.55
+        duration: 0.58
       },
+      "-=0.4"
+    )
 
-      "-=0.38"
 
+    .fromTo(
+      ".services-hero__cta",
+      {
+        opacity: 0,
+        y: 15
+      },
+      {
+        opacity: 1,
+        y: 0,
+
+        duration: 0.5
+      },
+      "-=0.35"
+    )
+
+
+    .fromTo(
+      ".services-hero__ape",
+      {
+        opacity: 0,
+        x: 70,
+        y: 60,
+        scale: 0.8,
+        rotation: 5
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+
+        duration: 1.05,
+
+        ease:
+          "back.out(1.5)"
+      },
+      "-=0.72"
     );
+
+
+  gsap.to(
+    ".services-hero__title-line:nth-child(odd)",
+    {
+      xPercent: -2,
+
+      ease: "none",
+
+      scrollTrigger: {
+        trigger:
+          ".services-hero",
+
+        start:
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub:
+          1
+      }
+    }
+  );
+
+
+  gsap.to(
+    ".services-hero__title-line:nth-child(even)",
+    {
+      xPercent: 2,
+
+      ease: "none",
+
+      scrollTrigger: {
+        trigger:
+          ".services-hero",
+
+        start:
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub:
+          1
+      }
+    }
+  );
 
 }
 
 
-
 /* =========================================================
-   CAPABILITY REVEAL
+   CAPABILITY MOTION
 ========================================================= */
 
 function initCapabilityMotion() {
 
   if (
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
+    reduceMotion
   ) {
 
     return;
@@ -731,81 +1185,84 @@ function initCapabilityMotion() {
   }
 
 
-
   gsap.fromTo(
-
-    ".capabilities__header",
-
+    ".capabilities__heading",
     {
-      opacity:
-        0,
-
-      y:
-        20
+      opacity: 0,
+      y: 35
     },
-
     {
-      opacity:
-        1,
+      opacity: 1,
+      y: 0,
 
-      y:
-        0,
-
-      duration:
-        0.6,
+      duration: 0.72,
 
       ease:
         "power3.out",
 
       scrollTrigger: {
-
         trigger:
-          ".capabilities",
+          ".capabilities__header",
 
         start:
           "top 84%",
 
         once:
           true
-
       }
-
     }
-
   );
 
 
-
   gsap.fromTo(
-
-    ".capability-row",
-
+    ".capabilities__intro",
     {
-      opacity:
-        0,
-
-      x:
-        -16
+      opacity: 0,
+      y: 28,
+      scale: 0.97
     },
-
     {
-      opacity:
-        1,
+      opacity: 1,
+      y: 0,
+      scale: 1,
 
-      x:
-        0,
-
-      duration:
-        0.48,
-
-      stagger:
-        0.05,
+      duration: 0.68,
 
       ease:
         "power3.out",
 
       scrollTrigger: {
+        trigger:
+          ".capabilities__header",
 
+        start:
+          "top 84%",
+
+        once:
+          true
+      }
+    }
+  );
+
+
+  gsap.fromTo(
+    ".capability-row",
+    {
+      opacity: 0,
+      x: -22
+    },
+    {
+      opacity: 1,
+      x: 0,
+
+      duration: 0.55,
+
+      stagger: 0.07,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
         trigger:
           ".capability-list",
 
@@ -814,15 +1271,42 @@ function initCapabilityMotion() {
 
         once:
           true
-
       }
-
     }
+  );
 
+
+  gsap.fromTo(
+    ".capability-preview",
+    {
+      opacity: 0,
+      x: 35,
+      scale: 0.97
+    },
+    {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+
+      duration: 0.8,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+        trigger:
+          ".capabilities__layout",
+
+        start:
+          "top 84%",
+
+        once:
+          true
+      }
+    }
   );
 
 }
-
 
 
 /* =========================================================
@@ -844,8 +1328,7 @@ function initHeroCTA() {
 
 
   if (
-    !button
-    ||
+    !button ||
     !target
   ) {
 
@@ -864,20 +1347,19 @@ function initHeroCTA() {
 
 
       target.scrollIntoView({
-
         behavior:
-          "smooth",
+          reduceMotion
+            ? "auto"
+            : "smooth",
 
         block:
           "start"
-
       });
 
     }
   );
 
 }
-
 
 
 /* =========================================================
@@ -892,14 +1374,17 @@ function initFooter() {
     );
 
 
-  if (year) {
+  if (
+    year
+  ) {
 
     year.textContent =
-      new Date()
-        .getFullYear();
+      String(
+        new Date()
+          .getFullYear()
+      );
 
   }
-
 
 
   const top =
@@ -908,8 +1393,12 @@ function initFooter() {
     );
 
 
-  if (!top) {
+  if (
+    !top
+  ) {
+
     return;
+
   }
 
 
@@ -923,20 +1412,18 @@ function initFooter() {
 
 
       window.scrollTo({
-
-        top:
-          0,
+        top: 0,
 
         behavior:
-          "smooth"
-
+          reduceMotion
+            ? "auto"
+            : "smooth"
       });
 
     }
   );
 
 }
-
 
 
 /* =========================================================
@@ -949,15 +1436,13 @@ document.addEventListener(
 
     initHeader();
 
-    buildServiceDirectory();
-
-    initialisePreview();
+    preloadImages();
 
     initCapabilities();
 
-    initHero();
+    initHeroApe();
 
-    initCapabilityMotion();
+    initHeroPointer();
 
     initHeroCTA();
 
@@ -966,6 +1451,10 @@ document.addEventListener(
 
     requestAnimationFrame(
       function () {
+
+        initHeroMotion();
+
+        initCapabilityMotion();
 
         ScrollTrigger.refresh();
 
@@ -976,6 +1465,9 @@ document.addEventListener(
 );
 
 
+/* =========================================================
+   FINAL REFRESH
+========================================================= */
 
 window.addEventListener(
   "load",

@@ -1,102 +1,775 @@
 /* =========================================================
-   TEAM CHAPTER
+   APE STUDIO — TEAM
+   FINAL STRAIGHT CAROUSEL
 ========================================================= */
-
-.chapter-team {
-  height:
-    620vh;
-}
-
 
 
 /* =========================================================
-   ACTIVE TEAM MEMBER COPY
+   SECTION
 ========================================================= */
 
-.experience-member-copy {
-  position: absolute;
+.about-team {
+  position: relative;
 
-  left: 5vw;
+  width: 100%;
 
-  bottom: 8.5vh;
+  overflow: hidden;
 
+  scroll-margin-top: 90px;
+
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      58% 95%
+      at 100% 44%,
+      rgba(125, 53, 235, 0.32),
+      transparent 71%
+    ),
+    radial-gradient(
+      35% 55%
+      at 0% 90%,
+      rgba(198, 255, 51, 0.055),
+      transparent 72%
+    ),
+    #000000;
+}
+
+
+/* =========================================================
+   INNER
+========================================================= */
+
+.about-team__inner {
+  width: 100%;
+
+  padding:
+    118px
+    0
+    88px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.about-team__header {
   width:
     min(
-      560px,
-      78vw
+      1500px,
+      90%
     );
 
+  margin:
+    0
+    auto
+    38px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(300px, 0.85fr);
+
+  gap: 60px;
+
+  align-items: end;
+}
+
+
+.about-team__eyebrow {
+  margin:
+    0
+    0
+    11px;
+
+  color: #c6ff33;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
+}
+
+
+.about-team__header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      55px,
+      6.2vw,
+      100px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.82;
+
+  letter-spacing: -0.068em;
+
+  text-transform: uppercase;
+}
+
+
+.about-team__header h2 span {
+  display: block;
+
+  color: #7d35eb;
+}
+
+
+/* =========================================================
+   HEADER SIDE
+========================================================= */
+
+.about-team__header-side {
+  width:
+    min(
+      430px,
+      100%
+    );
+
+  justify-self: end;
+}
+
+
+.about-team__intro {
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.60
+    );
+
+  font-size: 13px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.about-team__controls {
+  margin-top: 20px;
+
+  display: flex;
+
+  gap: 8px;
+}
+
+
+.about-team__control {
+  width: 44px;
+
+  height: 44px;
+
+  padding: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.22
+    );
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  background: transparent;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+
+.about-team__control:hover {
+  color: #000000;
+
+  border-color: #c6ff33;
+
+  background: #c6ff33;
+
+  transform:
+    scale(1.07);
+}
+
+
+.about-team__control:disabled {
+  opacity: 0.22;
+
+  cursor: default;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   VIEWPORT
+========================================================= */
+
+.about-team__viewport {
+  position: relative;
+
+  width: 100%;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+
+  scroll-snap-type:
+    x proximity;
+
+  overscroll-behavior-x:
+    contain;
+
+  -webkit-overflow-scrolling:
+    touch;
+
+  cursor: grab;
+}
+
+
+.about-team__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+
+.about-team__viewport.is-dragging {
+  cursor: grabbing;
+
+  scroll-snap-type: none;
+}
+
+
+/*
+ * When wheel mode is active.
+ */
+
+.about-team__viewport.is-wheel-active {
+  cursor: ew-resize;
+}
+
+
+/* =========================================================
+   TRACK
+========================================================= */
+
+.about-team__track {
+  --team-card-width:
+    clamp(
+      300px,
+      24vw,
+      390px
+    );
+
+  width: max-content;
+
+  display: flex;
+
+  align-items: center;
+
+  gap:
+    clamp(
+      22px,
+      2.4vw,
+      36px
+    );
+
+  padding:
+    16px
+    calc(
+      50vw -
+      (
+        var(--team-card-width) /
+        2
+      )
+    )
+    29px;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+}
+
+
+/* =========================================================
+   CARD
+
+   IMPORTANT:
+   EVERY CARD HAS EXACT SAME HEIGHT.
+   NO VERTICAL OFFSET.
+========================================================= */
+
+.about-team-card {
+  position: relative;
+
+  flex:
+    0
+    0
+    var(--team-card-width);
+
+  height:
+    clamp(
+      430px,
+      58vh,
+      590px
+    );
+
+  margin: 0;
+
+  padding: 0;
+
+  align-self: center;
+
+  scroll-snap-align: center;
+
+  perspective: 1200px;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/* =========================================================
+   FOCUS
+
+   NO translateY HERE.
+========================================================= */
+
+.about-team-card__focus {
+  width: 100%;
+
+  height: 100%;
+
+  opacity: 0.40;
+
+  transform:
+    scale(0.88);
+
+  transform-origin:
+    center center;
+
+  transition:
+    opacity 450ms ease,
+    transform 540ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+
+.about-team-card.is-active
+.about-team-card__focus {
+  opacity: 1;
+
+  transform:
+    scale(1);
+}
+
+
+/* =========================================================
+   SURFACE
+========================================================= */
+
+.about-team-card__surface {
+  position: relative;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.14
+    );
+
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      155deg,
+      #19131f,
+      #050505
+    );
+
+  transform-style:
+    preserve-3d;
+
+  transform-origin:
+    center center;
+
+  will-change:
+    transform;
+
+  transition:
+    border-color 400ms ease,
+    box-shadow 400ms ease;
+}
+
+
+.about-team-card:nth-child(even)
+.about-team-card__surface {
+  background:
+    linear-gradient(
+      150deg,
+      #0a0a0a,
+      #140922
+    );
+}
+
+
+.about-team-card.is-active
+.about-team-card__surface {
+  border-color:
+    rgba(
+      198,
+      255,
+      51,
+      0.80
+    );
+
+  box-shadow:
+    0
+    30px
+    75px
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    ),
+    0
+    0
+    42px
+    rgba(
+      125,
+      53,
+      235,
+      0.17
+    );
+}
+
+
+/* =========================================================
+   PORTRAIT
+========================================================= */
+
+.about-team-card__portrait {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+}
+
+
+.about-team-card__portrait::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 1;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle
+      at 50% 37%,
+      rgba(
+        125,
+        53,
+        235,
+        0.25
+      ),
+      transparent 57%
+    );
+}
+
+
+.about-team-card:nth-child(even)
+.about-team-card__portrait::before {
+  background:
+    radial-gradient(
+      circle
+      at 50% 38%,
+      rgba(
+        198,
+        255,
+        51,
+        0.09
+      ),
+      transparent 57%
+    );
+}
+
+
+.about-team-card__portrait::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 40%,
+      rgba(0, 0, 0, 0.12) 59%,
+      rgba(0, 0, 0, 0.94) 100%
+    );
+}
+
+
+.about-team-card__portrait img {
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 94%;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  object-position:
+    center bottom;
+
+  pointer-events: none;
+
+  transform:
+    translateX(-50%);
+
+  transform-origin:
+    center bottom;
+
+  will-change:
+    transform;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.about-team-card__meta {
+  position: absolute;
+
+  z-index: 5;
+
+  left: 25px;
+
+  right: 25px;
+
+  bottom: 25px;
+
+  opacity: 0.72;
+}
+
+
+.about-team-card__meta p {
+  margin:
+    0
+    0
+    9px;
+
+  color: #c6ff33;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+.about-team-card__meta h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      28px,
+      2.5vw,
+      42px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.055em;
+
+  text-transform: uppercase;
+}
+
+
+.about-team-card.is-active
+.about-team-card__meta {
   opacity: 1;
 }
 
 
-.experience-member-role {
-  margin:
-    0 0
-    13px;
+/* =========================================================
+   MISSING IMAGE
+========================================================= */
 
-  color:
-    var(--ape-amber);
-
-  font-size:
-    clamp(
-      10px,
-      0.9vw,
-      14px
-    );
-
-  font-weight:
-    700;
-
-  line-height:
-    1.15;
-
-  letter-spacing:
-    0.23em;
-
-  text-transform:
-    uppercase;
+.about-team-card.is-image-missing
+.about-team-card__portrait img {
+  display: none;
 }
 
 
-.experience-member-name {
+.about-team-card.is-image-missing
+.about-team-card__portrait {
+  background:
+    linear-gradient(
+      135deg,
+      #7d35eb,
+      #070707
+    );
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.about-team__bottom {
+  width:
+    min(
+      1500px,
+      90%
+    );
+
+  margin:
+    17px
+    auto
+    0;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(
+      160px,
+      1fr
+    );
+
+  gap: 28px;
+
+  align-items: center;
+}
+
+
+.about-team__bottom > p {
   margin: 0;
 
   color:
-    var(--ape-ivory);
-
-  font-size:
-    clamp(
-      38px,
-      5.4vw,
-      86px
+    rgba(
+      255,
+      255,
+      255,
+      0.35
     );
 
-  font-weight:
-    800;
+  font-size: 7px;
 
-  line-height:
-    0.88;
+  font-weight: 850;
 
-  letter-spacing:
-    -0.055em;
+  line-height: 1;
 
-  text-transform:
-    uppercase;
+  letter-spacing: 0.14em;
 }
 
 
-.experience-member-line {
-  width:
-    min(
-      180px,
-      40vw
-    );
+.about-team__progress {
+  width: 100%;
 
   height: 2px;
 
-  margin-top:
-    19px;
+  overflow: hidden;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+}
+
+
+.about-team__progress-fill {
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  transform:
+    scaleX(0);
 
   transform-origin:
     left center;
@@ -104,107 +777,341 @@
   background:
     linear-gradient(
       90deg,
-      var(--ape-amber),
-      var(--ape-purple),
-      var(--ape-violet)
-    );
-
-  box-shadow:
-    0 0 18px
-    rgba(
-      101,
-      71,
-      168,
-      0.32
+      #c6ff33,
+      #7d35eb
     );
 }
 
 
-
 /* =========================================================
-   TEAM CHAPTER MARKER
+   DESKTOP HOVER
 ========================================================= */
 
-.chapter-marker {
-  position: absolute;
+@media
+(
+  hover: hover
+)
+and
+(
+  pointer: fine
+) {
 
-  top: 42px;
-  right: 4vw;
-
-  z-index: 25;
-
-  display: flex;
-
-  gap: 12px;
-
-  align-items: center;
-
-  color:
-    rgba(
-      245,
-      243,
-      239,
-      0.28
-    );
-
-  font-size:
-    8px;
-
-  font-weight:
-    600;
-
-  letter-spacing:
-    0.16em;
-}
-
-
-
-/* =========================================================
-   MOBILE TEAM
-========================================================= */
-
-@media (max-width: 767px) {
-
-  .chapter-team {
-    height:
-      520vh;
+  .about-team-card {
+    cursor: pointer;
   }
 
 
-  .experience-member-copy {
-    left:
-      20px;
-
-    right:
-      20px;
-
-    bottom:
-      70px;
-
-    width:
-      auto;
-  }
-
-
-  .experience-member-role {
-    font-size:
-      9px;
-  }
-
-
-  .experience-member-name {
-    font-size:
-      clamp(
-        34px,
-        11vw,
-        55px
+  .about-team-card:hover
+  .about-team-card__surface {
+    border-color:
+      rgba(
+        125,
+        53,
+        235,
+        0.82
       );
   }
 
 
-  .chapter-marker {
-    display:
-      none;
+  .about-team-card.is-active:hover
+  .about-team-card__surface {
+    border-color:
+      #c6ff33;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media
+(
+  min-width: 768px
+)
+and
+(
+  max-width: 1100px
+) {
+
+  .about-team__inner {
+    padding:
+      100px
+      0
+      74px;
+  }
+
+
+  .about-team__header {
+    width:
+      calc(
+        100% -
+        76px
+      );
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(250px, 0.75fr);
+
+    gap: 30px;
+  }
+
+
+  .about-team__header h2 {
+    font-size:
+      clamp(
+        48px,
+        7vw,
+        74px
+      );
+  }
+
+
+  .about-team__track {
+    --team-card-width:
+      clamp(
+        285px,
+        35vw,
+        345px
+      );
+  }
+
+
+  .about-team-card {
+    height:
+      clamp(
+        410px,
+        56vh,
+        520px
+      );
+  }
+
+
+  .about-team__bottom {
+    width:
+      calc(
+        100% -
+        76px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(
+  max-width: 767px
+) {
+
+  .about-team {
+    scroll-margin-top: 70px;
+  }
+
+
+  .about-team__inner {
+    padding:
+      72px
+      0
+      65px;
+  }
+
+
+  .about-team__header {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    padding:
+      0
+      18px;
+
+    display: block;
+  }
+
+
+  .about-team__eyebrow {
+    font-size: 7px;
+  }
+
+
+  .about-team__header h2 {
+    font-size:
+      clamp(
+        42px,
+        12vw,
+        57px
+      );
+
+    line-height: 0.84;
+  }
+
+
+  .about-team__header-side {
+    width: 100%;
+
+    margin-top: 17px;
+  }
+
+
+  .about-team__intro {
+    width:
+      min(
+        320px,
+        100%
+      );
+
+    font-size: 11px;
+
+    line-height: 1.55;
+  }
+
+
+  .about-team__controls {
+    margin-top: 14px;
+  }
+
+
+  .about-team__control {
+    width: 38px;
+
+    height: 38px;
+  }
+
+
+  .about-team__track {
+    --team-card-width:
+      min(
+        76vw,
+        305px
+      );
+
+    gap: 11px;
+  }
+
+
+  .about-team-card {
+    height:
+      min(
+        105vw,
+        420px
+      );
+  }
+
+
+  /*
+   * Mobile:
+   * still no vertical displacement.
+  */
+
+  .about-team-card__focus {
+    opacity: 0.48;
+
+    transform:
+      scale(0.92);
+  }
+
+
+  .about-team-card.is-active
+  .about-team-card__focus {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+
+
+  .about-team-card__meta {
+    left: 19px;
+
+    right: 19px;
+
+    bottom: 19px;
+  }
+
+
+  .about-team-card__meta h3 {
+    font-size:
+      clamp(
+        26px,
+        8vw,
+        36px
+      );
+  }
+
+
+  .about-team-card__meta p {
+    font-size: 7px;
+  }
+
+
+  .about-team__bottom {
+    width:
+      calc(
+        100% -
+        36px
+      );
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-top: 12px;
+  }
+
+
+  .about-team__bottom > p {
+    font-size: 6px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media
+(
+  max-width: 390px
+) {
+
+  .about-team__header {
+    padding:
+      0
+      16px;
+  }
+
+
+  .about-team__bottom {
+    width:
+      calc(
+        100% -
+        32px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(
+  prefers-reduced-motion: reduce
+) {
+
+  .about-team-card__focus,
+  .about-team-card__surface {
+
+    transition: none;
+
   }
 
 }

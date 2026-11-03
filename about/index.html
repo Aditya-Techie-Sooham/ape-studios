@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="en-IN">
 
 <head>
 
@@ -11,14 +11,177 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <meta
-    name="description"
-    content="APE Studio brings together creative thinking, digital strategy, design and performance to help brands build meaningful connections."
-  >
+
+  <!-- =====================================================
+       PRIMARY SEO
+  ====================================================== -->
 
   <title>
-    About APE Studio
+    About APE Studio | Creative & Digital Marketing Agency in Kolkata
   </title>
+
+  <meta
+    name="description"
+    content="Learn about APE Studio, a creative and digital marketing agency in Kolkata combining strategy, branding, design, content and performance to build stronger brands."
+  >
+
+  <meta
+    name="robots"
+    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  >
+
+  <meta
+    name="author"
+    content="APE Studio"
+  >
+
+  <link
+    rel="canonical"
+    href="https://apeindia.in/about/"
+  >
+
+
+  <!-- =====================================================
+       OPEN GRAPH
+  ====================================================== -->
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+
+  <meta
+    property="og:site_name"
+    content="APE Studio"
+  >
+
+  <meta
+    property="og:locale"
+    content="en_IN"
+  >
+
+  <meta
+    property="og:title"
+    content="About APE Studio | Creative & Digital Marketing Agency in Kolkata"
+  >
+
+  <meta
+    property="og:description"
+    content="Meet APE Studio and discover how strategy, creativity, design, digital and performance come together to build stronger brands."
+  >
+
+  <meta
+    property="og:url"
+    content="https://apeindia.in/about/"
+  >
+
+  <meta
+    property="og:image"
+    content="https://apeindia.in/about/about-studio-01.jpg"
+  >
+
+  <meta
+    property="og:image:alt"
+    content="About APE Studio"
+  >
+
+
+  <!-- =====================================================
+       X / TWITTER
+  ====================================================== -->
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  >
+
+  <meta
+    name="twitter:title"
+    content="About APE Studio | Creative & Digital Marketing Agency in Kolkata"
+  >
+
+  <meta
+    name="twitter:description"
+    content="Meet APE Studio and discover how strategy, creativity, design, digital and performance come together to build stronger brands."
+  >
+
+  <meta
+    name="twitter:image"
+    content="https://apeindia.in/about/about-studio-01.jpg"
+  >
+
+  <meta
+    name="twitter:image:alt"
+    content="About APE Studio"
+  >
+
+
+  <!-- =====================================================
+       BREADCRUMB STRUCTURED DATA
+
+       REAL SITE HIERARCHY:
+       HOME → ABOUT
+
+       NO FAQ SCHEMA
+       NO UNNECESSARY SCHEMA TYPES
+  ====================================================== -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "https://apeindia.in/about/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://apeindia.in/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "About APE Studio"
+      }
+    ]
+  }
+  </script>
+
+
+  <!-- =====================================================
+       EXISTING CSS
+       NO CSS CHANGES
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/variables.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/reset.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/header.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/footer.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/about-page.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/team.css"
+  >
 
 </head>
 
@@ -38,12 +201,10 @@
     <div class="site-header__inner">
 
 
-      <!-- LOGO -->
-
       <a
         href="/"
         class="site-header__brand"
-        aria-label="APE Studio Home"
+        aria-label="APE Studio home"
       >
 
         <img
@@ -55,8 +216,6 @@
       </a>
 
 
-
-      <!-- DESKTOP NAV -->
 
       <nav
         class="site-header__nav"
@@ -99,8 +258,6 @@
 
 
 
-      <!-- HEADER CTA -->
-
       <a
         href="/contact/"
         class="site-header__cta"
@@ -110,7 +267,7 @@
           Let's Talk
         </span>
 
-        <span>
+        <span aria-hidden="true">
           ↗
         </span>
 
@@ -118,18 +275,17 @@
 
 
 
-      <!-- MOBILE TOGGLE -->
-
       <button
         id="site-menu-toggle"
         class="site-menu-toggle"
         type="button"
-        aria-label="Open menu"
+        aria-label="Open navigation menu"
         aria-expanded="false"
+        aria-controls="site-mobile-menu"
       >
 
-        <span></span>
-        <span></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
 
       </button>
 
@@ -139,6 +295,9 @@
 
     <!-- ===================================================
          MOBILE MENU
+
+         NO NUMBERING
+         NO <small>
     ==================================================== -->
 
     <div
@@ -155,100 +314,41 @@
       </div>
 
 
-      <nav class="site-mobile-menu__links">
+      <nav
+        class="site-mobile-menu__links"
+        aria-label="Mobile navigation"
+      >
 
         <a href="/">
-
-          <small>
-            01
-          </small>
-
-          <span>
-            Home
-          </span>
-
+          <span>Home</span>
         </a>
-
 
         <a
           href="/about/"
           class="is-active"
           aria-current="page"
         >
-
-          <small>
-            02
-          </small>
-
-          <span>
-            About
-          </span>
-
+          <span>About</span>
         </a>
-
 
         <a href="/services/">
-
-          <small>
-            03
-          </small>
-
-          <span>
-            Services
-          </span>
-
+          <span>Services</span>
         </a>
-
 
         <a href="/work/">
-
-          <small>
-            04
-          </small>
-
-          <span>
-            Work
-          </span>
-
+          <span>Work</span>
         </a>
-
 
         <a href="/blog/">
-
-          <small>
-            05
-          </small>
-
-          <span>
-            Blog
-          </span>
-
+          <span>Blog</span>
         </a>
-
 
         <a href="/faq/">
-
-          <small>
-            06
-          </small>
-
-          <span>
-            FAQ
-          </span>
-
+          <span>FAQ</span>
         </a>
 
-
         <a href="/contact/">
-
-          <small>
-            07
-          </small>
-
-          <span>
-            Contact
-          </span>
-
+          <span>Contact</span>
         </a>
 
       </nav>
@@ -267,119 +367,263 @@
 
 
     <!-- ===================================================
-         ABOUT HERO
+         HERO
+         ONE PRIMARY H1
     ==================================================== -->
 
     <section
       id="about-hero"
       class="about-hero"
+      aria-labelledby="about-hero-title"
     >
 
+
       <div
-        class="about-hero__ape"
+        class="about-hero__glow about-hero__glow--violet"
         aria-hidden="true"
-      >
-        APE
-      </div>
+      ></div>
+
+
+      <div
+        class="about-hero__glow about-hero__glow--lime"
+        aria-hidden="true"
+      ></div>
+
 
 
       <div class="about-hero__inner">
 
 
-        <!-- HEADLINE -->
+        <div class="about-hero__content">
 
-        <div class="about-hero__headline">
 
-          <h1>
+          <p class="about-hero__eyebrow">
+            ABOUT / APE STUDIO
+          </p>
 
-            <span>
+
+
+          <h1 id="about-hero-title">
+
+            <span class="about-hero__title-line">
               THINK BIG.
             </span>
 
-            <span class="about-hero__outline">
+            <span
+              class="
+                about-hero__title-line
+                about-hero__title-line--outline
+              "
+            >
               THINK APE.
             </span>
 
           </h1>
 
+
+
+          <p class="about-hero__lead">
+
+            APE Studio brings together creative thinking,
+            digital strategy, design and performance to help
+            brands build meaningful connections with their audiences.
+
+          </p>
+
+
+
+          <div class="about-hero__actions">
+
+
+            <a
+              href="#about-team"
+              class="about-hero__primary"
+            >
+
+              Meet The Team
+
+              <span aria-hidden="true">
+                ↓
+              </span>
+
+            </a>
+
+
+            <a
+              href="/work/"
+              class="about-hero__secondary"
+            >
+
+              Explore Our Work
+
+              <span aria-hidden="true">
+                ↗
+              </span>
+
+            </a>
+
+
+          </div>
+
+
         </div>
 
 
 
-        <!-- COPY -->
+        <div
+          class="about-hero__visual"
+          aria-hidden="true"
+        >
 
-        <div class="about-hero__content">
+
+          <span
+            class="about-hero__ape-aura"
+            aria-hidden="true"
+          ></span>
 
 
-          <div class="about-hero__lead">
+          <button
+            id="about-hero-ape"
+            class="about-hero__ape"
+            type="button"
+            tabindex="-1"
+            aria-hidden="true"
+          >
 
-            <p>
-              A brand is more than a logo,
-              a social media page or a
-              good-looking campaign.
-            </p>
+            <img
+              src="/mascot/ape-thinking.webp"
+              alt=""
+              draggable="false"
+            >
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
+
+      <div
+        class="about-hero__bottom"
+        aria-hidden="true"
+      >
+
+        <span>
+          STRATEGY-LED
+        </span>
+
+        <span>
+          CREATIVITY-DRIVEN
+        </span>
+
+        <span>
+          PERFORMANCE-FOCUSED
+        </span>
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- ===================================================
+         WHO WE ARE
+         H2
+    ==================================================== -->
+
+    <section
+      id="about-intro"
+      class="about-intro"
+      aria-labelledby="about-intro-title"
+    >
+
+      <div class="about-intro__inner">
+
+
+        <p
+          class="
+            about-section-eyebrow
+            reveal-eyebrow
+          "
+        >
+          WHO WE ARE
+        </p>
+
+
+
+        <div class="about-intro__layout">
+
+
+          <div class="about-intro__heading-mask">
+
+            <h2
+              id="about-intro-title"
+              class="about-intro__heading"
+            >
+
+              WE DON'T
+              <br>
+              JUST
+
+              <span>
+                MAKE THINGS
+                <br>
+                LOOK GOOD.
+              </span>
+
+            </h2>
 
           </div>
 
 
 
-          <div class="about-hero__body">
+          <div class="about-intro__copy">
 
             <p>
-              At APE Studio, we bring together creative
-              thinking, digital strategy, design and
-              performance to help brands build meaningful
-              connections with their audiences.
+
+              A brand is more than a logo, a social media page
+              or a good-looking campaign.
+
             </p>
 
 
             <p>
-              Whether you're launching a new business,
-              refreshing an existing brand or looking to
-              scale your digital presence, we build
-              strategies designed around your business
+
+              At APE Studio, we bring together creative thinking,
+              digital strategy, design and performance to help brands
+              build meaningful connections with their audiences.
+
+            </p>
+
+
+            <p>
+
+              Whether you're launching a new business, refreshing an
+              existing brand or looking to scale your digital presence,
+              we build strategies that are designed around your business
               goals, audience and growth journey.
+
+            </p>
+
+
+            <p>
+
+              From branding and packaging to social media, performance
+              marketing, websites, influencer campaigns and content,
+              APE brings the pieces together under one roof.
+
             </p>
 
           </div>
 
-        </div>
-
-
-
-        <!-- POSITIONING -->
-
-        <div class="about-hero__positioning">
-
-          <span>
-            STRATEGY-LED.
-          </span>
-
-          <span>
-            CREATIVITY-DRIVEN.
-          </span>
-
-          <span>
-            PERFORMANCE-FOCUSED.
-          </span>
 
         </div>
 
-
-
-        <!-- SCROLL -->
-
-        <div class="about-hero__scroll">
-
-          <span>
-            MEET THE PEOPLE BEHIND APE
-          </span>
-
-          <span>
-            ↓
-          </span>
-
-        </div>
 
       </div>
 
@@ -387,556 +631,605 @@
 
 
 
-    <!-- =====================================================
-         TEAM + CINEMATIC STORY
-         KEEP THIS STRUCTURE UNTOUCHED
-    ====================================================== -->
 
-    <div
-      id="ape-experience"
-      class="ape-experience"
+    <!-- ===================================================
+         TEAM
+         H2
+    ==================================================== -->
+
+    <section
+      id="about-team"
+      class="about-team"
+      aria-labelledby="about-team-title"
     >
 
 
-      <!-- =================================================
-           WEBGL STAGE
-      ================================================== -->
-
-      <div
-        id="experience-stage"
-        class="experience-stage"
-      >
-
-        <canvas
-          id="experience-canvas"
-          class="experience-canvas"
-        ></canvas>
+      <div class="about-team__inner">
 
 
-        <div class="experience-ui">
+        <header class="about-team__header">
 
-          <p
-            id="experience-kicker"
-            class="experience-kicker"
-          >
-            THE PEOPLE BEHIND APE
+
+          <div>
+
+            <p class="about-team__eyebrow">
+              THE PEOPLE BEHIND APE
+            </p>
+
+
+            <h2 id="about-team-title">
+
+              MEET
+
+              <span>
+                THE TRIBE.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+
+          <div class="about-team__header-side">
+
+
+            <p class="about-team__intro">
+
+              Different minds. Different disciplines.
+              One studio moving in the same direction.
+
+            </p>
+
+
+            <div
+              class="about-team__controls"
+              aria-label="Team gallery controls"
+            >
+
+              <button
+                id="about-team-prev"
+                class="about-team__control"
+                type="button"
+                aria-label="Previous team member"
+              >
+                ←
+              </button>
+
+
+              <button
+                id="about-team-next"
+                class="about-team__control"
+                type="button"
+                aria-label="Next team member"
+              >
+                →
+              </button>
+
+            </div>
+
+
+          </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             TEAM GALLERY
+
+             TEAM MEMBERS ARE GENERATED BY EXISTING JS.
+        ================================================== -->
+
+        <div
+          id="about-team-viewport"
+          class="about-team__viewport"
+          aria-label="APE Studio team"
+        >
+
+          <div
+            id="about-team-track"
+            class="about-team__track"
+          ></div>
+
+        </div>
+
+
+
+        <div class="about-team__bottom">
+
+
+          <p aria-hidden="true">
+            DRAG / SWIPE TO EXPLORE
           </p>
 
 
           <div
-            id="experience-member-copy"
-            class="experience-member-copy"
+            class="about-team__progress"
+            aria-hidden="true"
           >
 
-            <p
-              id="experience-member-role"
-              class="experience-member-role"
-            ></p>
-
-
-            <h2
-              id="experience-member-name"
-              class="experience-member-name"
-            ></h2>
-
-
-            <div
-              id="experience-member-line"
-              class="experience-member-line"
-            ></div>
+            <span
+              id="about-team-progress"
+              class="about-team__progress-fill"
+            ></span>
 
           </div>
 
-
-          <div class="experience-progress">
-
-            <div
-              id="experience-progress-fill"
-              class="experience-progress-fill"
-            ></div>
-
-          </div>
 
         </div>
+
 
       </div>
 
 
-
-      <!-- =================================================
-           TEAM
-      ================================================== -->
-
-      <section
-        id="chapter-team"
-        class="experience-chapter chapter-team"
-        data-chapter="team"
-      >
-
-        <div class="chapter-marker">
-
-          <span>
-            THE TRIBE
-          </span>
-
-        </div>
-
-      </section>
+    </section>
 
 
 
-      <!-- =================================================
-           STORY
-      ================================================== -->
 
-      <section
-        id="chapter-story"
-        class="ape-story"
-      >
+    <!-- ===================================================
+         HOW WE THINK
+    ==================================================== -->
 
-        <div class="ape-story__stage">
-
+    <section
+      class="about-belief"
+      aria-label="How APE Studio thinks"
+    >
 
 
-          <!-- =============================================
-               PEOPLE
-          ============================================== -->
+      <div class="about-belief__inner">
 
-          <article
-            class="story-scene story-transition story-transition--people is-visible"
+
+        <p
+          class="
+            about-section-eyebrow
+            reveal-eyebrow
+          "
+        >
+          HOW WE THINK
+        </p>
+
+
+
+        <article
+          class="about-belief__statement"
+          aria-labelledby="about-belief-people"
+        >
+
+
+          <div class="about-belief__heading-mask">
+
+            <h2 id="about-belief-people">
+
+              PEOPLE
+
+              <span>
+                BUILD BRANDS.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+          <p>
+
+            Every meaningful brand starts with people,
+            instinct and an idea worth believing in.
+
+          </p>
+
+
+        </article>
+
+
+
+        <article
+          class="about-belief__statement"
+          aria-labelledby="about-belief-culture"
+        >
+
+
+          <div class="about-belief__heading-mask">
+
+            <h2 id="about-belief-culture">
+
+              BRANDS
+
+              <span>
+                BUILD CULTURE.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+          <p>
+
+            Creativity turns strategy into something
+            people can see, feel and remember.
+
+          </p>
+
+
+        </article>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- ===================================================
+         INSIDE APE
+         H2
+    ==================================================== -->
+
+    <section
+      class="
+        about-feature
+        about-feature--studio
+      "
+      aria-labelledby="about-studio-title"
+    >
+
+
+      <div class="about-feature__inner">
+
+
+        <div class="about-feature__copy">
+
+
+          <p
+            class="
+              about-section-eyebrow
+              reveal-eyebrow
+            "
           >
-
-            <div class="story-transition__copy">
-
-              <h2>
-
-                PEOPLE
-
-                <span>
-                  BUILD BRANDS.
-                </span>
-
-              </h2>
+            INSIDE APE
+          </p>
 
 
-              <p>
-                Every meaningful brand starts with people,
-                instinct and an idea worth believing in.
-              </p>
+          <div class="about-feature__heading-mask">
 
-            </div>
+            <h2 id="about-studio-title">
 
-          </article>
+              PERFORMANCE-
+              <br>
+              DRIVEN
 
-
-
-          <!-- =============================================
-               CULTURE
-          ============================================== -->
-
-          <article
-            class="story-scene story-transition story-transition--culture"
-          >
-
-            <div class="story-transition__copy">
-
-              <h2>
-
-                BRANDS
-
-                <span>
-                  BUILD CULTURE.
-                </span>
-
-              </h2>
-
-
-              <p>
-                Creativity turns strategy into something
-                people can see, feel and remember.
-              </p>
-
-            </div>
-
-          </article>
-
-
-
-          <!-- =============================================
-               INSIDE APE
-          ============================================== -->
-
-          <article
-            class="story-scene story-transition story-transition--welcome"
-          >
-
-            <div class="story-transition__copy">
-
-              <h2>
-
-                WELCOME
-
-                <span>
-                  INSIDE APE.
-                </span>
-
-              </h2>
-
-
-              <p>
-                Branding is the heart.
-                Strategy gives it direction.
-                Creativity gives it life.
-              </p>
-
-            </div>
-
-          </article>
-
-
-
-          <!-- =============================================
-               STUDIO
-          ============================================== -->
-
-          <article
-            class="story-scene story-about story-about--studio"
-          >
-
-            <div class="story-studio__copy">
-
-              <h2>
-
-                PERFORMANCE-
+              <span>
+                CREATIVE
                 <br>
-                DRIVEN
-
-                <span>
-                  CREATIVE &
-                  <br>
-                  BRANDING.
-                </span>
-
-              </h2>
-
-
-              <p class="story-body">
-                We bring together creative thinking,
-                digital strategy, design and performance
-                to help brands build meaningful connections.
-              </p>
-
-            </div>
-
-
-            <figure
-              class="story-media story-studio__media"
-            >
-
-              <div class="story-placeholder">
-
-                <strong>
-                  INSIDE
-                  <br>
-                  APE
-                </strong>
-
-              </div>
-
-
-              <img
-                src="/about/about-studio-01.jpg"
-                alt="Inside APE Studio"
-                data-story-media
-              >
-
-            </figure>
-
-          </article>
-
-
-
-          <!-- =============================================
-               FILM
-          ============================================== -->
-
-          <article
-            class="story-scene story-about story-about--film"
-          >
-
-            <div class="story-film__word">
-              MOTION
-            </div>
-
-
-            <figure
-              class="story-media story-film__media"
-            >
-
-              <div class="story-placeholder">
-
-                <strong>
-                  STORIES
-                  <br>
-                  IN MOTION
-                </strong>
-
-              </div>
-
-
-              <video
-                muted
-                loop
-                playsinline
-                autoplay
-                preload="metadata"
-                data-story-media
-              >
-
-                <source
-                  src="/about/about-film-01.mp4"
-                  type="video/mp4"
-                >
-
-              </video>
-
-            </figure>
-
-
-            <div class="story-film__copy">
-
-              <h2>
-
-                STORIES
-
-                <span>
-                  SHOULD MOVE.
-                </span>
-
-              </h2>
-
-
-              <p class="story-body">
-                Content, film and creative production
-                turn brand thinking into moments people
-                actually stop for.
-              </p>
-
-            </div>
-
-          </article>
-
-
-
-          <!-- =============================================
-               DIGITAL
-          ============================================== -->
-
-          <article
-            class="story-scene story-about story-about--digital"
-          >
-
-            <div class="story-digital__heading">
-
-              <h2>
-
-                BUILDING
-
-                <span>
-                  DIGITAL WORLDS.
-                </span>
-
-              </h2>
-
-            </div>
-
-
-            <figure
-              class="story-media story-digital__media"
-            >
-
-              <div class="story-digital__browser">
-
-                <i></i>
-                <i></i>
-                <i></i>
-
-              </div>
-
-
-              <div class="story-placeholder">
-
-                <strong>
-                  DIGITAL
-                  <br>
-                  EXPERIENCES
-                </strong>
-
-              </div>
-
-
-              <img
-                src="/about/about-web-01.jpg"
-                alt="APE Digital Experience"
-                data-story-media
-              >
-
-            </figure>
-
-          </article>
-
-
-
-          <!-- =============================================
-               BRAND
-          ============================================== -->
-
-          <article
-            class="story-scene story-about story-about--brand"
-          >
-
-            <div class="story-brand__word">
-              BRAND
-            </div>
-
-
-            <div class="story-brand__copy">
-
-              <h2>
-
-                MAKE IT
-
-                <span>
-                  MEAN SOMETHING.
-                </span>
-
-              </h2>
-
-
-              <p class="story-body">
-                Values, voice, mission, vision,
-                positioning and storytelling come
-                together to create a recognizable
-                brand language.
-              </p>
-
-            </div>
-
-
-            <figure
-              class="story-media story-brand__media"
-            >
-
-              <div class="story-placeholder">
-
-                <strong>
-                  BRAND
-                  <br>
-                  THINKING
-                </strong>
-
-              </div>
-
-
-              <img
-                src="/about/about-brand-01.jpg"
-                alt="APE Brand Strategy"
-                data-story-media
-              >
-
-            </figure>
-
-
-            <div class="story-brand__keywords">
-
-              <span>
-                VALUES
+                &amp; BRANDING.
               </span>
 
-              <span>
-                VOICE
-              </span>
+            </h2>
 
-              <span>
-                VISION
-              </span>
-
-              <span>
-                POSITIONING
-              </span>
-
-              <span>
-                STORY
-              </span>
-
-            </div>
-
-          </article>
+          </div>
 
 
+          <p class="about-feature__description">
 
-          <!-- =============================================
-               FINAL STORY SCENE
-          ============================================== -->
+            At APE Studio, strategy meets creativity,
+            content meets performance, and branding meets
+            business objectives.
 
-          <article
-            class="story-scene story-about story-about--final about-story-final"
-          >
-
-            <div
-              class="about-story-final__background"
-              aria-hidden="true"
-            >
-
-              <span>
-                APE
-              </span>
-
-            </div>
-
-
-            <div class="story-final__copy">
-
-              <h2>
-
-                STRATEGY-
-                <br>
-                LED.
-
-                <span>
-                  CREATIVITY-
-                  <br>
-                  DRIVEN.
-                </span>
-
-                PERFORMANCE-
-                <br>
-                FOCUSED.
-
-              </h2>
-
-
-              <p class="story-body">
-                From branding and packaging to social media,
-                performance marketing, websites, influencer
-                campaigns and content — APE brings the pieces
-                together under one roof.
-              </p>
-
-            </div>
-
-          </article>
+          </p>
 
 
         </div>
 
-      </section>
 
-    </div>
 
+        <figure class="about-feature__media">
+
+
+          <div
+            class="about-feature__media-reveal"
+            aria-hidden="true"
+          ></div>
+
+
+          <img
+            src="/about/about-studio-01.jpg"
+            alt="Inside APE Studio"
+            loading="lazy"
+            decoding="async"
+          >
+
+
+        </figure>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- ===================================================
+         CONTENT / FILM / MOTION
+         H2
+    ==================================================== -->
+
+    <section
+      class="
+        about-feature
+        about-feature--motion
+      "
+      aria-labelledby="about-motion-title"
+    >
+
+
+      <div class="about-feature__inner">
+
+
+        <figure class="about-feature__media">
+
+
+          <div
+            class="about-feature__media-reveal"
+            aria-hidden="true"
+          ></div>
+
+
+          <video
+            muted
+            loop
+            playsinline
+            autoplay
+            preload="metadata"
+            aria-label="APE Studio content, film and motion work"
+          >
+
+            <source
+              src="/about/about-film-01.mp4"
+              type="video/mp4"
+            >
+
+          </video>
+
+
+        </figure>
+
+
+
+        <div class="about-feature__copy">
+
+
+          <p
+            class="
+              about-section-eyebrow
+              reveal-eyebrow
+            "
+          >
+            CONTENT / FILM / MOTION
+          </p>
+
+
+          <div class="about-feature__heading-mask">
+
+            <h2 id="about-motion-title">
+
+              STORIES
+
+              <span>
+                SHOULD
+                <br>
+                MOVE.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+          <p class="about-feature__description">
+
+            We transform ideas, raw footage and brand stories
+            into reels, motion graphics and short-form content
+            designed for today's attention spans.
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- ===================================================
+         DIGITAL EXPERIENCE
+         H2
+    ==================================================== -->
+
+    <section
+      class="
+        about-feature
+        about-feature--digital
+      "
+      aria-labelledby="about-digital-title"
+    >
+
+
+      <div class="about-feature__inner">
+
+
+        <div class="about-feature__copy">
+
+
+          <p
+            class="
+              about-section-eyebrow
+              reveal-eyebrow
+            "
+          >
+            DIGITAL EXPERIENCE
+          </p>
+
+
+          <div class="about-feature__heading-mask">
+
+            <h2 id="about-digital-title">
+
+              BUILDING
+
+              <span>
+                DIGITAL
+                <br>
+                WORLDS.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+          <p class="about-feature__description">
+
+            We design and develop responsive, user-focused
+            websites and landing pages that combine strong
+            visual identity, intuitive experiences and
+            conversion-focused structure.
+
+          </p>
+
+
+        </div>
+
+
+
+        <figure class="about-feature__media">
+
+
+          <div
+            class="about-feature__media-reveal"
+            aria-hidden="true"
+          ></div>
+
+
+          <img
+            src="/about/about-web-01.jpg"
+            alt="Website and digital experience work by APE Studio"
+            loading="lazy"
+            decoding="async"
+          >
+
+
+        </figure>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- ===================================================
+         BRAND THINKING
+         H2
+    ==================================================== -->
+
+    <section
+      class="
+        about-feature
+        about-feature--brand
+      "
+      aria-labelledby="about-brand-title"
+    >
+
+
+      <div class="about-feature__inner">
+
+
+        <figure class="about-feature__media">
+
+
+          <div
+            class="about-feature__media-reveal"
+            aria-hidden="true"
+          ></div>
+
+
+          <img
+            src="/about/about-brand-01.jpg"
+            alt="Brand strategy and identity work by APE Studio"
+            loading="lazy"
+            decoding="async"
+          >
+
+
+        </figure>
+
+
+
+        <div class="about-feature__copy">
+
+
+          <p
+            class="
+              about-section-eyebrow
+              reveal-eyebrow
+            "
+          >
+            BRAND THINKING
+          </p>
+
+
+          <div class="about-feature__heading-mask">
+
+            <h2 id="about-brand-title">
+
+              MAKE IT
+
+              <span>
+                MEAN
+                <br>
+                SOMETHING.
+              </span>
+
+            </h2>
+
+          </div>
+
+
+          <p class="about-feature__description">
+
+            From brand strategy and positioning to visual identity,
+            logo design, brand guidelines and communication,
+            we create brands designed to stand apart.
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
 
 
   </main>
+
 
 
 
@@ -952,11 +1245,8 @@
     <div class="site-footer__container">
 
 
-      <!-- =================================================
-           FOOTER CTA
-      ================================================== -->
-
       <div class="site-footer__cta">
+
 
         <div>
 
@@ -966,13 +1256,17 @@
 
 
           <h2>
+
             LET'S BUILD
+
             <span>
               SOMETHING GOOD.
             </span>
+
           </h2>
 
         </div>
+
 
 
         <a
@@ -984,31 +1278,31 @@
             LET'S TALK
           </span>
 
-          <i>
+          <i aria-hidden="true">
             ↗
           </i>
 
         </a>
 
+
       </div>
 
 
 
-      <!-- =================================================
-           FOOTER NAVIGATION
-      ================================================== -->
-
       <div class="site-footer__main">
 
 
-        <!-- BRAND -->
+        <!-- =================================================
+             BRAND
+        ================================================== -->
 
         <div class="site-footer__brand-column">
+
 
           <a
             href="/"
             class="site-footer__logo"
-            aria-label="APE Studio Home"
+            aria-label="APE Studio home"
           >
 
             <img
@@ -1020,16 +1314,22 @@
 
 
           <p>
-            Strategy, creativity, digital and production
-            brought together to build brands that get noticed,
-            remembered and chosen.
+
+            APE Studio is a performance-driven creative and
+            digital marketing agency helping brands build stronger
+            identities, sharper digital presence and meaningful
+            connections with their audiences.
+
           </p>
+
 
         </div>
 
 
 
-        <!-- PAGES -->
+        <!-- =================================================
+             PAGES
+        ================================================== -->
 
         <div class="site-footer__column">
 
@@ -1038,15 +1338,16 @@
           </p>
 
 
-          <nav
-            aria-label="Footer pages"
-          >
+          <nav aria-label="Footer pages">
 
             <a href="/">
               Home
             </a>
 
-            <a href="/about/">
+            <a
+              href="/about/"
+              aria-current="page"
+            >
               About
             </a>
 
@@ -1064,7 +1365,9 @@
 
 
 
-        <!-- EXPLORE -->
+        <!-- =================================================
+             EXPLORE
+        ================================================== -->
 
         <div class="site-footer__column">
 
@@ -1073,9 +1376,7 @@
           </p>
 
 
-          <nav
-            aria-label="Footer explore navigation"
-          >
+          <nav aria-label="Footer explore navigation">
 
             <a href="/blog/">
               Blog
@@ -1095,11 +1396,15 @@
 
 
 
-        <!-- CAPABILITIES -->
+        <!-- =================================================
+             CAPABILITIES
+        ================================================== -->
 
         <div
-          class="site-footer__column
-                 site-footer__column--services"
+          class="
+            site-footer__column
+            site-footer__column--services
+          "
         >
 
           <p class="site-footer__column-title">
@@ -1107,59 +1412,40 @@
           </p>
 
 
-          <nav
-            aria-label="APE capabilities"
-          >
+          <nav aria-label="APE Studio capabilities">
 
-            <a href="/services/">
-              Social Media
-            </a>
-
-            <a href="/services/">
-              Performance Marketing
-            </a>
-
-            <a href="/services/">
+            <a href="/services/digital-marketing/">
               Digital Marketing
             </a>
 
-            <a href="/services/">
-              Website Development
+            <a href="/services/printables/">
+              Printables
             </a>
 
-            <a href="/services/">
-              Packaging
-            </a>
-
-            <a href="/services/">
+            <a href="/services/branding/">
               Branding
             </a>
 
-            <a href="/services/">
+            <a href="/services/influencer-marketing/">
               Influencer Marketing
             </a>
 
-            <a href="/services/">
-              Reels & Motion
+            <a href="/services/visual-studio/">
+              Visual Studio
             </a>
 
           </nav>
 
         </div>
 
+
       </div>
 
 
 
-      <!-- DIVIDER -->
-
       <div class="site-footer__divider"></div>
 
 
-
-      <!-- =================================================
-           FOOTER BOTTOM
-      ================================================== -->
 
       <div class="site-footer__bottom">
 
@@ -1167,8 +1453,15 @@
         <div class="site-footer__copyright">
 
           <span>
-            © 2026 APE STUDIO
+
+            ©
+
+            <span id="ape-footer-year"></span>
+
+            APE STUDIO
+
           </span>
+
 
           <span>
             ALL RIGHTS RESERVED
@@ -1180,7 +1473,10 @@
 
         <div class="site-footer__bottom-nav">
 
-          <a href="/about/">
+          <a
+            href="/about/"
+            aria-current="page"
+          >
             ABOUT
           </a>
 
@@ -1209,19 +1505,21 @@
 
 
         <a
-          href="#"
+          href="#about-hero"
           class="site-footer__top-link"
         >
 
           BACK TO TOP
 
-          <span>
+          <span aria-hidden="true">
             ↑
           </span>
 
         </a>
 
+
       </div>
+
 
     </div>
 
@@ -1230,7 +1528,7 @@
 
 
   <!-- =====================================================
-       ABOUT SCRIPT
+       APP ENTRY
   ====================================================== -->
 
   <script

@@ -10,13 +10,6 @@ import {
 } from "gsap/ScrollTrigger";
 
 
-import "../styles/variables.css";
-import "../styles/reset.css";
-import "../styles/header.css";
-import "../styles/footer.css";
-import "../styles/service-detail.css";
-
-
 import {
   initHeader
 } from "../header/header.js";
@@ -32,12 +25,62 @@ gsap.registerPlugin(
 );
 
 
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+
+const finePointer =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+
 
 /* =========================================================
-   SLUG
+   SERVICE MASCOTS
+========================================================= */
+
+const SERVICE_MASCOTS = {
+
+  "digital-marketing":
+    "/mascot/ape-laptop.webp",
+
+  "printables":
+    "/mascot/ape-idea.webp",
+
+  "branding":
+    "/mascot/ape-thinking.webp",
+
+  "influencer-marketing":
+    "/mascot/ape-phone.webp",
+
+  "visual-studio":
+    "/mascot/ape-camera.webp"
+
+};
+
+
+/* =========================================================
+   GET SERVICE SLUG
 ========================================================= */
 
 function getServiceSlug() {
+
+  const bodySlug =
+    document.body.dataset.service;
+
+
+  if (bodySlug) {
+
+    return bodySlug;
+
+  }
+
 
   const parts =
     window.location.pathname
@@ -54,9 +97,8 @@ function getServiceSlug() {
 }
 
 
-
 /* =========================================================
-   DATA
+   GET SERVICE DATA
 ========================================================= */
 
 function getServiceData() {
@@ -76,9 +118,30 @@ function getServiceData() {
 }
 
 
+/* =========================================================
+   SAFE SECTION ID
+========================================================= */
+
+function createSectionId(
+  title
+) {
+
+  return title
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-|-$/g,
+      ""
+    );
+
+}
+
 
 /* =========================================================
-   HERO TITLE
+   HERO LINES
 ========================================================= */
 
 function renderHeroLines(
@@ -94,11 +157,14 @@ function renderHeroLines(
         return `
 
           <span
-            class="${
-              line.accent
-                ? "is-accent"
-                : ""
-            }"
+            class="
+              service-detail-hero__title-line
+              ${
+                line.accent
+                  ? "is-accent"
+                  : ""
+              }
+            "
           >
             ${line.text}
           </span>
@@ -112,21 +178,16 @@ function renderHeroLines(
 }
 
 
-
 /* =========================================================
    SUB SERVICES
-
-   ONLY:
-   H2
-   SHORT DESCRIPTION
-   TWO IMAGES
+   H2 STRUCTURE
 ========================================================= */
 
 function renderSubservices(
-  items
+  service
 ) {
 
-  return items
+  return service.subservices
     .map(
       function (
         item,
@@ -134,16 +195,13 @@ function renderSubservices(
       ) {
 
         const id =
-          item.title
-            .toLowerCase()
-            .replace(
-              /[^a-z0-9]+/g,
-              "-"
-            )
-            .replace(
-              /^-|-$/g,
-              ""
-            );
+          createSectionId(
+            item.title
+          );
+
+
+        const headingId =
+          `${id}-title`;
 
 
         return `
@@ -158,6 +216,7 @@ function renderSubservices(
                   : ""
               }
             "
+            aria-labelledby="${headingId}"
           >
 
 
@@ -167,12 +226,17 @@ function renderSubservices(
               <div class="service-subsection__content">
 
 
-                <h2>
+                <p class="service-subsection__eyebrow">
+                  ${service.navLabel}
+                </p>
+
+
+                <h2 id="${headingId}">
                   ${item.title}
                 </h2>
 
 
-                <p>
+                <p class="service-subsection__description">
                   ${item.description}
                 </p>
 
@@ -200,7 +264,7 @@ function renderSubservices(
 
                   <img
                     src="${item.images[1]}"
-                    alt="${item.title} work by APE Studio"
+                    alt="${item.title} creative example by APE Studio"
                     loading="lazy"
                     decoding="async"
                   >
@@ -225,7 +289,6 @@ function renderSubservices(
 }
 
 
-
 /* =========================================================
    BUILD PAGE
 ========================================================= */
@@ -239,7 +302,9 @@ function renderServicePage() {
 
 
   if (!root) {
+
     return;
+
   }
 
 
@@ -247,11 +312,16 @@ function renderServicePage() {
     getServiceData();
 
 
+  const mascot =
+    SERVICE_MASCOTS[
+      service.slug
+    ]
+    ||
+    "/mascot/ape-idea.webp";
 
-  /*
-   * No separate hero image.
-   * Keeps hero cleaner + one screen.
-  */
+
+  const heroTitleId =
+    `${service.slug}-service-title`;
 
 
   root.innerHTML =
@@ -261,70 +331,147 @@ function renderServicePage() {
            HERO
       ================================================ -->
 
-      <section class="service-detail-hero">
+      <section
+        id="service-detail-hero"
+        class="service-detail-hero"
+        aria-labelledby="${heroTitleId}"
+      >
+
+
+        <div
+          class="service-detail-hero__glow service-detail-hero__glow--violet"
+          aria-hidden="true"
+        ></div>
+
+
+        <div
+          class="service-detail-hero__glow service-detail-hero__glow--lime"
+          aria-hidden="true"
+        ></div>
+
 
 
         <div class="service-detail-hero__inner">
 
 
-          <a
-            href="/services/"
-            class="service-detail-back"
-          >
-            ← All Services
-          </a>
+          <!-- =============================================
+               LEFT
+          ============================================== -->
 
-
-          <p class="service-detail-hero__eyebrow">
-            ${service.navLabel}
-          </p>
-
-
-          <h1>
-
-            ${renderHeroLines(
-              service.heroLines
-            )}
-
-          </h1>
-
-
-          <p class="service-detail-hero__lead">
-
-            ${service.intro}
-
-          </p>
-
-
-          <div class="service-detail-hero__actions">
+          <div class="service-detail-hero__content">
 
 
             <a
-              href="#service-subsections"
-              class="service-detail-primary"
+              href="/services/"
+              class="service-detail-back"
             >
-
-              Explore
-
-              <span>
-                ↓
-              </span>
-
+              ← ALL SERVICES
             </a>
 
 
-            <a
-              href="/contact/"
-              class="service-detail-secondary"
+            <p class="service-detail-hero__eyebrow">
+              ${service.eyebrow}
+            </p>
+
+
+            <!--
+              ONE H1 PER SERVICE DETAIL PAGE.
+
+              SPANS ARE PRESENTATION / ANIMATION WRAPPERS ONLY.
+            -->
+
+            <h1 id="${heroTitleId}">
+
+              ${renderHeroLines(
+                service.heroLines
+              )}
+
+            </h1>
+
+
+            <p class="service-detail-hero__lead">
+              ${service.intro}
+            </p>
+
+
+            <div class="service-detail-hero__actions">
+
+
+              <a
+                href="#service-subsections"
+                class="service-detail-primary"
+              >
+
+                EXPLORE
+
+                <span aria-hidden="true">
+                  ↓
+                </span>
+
+              </a>
+
+
+              <a
+                href="/contact/"
+                class="service-detail-secondary"
+              >
+
+                START A PROJECT
+
+                <span aria-hidden="true">
+                  ↗
+                </span>
+
+              </a>
+
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- =============================================
+               DECORATIVE MASCOT
+          ============================================== -->
+
+          <div class="service-detail-hero__visual">
+
+
+            <button
+              type="button"
+              class="service-detail-ape"
+              aria-label="Make the APE Studio mascot react"
             >
 
-              Start A Project
 
-              <span>
-                ↗
+              <span
+                class="service-detail-ape__aura"
+                aria-hidden="true"
+              ></span>
+
+
+              <span class="service-detail-ape__world">
+
+                <span class="service-detail-ape__rig">
+
+                  <span class="service-detail-ape__float">
+
+                    <img
+                      src="${mascot}"
+                      alt=""
+                      draggable="false"
+                    >
+
+                  </span>
+
+                </span>
+
               </span>
 
-            </a>
+
+            </button>
 
 
           </div>
@@ -339,15 +486,17 @@ function renderServicePage() {
 
       <!-- ===============================================
            SUB SERVICES
+           H2 SECTIONS
       ================================================ -->
 
       <section
         id="service-subsections"
         class="service-subsections"
+        aria-label="${service.navLabel} services"
       >
 
         ${renderSubservices(
-          service.subservices
+          service
         )}
 
       </section>
@@ -355,24 +504,35 @@ function renderServicePage() {
     `;
 
 
-
-  document.title =
-    `${service.navLabel} | APE Studio`;
+  /*
+   * IMPORTANT SEO RULE
+   *
+   * DO NOT overwrite:
+   *
+   * document.title
+   * meta description
+   * canonical
+   * Open Graph
+   *
+   * Each HTML page owns its own unique SEO metadata.
+   */
 
 }
 
 
-
 /* =========================================================
-   MOTION
+   HERO APE DANCE
 ========================================================= */
 
-function initMotion() {
+function danceApe(
+  rig,
+  aura,
+  pulse
+) {
 
   if (
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches
+    !rig ||
+    reduceMotion
   ) {
 
     return;
@@ -380,120 +540,505 @@ function initMotion() {
   }
 
 
+  gsap.killTweensOf(
+    rig
+  );
 
-  gsap
-    .timeline({
 
-      defaults: {
-        ease:
-          "power4.out"
-      }
+  gsap.timeline()
 
-    })
-
-    .fromTo(
-
-      ".service-detail-back",
-
+    .to(
+      rig,
       {
-        opacity: 0,
-        y: 10
-      },
+        y: -26,
+        x: -10,
+        rotation: -7,
+        scale: 1.08,
 
-      {
-        opacity: 1,
-        y: 0,
-
-        duration:
-          .35
+        duration: 0.15
       }
-
     )
 
+    .to(
+      rig,
+      {
+        x: 12,
+        rotation: 8,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: -9,
+        rotation: -6,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 0,
+
+        rotationY:
+          "+=360",
+
+        duration: 0.5,
+
+        ease:
+          "power3.inOut"
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 0,
+        y: 0,
+
+        rotation: 0,
+        rotationX: 0,
+        rotationY: 0,
+
+        scale: 1,
+
+        duration: 0.38,
+
+        ease:
+          "bounce.out"
+      }
+    );
+
+
+  if (aura) {
+
+    gsap.fromTo(
+      aura,
+      {
+        scale: 0.78,
+        opacity: 0.9
+      },
+      {
+        scale: 1.35,
+        opacity: 0.45,
+
+        duration: 0.55
+      }
+    );
+
+  }
+
+
+  if (pulse) {
+
+    gsap.fromTo(
+      pulse,
+      {
+        scale: 0.7,
+        opacity: 0.7
+      },
+      {
+        scale: 1.4,
+        opacity: 0,
+
+        duration: 0.58
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HERO APE INTERACTION
+========================================================= */
+
+function initHeroApe() {
+
+  const ape =
+    document.querySelector(
+      ".service-detail-ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".service-detail-ape__world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".service-detail-ape__rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".service-detail-ape__float"
+    );
+
+
+  const aura =
+    document.querySelector(
+      ".service-detail-ape__aura"
+    );
+
+
+  const pulse =
+    document.querySelector(
+      ".service-detail-ape__pulse"
+    );
+
+
+  if (
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+
+    return;
+
+  }
+
+
+  if (!reduceMotion) {
+
+    gsap.to(
+      float,
+      {
+        y: -8,
+        rotation: 1.4,
+
+        duration: 1.7,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+
+    gsap.to(
+      ".service-detail-hero__visual",
+      {
+        yPercent: -4,
+
+        ease: "none",
+
+        scrollTrigger: {
+
+          trigger:
+            ".service-detail-hero",
+
+          start:
+            "top top",
+
+          end:
+            "bottom top",
+
+          scrub:
+            0.8
+
+        }
+      }
+    );
+
+  }
+
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 20,
+
+            y:
+              y * 11,
+
+            duration: 0.34,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 12,
+
+            rotationX:
+              y * -7,
+
+            rotation:
+              x * 2,
+
+            scale: 1.045,
+
+            duration: 0.32,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x: 0,
+            y: 0,
+
+            duration: 0.55,
+
+            ease:
+              "elastic.out(1,0.45)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotation: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+
+            duration: 0.48,
+
+            ease:
+              "back.out(1.6)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      danceApe(
+        rig,
+        aura,
+        pulse
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HERO MOTION
+========================================================= */
+
+function initHeroMotion() {
+
+  if (reduceMotion) {
+
+    return;
+
+  }
+
+
+  gsap.timeline({
+
+    defaults: {
+
+      ease:
+        "power4.out"
+
+    }
+
+  })
+
     .fromTo(
-
-      ".service-detail-hero__eyebrow",
-
+      ".service-detail-back",
       {
         opacity: 0,
         y: 12
       },
-
       {
         opacity: 1,
         y: 0,
 
-        duration:
-          .4
-      },
-
-      "-=.15"
-
+        duration: 0.4
+      }
     )
 
+
     .fromTo(
-
-      ".service-detail-hero h1",
-
+      ".service-detail-hero__eyebrow",
       {
         opacity: 0,
-        y: 45
+        y: 13
       },
-
       {
         opacity: 1,
         y: 0,
 
-        duration:
-          .78
+        duration: 0.42
       },
-
-      "-=.18"
-
+      "-=0.18"
     )
 
-    .fromTo(
 
+    .fromTo(
+      ".service-detail-hero__title-line",
+      {
+        opacity: 0,
+        y: 50,
+        rotationX: -10
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+
+        duration: 0.76,
+
+        stagger: 0.08
+      },
+      "-=0.2"
+    )
+
+
+    .fromTo(
       ".service-detail-hero__lead",
-
       {
         opacity: 0,
-        y: 18
+        y: 20
       },
-
       {
         opacity: 1,
         y: 0,
 
-        duration:
-          .5
+        duration: 0.55
       },
-
-      "-=.35"
-
+      "-=0.4"
     )
 
+
     .fromTo(
-
       ".service-detail-hero__actions",
-
       {
         opacity: 0,
         y: 16
       },
-
       {
         opacity: 1,
         y: 0,
 
-        duration:
-          .45
+        duration: 0.48
       },
+      "-=0.32"
+    )
 
-      "-=.3"
 
+    .fromTo(
+      ".service-detail-ape",
+      {
+        opacity: 0,
+        x: 65,
+        y: 55,
+        scale: 0.8,
+        rotation: 5
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+
+        duration: 1.05,
+
+        ease:
+          "back.out(1.5)"
+      },
+      "-=0.72"
     );
 
+}
+
+
+/* =========================================================
+   SUBSERVICE MOTION
+========================================================= */
+
+function initSubserviceMotion() {
+
+  if (reduceMotion) {
+
+    return;
+
+  }
 
 
   const sections =
@@ -513,28 +1058,29 @@ function initMotion() {
         );
 
 
-      const images =
+      const figures =
         section.querySelectorAll(
           "figure"
         );
 
 
+      const images =
+        section.querySelectorAll(
+          "figure img"
+        );
+
 
       gsap.fromTo(
-
         content,
-
         {
           opacity: 0,
-          y: 22
+          y: 36
         },
-
         {
           opacity: 1,
           y: 0,
 
-          duration:
-            .6,
+          duration: 0.72,
 
           ease:
             "power3.out",
@@ -551,33 +1097,25 @@ function initMotion() {
               true
 
           }
-
         }
-
       );
 
 
-
       gsap.fromTo(
-
-        images,
-
+        figures,
         {
           opacity: 0,
-          y: 25,
-          scale: .98
+          y: 40,
+          scale: 0.965
         },
-
         {
           opacity: 1,
           y: 0,
           scale: 1,
 
-          duration:
-            .65,
+          duration: 0.78,
 
-          stagger:
-            .08,
+          stagger: 0.09,
 
           ease:
             "power3.out",
@@ -588,15 +1126,54 @@ function initMotion() {
               section,
 
             start:
-              "top 78%",
+              "top 80%",
 
             once:
               true
 
           }
+        }
+      );
+
+
+      images.forEach(
+        function (
+          image
+        ) {
+
+          gsap.fromTo(
+            image,
+            {
+              yPercent: -3,
+              scale: 1.04
+            },
+            {
+              yPercent: 3,
+              scale: 1.04,
+
+              ease: "none",
+
+              scrollTrigger: {
+
+                trigger:
+                  image.closest(
+                    "figure"
+                  ),
+
+                start:
+                  "top bottom",
+
+                end:
+                  "bottom top",
+
+                scrub:
+                  1
+
+              }
+            }
+          );
 
         }
-
       );
 
     }
@@ -605,9 +1182,8 @@ function initMotion() {
 }
 
 
-
 /* =========================================================
-   SMOOTH CTA
+   EXPLORE CTA
 ========================================================= */
 
 function initAnchor() {
@@ -625,8 +1201,7 @@ function initAnchor() {
 
 
   if (
-    !button
-    ||
+    !button ||
     !target
   ) {
 
@@ -647,7 +1222,9 @@ function initAnchor() {
       target.scrollIntoView({
 
         behavior:
-          "smooth",
+          reduceMotion
+            ? "auto"
+            : "smooth",
 
         block:
           "start"
@@ -658,7 +1235,6 @@ function initAnchor() {
   );
 
 }
-
 
 
 /* =========================================================
@@ -676,8 +1252,10 @@ function initFooter() {
   if (year) {
 
     year.textContent =
-      new Date()
-        .getFullYear();
+      String(
+        new Date()
+          .getFullYear()
+      );
 
   }
 
@@ -689,7 +1267,9 @@ function initFooter() {
 
 
   if (!top) {
+
     return;
+
   }
 
 
@@ -707,7 +1287,9 @@ function initFooter() {
         top: 0,
 
         behavior:
-          "smooth"
+          reduceMotion
+            ? "auto"
+            : "smooth"
 
       });
 
@@ -715,7 +1297,6 @@ function initFooter() {
   );
 
 }
-
 
 
 /* =========================================================
@@ -738,7 +1319,11 @@ document.addEventListener(
     requestAnimationFrame(
       function () {
 
-        initMotion();
+        initHeroApe();
+
+        initHeroMotion();
+
+        initSubserviceMotion();
 
         ScrollTrigger.refresh();
 
@@ -749,6 +1334,9 @@ document.addEventListener(
 );
 
 
+/* =========================================================
+   FINAL REFRESH
+========================================================= */
 
 window.addEventListener(
   "load",

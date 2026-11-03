@@ -20,6 +20,38 @@
     Contact APE Studio
   </title>
 
+
+  <!-- =====================================================
+       CONTACT PAGE — CRITICAL CSS
+       LOAD BEFORE FIRST PAINT
+       PREVENTS FLASH / RELOAD ISSUE
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/variables.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/reset.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/header.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/footer.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/src/styles/contact-page.css"
+  >
+
 </head>
 
 
@@ -37,7 +69,6 @@
 
     <div class="site-header__inner">
 
-
       <a
         href="/"
         class="site-header__brand"
@@ -51,7 +82,6 @@
         >
 
       </a>
-
 
 
       <nav
@@ -94,7 +124,6 @@
       </nav>
 
 
-
       <a
         href="/contact/"
         class="site-header__cta"
@@ -111,7 +140,6 @@
       </a>
 
 
-
       <button
         id="site-menu-toggle"
         class="site-menu-toggle"
@@ -126,7 +154,6 @@
       </button>
 
     </div>
-
 
 
     <!-- MOBILE MENU -->
@@ -216,7 +243,6 @@
 
 
 
-
   <!-- =====================================================
        CONTACT PAGE
   ====================================================== -->
@@ -230,13 +256,21 @@
 
     <section class="contact-hero">
 
+
       <div
         class="contact-hero__glow contact-hero__glow--violet"
         aria-hidden="true"
       ></div>
 
+
       <div
-        class="contact-hero__glow contact-hero__glow--magenta"
+        class="contact-hero__glow contact-hero__glow--lime"
+        aria-hidden="true"
+      ></div>
+
+
+      <div
+        class="contact-hero__glow contact-hero__glow--deep"
         aria-hidden="true"
       ></div>
 
@@ -244,7 +278,20 @@
       <div class="contact-hero__inner">
 
 
+        <!-- HERO COPY -->
+
         <div class="contact-hero__headline">
+
+          <p class="contact-hero__eyebrow">
+
+            START A CONVERSATION
+
+            <span aria-hidden="true"></span>
+
+            APE STUDIO
+
+          </p>
+
 
           <h1>
 
@@ -258,12 +305,55 @@
 
           </h1>
 
+
+          <p class="contact-hero__lead">
+
+            Have a brand, campaign, website, content idea or
+            something completely different in mind? Tell us
+            what you're building.
+
+          </p>
+
+
+          <a
+            href="#contact-form"
+            class="contact-hero__jump"
+          >
+
+            <span>
+              START A PROJECT
+            </span>
+
+            <i aria-hidden="true">
+              ↓
+            </i>
+
+          </a>
+
         </div>
 
 
 
-        <div class="contact-hero__details">
+        <!-- CONTACT CARD -->
 
+        <aside class="contact-hero__details">
+
+
+          <div class="contact-hero__location">
+
+            <span
+              class="contact-hero__location-dot"
+              aria-hidden="true"
+            ></span>
+
+            <span>
+              KOLKATA / INDIA
+            </span>
+
+          </div>
+
+
+          <!-- PHONE -->
 
           <div class="contact-detail">
 
@@ -277,13 +367,24 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              +91 9230647425
-              <span>↗</span>
+
+              <span class="contact-detail__value">
+                +91 9230647425
+              </span>
+
+              <span
+                class="contact-detail__arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+
             </a>
 
           </div>
 
 
+          <!-- EMAIL -->
 
           <div class="contact-detail">
 
@@ -293,20 +394,154 @@
 
 
             <a href="mailto:info@apeindia.in">
-              info@apeindia.in
-              <span>↗</span>
+
+              <span class="contact-detail__value">
+                info@apeindia.in
+              </span>
+
+              <span
+                class="contact-detail__arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+
             </a>
 
           </div>
 
 
-        </div>
+
+          <!-- =================================================
+               SOCIAL MEDIA
+          ================================================== -->
+
+          <div class="contact-social">
+
+            <p class="contact-detail__label">
+              FOLLOW APE
+            </p>
+
+
+            <div class="contact-social__links">
+
+
+              <!-- FACEBOOK -->
+
+              <a
+                class="contact-social__link"
+                href="https://www.facebook.com/share/19gyU4ZwxS/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="APE Studio on Facebook"
+                title="Facebook"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M13.5 22v-9h3l.45-3.5H13.5V7.25c0-1.01.28-1.7 1.73-1.7H17V2.42c-.31-.04-1.39-.13-2.65-.13-2.62 0-4.42 1.6-4.42 4.55V9.5H7v3.5h2.93v9h3.57Z"
+                  />
+                </svg>
+
+              </a>
+
+
+
+              <!-- INSTAGRAM -->
+
+              <a
+                class="contact-social__link"
+                href="https://www.instagram.com/apestudiosin?exln=N2tpem5qNWY1dXNw"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="APE Studio on Instagram"
+                title="Instagram"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+
+                  <path
+                    fill="currentColor"
+                    d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.76 3.76 0 0 0 4 7.75v8.5A3.76 3.76 0 0 0 7.75 20h8.5A3.76 3.76 0 0 0 20 16.25v-8.5A3.76 3.76 0 0 0 16.25 4h-8.5Zm8.75 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+                  />
+
+                </svg>
+
+              </a>
+
+
+
+              <!-- LINKEDIN -->
+
+              <a
+                class="contact-social__link"
+                href="https://www.linkedin.com/company/ape-studioindia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="APE Studio on LinkedIn"
+                title="LinkedIn"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+
+                  <path
+                    fill="currentColor"
+                    d="M5.34 3.5A2.34 2.34 0 1 1 5.33 8.18 2.34 2.34 0 0 1 5.34 3.5ZM3.3 9.75h4.08V22H3.3V9.75Zm6.55 0h3.91v1.67h.06c.54-1.03 1.88-2.12 3.87-2.12 4.14 0 4.91 2.73 4.91 6.28V22h-4.08v-5.69c0-1.36-.03-3.1-1.89-3.1-1.89 0-2.18 1.47-2.18 3V22H9.85V9.75Z"
+                  />
+
+                </svg>
+
+              </a>
+
+
+
+              <!-- YOUTUBE -->
+
+              <a
+                class="contact-social__link"
+                href="https://youtube.com/@apestudioind?si=pNedUN5wmQLruhUn"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="APE Studio on YouTube"
+                title="YouTube"
+              >
+
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+
+                  <path
+                    fill="currentColor"
+                    d="M23.5 6.2a3 3 0 0 0-2.11-2.12C19.52 3.58 12 3.58 12 3.58s-7.52 0-9.39.5A3 3 0 0 0 .5 6.2 31.08 31.08 0 0 0 0 12a31.08 31.08 0 0 0 .5 5.8 3 3 0 0 0 2.11 2.12c1.87.5 9.39.5 9.39.5s7.52 0 9.39-.5a3 3 0 0 0 2.11-2.12A31.08 31.08 0 0 0 24 12a31.08 31.08 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"
+                  />
+
+                </svg>
+
+              </a>
+
+
+            </div>
+
+          </div>
+
+
+        </aside>
 
 
       </div>
 
     </section>
-
 
 
 
@@ -326,31 +561,77 @@
 
         <div class="contact-form-section__intro">
 
+
           <p class="contact-form-section__eyebrow">
             START A PROJECT
           </p>
 
 
           <h2>
+
             Tell us what
+
             <span>
               you're building.
             </span>
+
           </h2>
 
 
-          <p>
+          <p class="contact-form-section__copy">
+
             Give us a little context about your brand,
             requirement or project. We'll take it from there.
+
           </p>
+
+
+          <div class="contact-form-section__mini">
+
+            <span>
+              BRANDING
+            </span>
+
+            <span>
+              DIGITAL
+            </span>
+
+            <span>
+              CONTENT
+            </span>
+
+            <span>
+              PRODUCTION
+            </span>
+
+          </div>
 
         </div>
 
 
 
-        <!-- FORM -->
+        <!-- FORM CARD -->
 
         <div class="contact-form-wrap">
+
+
+          <div
+            class="contact-form-wrap__accent"
+            aria-hidden="true"
+          ></div>
+
+
+          <div class="contact-form-wrap__top">
+
+            <span>
+              PROJECT ENQUIRY
+            </span>
+
+            <span>
+              APE / KOLKATA
+            </span>
+
+          </div>
 
 
           <form
@@ -362,7 +643,7 @@
           >
 
 
-            <!-- HONEYPOT / SPAM FIELD -->
+            <!-- HONEYPOT -->
 
             <div
               class="contact-form__trap"
@@ -370,6 +651,7 @@
             >
 
               <label>
+
                 Website
 
                 <input
@@ -384,7 +666,6 @@
             </div>
 
 
-
             <!-- NAME -->
 
             <div class="contact-field">
@@ -392,7 +673,6 @@
               <label for="contact-name">
                 Your Name
               </label>
-
 
               <input
                 id="contact-name"
@@ -406,7 +686,6 @@
             </div>
 
 
-
             <!-- PHONE -->
 
             <div class="contact-field">
@@ -414,7 +693,6 @@
               <label for="contact-phone">
                 Phone Number
               </label>
-
 
               <input
                 id="contact-phone"
@@ -428,7 +706,6 @@
             </div>
 
 
-
             <!-- EMAIL -->
 
             <div class="contact-field">
@@ -436,7 +713,6 @@
               <label for="contact-email">
                 Email
               </label>
-
 
               <input
                 id="contact-email"
@@ -450,7 +726,6 @@
             </div>
 
 
-
             <!-- COMPANY -->
 
             <div class="contact-field">
@@ -458,7 +733,6 @@
               <label for="contact-company">
                 Brand / Company
               </label>
-
 
               <input
                 id="contact-company"
@@ -471,7 +745,6 @@
             </div>
 
 
-
             <!-- SERVICE -->
 
             <div class="contact-field contact-field--full">
@@ -479,7 +752,6 @@
               <label for="contact-service">
                 What can we help you with?
               </label>
-
 
               <select
                 id="contact-service"
@@ -540,7 +812,6 @@
             </div>
 
 
-
             <!-- MESSAGE -->
 
             <div class="contact-field contact-field--full">
@@ -548,7 +819,6 @@
               <label for="contact-message">
                 Tell us about the project
               </label>
-
 
               <textarea
                 id="contact-message"
@@ -559,7 +829,6 @@
               ></textarea>
 
             </div>
-
 
 
             <!-- HIDDEN TRACKING -->
@@ -593,7 +862,6 @@
               type="hidden"
               name="utmCampaign"
             >
-
 
 
             <!-- SUBMIT -->
@@ -633,12 +901,6 @@
           </form>
 
 
-
-          <!--
-            Hidden iframe receives Google Apps Script response.
-            This avoids leaving the Contact page.
-          -->
-
           <iframe
             id="contact-form-frame"
             name="contact-form-frame"
@@ -656,7 +918,6 @@
 
 
   </main>
-
 
 
 
@@ -684,13 +945,11 @@
 
     </svg>
 
-
     <span>
       WhatsApp
     </span>
 
   </a>
-
 
 
 
@@ -713,7 +972,6 @@
           <p class="site-footer__eyebrow">
             READY TO MAKE A MOVE?
           </p>
-
 
           <h2>
 
@@ -782,7 +1040,6 @@
             PAGES
           </p>
 
-
           <nav>
 
             <a href="/">
@@ -812,7 +1069,6 @@
           <p class="site-footer__column-title">
             EXPLORE
           </p>
-
 
           <nav>
 
@@ -844,7 +1100,6 @@
           <p class="site-footer__column-title">
             CAPABILITIES
           </p>
-
 
           <nav>
 
@@ -892,7 +1147,6 @@
       <div class="site-footer__divider"></div>
 
 
-
       <div class="site-footer__bottom">
 
 
@@ -906,13 +1160,11 @@
 
           </span>
 
-
           <span>
             ALL RIGHTS RESERVED
           </span>
 
         </div>
-
 
 
         <div class="site-footer__bottom-nav">
@@ -944,7 +1196,6 @@
         </div>
 
 
-
         <a
           href="#"
           class="site-footer__top-link"
@@ -964,7 +1215,6 @@
     </div>
 
   </footer>
-
 
 
   <script

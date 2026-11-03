@@ -1,2520 +1,2008 @@
 /* =========================================================
-   APE ABOUT PAGE
+   APE STUDIO — ABOUT PAGE
+   FINAL POLISHED VERSION
+========================================================= */
+
+:root {
+  --ape-black: #000000;
+  --ape-violet: #7d35eb;
+  --ape-lime: #c6ff33;
+  --ape-white: #ffffff;
+  --ape-offwhite: #f7f6f4;
+}
+
+/* =========================================================
+   PAGE
 ========================================================= */
 
 .about-page {
+  width: 100%;
+  overflow-x: clip;
+  color: var(--ape-black);
+  background: var(--ape-white);
+}
+
+.about-page * {
+  box-sizing: border-box;
+}
+
+.about-page img,
+.about-page video {
+  display: block;
+  max-width: 100%;
+}
+
+/* =========================================================
+   SHARED EYEBROW
+========================================================= */
+
+.about-section-eyebrow {
   position: relative;
 
-  width: 100%;
+  width: fit-content;
 
-  padding-bottom: 95px;
+  margin:
+    0
+    0
+    17px;
 
-  box-sizing: border-box;
+  padding-left: 21px;
 
-  background: #ffffff;
+  color: var(--ape-violet);
 
-  color: #29183f;
+  font-size: 9px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
 }
 
+.about-section-eyebrow::before {
+  content: "";
 
-/* =========================================================
-   HEADER SAFE SPACE
-========================================================= */
+  position: absolute;
 
-.about-page {
-  --about-header-safe:
-    88px;
+  left: 0;
+
+  top: 50%;
+
+  width: 10px;
+
+  height: 2px;
+
+  transform:
+    translateY(-50%);
+
+  background: var(--ape-lime);
 }
 
-
 /* =========================================================
-   ABOUT HERO
+   HERO
 ========================================================= */
 
 .about-hero {
   position: relative;
 
+  width: 100%;
+
+  height: 100svh;
+
   min-height: 100svh;
 
   overflow: hidden;
 
+  isolation: isolate;
+
+  color: #ffffff;
+
   background:
     radial-gradient(
-      circle at 86% 16%,
-      rgba(216, 75, 169, 0.10),
-      transparent 29%
-    ),
-    radial-gradient(
-      circle at 9% 86%,
-      rgba(116, 82, 217, 0.11),
-      transparent 34%
+      70% 100%
+      at 100% 18%,
+      rgba(125, 53, 235, 0.53),
+      transparent 68%
     ),
     linear-gradient(
-      135deg,
-      #ffffff 0%,
-      #fbf9ff 52%,
-      #f0eaff 100%
+      115deg,
+      #000000 0%,
+      #06010b 40%,
+      #19052d 72%,
+      #10031c 100%
     );
 }
 
+/* =========================================================
+   HERO GLOW
+========================================================= */
 
-.about-hero__ape {
+.about-hero__glow {
   position: absolute;
 
-  right: -5vw;
-  top: 48%;
+  z-index: -1;
 
-  transform:
-    translateY(-50%);
-
-  color:
-    rgba(
-      112,
-      78,
-      213,
-      0.038
-    );
-
-  font-size:
-    clamp(
-      250px,
-      40vw,
-      680px
-    );
-
-  line-height: 0.72;
-
-  font-weight: 950;
-
-  letter-spacing: -0.13em;
+  border-radius: 50%;
 
   pointer-events: none;
-
-  will-change: transform;
 }
 
+.about-hero__glow--violet {
+  width: 50vw;
+
+  height: 50vw;
+
+  right: -18vw;
+
+  top: -20vw;
+
+  opacity: 0.42;
+
+  filter:
+    blur(70px);
+
+  background:
+    radial-gradient(
+      circle,
+      #7d35eb,
+      transparent 68%
+    );
+}
+
+.about-hero__glow--lime {
+  width: 28vw;
+
+  height: 28vw;
+
+  right: 13vw;
+
+  bottom: -21vw;
+
+  opacity: 0.09;
+
+  filter:
+    blur(70px);
+
+  background:
+    radial-gradient(
+      circle,
+      #c6ff33,
+      transparent 70%
+    );
+}
+
+/* =========================================================
+   HERO INNER
+========================================================= */
 
 .about-hero__inner {
   position: relative;
 
-  z-index: 5;
+  z-index: 3;
 
   width:
     min(
-      1480px,
-      100%
+      1320px,
+      90%
     );
 
-  min-height: 100svh;
+  height: 100%;
 
-  margin: 0 auto;
+  min-height: 100%;
 
-  padding:
+  margin:
+    0
+    auto;
+
+  padding-top: 108px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(430px, 0.92fr);
+
+  gap:
     clamp(
-      120px,
-      15vh,
-      165px
-    )
-    clamp(
-      30px,
-      6vw,
-      92px
-    )
-    55px;
-
-  box-sizing: border-box;
-
-  display: flex;
-
-  flex-direction: column;
-}
-
-
-/* =========================================================
-   HERO HEADLINE
-========================================================= */
-
-.about-hero__headline {
-  position: relative;
-
-  z-index: 5;
-
-  padding-top:
-    clamp(
-      15px,
-      4vh,
-      42px
-    );
-}
-
-
-.about-hero__headline h1 {
-  margin: 0;
-
-  max-width: 1150px;
-
-  color: #29183f;
-
-  font-size:
-    clamp(
-      72px,
-      10.5vw,
-      174px
+      48px,
+      4.5vw,
+      72px
     );
 
-  font-weight: 950;
-
-  line-height: 0.78;
-
-  letter-spacing: -0.072em;
-
-  text-transform: uppercase;
+  align-items: center;
 }
-
-
-.about-hero__headline h1 span {
-  display: block;
-}
-
-
-.about-hero__outline {
-  color: transparent;
-
-  -webkit-text-stroke:
-    2px
-    #7654dc;
-}
-
 
 /* =========================================================
    HERO CONTENT
 ========================================================= */
 
 .about-hero__content {
-  display: grid;
+  min-width: 0;
 
-  grid-template-columns:
-    minmax(
-      300px,
-      0.9fr
-    )
-    minmax(
-      480px,
-      1.1fr
-    );
+  max-width: 640px;
 
-  gap:
-    clamp(
-      60px,
-      9vw,
-      145px
-    );
-
-  align-items: start;
-
-  margin-top:
-    clamp(
-      56px,
-      8vh,
-      92px
-    );
+  padding-bottom: 0;
 }
 
+.about-hero__eyebrow {
+  margin:
+    0
+    0
+    16px;
 
-.about-hero__lead p {
+  color: #c6ff33;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
+}
+
+.about-hero h1 {
+  width:
+    min(
+      640px,
+      100%
+    );
+
   margin: 0;
 
-  max-width: 540px;
-
-  color: #321b49;
+  color: #ffffff;
 
   font-size:
     clamp(
-      25px,
-      2.5vw,
-      42px
+      54px,
+      4.8vw,
+      68px
     );
 
-  line-height: 1.08;
+  font-weight: 950;
 
-  font-weight: 760;
+  line-height: 0.98;
 
   letter-spacing: -0.04em;
+
+  text-transform: uppercase;
 }
 
+.about-hero__title-line {
+  display: block;
 
-.about-hero__body {
-  display: grid;
+  width: fit-content;
 
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(
-        0,
-        1fr
-      )
-    );
+  max-width: 100%;
 
-  gap:
-    clamp(
-      25px,
-      4vw,
-      55px
-    );
+  margin-bottom: 2px;
+
+  white-space: nowrap;
 }
 
+.about-hero__title-line:last-child {
+  margin-bottom: 0;
+}
 
-.about-hero__body p {
-  margin: 0;
+.about-hero__title-line--outline {
+  color:
+    rgba(125, 53, 235, 0.02);
+
+  -webkit-text-stroke:
+    1.7px
+    #7d35eb;
+
+  text-shadow:
+    0
+    0
+    30px
+    rgba(125, 53, 235, 0.14);
+}
+
+.about-hero__lead {
+  width:
+    min(
+      500px,
+      100%
+    );
+
+  margin:
+    19px
+    0
+    0;
 
   color:
-    rgba(
-      43,
-      26,
-      64,
-      0.64
-    );
+    rgba(255, 255, 255, 0.64);
 
   font-size:
     clamp(
       13px,
-      1vw,
-      16px
+      0.95vw,
+      15px
     );
 
-  line-height: 1.72;
+  line-height: 1.55;
 }
-
 
 /* =========================================================
-   POSITIONING
+   HERO ACTIONS
 ========================================================= */
 
-.about-hero__positioning {
-  margin-top:
-    clamp(
-      55px,
-      8vh,
-      90px
-    );
-
-  padding:
-    20px
-    0;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(
-        0,
-        1fr
-      )
-    );
-
-  gap: 20px;
-
-  border-top:
-    1px
-    solid
-    rgba(
-      54,
-      32,
-      79,
-      0.11
-    );
-
-  border-bottom:
-    1px
-    solid
-    rgba(
-      54,
-      32,
-      79,
-      0.11
-    );
-}
-
-
-.about-hero__positioning span {
-  color: #7352d9;
-
-  font-size:
-    clamp(
-      10px,
-      1vw,
-      14px
-    );
-
-  font-weight: 900;
-
-  letter-spacing: 0.08em;
-}
-
-
-.about-hero__positioning span:nth-child(2) {
-  color: #d84ba9;
-
-  text-align: center;
-}
-
-
-.about-hero__positioning span:nth-child(3) {
-  text-align: right;
-}
-
-
-.about-hero__scroll {
-  margin-top: auto;
-
-  padding-top: 34px;
+.about-hero__actions {
+  margin-top: 18px;
 
   display: flex;
 
-  justify-content: space-between;
+  flex-wrap: wrap;
 
-  color:
-    rgba(
-      45,
-      27,
-      67,
-      0.42
-    );
-
-  font-size: 7px;
-
-  font-weight: 850;
-
-  letter-spacing: 0.17em;
+  gap: 9px;
 }
 
+.about-hero__primary,
+.about-hero__secondary {
+  min-height: 42px;
+
+  padding:
+    0
+    17px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  border-radius: 999px;
+
+  font-size: 7.5px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.09em;
+
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  transition:
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease;
+}
+
+.about-hero__primary {
+  color: #000000;
+
+  background: #c6ff33;
+}
+
+.about-hero__secondary {
+  color: #ffffff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.34);
+}
+
+.about-hero__primary:hover,
+.about-hero__secondary:hover {
+  transform:
+    translateY(-3px);
+}
+
+.about-hero__secondary:hover {
+  border-color: #7d35eb;
+
+  background: #7d35eb;
+}
 
 /* =========================================================
-   REMOVE OLD STORY META / NUMBER SYSTEM
+   HERO MASCOT
 ========================================================= */
 
-.about-page .story-meta,
-.about-page .story-progress,
-.about-page .story-transition__number,
-.about-page .story-kicker {
-  display: none !important;
-}
+.about-hero__visual {
+  position: relative;
 
+  width: 100%;
 
-/* =========================================================
-   STORY HEADER SAFETY
-========================================================= */
+  min-width: 0;
 
-.about-page .story-transition {
-  padding-top:
-    max(
-      100px,
-      12vh
+  height:
+    min(
+      640px,
+      calc(
+        100svh - 116px
+      )
     );
 
-  padding-bottom:
-    60px;
+  max-height: 640px;
+
+  align-self: end;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: flex-end;
 }
 
-
-/* =========================================================
-   STUDIO COPY
-========================================================= */
-
-.about-page .story-about--studio {
-  padding-top:
-    max(
-      105px,
-      12vh
-    );
-
-  padding-bottom: 70px;
-}
-
-
-.about-page
-.story-studio__copy h2 {
-  font-size:
-    clamp(
-      49px,
-      5.7vw,
-      98px
-    );
-
-  line-height: 0.88;
-}
-
-
-/* =========================================================
-   FILM SAFETY
-========================================================= */
-
-.about-page
-.story-film__media {
-  top:
-    max(
-      100px,
-      12vh
-    );
-
-  height: 72vh;
-}
-
-
-.about-page
-.story-film__copy h2 {
-  font-size:
-    clamp(
-      52px,
-      6.2vw,
-      108px
-    );
-}
-
-
-/* =========================================================
-   DIGITAL
-========================================================= */
-
-.about-page
-.story-about--digital {
-  padding-top:
-    max(
-      105px,
-      12vh
-    );
-}
-
-
-.about-page
-.story-digital__heading h2 {
-  font-size:
-    clamp(
-      44px,
-      5.2vw,
-      88px
-    );
-}
-
-
-/* =========================================================
-   BRAND
-========================================================= */
-
-.about-page
-.story-brand__media {
-  top:
-    max(
-      100px,
-      11vh
-    );
-
-  height: 69vh;
-}
-
-
-.about-page
-.story-brand__copy h2 {
-  font-size:
-    clamp(
-      52px,
-      6.1vw,
-      105px
-    );
-}
-
-
-/* =========================================================
-   FINAL STORY
-   THIS FIXES THE BROKEN SCREEN
-========================================================= */
-
-.about-page
-.about-story-final {
+.about-hero__ape-aura {
   position: absolute;
 
-  inset: 0;
+  left: 3%;
+
+  right: 3%;
+
+  bottom: 3%;
+
+  height: 70%;
+
+  border-radius: 50%;
+
+  opacity: 0.62;
+
+  filter:
+    blur(32px);
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(125, 53, 235, 0.56),
+      rgba(125, 53, 235, 0.13) 48%,
+      transparent 73%
+    );
+}
+
+.about-hero__ape {
+  position: relative;
+
+  z-index: 3;
+
+  width:
+    min(
+      116%,
+      545px
+    );
+
+  height: 100%;
+
+  max-width: none;
+
+  max-height: 640px;
+
+  margin:
+    0
+    -20px
+    0
+    auto;
+
+  padding: 0;
+
+  border: 0;
+
+  outline: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transform-origin:
+    center bottom;
+}
+
+.about-hero__ape img {
+  position: absolute;
+
+  left: 50%;
+
+  bottom: -5px;
+
+  width: 110%;
+
+  height: 103%;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  object-position:
+    center bottom;
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0
+      30px
+      45px
+      rgba(0, 0, 0, 0.46)
+    )
+    drop-shadow(
+      0
+      0
+      23px
+      rgba(125, 53, 235, 0.42)
+    );
+}
+
+/* =========================================================
+   HERO BOTTOM
+========================================================= */
+
+.about-hero__bottom {
+  position: absolute;
+
+  z-index: 5;
+
+  left: 5vw;
+
+  right: 5vw;
+
+  bottom: 24px;
 
   display: flex;
 
   align-items: center;
 
-  justify-content: flex-start;
+  gap: 26px;
 
-  box-sizing: border-box;
+  color:
+    rgba(255, 255, 255, 0.42);
+
+  font-size: 7px;
+
+  font-weight: 850;
+
+  letter-spacing: 0.13em;
+}
+
+/* =========================================================
+   WHO WE ARE
+========================================================= */
+
+.about-intro {
+  position: relative;
+
+  min-height: 92svh;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
 
   padding:
-    max(
-      115px,
-      14vh
-    )
-    7vw
-    70px;
+    115px
+    5vw
+    105px;
+
+  background:
+    radial-gradient(
+      circle
+      at 95% 12%,
+      rgba(125, 53, 235, 0.08),
+      transparent 33%
+    ),
+    #ffffff;
+}
+
+.about-intro__inner {
+  width:
+    min(
+      1500px,
+      100%
+    );
+
+  margin:
+    0
+    auto;
+}
+
+.about-intro__layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(330px, 0.8fr);
+
+  gap:
+    clamp(
+      55px,
+      8vw,
+      120px
+    );
+
+  align-items: center;
+}
+
+.about-intro__heading-mask {
+  overflow: hidden;
+
+  padding:
+    5px
+    0
+    12px;
+}
+
+.about-intro__heading {
+  margin: 0;
+
+  color: #000000;
+
+  font-size:
+    clamp(
+      54px,
+      6vw,
+      98px
+    );
+
+  font-weight: 950;
+
+  line-height: 0.84;
+
+  letter-spacing: -0.065em;
+
+  text-transform: uppercase;
+}
+
+.about-intro__heading span {
+  color: #7d35eb;
+}
+
+.about-intro__copy {
+  width:
+    min(
+      445px,
+      100%
+    );
+
+  justify-self: end;
+}
+
+.about-intro__copy p {
+  margin:
+    0
+    0
+    25px;
+
+  color:
+    rgba(0, 0, 0, 0.63);
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+.about-intro__copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   BELIEF
+========================================================= */
+
+.about-belief {
+  position: relative;
+
+  overflow: hidden;
+
+  padding:
+    105px
+    5vw;
 
   color: #ffffff;
 
   background:
     radial-gradient(
-      circle at 81% 19%,
-      rgba(
-        224,
-        91,
-        180,
-        0.40
-      ),
-      transparent 28%
+      45% 70%
+      at 100% 50%,
+      rgba(125, 53, 235, 0.17),
+      transparent 72%
     ),
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(
-        126,
-        88,
-        220,
-        0.25
-      ),
-      transparent 35%
-    ),
-    linear-gradient(
-      125deg,
-      #1f122f 0%,
-      #382050 43%,
-      #6841a0 100%
-    );
+    #000000;
 }
 
+.about-belief__inner {
+  width:
+    min(
+      1500px,
+      100%
+    );
 
-.about-page
-.about-story-final__background {
-  position: absolute;
+  margin:
+    0
+    auto;
+}
 
-  inset: 0;
+.about-belief
+.about-section-eyebrow {
+  color: #c6ff33;
+}
+
+.about-belief__statement {
+  position: relative;
+
+  padding:
+    64px
+    0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.22fr)
+    minmax(300px, 0.78fr);
+
+  gap: 65px;
+
+  align-items: center;
 
   overflow: hidden;
 
-  pointer-events: none;
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.14);
 }
 
-
-.about-page
-.about-story-final__background span {
-  position: absolute;
-
-  right: -5vw;
-  bottom: -9vh;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.045
-    );
-
-  font-size: 39vw;
-
-  font-weight: 950;
-
-  line-height: 0.7;
-
-  letter-spacing: -0.13em;
+.about-belief__statement:last-child {
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.14);
 }
 
+.about-belief__heading-mask {
+  overflow: hidden;
 
-.about-page
-.about-story-final
-.story-final__copy {
-  position: relative;
-
-  left: auto;
-  right: auto;
-  top: auto;
-  bottom: auto;
-
-  z-index: 20;
-
-  width:
-    min(
-      950px,
-      80vw
-    );
-
-  margin: 0;
-
-  transform: none;
-
-  color: #ffffff;
+  padding:
+    6px
+    0;
 }
 
-
-.about-page
-.about-story-final
-.story-final__copy h2 {
+.about-belief__statement h2 {
   margin: 0;
 
   color: #ffffff;
 
   font-size:
     clamp(
-      48px,
-      6.5vw,
-      108px
+      53px,
+      5.7vw,
+      92px
     );
-
-  line-height: 0.84;
 
   font-weight: 950;
 
-  letter-spacing: -0.062em;
+  line-height: 0.84;
+
+  letter-spacing: -0.064em;
 
   text-transform: uppercase;
 }
 
-
-.about-page
-.about-story-final
-.story-final__copy h2 span {
+.about-belief__statement h2 span {
   display: block;
 
-  color: #ef78c2;
+  color: #7d35eb;
 }
 
+.about-belief__statement p {
+  width:
+    min(
+      400px,
+      100%
+    );
 
-.about-page
-.about-story-final
-.story-body {
-  max-width: 610px;
-
-  margin-top: 28px;
+  margin:
+    0
+    0
+    0
+    auto;
 
   color:
-    rgba(
-      255,
-      255,
-      255,
-      0.72
+    rgba(255, 255, 255, 0.64);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FEATURE SYSTEM
+========================================================= */
+
+.about-feature {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 100svh;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  padding:
+    120px
+    5vw
+    80px;
+
+  background:
+    radial-gradient(
+      circle
+      at 96% 10%,
+      rgba(125, 53, 235, 0.055),
+      transparent 30%
+    ),
+    #ffffff;
+}
+
+.about-feature__inner {
+  width:
+    min(
+      1500px,
+      100%
     );
+
+  margin:
+    0
+    auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.88fr)
+    minmax(0, 1.12fr);
+
+  gap:
+    clamp(
+      48px,
+      5.5vw,
+      82px
+    );
+
+  align-items: center;
+}
+
+/* =========================================================
+   FEATURE COPY
+========================================================= */
+
+.about-feature__copy {
+  position: relative;
+
+  z-index: 4;
+
+  min-width: 0;
+}
+
+.about-feature__heading-mask {
+  overflow: hidden;
+
+  padding:
+    5px
+    0
+    9px;
+}
+
+.about-feature__copy h2 {
+  width: 100%;
+
+  max-width: 590px;
+
+  margin: 0;
+
+  color: #000000;
 
   font-size:
     clamp(
-      13px,
-      1vw,
-      16px
+      42px,
+      4.25vw,
+      67px
     );
 
-  line-height: 1.65;
+  font-weight: 950;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.058em;
+
+  text-transform: uppercase;
 }
 
+.about-feature__copy h2 span {
+  color: #7d35eb;
+}
 
+.about-feature__description {
+  width:
+    min(
+      470px,
+      100%
+    );
 
+  margin:
+    21px
+    0
+    0;
 
+  color:
+    rgba(0, 0, 0, 0.60);
 
+  font-size: 14px;
+
+  line-height: 1.7;
+}
 
 /* =========================================================
-   TABLET
+   PREMIUM MEDIA FRAME
+========================================================= */
+
+.about-feature__media {
+  position: relative;
+
+  isolation: isolate;
+
+  width: 100%;
+
+  height:
+    min(
+      62vh,
+      585px
+    );
+
+  min-height: 410px;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border:
+    1.5px solid
+    #c6ff33;
+
+  border-radius: 28px;
+
+  background: #090909;
+
+  box-shadow:
+    0
+    28px
+    75px
+    rgba(35, 8, 67, 0.13);
+
+  transform:
+    translateZ(0);
+}
+
+.about-feature__media::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 3;
+
+  inset: 11px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 19px;
+
+  pointer-events: none;
+}
+
+.about-feature__media::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.02) 0%,
+      transparent 55%,
+      rgba(0, 0, 0, 0.20) 100%
+    );
+}
+
+.about-feature__media img,
+.about-feature__media video {
+  position: absolute;
+
+  inset:
+    -5%
+    0;
+
+  width: 100%;
+
+  height: 110%;
+
+  max-width: none;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  will-change: transform;
+}
+
+/* =========================================================
+   PREMIUM TWO-TONE REVEAL
+========================================================= */
+
+.about-feature__media-reveal {
+  position: absolute;
+
+  z-index: 8;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      115deg,
+      #160326 0%,
+      #7d35eb 58%,
+      #7d35eb 100%
+    );
+
+  will-change: transform;
+}
+
+.about-feature__media-reveal::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+
+  top: 0;
+
+  width: 16px;
+
+  height: 100%;
+
+  background: #c6ff33;
+
+  box-shadow:
+    -12px
+    0
+    35px
+    rgba(198, 255, 51, 0.22);
+}
+
+/* =========================================================
+   SECOND + FOURTH FEATURE
+========================================================= */
+
+.about-feature--motion,
+.about-feature--brand {
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      58% 92%
+      at 100% 42%,
+      rgba(125, 53, 235, 0.56),
+      transparent 72%
+    ),
+    radial-gradient(
+      30% 50%
+      at 4% 92%,
+      rgba(198, 255, 51, 0.04),
+      transparent 72%
+    ),
+    linear-gradient(
+      120deg,
+      #050109 0%,
+      #18032b 56%,
+      #3a0a6c 100%
+    );
+}
+
+/* =========================================================
+   MOTION / BRAND COPY
+========================================================= */
+
+.about-feature--motion
+.about-section-eyebrow,
+.about-feature--brand
+.about-section-eyebrow {
+  color: #c6ff33;
+}
+
+.about-feature--motion
+.about-feature__copy h2,
+.about-feature--brand
+.about-feature__copy h2 {
+  color: #ffffff;
+}
+
+.about-feature--motion
+.about-feature__copy h2 span,
+.about-feature--brand
+.about-feature__copy h2 span {
+  color: #c6ff33;
+}
+
+.about-feature--motion
+.about-feature__description,
+.about-feature--brand
+.about-feature__description {
+  color:
+    rgba(255, 255, 255, 0.68);
+}
+
+/* =========================================================
+   ALTERNATING LAYOUT
+========================================================= */
+
+.about-feature--motion
+.about-feature__inner,
+.about-feature--brand
+.about-feature__inner {
+  grid-template-columns:
+    minmax(0, 1.12fr)
+    minmax(0, 0.88fr);
+}
+
+/* =========================================================
+   THIRD SECTION
+========================================================= */
+
+.about-feature--digital {
+  background:
+    radial-gradient(
+      circle
+      at 4% 88%,
+      rgba(198, 255, 51, 0.055),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f8f5ff,
+      #ffffff
+    );
+}
+
+/* =========================================================
+   SHORT LAPTOP
+   100% ZOOM
 ========================================================= */
 
 @media
-(
-  min-width: 768px
-)
+(min-width: 1101px)
 and
-(
-  max-width: 1100px
-) {
-
-  .about-page {
-    --about-header-safe:
-      78px;
-  }
-
-  .about-page {
-  padding-bottom: 75px;
-  }
-
+(max-height: 850px) {
 
   .about-hero__inner {
-    padding:
-      115px
-      44px
-      50px;
+    padding-top: 102px;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(420px, 0.92fr);
+
+    gap:
+      clamp(
+        44px,
+        4vw,
+        64px
+      );
+
+    align-items: center;
   }
 
+  .about-hero__content {
+    max-width: 620px;
 
-  .about-hero__headline h1 {
+    padding-bottom: 0;
+  }
+
+  .about-hero h1 {
+    width: 620px;
+
     font-size:
       clamp(
-        76px,
-        10vw,
-        115px
+        52px,
+        4.45vw,
+        62px
+      );
+
+    line-height: 0.99;
+  }
+
+  .about-hero__title-line {
+    margin-bottom: 2px;
+  }
+
+  .about-hero__lead {
+    width: 490px;
+
+    margin-top: 17px;
+
+    font-size: 13.5px;
+
+    line-height: 1.52;
+  }
+
+  .about-hero__actions {
+    margin-top: 16px;
+  }
+
+  .about-hero__visual {
+    height:
+      calc(
+        100svh - 106px
+      );
+
+    max-height: 650px;
+
+    justify-content: flex-end;
+  }
+
+  .about-hero__ape {
+    width:
+      min(
+        114%,
+        525px
+      );
+
+    max-width: none;
+
+    max-height: 650px;
+
+    margin-right: -20px;
+  }
+
+  .about-intro {
+    min-height: 100svh;
+
+    padding:
+      105px
+      5vw
+      70px;
+  }
+
+  .about-intro__heading {
+    font-size:
+      clamp(
+        50px,
+        5.4vw,
+        76px
       );
   }
 
-
-  .about-hero__content {
-    grid-template-columns:
-      0.9fr
-      1.1fr;
-
-    gap: 55px;
+  .about-belief {
+    padding:
+      92px
+      5vw
+      66px;
   }
 
-
-  .about-hero__body {
-    grid-template-columns: 1fr;
-
-    gap: 16px;
+  .about-belief__statement {
+    padding:
+      53px
+      0;
   }
 
-
-  .about-page
-  .about-story-final
-  .story-final__copy h2 {
+  .about-belief__statement h2 {
     font-size:
       clamp(
         48px,
-        7vw,
-        84px
+        4.9vw,
+        72px
       );
   }
 
-
-
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media
-(
-  max-width: 767px
-) {
-
-  .about-page {
-    --about-header-safe:
-      72px;
-  }
-
-
-  .about-hero {
-    min-height: auto;
-  }
-
-
-  .about-hero__inner {
-    min-height: auto;
+  .about-feature {
+    min-height: 100svh;
 
     padding:
-      105px
-      20px
-      65px;
+      108px
+      5vw
+      58px;
   }
 
-
-  .about-hero__headline {
-    padding-top: 25px;
+  .about-feature__inner {
+    gap: 54px;
   }
 
+  .about-feature__copy h2 {
+    max-width: 540px;
 
-  .about-hero__headline h1 {
     font-size:
       clamp(
-        58px,
-        17vw,
-        88px
-      );
-
-    line-height: 0.82;
-  }
-
-
-  .about-hero__outline {
-    -webkit-text-stroke-width:
-      1.3px;
-  }
-
-
-  .about-hero__content {
-    grid-template-columns: 1fr;
-
-    gap: 28px;
-
-    margin-top: 52px;
-  }
-
-
-  .about-hero__lead p {
-    font-size:
-      clamp(
-        23px,
-        6.6vw,
-        31px
+        39px,
+        4vw,
+        56px
       );
   }
 
+  .about-feature__description {
+    margin-top: 17px;
 
-  .about-hero__body {
-    grid-template-columns: 1fr;
-
-    gap: 18px;
-  }
-
-
-  .about-hero__body p {
     font-size: 13px;
   }
 
+  .about-feature__media {
+    height:
+      min(
+        59vh,
+        490px
+      );
 
-  .about-hero__positioning {
-    grid-template-columns: 1fr;
-
-    gap: 9px;
-
-    margin-top: 42px;
+    min-height: 380px;
   }
+}
 
+/* =========================================================
+   TABLET / 125% LAPTOP ZOOM SAFE
+========================================================= */
 
-  .about-hero__positioning span,
-  .about-hero__positioning span:nth-child(2),
-  .about-hero__positioning span:nth-child(3) {
-    text-align: left;
+@media
+(min-width: 768px)
+and
+(max-width: 1100px) {
 
-    font-size: 8px;
-  }
+  .about-hero__inner {
+    width:
+      calc(
+        100% - 64px
+      );
 
+    height: 100%;
 
-  .about-hero__scroll {
-    margin-top: 38px;
+    min-height: 100%;
 
-    padding-top: 0;
-  }
+    padding-top:
+      clamp(
+        88px,
+        15vh,
+        112px
+      );
 
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(280px, 0.82fr);
 
-  /* -----------------------------------------------
-     STORY
-  ------------------------------------------------ */
-
-  .about-page
-  .story-transition {
-    padding-top: 95px;
-  }
-
-
-  .about-page
-  .story-about--studio {
-    padding-top: 85px;
-  }
-
-
-  .about-page
-  .story-film__media,
-  .about-page
-  .story-brand__media {
-    top: 82px;
-  }
-
-
-  /* -----------------------------------------------
-     FINAL
-  ------------------------------------------------ */
-
-  .about-page
-  .about-story-final {
-    padding:
-      105px
-      20px
-      70px;
+    gap:
+      clamp(
+        20px,
+        3vw,
+        34px
+      );
 
     align-items: center;
   }
 
+  .about-hero__content {
+    max-width: 550px;
 
-  .about-page
-  .about-story-final
-  .story-final__copy {
-    width: 100%;
+    padding-bottom: 0;
   }
 
+  .about-hero h1 {
+    width: 100%;
 
-  .about-page
-  .about-story-final
-  .story-final__copy h2 {
     font-size:
       clamp(
-        39px,
-        10.8vw,
-        61px
+        44px,
+        4.9vw,
+        56px
       );
 
-    line-height: 0.88;
+    line-height: 0.99;
+
+    letter-spacing: -0.038em;
   }
 
+  .about-hero__title-line {
+    margin-bottom: 2px;
+  }
 
-  .about-page
-  .about-story-final
-  .story-body {
-    max-width: 92%;
+  .about-hero__lead {
+    width:
+      min(
+        420px,
+        100%
+      );
 
+    margin-top: 16px;
+
+    font-size: 12.5px;
+
+    line-height: 1.5;
+  }
+
+  .about-hero__actions {
+    margin-top: 15px;
+  }
+
+  .about-hero__visual {
+    height:
+      min(
+        520px,
+        calc(
+          100svh - 92px
+        )
+      );
+
+    max-height: 520px;
+
+    align-self: end;
+
+    justify-content: flex-end;
+  }
+
+  .about-hero__ape {
+    width:
+      min(
+        110%,
+        420px
+      );
+
+    max-width: none;
+
+    max-height: 520px;
+
+    margin-right: -12px;
+  }
+
+  .about-intro {
+    padding:
+      100px
+      38px;
+  }
+
+  .about-intro__layout {
+    gap: 42px;
+  }
+
+  .about-intro__heading {
+    font-size:
+      clamp(
+        46px,
+        6.4vw,
+        66px
+      );
+  }
+
+  .about-belief {
+    padding:
+      95px
+      38px;
+  }
+
+  .about-belief__statement {
+    gap: 34px;
+  }
+
+  .about-belief__statement h2 {
+    font-size:
+      clamp(
+        43px,
+        5.8vw,
+        62px
+      );
+  }
+
+  .about-feature {
+    padding:
+      110px
+      38px
+      68px;
+  }
+
+  .about-feature__inner {
+    gap: 34px;
+  }
+
+  .about-feature__copy h2 {
+    font-size:
+      clamp(
+        36px,
+        5vw,
+        50px
+      );
+  }
+
+  .about-feature__description {
     font-size: 12px;
   }
 
+  .about-feature__media {
+    height:
+      min(
+        55vh,
+        500px
+      );
 
-  
+    min-height: 360px;
 
+    border-radius: 22px;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media
-(
-  max-width: 767px
-) {
+(max-width: 767px) {
 
-  
+  .about-hero {
+    height: auto;
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================
-   ABOUT PAGE — MOBILE STORY REBUILD
-   ONLY 0px — 767px
-
-   HERO = UNTOUCHED
-   TEAM = UNTOUCHED
-   DESKTOP / TABLET = UNTOUCHED
-
-   THIS ONLY REBUILDS THE STORY AFTER TEAM
-========================================================= */
-
-@media (max-width: 767px) {
-
-  /* =====================================================
-     REMOVE DESKTOP PINNED STORY SYSTEM
-  ===================================================== */
-
-  .ape-story {
-    position: relative !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    overflow: hidden;
-
-    z-index: 5;
-
-    background: #ffffff;
+    min-height: 0;
   }
 
+  .about-hero__inner {
+    width: 100%;
 
-  .ape-story__stage,
-  .ape-story__stage.is-before,
-  .ape-story__stage.is-fixed,
-  .ape-story__stage.is-ended {
-    position: relative !important;
+    height: auto;
 
-    inset: auto !important;
-
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    overflow: visible !important;
-
-    opacity: 1 !important;
-
-    visibility: visible !important;
-
-    pointer-events: auto !important;
-
-    background: #ffffff;
-  }
-
-
-  /* =====================================================
-     REMOVE DESKTOP GLOBAL STORY UI
-  ===================================================== */
-
-  .story-meta,
-  .story-progress {
-    display: none !important;
-  }
-
-
-  /* =====================================================
-     EVERY STORY SCENE BECOMES NORMAL DOCUMENT FLOW
-  ===================================================== */
-
-  .story-scene,
-  .story-scene.is-visible {
-    position: relative !important;
-
-    inset: auto !important;
-
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    opacity: 1 !important;
-
-    visibility: visible !important;
-
-    overflow: hidden;
-
-    transform: none !important;
-
-    will-change: auto !important;
-  }
-
-
-  /* =====================================================
-     REMOVE GSAP DESKTOP TRANSFORMS
-  ===================================================== */
-
-  .story-transition__copy,
-
-  .story-studio__copy,
-  .story-studio__media,
-
-  .story-film__word,
-  .story-film__copy,
-  .story-film__media,
-
-  .story-digital__heading,
-  .story-digital__media,
-
-  .story-brand__word,
-  .story-brand__copy,
-  .story-brand__media,
-
-  .story-final__copy,
-  .story-final__media,
-
-  .about-story-final__background {
-    transform: none !important;
-  }
-
-
-  /* =========================================================
-     01 / 02 / 03
-     PEOPLE / CULTURE / WELCOME
-
-     KEEP THEM SIMPLE + EDITORIAL
-  ========================================================= */
-
-  .story-transition {
-    position: relative !important;
-
-    min-height: 56vh !important;
-
-    display: flex;
-
-    align-items: center;
+    min-height: 0;
 
     padding:
-      76px
-      20px;
+      98px
+      18px
+      0;
 
-    box-sizing: border-box;
+    display: block;
   }
 
-
-  .story-transition::before {
-    right: -22vw;
-
-    top: 52%;
-
-    font-size: 75vw;
-
-    opacity: 0.55;
-
-    pointer-events: none;
-  }
-
-
-  .story-transition__number {
-    position: absolute;
-
-    left: 20px;
-
-    top: 38px;
-
-    font-size: 6px;
-
-    letter-spacing: 0.18em;
-  }
-
-
-  .story-transition__copy {
-    position: relative !important;
-
-    z-index: 5;
-
-    width: 100% !important;
-
-    max-width: 100%;
-
-    margin: 0;
-
-    transform: none !important;
-  }
-
-
-  .story-transition__copy h2 {
+  .about-hero__content {
     width: 100%;
 
     max-width: 100%;
 
-    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .about-hero__eyebrow {
+    margin-bottom: 11px;
+
+    font-size: 7px;
+  }
+
+  .about-hero h1 {
+    width: 100%;
 
     font-size:
       clamp(
         39px,
-        11.6vw,
-        54px
+        10.5vw,
+        49px
       );
 
-    line-height: 0.84;
+    line-height: 1;
 
-    letter-spacing: -0.055em;
-
-    overflow-wrap: normal;
-
-    word-break: normal;
+    letter-spacing: -0.038em;
   }
 
+  .about-hero__title-line {
+    margin-bottom: 1px;
 
-  .story-transition__copy h2 span {
+    white-space: normal;
+  }
+
+  .about-hero__title-line--outline {
+    -webkit-text-stroke:
+      1.1px
+      #7d35eb;
+  }
+
+  .about-hero__lead {
+    width:
+      min(
+        94%,
+        390px
+      );
+
+    margin-top: 17px;
+
+    font-size: 13px;
+
+    line-height: 1.53;
+  }
+
+  .about-hero__actions {
+    margin-top: 18px;
+  }
+
+  .about-hero__primary,
+  .about-hero__secondary {
+    min-height: 37px;
+
+    padding:
+      0
+      13px;
+
+    font-size: 6.3px;
+  }
+
+  .about-hero__visual {
+    width: 100%;
+
+    height:
+      clamp(
+        285px,
+        76vw,
+        365px
+      );
+
+    min-height: 0;
+
+    max-height: 365px;
+
+    margin-top: 2px;
+
+    justify-content: flex-end;
+  }
+
+  .about-hero__ape {
+    width:
+      clamp(
+        250px,
+        72vw,
+        335px
+      );
+
+    height: 100%;
+
+    max-width: none;
+
+    max-height: none;
+
+    margin-right: -10px;
+  }
+
+  .about-hero__ape img {
+    width: 108%;
+
+    height: 103%;
+  }
+
+  .about-hero__bottom {
+    display: none;
+  }
+
+  .about-hero__glow--violet {
+    width: 105vw;
+
+    height: 105vw;
+
+    right: -62vw;
+
+    top: 20vh;
+  }
+
+  .about-intro {
+    min-height: 0;
+
     display: block;
-  }
-
-
-  .story-transition__copy p {
-    max-width: 88%;
-
-    margin-top: 22px;
-
-    font-size: 12px;
-
-    line-height: 1.6;
-  }
-
-
-  /* =========================================================
-     04 — STUDIO
-     PERFORMANCE DRIVEN / CREATIVE & BRANDING
-  ========================================================= */
-
-  .story-about--studio {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 0;
 
     padding:
       72px
       18px
-      76px;
-
-    box-sizing: border-box;
-
-    background:
-      radial-gradient(
-        circle at 100% 20%,
-        rgba(116, 82, 217, 0.10),
-        transparent 30%
-      ),
-      linear-gradient(
-        180deg,
-        #ffffff,
-        #f4efff
-      );
+      80px;
   }
 
-
-  /* IMAGE FIRST */
-
-  .story-studio__media {
-    position: relative !important;
-
-    order: 1;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    height:
-      clamp(
-        210px,
-        61vw,
-        285px
-      ) !important;
-
-    margin: 0;
-
-    border-radius: 18px !important;
-
-    overflow: hidden;
-
-    box-shadow:
-      0
-      18px
-      44px
-      rgba(
-        59,
-        36,
-        91,
-        0.10
-      );
-
-    transform: none !important;
+  .about-intro__layout {
+    display: block;
   }
 
-
-  .story-studio__media img,
-  .story-studio__media video {
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-  }
-
-
-  /* COPY BELOW IMAGE */
-
-  .story-studio__copy {
-    position: relative !important;
-
-    order: 2;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    margin-top: 27px;
-
-    transform: none !important;
-  }
-
-
-  .story-studio__copy h2 {
-    width: 100%;
-
-    max-width: 100%;
-
-    margin: 0;
-
-    color: #29183f;
-
+  .about-intro__heading {
     font-size:
       clamp(
-        35px,
-        10vw,
-        47px
+        40px,
+        11.3vw,
+        53px
       );
 
-    line-height: 0.85;
-
-    letter-spacing: -0.055em;
-
-    overflow-wrap: normal;
+    line-height: 0.87;
   }
 
+  .about-intro__copy {
+    width: 100%;
 
-  .story-studio__copy h2 span {
-    display: block;
-
-    color: transparent;
-
-    -webkit-text-stroke:
-      1px
-      #7451d8;
+    margin-top: 27px;
   }
 
-
-  .story-studio__copy .story-body {
-    max-width: 94%;
-
-    margin-top: 17px;
+  .about-intro__copy p {
+    max-width: 370px;
 
     font-size: 11.5px;
 
-    line-height: 1.58;
+    line-height: 1.62;
   }
 
-
-  .story-studio__number {
-    display: none;
-  }
-
-
-  /* =========================================================
-     05 — FILM / CONTENT
-     STORIES SHOULD MOVE
-  ========================================================= */
-
-  .story-about--film {
-    display: flex;
-
-    flex-direction: column;
-
+  .about-belief {
     padding:
-      74px
-      18px
-      80px;
-
-    box-sizing: border-box;
-
-    background:
-      radial-gradient(
-        circle at 0% 75%,
-        rgba(216, 75, 169, 0.10),
-        transparent 32%
-      ),
-      linear-gradient(
-        180deg,
-        #f4efff,
-        #ffffff
-      );
+      73px
+      18px;
   }
 
+  .about-belief__statement {
+    padding:
+      40px
+      0;
 
-  /* SUBTLE MOTION WORD */
-
-  .story-film__word {
-    position: absolute !important;
-
-    left: -12vw !important;
-
-    top: 43% !important;
-
-    z-index: 0;
-
-    font-size: 44vw;
-
-    opacity: 0.45;
-
-    transform: none !important;
-
-    pointer-events: none;
-  }
-
-
-  /* MEDIA */
-
-  .story-film__media {
-    position: relative !important;
-
-    order: 1;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    height:
-      clamp(
-        300px,
-        94vw,
-        410px
-      ) !important;
-
-    margin: 0;
-
-    border-radius: 20px !important;
-
-    overflow: hidden;
-
-    transform: none !important;
-
-    box-shadow:
-      0
-      20px
-      50px
-      rgba(
-        59,
-        36,
-        91,
-        0.12
-      );
-  }
-
-
-  .story-film__media img,
-  .story-film__media video {
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-  }
-
-
-  /* COPY */
-
-  .story-film__copy {
-    position: relative !important;
-
-    order: 2;
-
-    z-index: 5;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    margin-top: 27px;
-
-    transform: none !important;
-  }
-
-
-  .story-film__copy h2 {
-    width: 100%;
-
-    max-width: 100%;
-
-    margin: 0;
-
-    font-size:
-      clamp(
-        37px,
-        10.6vw,
-        50px
-      );
-
-    line-height: 0.84;
-
-    letter-spacing: -0.055em;
-  }
-
-
-  .story-film__copy h2 span {
     display: block;
-
-    color: #d84ba9;
   }
 
-
-  .story-film__copy .story-body {
-    max-width: 92%;
-
-    margin-top: 16px;
-
-    font-size: 11.5px;
-
-    line-height: 1.58;
-  }
-
-
-  /* =========================================================
-     06 — DIGITAL
-  ========================================================= */
-
-  .story-about--digital {
-    display: flex;
-
-    flex-direction: column;
-
-    padding:
-      76px
-      18px
-      80px;
-
-    box-sizing: border-box;
-
-    background: #ffffff;
-  }
-
-
-  .story-digital__heading {
-    position: relative !important;
-
-    order: 1;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100%;
-
-    margin: 0;
-
-    transform: none !important;
-  }
-
-
-  .story-digital__heading h2 {
-    width: 100%;
-
-    max-width: 100%;
-
-    margin: 0;
-
+  .about-belief__statement h2 {
     font-size:
       clamp(
-        37px,
-        10.4vw,
-        49px
+        40px,
+        11.4vw,
+        54px
       );
 
     line-height: 0.86;
-
-    letter-spacing: -0.055em;
   }
 
-
-  .story-digital__heading h2 span {
-    display: block;
-
-    color: #7452d9;
-  }
-
-
-  .story-digital__media {
-    position: relative !important;
-
-    order: 2;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    height:
-      clamp(
-        235px,
-        67vw,
-        305px
-      ) !important;
-
-    margin-top: 27px;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    transform: none !important;
-
-    box-shadow:
-      0
-      18px
-      46px
-      rgba(
-        57,
-        34,
-        87,
-        0.10
+  .about-belief__statement p {
+    width:
+      min(
+        340px,
+        100%
       );
+
+    margin:
+      21px
+      0
+      0;
+
+    font-size: 11px;
+
+    line-height: 1.58;
   }
 
+  .about-feature {
+    min-height: 0;
 
-  .story-digital__browser {
-    height: 31px;
-  }
-
-
-  .story-digital__browser i {
-    width: 5px;
-    height: 5px;
-  }
-
-
-  /* =========================================================
-     07 — BRAND
-     MAKE IT MEAN SOMETHING
-  ========================================================= */
-
-  .story-about--brand {
-    display: flex;
-
-    flex-direction: column;
+    display: block;
 
     padding:
       74px
       18px
-      80px;
-
-    box-sizing: border-box;
-
-    background:
-      radial-gradient(
-        circle at 100% 80%,
-        rgba(216, 75, 169, 0.11),
-        transparent 34%
-      ),
-      linear-gradient(
-        180deg,
-        #ffffff,
-        #f4edff
-      );
+      78px;
   }
 
+  .about-feature__inner,
+  .about-feature--motion
+  .about-feature__inner,
+  .about-feature--brand
+  .about-feature__inner {
+    display: flex;
 
-  .story-brand__word {
-    position: absolute !important;
+    flex-direction: column;
 
-    left: -11vw !important;
-
-    top: 42% !important;
-
-    font-size: 57vw;
-
-    opacity: 0.36;
-
-    transform: none !important;
-
-    pointer-events: none;
+    gap: 27px;
   }
 
-
-  /* IMAGE FIRST */
-
-  .story-brand__media {
-    position: relative !important;
-
+  .about-feature__copy {
     order: 1;
+  }
 
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
+  .about-feature__media {
+    order: 2;
 
-    width: 100% !important;
+    width: 100%;
 
-    height:
-      clamp(
-        300px,
-        91vw,
-        400px
-      ) !important;
+    height: auto;
 
-    margin: 0;
+    min-height: 0;
 
-    border-radius: 19px !important;
+    aspect-ratio: 4 / 3;
 
-    overflow: hidden;
+    border-width: 1.5px;
 
-    transform: none !important;
+    border-radius: 18px;
 
     box-shadow:
       0
       20px
       50px
-      rgba(
-        59,
-        36,
-        91,
-        0.11
-      );
+      rgba(35, 8, 67, 0.12);
   }
 
+  .about-feature__media::before {
+    inset: 7px;
 
-  .story-brand__media img {
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
+    border-radius: 12px;
   }
 
-
-  /* COPY */
-
-  .story-brand__copy {
-    position: relative !important;
-
-    order: 2;
-
-    z-index: 5;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    margin-top: 27px;
-
-    transform: none !important;
-  }
-
-
-  .story-brand__copy h2 {
-    width: 100%;
-
+  .about-feature__copy h2 {
     max-width: 100%;
-
-    margin: 0;
-
-    color: #29173f;
 
     font-size:
       clamp(
-        38px,
-        10.5vw,
-        50px
+        36px,
+        10.2vw,
+        48px
       );
 
-    line-height: 0.84;
-
-    letter-spacing: -0.055em;
-
-    overflow-wrap: normal;
+    line-height: 0.89;
   }
 
+  .about-feature__description {
+    width:
+      min(
+        355px,
+        100%
+      );
 
-  .story-brand__copy h2 span {
-    display: block;
+    margin-top: 15px;
 
-    color: #d84ba9;
-  }
-
-
-  .story-brand__copy .story-body {
-    max-width: 92%;
-
-    margin-top: 16px;
-
-    font-size: 11.5px;
+    font-size: 11px;
 
     line-height: 1.58;
   }
 
-
-  /* BRING KEYWORDS BACK ON MOBILE */
-
-  .story-brand__keywords {
-    position: relative !important;
-
-    order: 3;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    z-index: 5;
-
-    display: flex !important;
-
-    flex-wrap: wrap;
-
-    gap:
-      7px
-      8px;
-
-    margin-top: 23px;
-  }
-
-
-  .story-brand__keywords span {
-    padding:
-      7px
-      10px;
-
-    border:
-      1px solid
-      rgba(
-        116,
-        81,
-        217,
-        0.15
-      );
-
-    border-radius: 999px;
-
-    color: #7451d9;
-
-    background:
-      rgba(
-        255,
-        255,
-        255,
-        0.58
-      );
-
-    font-size: 5px;
-
-    letter-spacing: 0.12em;
-  }
-
-
-  /* =========================================================
-     08 — FINAL
-     STRATEGY LED / CREATIVITY DRIVEN / PERFORMANCE FOCUSED
-  ========================================================= */
-
-  .story-about--final {
-    position: relative !important;
-
-    display: block;
-
-    min-height: 0 !important;
-
-    padding:
-      26px
-      18px
-      82px;
-
-    box-sizing: border-box;
-
-    background:
-      linear-gradient(
-        180deg,
-        #f4edff,
-        #ffffff
-      );
-  }
-
-
-  /*
-   * NEWER ABOUT HTML USES THIS LARGE APE BACKGROUND.
-   */
-
-  .about-story-final__background {
-    position: absolute;
-
-    inset: 26px 18px 82px;
-
-    overflow: hidden;
-
-    border-radius: 22px;
-
-    background:
-      radial-gradient(
-        circle at 86% 20%,
-        rgba(216, 75, 169, 0.23),
-        transparent 30%
-      ),
-      radial-gradient(
-        circle at 15% 80%,
-        rgba(116, 82, 217, 0.26),
-        transparent 34%
-      ),
-      linear-gradient(
-        145deg,
-        #1a1026,
-        #29163e
-      );
-  }
-
-
-  .about-story-final__background span {
-    position: absolute;
-
-    right: -22%;
-
-    bottom: -7%;
-
-    color:
-      rgba(
-        255,
-        255,
-        255,
-        0.035
-      );
-
-    font-size: 76vw;
-
-    font-weight: 950;
-
-    line-height: 0.7;
-
-    letter-spacing: -0.12em;
-  }
-
-
-  /*
-   * SUPPORT OLDER VERSION TOO, IF ITS MEDIA EXISTS.
-   */
-
-  .story-final__media,
-  .story-final__overlay {
-    position: absolute !important;
-
+  .about-feature__media img,
+  .about-feature__media video {
     inset:
-      26px
-      18px
-      82px !important;
+      -4%
+      0;
 
-    width: auto !important;
-
-    height: auto !important;
-
-    border-radius: 22px !important;
-
-    transform: none !important;
+    height: 108%;
   }
 
+  .about-feature__media-reveal::after {
+    width: 9px;
+  }
+}
 
-  .story-final__copy {
-    position: relative !important;
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
-    z-index: 30;
+@media
+(max-width: 390px) {
 
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-
-    min-height: 520px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
+  .about-hero__inner {
     padding:
-      58px
-      25px;
-
-    box-sizing: border-box;
-
-    margin: 0;
-
-    color: #ffffff;
-
-    background:
-      radial-gradient(
-        circle at 88% 20%,
-        rgba(216,75,169,0.21),
-        transparent 31%
-      ),
-      radial-gradient(
-        circle at 5% 90%,
-        rgba(116,82,217,0.24),
-        transparent 35%
-      ),
-      linear-gradient(
-        145deg,
-        #1a1026,
-        #28163d
-      );
-
-    border-radius: 22px;
-
-    overflow: hidden;
-
-    transform: none !important;
+      94px
+      16px
+      0;
   }
 
+  .about-hero h1 {
+    font-size:
+      clamp(
+        36px,
+        10.4vw,
+        43px
+      );
+  }
 
-  .story-final__copy h2 {
-    width: 100%;
+  .about-hero__lead {
+    font-size: 12px;
+  }
 
-    max-width: 100%;
+  .about-hero__visual {
+    height: 285px;
 
-    margin: 0;
+    max-height: 285px;
+  }
 
+  .about-hero__ape {
+    width: 265px;
+
+    max-height: none;
+
+    margin-right: -8px;
+  }
+
+  .about-intro,
+  .about-belief,
+  .about-feature {
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+  .about-intro__heading {
     font-size:
       clamp(
         37px,
-        10.4vw,
-        49px
+        10.5vw,
+        46px
       );
-
-    line-height: 0.82;
-
-    letter-spacing: -0.055em;
   }
 
+  .about-feature__copy h2 {
+    font-size:
+      clamp(
+        33px,
+        9.6vw,
+        43px
+      );
+  }
+}
 
-  .story-final__copy h2 span {
-    display: block;
+/* =========================================================
+   SHORT MOBILE
+========================================================= */
 
-    color: #ef78c2;
+@media
+(max-width: 767px)
+and
+(max-height: 700px) {
+
+  .about-hero {
+    min-height: 0;
   }
 
+  .about-hero__inner {
+    padding-top: 92px;
+  }
 
-  .story-final__copy .story-body,
-  .story-final__copy p:last-child {
-    max-width: 92%;
-
-    margin-top: 28px;
-
-    color:
-      rgba(
-        255,
-        255,
-        255,
-        0.60
+  .about-hero h1 {
+    font-size:
+      clamp(
+        36px,
+        10.2vw,
+        43px
       );
+  }
+
+  .about-hero__lead {
+    margin-top: 13px;
 
     font-size: 11.5px;
-
-    line-height: 1.6;
   }
 
-  .about-page {
-  padding-bottom: 58px;
+  .about-hero__actions {
+    margin-top: 13px;
   }
 
+  .about-hero__visual {
+    height: 250px;
+
+    max-height: 250px;
+  }
+
+  .about-hero__ape {
+    width: 235px;
+
+    max-height: none;
+  }
 }
 
-
-
 /* =========================================================
-   ABOUT STORY — SMALL PHONES
-========================================================= */
-
-@media (max-width: 374px) {
-
-  .story-about--studio,
-  .story-about--film,
-  .story-about--digital,
-  .story-about--brand,
-  .story-about--final {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-
-  .story-transition {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-
-  .story-transition__number {
-    left: 15px;
-  }
-
-
-  .story-studio__copy h2,
-  .story-film__copy h2,
-  .story-brand__copy h2,
-  .story-digital__heading h2,
-  .story-final__copy h2 {
-    font-size: 34px;
-  }
-
-
-  .story-final__copy {
-    min-height: 490px;
-
-    padding:
-      50px
-      20px;
-  }
-
-}
-
-
-
-/* =========================================================
-   ABOUT STORY — LARGE PHONES
+   REDUCED MOTION
 ========================================================= */
 
 @media
-(
-  min-width: 390px
-)
-and
-(
-  max-width: 767px
-) {
+(prefers-reduced-motion: reduce) {
 
-  .story-about--studio,
-  .story-about--film,
-  .story-about--digital,
-  .story-about--brand {
-    padding-left: 20px;
-    padding-right: 20px;
+  .about-hero__primary,
+  .about-hero__secondary {
+    transition: none;
   }
 
-
-  .story-studio__media {
-    height:
-      clamp(
-        235px,
-        59vw,
-        300px
-      ) !important;
+  .about-feature__media-reveal {
+    display: none;
   }
-
-
-  .story-film__media,
-  .story-brand__media {
-    height:
-      clamp(
-        330px,
-        86vw,
-        425px
-      ) !important;
-  }
-
-
-  .story-final__copy {
-    min-height: 550px;
-
-    padding:
-      64px
-      29px;
-  }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================================
-   ABOUT — STUDIO SECTION MOBILE FIX ONLY
-   PERFORMANCE-DRIVEN / CREATIVE & BRANDING
-========================================================= */
-
-@media (max-width: 767px) {
-
-  .story-about--studio {
-    padding-left: 18px !important;
-    padding-right: 18px !important;
-
-    overflow: hidden;
-  }
-
-
-  .story-studio__copy {
-    position: relative !important;
-
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    margin-top: 24px !important;
-
-    padding: 0 !important;
-
-    box-sizing: border-box;
-
-    transform: none !important;
-
-    overflow: visible !important;
-  }
-
-
-  .story-studio__copy h2 {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-
-    font-size:
-      clamp(
-        26px,
-        7.7vw,
-        34px
-      ) !important;
-
-    line-height:
-      0.88 !important;
-
-    letter-spacing:
-      -0.035em !important;
-
-    white-space: normal !important;
-
-    word-break: normal !important;
-
-    overflow-wrap: normal !important;
-
-    overflow: visible !important;
-  }
-
-
-  .story-studio__copy h2 span {
-    display: block;
-
-    width: 100%;
-
-    max-width: 100%;
-
-    box-sizing: border-box;
-  }
-
-
-  .story-studio__copy .story-body {
-    width: 100%;
-
-    max-width: 94%;
-
-    margin-top: 16px !important;
-
-    font-size: 10.8px !important;
-
-    line-height: 1.55 !important;
-  }
-
-
-  .story-studio__media {
-    width: 100% !important;
-
-    max-width: 100% !important;
-
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-}
-
-
-/* =========================================================
-   EXACT FIX FOR 360PX PHONES
-========================================================= */
-
-@media (max-width: 374px) {
-
-  .story-about--studio {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-
-  .story-studio__copy h2 {
-    font-size:
-      25px !important;
-
-    line-height:
-      0.89 !important;
-
-    letter-spacing:
-      -0.03em !important;
-  }
-
-
-  .story-studio__copy .story-body {
-    font-size:
-      10.5px !important;
-  }
-
-}
-
-
-/* =========================================================
-   390PX+ PHONES
-========================================================= */
-
-@media
-(
-  min-width: 390px
-)
-and
-(
-  max-width: 767px
-) {
-
-  .story-studio__copy h2 {
-    font-size:
-      clamp(
-        28px,
-        7.5vw,
-        35px
-      ) !important;
-  }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

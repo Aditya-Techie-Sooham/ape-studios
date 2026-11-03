@@ -2,25 +2,15 @@
    APE STUDIO — FULL BLOG ARTICLE
 ========================================================= */
 
-
 import gsap from "gsap";
 
 import {
   ScrollTrigger
 } from "gsap/ScrollTrigger";
 
-
-import "../styles/variables.css";
-import "../styles/reset.css";
-import "../styles/header.css";
-import "../styles/footer.css";
-import "../styles/blog-read.css";
-
-
 import {
   initHeader
 } from "../header/header.js";
-
 
 import {
   BLOGS
@@ -32,9 +22,40 @@ gsap.registerPlugin(
 );
 
 
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const SITE_ORIGIN =
+  "https://apeindia.in";
+
 
 /* =========================================================
-   URL SLUG
+   ENVIRONMENT
+========================================================= */
+
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+
+const finePointer =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+
+
+/* =========================================================
+   URL / SLUG
+
+   SUPPORTS BOTH:
+
+   OLD:
+   /blog/read/?slug=article-slug
+
+   NEW:
+   /blog/article-slug/
 ========================================================= */
 
 function getSlug() {
@@ -45,12 +66,58 @@ function getSlug() {
     );
 
 
-  return params.get(
-    "slug"
-  );
+  const querySlug =
+    params.get(
+      "slug"
+    );
+
+
+  if (querySlug) {
+
+    return querySlug;
+
+  }
+
+
+  const parts =
+    window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+
+  if (
+    parts[0] === "blog"
+    &&
+    parts[1]
+    &&
+    parts[1] !== "read"
+  ) {
+
+    return decodeURIComponent(
+      parts[1]
+    );
+
+  }
+
+
+  return null;
 
 }
 
+
+/* =========================================================
+   CLEAN ARTICLE URL
+========================================================= */
+
+function getCleanArticleURL(
+  blog
+) {
+
+  return (
+    `${SITE_ORIGIN}/blog/${encodeURIComponent(blog.slug)}/`
+  );
+
+}
 
 
 /* =========================================================
@@ -63,9 +130,7 @@ function findBlog() {
     getSlug();
 
 
-  if (
-    !slug
-  ) {
+  if (!slug) {
 
     return null;
 
@@ -89,7 +154,6 @@ function findBlog() {
   );
 
 }
-
 
 
 /* =========================================================
@@ -122,11 +186,8 @@ function getCoverImage(
 }
 
 
-
 /* =========================================================
-   GET GALLERY IMAGES
-
-   Everything after images[0].
+   GALLERY
 ========================================================= */
 
 function getGalleryImages(
@@ -151,7 +212,6 @@ function getGalleryImages(
 }
 
 
-
 /* =========================================================
    ELEMENT HELPER
 ========================================================= */
@@ -168,9 +228,7 @@ function createElement(
     );
 
 
-  if (
-    className
-  ) {
+  if (className) {
 
     element.className =
       className;
@@ -193,38 +251,475 @@ function createElement(
 }
 
 
+/* =========================================================
+   META HELPER
+========================================================= */
+
+function setMeta(
+  selector,
+  attribute,
+  value
+) {
+
+  let element =
+    document.querySelector(
+      selector
+    );
+
+
+  if (!element) {
+
+    element =
+      document.createElement(
+        "meta"
+      );
+
+
+    if (
+      selector.includes(
+        'property="'
+      )
+    ) {
+
+      const propertyMatch =
+        selector.match(
+          /property="([^"]+)"/
+        );
+
+
+      if (propertyMatch) {
+
+        element.setAttribute(
+          "property",
+          propertyMatch[1]
+        );
+
+      }
+
+    }
+
+    else {
+
+      const nameMatch =
+        selector.match(
+          /name="([^"]+)"/
+        );
+
+
+      if (nameMatch) {
+
+        element.setAttribute(
+          "name",
+          nameMatch[1]
+        );
+
+      }
+
+    }
+
+
+    document.head.appendChild(
+      element
+    );
+
+  }
+
+
+  element.setAttribute(
+    attribute,
+    value
+  );
+
+}
+
 
 /* =========================================================
-   META
+   CANONICAL
+========================================================= */
+
+function setCanonical(
+  url
+) {
+
+  let canonical =
+    document.querySelector(
+      'link[rel="canonical"]'
+    );
+
+
+  if (!canonical) {
+
+    canonical =
+      document.createElement(
+        "link"
+      );
+
+
+    canonical.rel =
+      "canonical";
+
+
+    document.head.appendChild(
+      canonical
+    );
+
+  }
+
+
+  canonical.href =
+    url;
+
+}
+
+
+/* =========================================================
+   STRUCTURED DATA HELPER
+========================================================= */
+
+function setStructuredData(
+  id,
+  data
+) {
+
+  let script =
+    document.getElementById(
+      id
+    );
+
+
+  if (!script) {
+
+    script =
+      document.createElement(
+        "script"
+      );
+
+
+    script.type =
+      "application/ld+json";
+
+
+    script.id =
+      id;
+
+
+    document.head.appendChild(
+      script
+    );
+
+  }
+
+
+  script.textContent =
+    JSON.stringify(
+      data
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE PAGE SEO
 ========================================================= */
 
 function updatePageMeta(
   blog
 ) {
 
-  document.title =
-    `${blog.heading} — APE Studio`;
+  const title =
+    `${blog.heading} | APE Studio Journal`;
 
 
   const description =
-    document.querySelector(
-      'meta[name="description"]'
+    blog.subheading
+    ||
+    blog.content?.[0]
+    ||
+    "Read insights from APE Studio.";
+
+
+  const cover =
+    getCoverImage(
+      blog
     );
 
 
-  if (
-    description
-  ) {
+  const canonicalURL =
+    getCleanArticleURL(
+      blog
+    );
 
-    description.setAttribute(
+
+  const coverURL =
+    cover
+      ? new URL(
+          cover,
+          SITE_ORIGIN
+        ).href
+      : "";
+
+
+  /* =====================================================
+     TITLE
+  ===================================================== */
+
+  document.title =
+    title;
+
+
+  /* =====================================================
+     PRIMARY META
+  ===================================================== */
+
+  setMeta(
+    'meta[name="description"]',
+    "content",
+    description
+  );
+
+
+  setMeta(
+    'meta[name="robots"]',
+    "content",
+    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  );
+
+
+  /* =====================================================
+     OPEN GRAPH
+  ===================================================== */
+
+  setMeta(
+    'meta[property="og:type"]',
+    "content",
+    "article"
+  );
+
+
+  setMeta(
+    'meta[property="og:site_name"]',
+    "content",
+    "APE Studio"
+  );
+
+
+  setMeta(
+    'meta[property="og:locale"]',
+    "content",
+    "en_IN"
+  );
+
+
+  setMeta(
+    'meta[property="og:title"]',
+    "content",
+    title
+  );
+
+
+  setMeta(
+    'meta[property="og:description"]',
+    "content",
+    description
+  );
+
+
+  setMeta(
+    'meta[property="og:url"]',
+    "content",
+    canonicalURL
+  );
+
+
+  if (coverURL) {
+
+    setMeta(
+      'meta[property="og:image"]',
       "content",
-      blog.subheading
+      coverURL
+    );
+
+
+    setMeta(
+      'meta[property="og:image:alt"]',
+      "content",
+      `${blog.heading} — APE Studio Journal`
     );
 
   }
 
-}
 
+  /* =====================================================
+     X / TWITTER
+  ===================================================== */
+
+  setMeta(
+    'meta[name="twitter:card"]',
+    "content",
+    "summary_large_image"
+  );
+
+
+  setMeta(
+    'meta[name="twitter:title"]',
+    "content",
+    title
+  );
+
+
+  setMeta(
+    'meta[name="twitter:description"]',
+    "content",
+    description
+  );
+
+
+  if (coverURL) {
+
+    setMeta(
+      'meta[name="twitter:image"]',
+      "content",
+      coverURL
+    );
+
+
+    setMeta(
+      'meta[name="twitter:image:alt"]',
+      "content",
+      `${blog.heading} — APE Studio Journal`
+    );
+
+  }
+
+
+  /* =====================================================
+     CANONICAL
+
+     IMPORTANT:
+     OLD QUERY URLS CAN STILL LOAD,
+     BUT CANONICAL POINTS TO THE CLEAN URL.
+  ===================================================== */
+
+  setCanonical(
+    canonicalURL
+  );
+
+
+  /* =====================================================
+     BLOG POST STRUCTURED DATA
+
+     No fake:
+     - author
+     - datePublished
+     - dateModified
+     - reading time
+
+     because those do not currently exist in blog-data.js.
+  ===================================================== */
+
+  setStructuredData(
+    "blog-structured-data",
+    {
+      "@context":
+        "https://schema.org",
+
+      "@type":
+        "BlogPosting",
+
+      headline:
+        blog.heading,
+
+      description:
+        description,
+
+      image:
+        coverURL
+        ||
+        undefined,
+
+      publisher: {
+        "@type":
+          "Organization",
+
+        name:
+          "APE Studio",
+
+        url:
+          `${SITE_ORIGIN}/`
+      },
+
+      mainEntityOfPage: {
+        "@type":
+          "WebPage",
+
+        "@id":
+          canonicalURL
+      }
+    }
+  );
+
+
+  /* =====================================================
+     BREADCRUMB STRUCTURED DATA
+
+     If an article HTML page later contains this same ID,
+     the script is simply updated rather than duplicated.
+  ===================================================== */
+
+  setStructuredData(
+    "blog-breadcrumb-data",
+    {
+      "@context":
+        "https://schema.org",
+
+      "@type":
+        "BreadcrumbList",
+
+      "@id":
+        `${canonicalURL}#breadcrumb`,
+
+      itemListElement: [
+        {
+          "@type":
+            "ListItem",
+
+          position:
+            1,
+
+          name:
+            "Home",
+
+          item:
+            `${SITE_ORIGIN}/`
+        },
+        {
+          "@type":
+            "ListItem",
+
+          position:
+            2,
+
+          name:
+            "Blog",
+
+          item:
+            `${SITE_ORIGIN}/blog/`
+        },
+        {
+          "@type":
+            "ListItem",
+
+          position:
+            3,
+
+          name:
+            blog.heading
+        }
+      ]
+    }
+  );
+
+}
 
 
 /* =========================================================
@@ -277,8 +772,30 @@ function buildNotFound(
     inner
   );
 
-}
 
+  document.title =
+    "Article Not Found | APE Studio";
+
+
+  setMeta(
+    'meta[name="robots"]',
+    "content",
+    "noindex, follow"
+  );
+
+
+  setMeta(
+    'meta[name="description"]',
+    "content",
+    "The requested APE Studio Journal article could not be found."
+  );
+
+
+  setCanonical(
+    `${SITE_ORIGIN}/blog/`
+  );
+
+}
 
 
 /* =========================================================
@@ -304,13 +821,17 @@ function buildGallery(
   }
 
 
-
   const section =
     createElement(
       "section",
       "blog-gallery-section"
     );
 
+
+  section.setAttribute(
+    "aria-label",
+    `${blog.heading} supporting visuals`
+  );
 
 
   const gallery =
@@ -326,11 +847,9 @@ function buildGallery(
     );
 
 
-
   galleryImages.forEach(
     function (
-      src,
-      index
+      src
     ) {
 
       const figure =
@@ -338,7 +857,6 @@ function buildGallery(
           "figure",
           "blog-article__gallery-item"
         );
-
 
 
       const image =
@@ -352,7 +870,7 @@ function buildGallery(
 
 
       image.alt =
-        `${blog.heading} — image ${index + 2}`;
+        `${blog.heading} supporting visual`;
 
 
       image.loading =
@@ -376,7 +894,6 @@ function buildGallery(
   );
 
 
-
   section.appendChild(
     gallery
   );
@@ -386,6 +903,325 @@ function buildGallery(
 
 }
 
+
+/* =========================================================
+   BUILD ARTICLE HERO
+========================================================= */
+
+function buildArticleHero(
+  blog
+) {
+
+  const hero =
+    createElement(
+      "header",
+      "blog-article__hero"
+    );
+
+
+  const violetGlow =
+    createElement(
+      "div",
+      "blog-article__glow blog-article__glow--violet"
+    );
+
+
+  violetGlow.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  const limeGlow =
+    createElement(
+      "div",
+      "blog-article__glow blog-article__glow--lime"
+    );
+
+
+  limeGlow.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  const heroInner =
+    createElement(
+      "div",
+      "blog-article__hero-inner"
+    );
+
+
+  const copy =
+    createElement(
+      "div",
+      "blog-article__hero-copy"
+    );
+
+
+  const eyebrow =
+    createElement(
+      "p",
+      "blog-article__eyebrow"
+    );
+
+
+  eyebrow.append(
+    document.createTextNode(
+      "APE JOURNAL"
+    )
+  );
+
+
+  const diamond =
+    createElement(
+      "span",
+      ""
+    );
+
+
+  diamond.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  eyebrow.appendChild(
+    diamond
+  );
+
+
+  eyebrow.append(
+    document.createTextNode(
+      "IDEAS & OBSERVATIONS"
+    )
+  );
+
+
+  const heading =
+    createElement(
+      "h1",
+      "",
+      blog.heading
+    );
+
+
+  const subheading =
+    createElement(
+      "p",
+      "blog-article__subheading",
+      blog.subheading
+    );
+
+
+  copy.append(
+    eyebrow,
+    heading,
+    subheading
+  );
+
+
+  /* =====================================================
+     HERO APE
+  ===================================================== */
+
+  const ape =
+    createElement(
+      "button",
+      "blog-article__hero-ape"
+    );
+
+
+  ape.type =
+    "button";
+
+
+  ape.setAttribute(
+    "aria-label",
+    "Make the APE mascot react"
+  );
+
+
+  const aura =
+    createElement(
+      "span",
+      "blog-article__hero-ape-aura"
+    );
+
+
+  aura.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  const world =
+    createElement(
+      "span",
+      "blog-article__hero-ape-world"
+    );
+
+
+  const rig =
+    createElement(
+      "span",
+      "blog-article__hero-ape-rig"
+    );
+
+
+  const float =
+    createElement(
+      "span",
+      "blog-article__hero-ape-float"
+    );
+
+
+  const apeImage =
+    document.createElement(
+      "img"
+    );
+
+
+  apeImage.src =
+    "/mascot/ape-laptop.webp";
+
+
+  apeImage.alt =
+    "";
+
+
+  apeImage.draggable =
+    false;
+
+
+  float.appendChild(
+    apeImage
+  );
+
+
+  rig.appendChild(
+    float
+  );
+
+
+  world.appendChild(
+    rig
+  );
+
+
+  ape.append(
+    aura,
+    world
+  );
+
+
+  heroInner.append(
+    copy,
+    ape
+  );
+
+
+  hero.append(
+    violetGlow,
+    limeGlow,
+    heroInner
+  );
+
+
+  return hero;
+
+}
+
+
+/* =========================================================
+   BUILD READING APE
+========================================================= */
+
+function buildReadingApe() {
+
+  const side =
+    createElement(
+      "aside",
+      "blog-article__side"
+    );
+
+
+  side.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  const ape =
+    createElement(
+      "div",
+      "blog-reading-ape"
+    );
+
+
+  const aura =
+    createElement(
+      "div",
+      "blog-reading-ape__aura"
+    );
+
+
+  const rig =
+    createElement(
+      "div",
+      "blog-reading-ape__rig"
+    );
+
+
+  const float =
+    createElement(
+      "div",
+      "blog-reading-ape__float"
+    );
+
+
+  const image =
+    document.createElement(
+      "img"
+    );
+
+
+  image.src =
+    "/mascot/ape-sitting.webp";
+
+
+  image.alt =
+    "";
+
+
+  image.draggable =
+    false;
+
+
+  float.appendChild(
+    image
+  );
+
+
+  rig.appendChild(
+    float
+  );
+
+
+  ape.append(
+    aura,
+    rig
+  );
+
+
+  side.appendChild(
+    ape
+  );
+
+
+  return side;
+
+}
 
 
 /* =========================================================
@@ -400,23 +1236,18 @@ function buildArticle() {
     );
 
 
-  if (
-    !container
-  ) {
+  if (!container) {
 
     return;
 
   }
 
 
-
   const blog =
     findBlog();
 
 
-  if (
-    !blog
-  ) {
+  if (!blog) {
 
     buildNotFound(
       container
@@ -428,59 +1259,19 @@ function buildArticle() {
   }
 
 
-
   updatePageMeta(
     blog
   );
 
 
-
   /* =====================================================
-     ARTICLE HERO
+     HERO
   ===================================================== */
 
   const hero =
-    createElement(
-      "header",
-      "blog-article__hero"
+    buildArticleHero(
+      blog
     );
-
-
-  const heroInner =
-    createElement(
-      "div",
-      "blog-article__hero-inner"
-    );
-
-
-
-  const heading =
-    createElement(
-      "h1",
-      "",
-      blog.heading
-    );
-
-
-
-  const subheading =
-    createElement(
-      "p",
-      "blog-article__subheading",
-      blog.subheading
-    );
-
-
-  heroInner.append(
-    heading,
-    subheading
-  );
-
-
-  hero.appendChild(
-    heroInner
-  );
-
 
 
   /* =====================================================
@@ -494,12 +1285,17 @@ function buildArticle() {
     );
 
 
+  visualSection.setAttribute(
+    "aria-label",
+    `${blog.heading} featured visual`
+  );
+
+
   const visual =
     createElement(
       "div",
       "blog-article__visual"
     );
-
 
 
   const image =
@@ -536,9 +1332,8 @@ function buildArticle() {
   );
 
 
-
   /* =====================================================
-     AUTOMATIC IMAGE GALLERY
+     GALLERY
   ===================================================== */
 
   const gallerySection =
@@ -547,9 +1342,8 @@ function buildArticle() {
     );
 
 
-
   /* =====================================================
-     ARTICLE BODY
+     BODY
   ===================================================== */
 
   const body =
@@ -559,12 +1353,28 @@ function buildArticle() {
     );
 
 
+  body.setAttribute(
+    "aria-label",
+    `${blog.heading} article`
+  );
+
+
+  const bodyInner =
+    createElement(
+      "div",
+      "blog-article__body-inner"
+    );
+
+
+  const side =
+    buildReadingApe();
+
+
   const content =
     createElement(
       "div",
       "blog-article__content"
     );
-
 
 
   (
@@ -593,7 +1403,6 @@ function buildArticle() {
     );
 
 
-
   /* =====================================================
      BACK TO BLOG
   ===================================================== */
@@ -601,14 +1410,12 @@ function buildArticle() {
   const back =
     createElement(
       "a",
-      "blog-article__back",
-      "Back To Blog"
+      "blog-article__back"
     );
 
 
   back.href =
     "/blog/";
-
 
 
   const arrow =
@@ -625,8 +1432,15 @@ function buildArticle() {
   );
 
 
-  back.prepend(
-    arrow
+  const text =
+    document.createTextNode(
+      "Back To Blog"
+    );
+
+
+  back.append(
+    arrow,
+    text
   );
 
 
@@ -635,22 +1449,19 @@ function buildArticle() {
   );
 
 
-  body.appendChild(
+  bodyInner.append(
+    side,
     content
   );
 
 
+  body.appendChild(
+    bodyInner
+  );
+
 
   /* =====================================================
      FINAL ORDER
-
-     Hero
-     ↓
-     Cover
-     ↓
-     Gallery
-     ↓
-     Blog content
   ===================================================== */
 
   container.appendChild(
@@ -663,9 +1474,7 @@ function buildArticle() {
   );
 
 
-  if (
-    gallerySection
-  ) {
+  if (gallerySection) {
 
     container.appendChild(
       gallerySection
@@ -681,9 +1490,425 @@ function buildArticle() {
 }
 
 
+/* =========================================================
+   ARTICLE HERO MOTION
+========================================================= */
+
+function initArticleHero() {
+
+  if (reduceMotion) {
+
+    return;
+
+  }
+
+
+  const eyebrow =
+    document.querySelector(
+      ".blog-article__eyebrow"
+    );
+
+
+  const heading =
+    document.querySelector(
+      ".blog-article__hero h1"
+    );
+
+
+  const subheading =
+    document.querySelector(
+      ".blog-article__subheading"
+    );
+
+
+  const ape =
+    document.querySelector(
+      ".blog-article__hero-ape"
+    );
+
+
+  const timeline =
+    gsap.timeline({
+      defaults: {
+        ease:
+          "power4.out"
+      }
+    });
+
+
+  if (eyebrow) {
+
+    timeline.fromTo(
+      eyebrow,
+      {
+        autoAlpha: 0,
+        y: 15
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5
+      }
+    );
+
+  }
+
+
+  if (heading) {
+
+    timeline.fromTo(
+      heading,
+      {
+        autoAlpha: 0,
+        y: 72,
+        rotationX: -16
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        rotationX: 0,
+        duration: 0.95
+      },
+      "-=0.18"
+    );
+
+  }
+
+
+  if (subheading) {
+
+    timeline.fromTo(
+      subheading,
+      {
+        autoAlpha: 0,
+        y: 20
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.62
+      },
+      "-=0.4"
+    );
+
+  }
+
+
+  if (ape) {
+
+    timeline.fromTo(
+      ape,
+      {
+        autoAlpha: 0,
+        x: 90,
+        y: 65,
+        scale: 0.7,
+        rotation: 6
+      },
+      {
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 1,
+
+        ease:
+          "back.out(1.6)"
+      },
+      "-=0.7"
+    );
+
+
+    gsap.to(
+      ape,
+      {
+        yPercent: -7,
+
+        ease:
+          "none",
+
+        scrollTrigger: {
+          trigger:
+            ".blog-article__hero",
+
+          start:
+            "top top",
+
+          end:
+            "bottom top",
+
+          scrub:
+            0.9
+        }
+      }
+    );
+
+  }
+
+}
+
 
 /* =========================================================
-   MOTION
+   ARTICLE HERO APE
+========================================================= */
+
+function initArticleHeroApe() {
+
+  const ape =
+    document.querySelector(
+      ".blog-article__hero-ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".blog-article__hero-ape-world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".blog-article__hero-ape-rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".blog-article__hero-ape-float"
+    );
+
+
+  if (
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+
+    return;
+
+  }
+
+
+  if (!reduceMotion) {
+
+    gsap.to(
+      float,
+      {
+        y: -7,
+        rotation: 1.4,
+
+        duration: 1.75,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+  }
+
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 20,
+
+            y:
+              y * 12,
+
+            duration:
+              0.35,
+
+            ease:
+              "power3.out"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 11,
+
+            rotationX:
+              y * -7,
+
+            scale:
+              1.05,
+
+            duration:
+              0.32,
+
+            ease:
+              "power3.out"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x: 0,
+            y: 0,
+
+            duration:
+              0.55,
+
+            ease:
+              "elastic.out(1,0.5)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationX: 0,
+            rotationY: 0,
+            rotation: 0,
+            scale: 1,
+
+            duration:
+              0.45,
+
+            ease:
+              "back.out(1.6)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      if (reduceMotion) {
+
+        return;
+
+      }
+
+
+      gsap.killTweensOf(
+        rig
+      );
+
+
+      gsap.timeline()
+
+        .to(
+          rig,
+          {
+            y: -20,
+            rotation: -6,
+            scale: 1.08,
+
+            duration:
+              0.16
+          }
+        )
+
+        .to(
+          rig,
+          {
+            rotation: 6,
+
+            duration:
+              0.13
+          }
+        )
+
+        .to(
+          rig,
+          {
+            rotationY:
+              "+=360",
+
+            duration:
+              0.48,
+
+            ease:
+              "power3.inOut"
+          }
+        )
+
+        .to(
+          rig,
+          {
+            y: 0,
+            rotation: 0,
+            rotationY: 0,
+            scale: 1,
+
+            duration:
+              0.4,
+
+            ease:
+              "bounce.out"
+          }
+        );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   ARTICLE MOTION
 ========================================================= */
 
 function initArticleMotion() {
@@ -695,8 +1920,7 @@ function initArticleMotion() {
 
 
   if (
-    !article
-    ||
+    !article ||
     article.classList.contains(
       "blog-article--missing"
     )
@@ -707,109 +1931,55 @@ function initArticleMotion() {
   }
 
 
+  if (reduceMotion) {
 
-  /* =====================================================
-     HERO
-  ===================================================== */
+    return;
 
-  gsap
-    .timeline({
-
-      defaults: {
-
-        ease:
-          "power4.out"
-
-      }
-
-    })
-
-    .fromTo(
-      ".blog-article__hero h1",
-
-      {
-        opacity: 0,
-        y: 85
-      },
-
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 1
-      }
-    )
-
-    .fromTo(
-      ".blog-article__subheading",
-
-      {
-        opacity: 0,
-        y: 30
-      },
-
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.7
-      },
-
-      "-=0.5"
-    );
-
+  }
 
 
   /* =====================================================
-     COVER IMAGE
+     COVER
   ===================================================== */
 
   gsap.fromTo(
     ".blog-article__visual",
-
     {
-      opacity: 0,
-      y: 65,
+      autoAlpha: 0,
+      y: 60,
       scale: 0.97
     },
-
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
       scale: 1,
 
-      duration: 1,
+      duration:
+        0.95,
 
       ease:
         "power3.out",
 
       scrollTrigger: {
-
         trigger:
           ".blog-article__visual-wrap",
 
         start:
-          "top 83%"
+          "top 83%",
 
+        once:
+          true
       }
-
     }
   );
 
 
-
-  /* =====================================================
-     COVER PARALLAX
-  ===================================================== */
-
   gsap.fromTo(
     ".blog-article__visual img",
-
     {
       scale: 1.06,
       yPercent: -3
     },
-
     {
       scale: 1.06,
       yPercent: 3,
@@ -818,7 +1988,6 @@ function initArticleMotion() {
         "none",
 
       scrollTrigger: {
-
         trigger:
           ".blog-article__visual",
 
@@ -830,16 +1999,13 @@ function initArticleMotion() {
 
         scrub:
           1
-
       }
-
     }
   );
 
 
-
   /* =====================================================
-     GALLERY ITEMS
+     GALLERY
   ===================================================== */
 
   const galleryItems =
@@ -850,53 +2016,42 @@ function initArticleMotion() {
 
   galleryItems.forEach(
     function (
-      item,
-      index
+      item
     ) {
 
       gsap.fromTo(
         item,
-
         {
-          opacity: 0,
-          y: 45,
+          autoAlpha: 0,
+          y: 42,
           scale: 0.97
         },
-
         {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
           scale: 1,
 
-          duration: 0.8,
-
-          delay:
-            (
-              index %
-              3
-            )
-            *
-            0.06,
+          duration:
+            0.78,
 
           ease:
             "power3.out",
 
           scrollTrigger: {
-
             trigger:
               item,
 
             start:
-              "top 88%"
+              "top 88%",
 
+            once:
+              true
           }
-
         }
       );
 
     }
   );
-
 
 
   /* =====================================================
@@ -916,32 +2071,30 @@ function initArticleMotion() {
 
       gsap.fromTo(
         paragraph,
-
         {
-          opacity: 0,
-          y: 35
+          autoAlpha: 0,
+          y: 28
         },
-
         {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
 
           duration:
-            0.75,
+            0.72,
 
           ease:
             "power3.out",
 
           scrollTrigger: {
-
             trigger:
               paragraph,
 
             start:
-              "top 88%"
+              "top 89%",
 
+            once:
+              true
           }
-
         }
       );
 
@@ -949,41 +2102,139 @@ function initArticleMotion() {
   );
 
 
-
-  /* =====================================================
-     BACK BUTTON
-  ===================================================== */
-
   gsap.fromTo(
     ".blog-article__back",
-
     {
-      opacity: 0,
-      y: 20
+      autoAlpha: 0,
+      y: 18
     },
-
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
 
       duration:
-        0.7,
+        0.65,
 
       scrollTrigger: {
-
         trigger:
           ".blog-article__back",
 
         start:
-          "top 92%"
+          "top 92%",
 
+        once:
+          true
       }
-
     }
   );
 
 }
 
+
+/* =========================================================
+   READING APE MOTION
+========================================================= */
+
+function initReadingApe() {
+
+  const ape =
+    document.querySelector(
+      ".blog-reading-ape"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".blog-reading-ape__rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".blog-reading-ape__float"
+    );
+
+
+  if (
+    !ape ||
+    !rig ||
+    !float ||
+    reduceMotion
+  ) {
+
+    return;
+
+  }
+
+
+  gsap.to(
+    float,
+    {
+      y: -6,
+      rotation: 1.4,
+
+      duration:
+        1.7,
+
+      repeat:
+        -1,
+
+      yoyo:
+        true,
+
+      ease:
+        "sine.inOut"
+    }
+  );
+
+
+  ScrollTrigger.create({
+    trigger:
+      ".blog-article__body",
+
+    start:
+      "top 60%",
+
+    end:
+      "bottom 40%",
+
+    onUpdate(
+      self
+    ) {
+
+      const speed =
+        gsap.utils.clamp(
+          -1,
+          1,
+          self.getVelocity() /
+          1800
+        );
+
+
+      gsap.to(
+        rig,
+        {
+          rotation:
+            speed * 4,
+
+          x:
+            speed * 5,
+
+          duration:
+            0.25,
+
+          ease:
+            "power2.out",
+
+          overwrite:
+            "auto"
+        }
+      );
+
+    }
+  });
+
+}
 
 
 /* =========================================================
@@ -998,9 +2249,7 @@ function initFooter() {
     );
 
 
-  if (
-    year
-  ) {
+  if (year) {
 
     year.textContent =
       String(
@@ -1011,21 +2260,17 @@ function initFooter() {
   }
 
 
-
   const topButton =
     document.querySelector(
       ".site-footer__top-link"
     );
 
 
-  if (
-    !topButton
-  ) {
+  if (!topButton) {
 
     return;
 
   }
-
 
 
   topButton.addEventListener(
@@ -1038,19 +2283,18 @@ function initFooter() {
 
 
       window.scrollTo({
-
         top: 0,
 
         behavior:
-          "smooth"
-
+          reduceMotion
+            ? "auto"
+            : "smooth"
       });
 
     }
   );
 
 }
-
 
 
 /* =========================================================
@@ -1063,19 +2307,21 @@ document.addEventListener(
 
     initHeader();
 
-
     buildArticle();
 
-
     initFooter();
-
 
 
     requestAnimationFrame(
       function () {
 
+        initArticleHero();
+
+        initArticleHeroApe();
+
         initArticleMotion();
 
+        initReadingApe();
 
         ScrollTrigger.refresh();
 
@@ -1086,6 +2332,9 @@ document.addEventListener(
 );
 
 
+/* =========================================================
+   LOAD
+========================================================= */
 
 window.addEventListener(
   "load",

@@ -1,0 +1,1954 @@
+/* =========================================================
+   APE STUDIOS
+   INTERACTIVE MASCOT NAVIGATION UNIVERSE
+   FINAL VERSION
+========================================================= */
+
+
+/* =========================================================
+   NORMAL CHARACTER SECTIONS
+========================================================= */
+
+.ape-character-zone {
+  position: relative !important;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   SERVICES SPECIAL HOST
+   IMPORTANT: DO NOT BREAK PINNED GSAP SECTION
+========================================================= */
+
+.ape-services-character-host {
+  position: relative !important;
+
+  /*
+   * Never add height/min-height/padding here.
+   * Services ScrollTrigger controls the geometry.
+   */
+
+  overflow: visible !important;
+}
+
+
+/* =========================================================
+   CHARACTER ROOT
+========================================================= */
+
+.ape-nav-character {
+  --ape-violet: #7d35eb;
+  --ape-lime: #c6ff33;
+  --ape-black: #000000;
+  --ape-white: #ffffff;
+
+  position: absolute;
+  z-index: 40;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  -webkit-tap-highlight-color: transparent;
+
+  transform-origin: center bottom;
+
+  isolation: isolate;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/* =========================================================
+   WORLD
+   Cursor-follow / roaming layer
+========================================================= */
+
+.ape-nav-character__world {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  perspective: 1100px;
+
+  transform-style: preserve-3d;
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   RIG
+   Jump / tilt / dance layer
+========================================================= */
+
+.ape-nav-character__rig,
+.ape-nav-character__float {
+  position: relative;
+
+  z-index: 5;
+
+  width: 100%;
+  height: 100%;
+
+  transform-style: preserve-3d;
+
+  transform-origin: center bottom;
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   CHARACTER IMAGE
+========================================================= */
+
+.ape-nav-character__image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center bottom;
+
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  transform-origin: center bottom;
+
+  filter:
+    drop-shadow(
+      0
+      22px
+      30px
+      rgba(0, 0, 0, 0.28)
+    );
+
+  transition:
+    filter 0.35s ease;
+
+  will-change:
+    transform,
+    filter;
+}
+
+
+/* =========================================================
+   AURA
+========================================================= */
+
+.ape-nav-character__aura {
+  position: absolute;
+
+  z-index: 1;
+
+  left: 10%;
+  right: 10%;
+
+  bottom: 2%;
+
+  height: 65%;
+
+  pointer-events: none;
+
+  opacity: 0.85;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(125, 53, 235, 0.42) 0%,
+      rgba(125, 53, 235, 0.20) 34%,
+      rgba(198, 255, 51, 0.11) 53%,
+      transparent 73%
+    );
+
+  filter: blur(22px);
+
+  transform: scale(1);
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+/* =========================================================
+   MOTION TRAILS
+========================================================= */
+
+.ape-nav-character__trail {
+  position: absolute;
+
+  z-index: 2;
+
+  top: 48%;
+
+  width: 70%;
+  height: 12px;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transform-origin: center;
+
+  will-change:
+    opacity,
+    transform;
+}
+
+
+.ape-nav-character__trail--violet {
+  left: 10%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(125, 53, 235, 0.95),
+      transparent
+    );
+
+  filter: blur(5px);
+}
+
+
+.ape-nav-character__trail--lime {
+  right: 5%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(198, 255, 51, 0.95),
+      transparent
+    );
+
+  filter: blur(4px);
+}
+
+
+/* =========================================================
+   IMPACT BURST
+========================================================= */
+
+.ape-nav-character__impact {
+  position: absolute;
+
+  z-index: 3;
+
+  width: 82%;
+  height: 82%;
+
+  left: 9%;
+  top: 9%;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transform-origin: center;
+
+  background:
+    conic-gradient(
+      from 24deg,
+
+      transparent 0deg,
+      transparent 34deg,
+      rgba(125, 53, 235, 0.84) 35deg,
+      transparent 39deg,
+
+      transparent 82deg,
+      rgba(198, 255, 51, 0.82) 83deg,
+      transparent 87deg,
+
+      transparent 143deg,
+      rgba(125, 53, 235, 0.68) 144deg,
+      transparent 148deg,
+
+      transparent 207deg,
+      rgba(198, 255, 51, 0.68) 208deg,
+      transparent 212deg,
+
+      transparent 274deg,
+      rgba(125, 53, 235, 0.72) 275deg,
+      transparent 279deg,
+
+      transparent 332deg,
+      rgba(198, 255, 51, 0.68) 333deg,
+      transparent 337deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      circle,
+      transparent 0%,
+      transparent 50%,
+      #000 53%,
+      #000 63%,
+      transparent 67%
+    );
+
+  mask:
+    radial-gradient(
+      circle,
+      transparent 0%,
+      transparent 50%,
+      #000 53%,
+      #000 63%,
+      transparent 67%
+    );
+
+  filter: blur(0.5px);
+
+  will-change:
+    opacity,
+    transform;
+}
+
+
+/* =========================================================
+   SPEED LINES
+========================================================= */
+
+.ape-nav-character__speed-line {
+  position: absolute;
+
+  z-index: 2;
+
+  left: 20%;
+
+  width: 60%;
+  height: 3px;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transform-origin: right center;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(125, 53, 235, 0.96) 45%,
+      rgba(198, 255, 51, 0.96)
+    );
+
+  filter: blur(0.7px);
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+.ape-nav-character__speed-line--one {
+  top: 34%;
+}
+
+
+.ape-nav-character__speed-line--two {
+  top: 49%;
+
+  width: 52%;
+
+  left: 24%;
+}
+
+
+.ape-nav-character__speed-line--three {
+  top: 64%;
+
+  width: 43%;
+
+  left: 29%;
+}
+
+
+/* =========================================================
+   SPEECH NAVIGATION
+========================================================= */
+
+.ape-nav-character__speech {
+  position: absolute;
+
+  z-index: 20;
+
+  width:
+    clamp(
+      195px,
+      16vw,
+      260px
+    );
+
+  padding:
+    16px
+    17px
+    15px;
+
+  pointer-events: auto;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.17);
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 8, 14, 0.95),
+      rgba(20, 12, 31, 0.92)
+    );
+
+  box-shadow:
+    0
+    18px
+    50px
+    rgba(0, 0, 0, 0.3),
+
+    0
+    0
+    28px
+    rgba(125, 53, 235, 0.16);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: #ffffff;
+
+  transform-origin: center bottom;
+
+  will-change:
+    transform,
+    opacity,
+    box-shadow;
+}
+
+
+/* top accent */
+
+.ape-nav-character__speech::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 16px;
+
+  width: 42px;
+  height: 3px;
+
+  border-radius:
+    0
+    0
+    999px
+    999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--ape-violet),
+      var(--ape-lime)
+    );
+}
+
+
+/* subtle speech glow */
+
+.ape-nav-character__speech::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: -1;
+
+  inset: -1px;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  opacity: 0.55;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(125, 53, 235, 0.15),
+      transparent 45%,
+      rgba(198, 255, 51, 0.08)
+    );
+}
+
+
+/* =========================================================
+   SPEECH TEXT
+========================================================= */
+
+.ape-nav-character__speech-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color:
+    var(--ape-lime);
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+.ape-nav-character__speech-title {
+  display: block;
+
+  margin-bottom: 13px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    clamp(
+      15px,
+      1.1vw,
+      19px
+    );
+
+  line-height: 1.02;
+
+  letter-spacing: -0.04em;
+
+  font-weight: 950;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.ape-nav-character__cta {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 39px;
+
+  padding:
+    0
+    15px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    var(--ape-lime);
+
+  color:
+    #000000 !important;
+
+  text-decoration:
+    none !important;
+
+  font-size: 10px;
+
+  font-weight: 950;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* CTA shine */
+
+.ape-nav-character__cta::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: -60px;
+
+  width: 44px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent
+    );
+
+  transform:
+    skewX(-18deg);
+
+  transition:
+    left
+    0.58s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.ape-nav-character__cta:hover {
+  transform:
+    translateY(-3px)
+    scale(1.055);
+
+  background:
+    var(--ape-violet);
+
+  color:
+    #ffffff !important;
+
+  box-shadow:
+    0
+    10px
+    24px
+    rgba(125, 53, 235, 0.28);
+}
+
+
+.ape-nav-character__cta:hover::before {
+  left:
+    calc(
+      100% + 30px
+    );
+}
+
+
+/* =========================================================
+   ACTIVE CHARACTER STATES
+========================================================= */
+
+.ape-nav-character.is-chasing {
+  z-index: 120;
+}
+
+
+.ape-nav-character.is-roaming {
+  z-index: 180;
+}
+
+
+.ape-nav-character.is-mobile-active {
+  z-index: 150;
+}
+
+
+.ape-nav-character.is-speaking {
+  z-index: 125;
+}
+
+
+/* =========================================================
+   CHASING VISUAL
+========================================================= */
+
+.ape-nav-character.is-chasing
+.ape-nav-character__image {
+  filter:
+    drop-shadow(
+      0
+      30px
+      38px
+      rgba(0, 0, 0, 0.36)
+    )
+
+    drop-shadow(
+      0
+      0
+      20px
+      rgba(125, 53, 235, 0.58)
+    )
+
+    drop-shadow(
+      0
+      0
+      8px
+      rgba(198, 255, 51, 0.30)
+    );
+}
+
+
+.ape-nav-character.is-chasing
+.ape-nav-character__aura {
+  opacity: 1;
+
+  filter: blur(27px);
+}
+
+
+/* =========================================================
+   ROAMING VISUAL
+========================================================= */
+
+.ape-nav-character.is-roaming
+.ape-nav-character__image {
+  filter:
+    drop-shadow(
+      0
+      34px
+      42px
+      rgba(0, 0, 0, 0.38)
+    )
+
+    drop-shadow(
+      0
+      0
+      26px
+      rgba(125, 53, 235, 0.66)
+    )
+
+    drop-shadow(
+      0
+      0
+      11px
+      rgba(198, 255, 51, 0.38)
+    );
+}
+
+
+.ape-nav-character.is-roaming
+.ape-nav-character__aura {
+  opacity: 1;
+
+  filter: blur(30px);
+}
+
+
+/* =========================================================
+   MOBILE ACTIVE VISUAL
+========================================================= */
+
+.ape-nav-character.is-mobile-active
+.ape-nav-character__image {
+  filter:
+    drop-shadow(
+      0
+      22px
+      30px
+      rgba(0, 0, 0, 0.34)
+    )
+
+    drop-shadow(
+      0
+      0
+      18px
+      rgba(125, 53, 235, 0.58)
+    )
+
+    drop-shadow(
+      0
+      0
+      6px
+      rgba(198, 255, 51, 0.24)
+    );
+}
+
+
+.ape-nav-character.is-mobile-active
+.ape-nav-character__aura {
+  opacity: 1;
+
+  filter: blur(18px);
+}
+
+
+/* =========================================================
+   SPEAKING STATE
+========================================================= */
+
+.ape-nav-character.is-speaking
+.ape-nav-character__speech {
+  box-shadow:
+    0
+    20px
+    58px
+    rgba(0, 0, 0, 0.34),
+
+    0
+    0
+    0
+    1px
+    rgba(125, 53, 235, 0.18),
+
+    0
+    0
+    34px
+    rgba(125, 53, 235, 0.24);
+}
+
+
+/* =========================================================
+   DESKTOP HOVER
+========================================================= */
+
+@media
+(hover: hover)
+and
+(pointer: fine) {
+
+  .ape-nav-character {
+    touch-action: auto;
+  }
+
+
+  .ape-nav-character:hover {
+    z-index: 120;
+  }
+
+
+  .ape-nav-character:hover
+  .ape-nav-character__image {
+    transform:
+      translateZ(24px);
+
+    filter:
+      drop-shadow(
+        0
+        30px
+        38px
+        rgba(0, 0, 0, 0.34)
+      )
+
+      drop-shadow(
+        0
+        0
+        17px
+        rgba(125, 53, 235, 0.55)
+      );
+  }
+
+
+  .ape-nav-character:hover
+  .ape-nav-character__aura {
+    opacity: 1;
+
+    filter:
+      blur(26px);
+  }
+
+}
+
+
+/* =========================================================
+   HERO MAIN
+========================================================= */
+
+.ape-nav-character--hero {
+  right:
+    clamp(
+      -20px,
+      1vw,
+      28px
+    );
+
+  bottom: -8px;
+
+  width:
+    clamp(
+      300px,
+      27vw,
+      440px
+    );
+
+  height:
+    clamp(
+      360px,
+      35vw,
+      540px
+    );
+}
+
+
+.ape-nav-character--hero
+.ape-nav-character__speech {
+  left: -46%;
+  top: 24%;
+}
+
+
+/* =========================================================
+   HERO IDEA
+========================================================= */
+
+.ape-nav-character--hero-idea {
+  left:
+    clamp(
+      5px,
+      2vw,
+      32px
+    );
+
+  top:
+    clamp(
+      105px,
+      15vh,
+      180px
+    );
+
+  width:
+    clamp(
+      145px,
+      12vw,
+      205px
+    );
+
+  height:
+    clamp(
+      175px,
+      15vw,
+      245px
+    );
+}
+
+
+.ape-nav-character--hero-idea
+.ape-nav-character__speech {
+  left: 75%;
+  top: 14%;
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.ape-nav-character--about {
+  right:
+    clamp(
+      -12px,
+      1vw,
+      24px
+    );
+
+  bottom: 0;
+
+  width:
+    clamp(
+      260px,
+      22vw,
+      365px
+    );
+
+  height:
+    clamp(
+      310px,
+      28vw,
+      440px
+    );
+}
+
+
+.ape-nav-character--about
+.ape-nav-character__speech {
+  left: -55%;
+  top: 25%;
+}
+
+
+/* =========================================================
+   SERVICES
+   SPECIAL PINNED STAGE SAFE VERSION
+========================================================= */
+
+.ape-services-character-host
+.ape-nav-character--services {
+  position: absolute !important;
+
+  left: auto !important;
+
+  right:
+    clamp(
+      12px,
+      2.2vw,
+      36px
+    ) !important;
+
+  top: auto !important;
+
+  bottom:
+    clamp(
+      8px,
+      1.5vw,
+      20px
+    ) !important;
+
+  width:
+    clamp(
+      130px,
+      10vw,
+      175px
+    ) !important;
+
+  height:
+    clamp(
+      175px,
+      14vw,
+      230px
+    ) !important;
+
+  z-index: 30;
+}
+
+
+.ape-services-character-host
+.ape-nav-character--services
+.ape-nav-character__speech {
+  left: auto !important;
+
+  right:
+    calc(
+      100% + 12px
+    ) !important;
+
+  top: 13% !important;
+
+  bottom: auto !important;
+
+  width:
+    clamp(
+      175px,
+      14vw,
+      220px
+    );
+}
+
+
+.ape-services-character-host
+.ape-nav-character--services
+.ape-nav-character__aura {
+  left: 15%;
+  right: 15%;
+
+  bottom: 5%;
+
+  height: 52%;
+
+  opacity: 0.65;
+
+  filter:
+    blur(14px);
+}
+
+
+.ape-services-character-host
+.ape-nav-character--services
+.ape-nav-character__image {
+  filter:
+    drop-shadow(
+      0
+      17px
+      23px
+      rgba(0, 0, 0, 0.3)
+    )
+
+    drop-shadow(
+      0
+      0
+      10px
+      rgba(125, 53, 235, 0.28)
+    );
+}
+
+
+/* =========================================================
+   WORK MAIN
+========================================================= */
+
+.ape-nav-character--work {
+  left:
+    clamp(
+      6px,
+      1.5vw,
+      28px
+    );
+
+  bottom: 0;
+
+  width:
+    clamp(
+      270px,
+      22vw,
+      370px
+    );
+
+  height:
+    clamp(
+      330px,
+      29vw,
+      450px
+    );
+}
+
+
+.ape-nav-character--work
+.ape-nav-character__speech {
+  left: 72%;
+  top: 24%;
+}
+
+
+/* =========================================================
+   WORK SUPPORT
+========================================================= */
+
+.ape-nav-character--work-music {
+  right:
+    clamp(
+      4px,
+      1.8vw,
+      28px
+    );
+
+  top:
+    clamp(
+      80px,
+      9vw,
+      130px
+    );
+
+  width:
+    clamp(
+      150px,
+      12vw,
+      210px
+    );
+
+  height:
+    clamp(
+      180px,
+      16vw,
+      255px
+    );
+}
+
+
+.ape-nav-character--work-music
+.ape-nav-character__speech {
+  right: 75%;
+  top: 12%;
+}
+
+
+/* =========================================================
+   CLIENTS
+========================================================= */
+
+.ape-nav-character--clients {
+  right:
+    clamp(
+      10px,
+      3vw,
+      58px
+    );
+
+  top:
+    clamp(
+      4px,
+      1vw,
+      18px
+    );
+
+  width:
+    clamp(
+      220px,
+      18vw,
+      300px
+    );
+
+  height:
+    clamp(
+      260px,
+      23vw,
+      355px
+    );
+}
+
+
+.ape-nav-character--clients
+.ape-nav-character__speech {
+  left: -70%;
+  top: 28%;
+}
+
+
+/* =========================================================
+   RECOGNITION
+========================================================= */
+
+.ape-nav-character--recognition {
+  right:
+    clamp(
+      4px,
+      2vw,
+      40px
+    );
+
+  bottom: 0;
+
+  width:
+    clamp(
+      270px,
+      22vw,
+      365px
+    );
+
+  height:
+    clamp(
+      320px,
+      27vw,
+      440px
+    );
+}
+
+
+.ape-nav-character--recognition
+.ape-nav-character__speech {
+  left: -62%;
+  top: 26%;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.ape-nav-character--footer {
+  right:
+    clamp(
+      6px,
+      3vw,
+      52px
+    );
+
+  bottom: -5px;
+
+  width:
+    clamp(
+      255px,
+      20vw,
+      345px
+    );
+
+  height:
+    clamp(
+      300px,
+      25vw,
+      410px
+    );
+}
+
+
+.ape-nav-character--footer
+.ape-nav-character__speech {
+  left: -72%;
+  top: 20%;
+}
+
+
+/* =========================================================
+   TABLET / 125% ZOOM
+========================================================= */
+
+@media
+(min-width: 768px)
+and
+(max-width: 1180px) {
+
+  .ape-nav-character--hero {
+    width: 275px;
+    height: 340px;
+  }
+
+
+  .ape-nav-character--about {
+    width: 235px;
+    height: 290px;
+  }
+
+
+  /* services */
+
+  .ape-services-character-host
+  .ape-nav-character--services {
+    right: 12px !important;
+
+    bottom: 8px !important;
+
+    width: 115px !important;
+
+    height: 160px !important;
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services
+  .ape-nav-character__speech {
+    right:
+      calc(
+        100% + 8px
+      ) !important;
+
+    top: 7% !important;
+
+    width: 175px;
+  }
+
+
+  .ape-nav-character--work {
+    width: 235px;
+    height: 285px;
+  }
+
+
+  .ape-nav-character--work-music {
+    width: 120px;
+    height: 155px;
+  }
+
+
+  .ape-nav-character--clients {
+    width: 195px;
+    height: 240px;
+  }
+
+
+  .ape-nav-character--recognition {
+    width: 235px;
+    height: 290px;
+  }
+
+
+  .ape-nav-character--footer {
+    width: 220px;
+    height: 270px;
+  }
+
+
+  .ape-nav-character__speech {
+    width: 195px;
+
+    padding: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(max-width: 767px) {
+
+  /*
+   * Important:
+   * finger interactions happen directly
+   * on the mascot.
+   */
+
+  .ape-nav-character {
+    touch-action: none;
+  }
+
+
+  .ape-nav-character__speech {
+    width:
+      min(
+        190px,
+        58vw
+      );
+
+    padding:
+      12px
+      13px;
+
+    border-radius:
+      14px;
+  }
+
+
+  .ape-nav-character__speech-title {
+    font-size: 14px;
+  }
+
+
+  .ape-nav-character__speech-eyebrow {
+    font-size: 8px;
+  }
+
+
+  .ape-nav-character__cta {
+    min-height: 34px;
+
+    padding:
+      0
+      12px;
+
+    font-size: 9px;
+  }
+
+
+  .ape-nav-character__aura {
+    opacity: 0.72;
+
+    filter:
+      blur(13px);
+  }
+
+
+  .ape-nav-character__impact {
+    width: 92%;
+    height: 92%;
+
+    left: 4%;
+    top: 4%;
+  }
+
+
+  .ape-nav-character__speed-line {
+    height: 2px;
+  }
+
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+
+  .ape-nav-character--hero {
+    right: -35px;
+
+    bottom: -5px;
+
+    width:
+      clamp(
+        175px,
+        48vw,
+        215px
+      );
+
+    height:
+      clamp(
+        215px,
+        59vw,
+        265px
+      );
+  }
+
+
+  .ape-nav-character--hero
+  .ape-nav-character__speech {
+    left: -62%;
+
+    top: 8%;
+  }
+
+
+  /* =======================================================
+     HERO IDEA
+  ======================================================= */
+
+  .ape-nav-character--hero-idea {
+    left: -13px;
+
+    top: 105px;
+
+    width:
+      clamp(
+        92px,
+        25vw,
+        115px
+      );
+
+    height: 140px;
+  }
+
+
+  .ape-nav-character--hero-idea
+  .ape-nav-character__speech {
+    left: 60%;
+
+    top: 5%;
+  }
+
+
+  /* =======================================================
+     ABOUT
+  ======================================================= */
+
+  .ape-nav-character--about {
+    right: -28px;
+
+    bottom: -3px;
+
+    width:
+      clamp(
+        155px,
+        43vw,
+        195px
+      );
+
+    height:
+      clamp(
+        190px,
+        53vw,
+        240px
+      );
+  }
+
+
+  .ape-nav-character--about
+  .ape-nav-character__speech {
+    left: -82%;
+
+    top: 13%;
+  }
+
+
+  /* =======================================================
+     SERVICES
+     IMPORTANT: DO NOT CHANGE SECTION HEIGHT
+  ======================================================= */
+
+  .ape-services-character-host
+  .ape-nav-character--services {
+    left: auto !important;
+
+    right: 7px !important;
+
+    top: auto !important;
+
+    bottom: 5px !important;
+
+    width:
+      clamp(
+        90px,
+        25vw,
+        110px
+      ) !important;
+
+    height:
+      clamp(
+        120px,
+        33vw,
+        145px
+      ) !important;
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services
+  .ape-nav-character__speech {
+    left: auto !important;
+
+    right: 0 !important;
+
+    top: auto !important;
+
+    bottom:
+      calc(
+        100% + 6px
+      ) !important;
+
+    width:
+      min(
+        165px,
+        53vw
+      );
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services
+  .ape-nav-character__aura {
+    filter:
+      blur(10px);
+
+    opacity: 0.52;
+  }
+
+
+  /* =======================================================
+     WORK
+  ======================================================= */
+
+  .ape-nav-character--work {
+    left: -25px;
+
+    bottom: -5px;
+
+    width:
+      clamp(
+        155px,
+        43vw,
+        195px
+      );
+
+    height: 235px;
+  }
+
+
+  .ape-nav-character--work
+  .ape-nav-character__speech {
+    left: 67%;
+
+    top: 10%;
+  }
+
+
+  /* =======================================================
+     WORK SUPPORT
+  ======================================================= */
+
+  .ape-nav-character--work-music {
+    right: -10px;
+
+    top: 65px;
+
+    width: 95px;
+
+    height: 125px;
+  }
+
+
+  .ape-nav-character--work-music
+  .ape-nav-character__speech {
+    right: 42%;
+
+    top: 5%;
+  }
+
+
+  /* =======================================================
+     CLIENTS
+  ======================================================= */
+
+  .ape-nav-character--clients {
+    right: -22px;
+
+    top: -3px;
+
+    width:
+      clamp(
+        130px,
+        36vw,
+        165px
+      );
+
+    height: 200px;
+  }
+
+
+  .ape-nav-character--clients
+  .ape-nav-character__speech {
+    left: -100%;
+
+    top: 8%;
+  }
+
+
+  /* =======================================================
+     RECOGNITION
+  ======================================================= */
+
+  .ape-nav-character--recognition {
+    right: -25px;
+
+    bottom: -4px;
+
+    width:
+      clamp(
+        155px,
+        43vw,
+        195px
+      );
+
+    height: 235px;
+  }
+
+
+  .ape-nav-character--recognition
+  .ape-nav-character__speech {
+    left: -87%;
+
+    top: 10%;
+  }
+
+
+  /* =======================================================
+     FOOTER
+  ======================================================= */
+
+  .ape-nav-character--footer {
+    right: -20px;
+
+    bottom: -3px;
+
+    width:
+      clamp(
+        155px,
+        42vw,
+        190px
+      );
+
+    height: 230px;
+  }
+
+
+  .ape-nav-character--footer
+  .ape-nav-character__speech {
+    left: -92%;
+
+    top: 7%;
+  }
+
+
+  /* =======================================================
+     MOBILE ACTIVE SPEECH
+  ======================================================= */
+
+  .ape-nav-character.is-speaking
+  .ape-nav-character__speech {
+    box-shadow:
+      0
+      16px
+      38px
+      rgba(0, 0, 0, 0.36),
+
+      0
+      0
+      22px
+      rgba(125, 53, 235, 0.25);
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media
+(max-width: 374px) {
+
+  .ape-nav-character__speech {
+    width: 160px;
+  }
+
+
+  .ape-nav-character--hero {
+    width: 160px;
+
+    height: 205px;
+  }
+
+
+  .ape-nav-character--hero-idea {
+    width: 82px;
+  }
+
+
+  .ape-nav-character--about,
+  .ape-nav-character--work,
+  .ape-nav-character--recognition,
+  .ape-nav-character--footer {
+    width: 145px;
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services {
+    width: 82px !important;
+
+    height: 112px !important;
+
+    right: 4px !important;
+
+    bottom: 3px !important;
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services
+  .ape-nav-character__speech {
+    width: 145px;
+  }
+
+
+  .ape-nav-character--clients {
+    width: 120px;
+  }
+
+
+  /*
+   * Keep very small phones clean.
+   */
+
+  .ape-nav-character--work-music {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media
+(min-width: 1600px) {
+
+  .ape-nav-character--hero {
+    width: 470px;
+
+    height: 575px;
+  }
+
+
+  .ape-nav-character--about {
+    width: 390px;
+
+    height: 475px;
+  }
+
+
+  /*
+   * Services stays more controlled because
+   * the pinned area already contains a
+   * large image and service navigation.
+   */
+
+  .ape-services-character-host
+  .ape-nav-character--services {
+    width: 190px !important;
+
+    height: 250px !important;
+
+    right: 34px !important;
+
+    bottom: 16px !important;
+  }
+
+
+  .ape-services-character-host
+  .ape-nav-character--services
+  .ape-nav-character__speech {
+    width: 225px;
+
+    right:
+      calc(
+        100% + 16px
+      ) !important;
+  }
+
+
+  .ape-nav-character--work {
+    width: 400px;
+
+    height: 480px;
+  }
+
+
+  .ape-nav-character--work-music {
+    width: 220px;
+
+    height: 270px;
+  }
+
+
+  .ape-nav-character--clients {
+    width: 320px;
+
+    height: 385px;
+  }
+
+
+  .ape-nav-character--recognition {
+    width: 390px;
+
+    height: 475px;
+  }
+
+
+  .ape-nav-character--footer {
+    width: 365px;
+
+    height: 440px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media
+(prefers-reduced-motion: reduce) {
+
+  .ape-nav-character,
+  .ape-nav-character__world,
+  .ape-nav-character__rig,
+  .ape-nav-character__float,
+  .ape-nav-character__image,
+  .ape-nav-character__aura,
+  .ape-nav-character__trail,
+  .ape-nav-character__impact,
+  .ape-nav-character__speed-line,
+  .ape-nav-character__speech {
+    animation: none !important;
+
+    transition: none !important;
+  }
+
+
+  .ape-nav-character__impact,
+  .ape-nav-character__speed-line,
+  .ape-nav-character__trail {
+    display: none !important;
+  }
+
+}

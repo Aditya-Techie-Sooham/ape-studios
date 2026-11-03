@@ -62,10 +62,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "a",
 
     intro:
-      "A selection of APE Studio's creative work for Babumoshai.",
+      "Selected creative and visual work by APE Studio for Babumoshai.",
 
     description:
-      "Explore ten visual pieces from the current project archive. The final case-study narrative, objectives and detailed scope can be updated here once the approved project notes are ready."
+      "This hospitality project is presented through a curated visual archive showcasing APE Studio's creative work for the brand."
   },
 
 
@@ -85,10 +85,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "b",
 
     intro:
-      "A visual selection from APE Studio's work for Noodle Oodle.",
+      "Selected creative and visual work by APE Studio for Noodle Oodle.",
 
     description:
-      "This project page brings the current creative archive together in one place, allowing the visual work to lead while the final case-study story is being prepared."
+      "This hospitality project is presented through a curated visual archive showcasing APE Studio's creative work for the brand."
   },
 
 
@@ -108,10 +108,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "c",
 
     intro:
-      "A collection of visual work created for Boho.",
+      "Selected creative and visual work by APE Studio for Boho.",
 
     description:
-      "The gallery below presents the project's current visual archive through an editorial layout rather than a conventional equal-sized grid."
+      "This hospitality project brings together selected visual work created by APE Studio for Boho in a focused creative portfolio."
   },
 
 
@@ -131,10 +131,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "d",
 
     intro:
-      "Selected visual work from APE Studio's work for Baraf.",
+      "Selected creative and visual work by APE Studio for Baraf.",
 
     description:
-      "This case study currently focuses on the visual output. The detailed project story and approved scope can be added later without changing the page structure."
+      "This hospitality project is presented through a curated collection of visual work created by APE Studio for the brand."
   },
 
 
@@ -154,10 +154,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "a",
 
     intro:
-      "A visual archive from APE Studio's work for Grandly.",
+      "Selected creative and visual work by APE Studio for Grandly.",
 
     description:
-      "The project is presented as a flexible editorial case study, combining different image scales to let each piece of work breathe."
+      "This spaces and design project brings together selected visual work created by APE Studio for Grandly in a curated creative portfolio."
   },
 
 
@@ -177,10 +177,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "b",
 
     intro:
-      "Selected work from the Aditya Academy project archive.",
+      "Selected creative and visual work by APE Studio for Aditya Academy.",
 
     description:
-      "The gallery brings together the available visual pieces in a case-study format designed to expand later as additional approved project information becomes available."
+      "This education project brings together selected visual work created by APE Studio for Aditya Academy in a curated creative portfolio."
   },
 
 
@@ -200,10 +200,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "c",
 
     intro:
-      "A selection of APE Studio's visual work for Aditya Academy Junior.",
+      "Selected creative and visual work by APE Studio for Aditya Academy Junior.",
 
     description:
-      "This page is structured around the creative output first, using an irregular editorial gallery instead of a conventional portfolio grid."
+      "This education project brings together selected visual work created by APE Studio for Aditya Academy Junior in a curated creative portfolio."
   },
 
 
@@ -223,10 +223,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "d",
 
     intro:
-      "Selected visual work for Aditya Food Park.",
+      "Selected creative and visual work by APE Studio for Aditya Food Park.",
 
     description:
-      "Ten pieces from the current project archive are presented below. Approved case-study details can be added later through this same data file."
+      "This food and lifestyle project brings together selected visual work created by APE Studio for Aditya Food Park in a curated creative portfolio."
   },
 
 
@@ -246,10 +246,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "b",
 
     intro:
-      "A visual selection from APE Studio's work for Homelicious.",
+      "Selected creative and visual work by APE Studio for Homelicious.",
 
     description:
-      "The project is presented through a flexible visual system that allows different image proportions and formats to coexist naturally."
+      "This food and lifestyle project brings together selected visual work created by APE Studio for Homelicious in a curated creative portfolio."
   },
 
 
@@ -269,10 +269,10 @@ export const WORK_PROJECTS = [
     galleryLayout: "a",
 
     intro:
-      "Selected creative work from the Shopnamo project archive.",
+      "Selected creative and visual work by APE Studio for Shopnamo.",
 
     description:
-      "The current visual archive is shown below in an editorial case-study format, with the detailed project narrative ready to be added later."
+      "This retail project brings together selected visual work created by APE Studio for Shopnamo in a curated creative portfolio."
   }
 
 ];

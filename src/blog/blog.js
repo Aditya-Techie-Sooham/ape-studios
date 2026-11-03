@@ -2,19 +2,11 @@
    APE STUDIO — BLOG LISTING PAGE
 ========================================================= */
 
-
 import gsap from "gsap";
 
 import {
   ScrollTrigger
 } from "gsap/ScrollTrigger";
-
-
-import "../styles/variables.css";
-import "../styles/reset.css";
-import "../styles/header.css";
-import "../styles/footer.css";
-import "../styles/blog-page.css";
 
 
 import {
@@ -32,11 +24,24 @@ gsap.registerPlugin(
 );
 
 
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+
+const finePointer =
+  window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+
 
 /* =========================================================
    GET COVER IMAGE
-
-   images[0] is always the cover.
 ========================================================= */
 
 function getCoverImage(
@@ -56,11 +61,6 @@ function getCoverImage(
   }
 
 
-  /*
-   * Small fallback in case an older blog
-   * still uses the old "image" property.
-   */
-
   return (
     blog.image
     ||
@@ -68,7 +68,6 @@ function getCoverImage(
   );
 
 }
-
 
 
 /* =========================================================
@@ -111,7 +110,6 @@ function createExcerpt(
 }
 
 
-
 /* =========================================================
    ELEMENT HELPER
 ========================================================= */
@@ -128,9 +126,7 @@ function createElement(
     );
 
 
-  if (
-    className
-  ) {
+  if (className) {
 
     element.className =
       className;
@@ -153,7 +149,6 @@ function createElement(
 }
 
 
-
 /* =========================================================
    ARTICLE URL
 ========================================================= */
@@ -163,11 +158,10 @@ function getArticleURL(
 ) {
 
   return (
-    `/blog/read/?slug=${encodeURIComponent(blog.slug)}`
+    `/blog/${encodeURIComponent(blog.slug)}/`
   );
 
 }
-
 
 
 /* =========================================================
@@ -178,7 +172,7 @@ function buildFeaturedBlog() {
 
   const container =
     document.getElementById(
-      "blog-featured"
+      "blog-featured-content"
     );
 
 
@@ -197,13 +191,11 @@ function buildFeaturedBlog() {
   }
 
 
-
   const inner =
     createElement(
       "div",
       "blog-featured__inner"
     );
-
 
 
   /* =====================================================
@@ -222,6 +214,11 @@ function buildFeaturedBlog() {
       blog
     );
 
+
+  imageLink.setAttribute(
+    "aria-label",
+    `Read ${blog.heading}`
+  );
 
 
   const image =
@@ -253,7 +250,6 @@ function buildFeaturedBlog() {
   );
 
 
-
   /* =====================================================
      CONTENT
   ===================================================== */
@@ -264,6 +260,13 @@ function buildFeaturedBlog() {
       "blog-featured__content"
     );
 
+
+  const label =
+    createElement(
+      "p",
+      "blog-featured__label",
+      "Featured insight"
+    );
 
 
   const headingLink =
@@ -279,10 +282,9 @@ function buildFeaturedBlog() {
     );
 
 
-
   const heading =
     createElement(
-      "h2",
+      "h3",
       "",
       blog.heading
     );
@@ -293,14 +295,12 @@ function buildFeaturedBlog() {
   );
 
 
-
   const subheading =
     createElement(
       "p",
       "blog-featured__subheading",
       blog.subheading
     );
-
 
 
   const excerpt =
@@ -314,12 +314,11 @@ function buildFeaturedBlog() {
     );
 
 
-
   const readMore =
     createElement(
       "a",
       "blog-read-more",
-      "Read More"
+      "Read Article"
     );
 
 
@@ -327,7 +326,6 @@ function buildFeaturedBlog() {
     getArticleURL(
       blog
     );
-
 
 
   const arrow =
@@ -349,8 +347,8 @@ function buildFeaturedBlog() {
   );
 
 
-
   content.append(
+    label,
     headingLink,
     subheading,
     excerpt,
@@ -371,14 +369,12 @@ function buildFeaturedBlog() {
 }
 
 
-
 /* =========================================================
-   CREATE NORMAL BLOG CARD
+   CREATE BLOG CARD
 ========================================================= */
 
 function createBlogCard(
-  blog,
-  index
+  blog
 ) {
 
   const article =
@@ -387,17 +383,6 @@ function createBlogCard(
       "blog-card"
     );
 
-
-  article.dataset.blogIndex =
-    String(
-      index
-    );
-
-
-
-  /* =====================================================
-     IMAGE
-  ===================================================== */
 
   const imageLink =
     createElement(
@@ -411,6 +396,11 @@ function createBlogCard(
       blog
     );
 
+
+  imageLink.setAttribute(
+    "aria-label",
+    `Read ${blog.heading}`
+  );
 
 
   const image =
@@ -442,17 +432,19 @@ function createBlogCard(
   );
 
 
-
-  /* =====================================================
-     CONTENT
-  ===================================================== */
-
   const content =
     createElement(
       "div",
       "blog-card__content"
     );
 
+
+  const eyebrow =
+    createElement(
+      "p",
+      "blog-card__eyebrow",
+      "APE Journal"
+    );
 
 
   const headingLink =
@@ -468,10 +460,9 @@ function createBlogCard(
     );
 
 
-
   const heading =
     createElement(
-      "h2",
+      "h3",
       "",
       blog.heading
     );
@@ -482,14 +473,12 @@ function createBlogCard(
   );
 
 
-
   const subheading =
     createElement(
       "p",
       "blog-card__subheading",
       blog.subheading
     );
-
 
 
   const excerpt =
@@ -502,12 +491,11 @@ function createBlogCard(
     );
 
 
-
   const readMore =
     createElement(
       "a",
       "blog-read-more",
-      "Read More"
+      "Read Article"
     );
 
 
@@ -515,7 +503,6 @@ function createBlogCard(
     getArticleURL(
       blog
     );
-
 
 
   const arrow =
@@ -537,8 +524,8 @@ function createBlogCard(
   );
 
 
-
   content.append(
+    eyebrow,
     headingLink,
     subheading,
     excerpt,
@@ -555,7 +542,6 @@ function createBlogCard(
   return article;
 
 }
-
 
 
 /* =========================================================
@@ -576,28 +562,16 @@ function buildBlogGrid() {
     );
 
 
-  if (
-    !grid
-  ) {
-
+  if (!grid) {
     return;
-
   }
 
-
-
-  /*
-   * If there is only one article,
-   * hide the archive completely.
-   */
 
   if (
     BLOGS.length <= 1
   ) {
 
-    if (
-      archive
-    ) {
+    if (archive) {
 
       archive.hidden =
         true;
@@ -610,26 +584,16 @@ function buildBlogGrid() {
   }
 
 
-
-  /*
-   * BLOGS[0] is featured.
-   * Everything else enters the grid.
-   */
-
   BLOGS
-    .slice(
-      1
-    )
+    .slice(1)
     .forEach(
       function (
-        blog,
-        index
+        blog
       ) {
 
         grid.appendChild(
           createBlogCard(
-            blog,
-            index
+            blog
           )
         );
 
@@ -639,109 +603,1133 @@ function buildBlogGrid() {
 }
 
 
-
 /* =========================================================
-   PAGE MOTION
+   HERO MOTION
 ========================================================= */
 
-function initBlogMotion() {
+function initHeroMotion() {
 
-  /* =====================================================
-     HERO
-  ===================================================== */
+  if (reduceMotion) {
+    return;
+  }
 
-  gsap
-    .timeline({
-      defaults: {
 
-        ease:
-          "power4.out"
-
-      }
-    })
-
-    .fromTo(
-      ".blog-hero h1",
-
-      {
-        opacity: 0,
-        y: 80
-      },
-
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 1
-      }
-    )
-
-    .fromTo(
-      ".blog-hero__inner > p",
-
-      {
-        opacity: 0,
-        y: 30
-      },
-
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.7
-      },
-
-      "-=0.5"
+  const eyebrow =
+    document.querySelector(
+      ".blog-hero__eyebrow"
     );
 
 
+  const titleLines =
+    document.querySelectorAll(
+      ".blog-hero h1 > *"
+    );
 
-  /* =====================================================
-     FEATURED
-  ===================================================== */
 
-  gsap.fromTo(
-    ".blog-featured__visual",
+  const lead =
+    document.querySelector(
+      ".blog-hero__lead"
+    );
 
+
+  const jump =
+    document.querySelector(
+      ".blog-hero__jump"
+    );
+
+
+  const ape =
+    document.querySelector(
+      ".blog-hero__ape"
+    );
+
+
+  const timeline =
+    gsap.timeline({
+      defaults: {
+        ease:
+          "power4.out"
+      }
+    });
+
+
+  if (eyebrow) {
+
+    timeline.fromTo(
+      eyebrow,
+      {
+        autoAlpha: 0,
+        y: 15
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5
+      }
+    );
+
+  }
+
+
+  if (titleLines.length) {
+
+    timeline.fromTo(
+      titleLines,
+      {
+        autoAlpha: 0,
+        y: 70,
+        rotationX: -18
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        rotationX: 0,
+        duration: 0.92,
+        stagger: 0.09
+      },
+      "-=0.2"
+    );
+
+  }
+
+
+  if (lead) {
+
+    timeline.fromTo(
+      lead,
+      {
+        autoAlpha: 0,
+        y: 20
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.62
+      },
+      "-=0.4"
+    );
+
+  }
+
+
+  if (jump) {
+
+    timeline.fromTo(
+      jump,
+      {
+        autoAlpha: 0,
+        y: 14
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.55
+      },
+      "-=0.35"
+    );
+
+  }
+
+
+  if (ape) {
+
+    timeline.fromTo(
+      ape,
+      {
+        autoAlpha: 0,
+        x: 110,
+        y: 80,
+        rotation: 8,
+        scale: 0.66
+      },
+      {
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        duration: 1.12,
+        ease:
+          "back.out(1.6)"
+      },
+      "-=0.72"
+    );
+
+  }
+
+
+  gsap.to(
+    ".blog-hero h1 span",
     {
-      opacity: 0,
-      y: 60
-    },
+      xPercent: -3,
 
-    {
-      opacity: 1,
-      y: 0,
-
-      duration: 1,
-
-      ease:
-        "power3.out",
+      ease: "none",
 
       scrollTrigger: {
-
         trigger:
-          ".blog-featured",
+          ".blog-hero",
 
         start:
-          "top 78%"
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub: 1
+      }
+    }
+  );
+
+
+  gsap.to(
+    ".blog-hero h1 strong",
+    {
+      xPercent: 3,
+
+      ease: "none",
+
+      scrollTrigger: {
+        trigger:
+          ".blog-hero",
+
+        start:
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub: 1
+      }
+    }
+  );
+
+
+  gsap.to(
+    ".blog-hero__ape",
+    {
+      yPercent: -7,
+
+      ease: "none",
+
+      scrollTrigger: {
+        trigger:
+          ".blog-hero",
+
+        start:
+          "top top",
+
+        end:
+          "bottom top",
+
+        scrub: 0.9
+      }
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HERO APE
+========================================================= */
+
+function initHeroApe() {
+
+  const ape =
+    document.querySelector(
+      ".blog-hero__ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".blog-hero__ape-world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".blog-hero__ape-rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".blog-hero__ape-float"
+    );
+
+
+  const aura =
+    document.querySelector(
+      ".blog-hero__ape-aura"
+    );
+
+
+  const pulse =
+    document.querySelector(
+      ".blog-hero__ape-pulse"
+    );
+
+
+  if (
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+    return;
+  }
+
+
+  if (!reduceMotion) {
+
+    gsap.to(
+      float,
+      {
+        y: -8,
+        rotation: 1.4,
+
+        duration: 1.8,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+  }
+
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 24,
+
+            y:
+              y * 14,
+
+            duration: 0.38,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 13,
+
+            rotationX:
+              y * -8,
+
+            rotation:
+              x * 3,
+
+            scale: 1.06,
+
+            duration: 0.32,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x: 0,
+            y: 0,
+
+            duration: 0.6,
+
+            ease:
+              "elastic.out(1,0.45)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotation: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+
+            duration: 0.5,
+
+            ease:
+              "back.out(1.7)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      if (reduceMotion) {
+        return;
+      }
+
+
+      danceApe(
+        rig,
+        aura,
+        pulse
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SHARED APE DANCE
+========================================================= */
+
+function danceApe(
+  rig,
+  aura,
+  pulse
+) {
+
+  if (!rig) {
+    return;
+  }
+
+
+  gsap.killTweensOf(
+    rig
+  );
+
+
+  gsap.timeline()
+
+    .to(
+      rig,
+      {
+        y: -26,
+        x: -12,
+        rotation: -8,
+        scale: 1.1,
+
+        duration: 0.16
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 14,
+        rotation: 8,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: -10,
+        rotation: -6,
+
+        duration: 0.13
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 8,
+        rotation: 5,
+
+        duration: 0.12
+      }
+    )
+
+    .to(
+      rig,
+      {
+        x: 0,
+
+        rotationY:
+          "+=360",
+
+        duration: 0.48,
+
+        ease:
+          "power3.inOut"
+      }
+    )
+
+    .to(
+      rig,
+      {
+        y: 0,
+
+        rotation: 0,
+        rotationX: 0,
+        rotationY: 0,
+
+        scale: 1,
+
+        duration: 0.4,
+
+        ease:
+          "bounce.out"
+      }
+    );
+
+
+  if (aura) {
+
+    gsap.fromTo(
+      aura,
+      {
+        scale: 0.78,
+        opacity: 0.9
+      },
+      {
+        scale: 1.35,
+        opacity: 0.45,
+
+        duration: 0.55,
+
+        ease:
+          "power2.out"
+      }
+    );
+
+  }
+
+
+  if (pulse) {
+
+    gsap.fromTo(
+      pulse,
+      {
+        scale: 0.65,
+        opacity: 0.8
+      },
+      {
+        scale: 1.42,
+        opacity: 0,
+
+        duration: 0.58,
+
+        ease:
+          "power2.out"
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   HERO BACKGROUND POINTER MOTION
+========================================================= */
+
+function initHeroPointerMotion() {
+
+  if (
+    !finePointer ||
+    reduceMotion
+  ) {
+    return;
+  }
+
+
+  const hero =
+    document.querySelector(
+      ".blog-hero"
+    );
+
+
+  const violet =
+    document.querySelector(
+      ".blog-hero__glow--violet"
+    );
+
+
+  const lime =
+    document.querySelector(
+      ".blog-hero__glow--lime"
+    );
+
+
+  if (!hero) {
+    return;
+  }
+
+
+  hero.addEventListener(
+    "pointermove",
+    function (
+      event
+    ) {
+
+      const rect =
+        hero.getBoundingClientRect();
+
+
+      const x =
+        (
+          event.clientX -
+          rect.left
+        )
+        /
+        rect.width -
+        0.5;
+
+
+      const y =
+        (
+          event.clientY -
+          rect.top
+        )
+        /
+        rect.height -
+        0.5;
+
+
+      if (violet) {
+
+        gsap.to(
+          violet,
+          {
+            x:
+              x * -36,
+
+            y:
+              y * -22,
+
+            duration: 1,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+
+
+      if (lime) {
+
+        gsap.to(
+          lime,
+          {
+            x:
+              x * 28,
+
+            y:
+              y * 18,
+
+            duration: 1.1,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
 
       }
 
     }
   );
 
+}
+
+
+/* =========================================================
+   ARCHIVE APE
+========================================================= */
+
+function initArchiveApe() {
+
+  const section =
+    document.querySelector(
+      ".blog-archive"
+    );
+
+
+  const ape =
+    document.querySelector(
+      ".blog-archive__ape"
+    );
+
+
+  const world =
+    document.querySelector(
+      ".blog-archive__ape-world"
+    );
+
+
+  const rig =
+    document.querySelector(
+      ".blog-archive__ape-rig"
+    );
+
+
+  const float =
+    document.querySelector(
+      ".blog-archive__ape-float"
+    );
+
+
+  const aura =
+    document.querySelector(
+      ".blog-archive__ape-aura"
+    );
+
+
+  const pulse =
+    document.querySelector(
+      ".blog-archive__ape-pulse"
+    );
+
+
+  if (
+    !section ||
+    !ape ||
+    !world ||
+    !rig ||
+    !float
+  ) {
+    return;
+  }
+
+
+  if (!reduceMotion) {
+
+    /* =====================================================
+       ENTRANCE
+    ===================================================== */
+
+    gsap.fromTo(
+      ape,
+      {
+        autoAlpha: 0,
+        x: 55,
+        y: 35,
+        scale: 0.72,
+        rotation: 6
+      },
+      {
+        autoAlpha: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+
+        duration: 0.85,
+
+        ease:
+          "back.out(1.8)",
+
+        scrollTrigger: {
+          trigger:
+            section,
+
+          start:
+            "top 80%",
+
+          once: true
+        }
+      }
+    );
+
+
+    /* =====================================================
+       ALWAYS FLOAT
+    ===================================================== */
+
+    gsap.to(
+      float,
+      {
+        y: -8,
+        rotation: 1.8,
+
+        duration: 1.55,
+
+        repeat: -1,
+
+        yoyo: true,
+
+        ease:
+          "sine.inOut"
+      }
+    );
+
+
+    /* =====================================================
+       SCROLL REACTION
+    ===================================================== */
+
+    ScrollTrigger.create({
+      trigger:
+        section,
+
+      start:
+        "top bottom",
+
+      end:
+        "bottom top",
+
+      onUpdate(
+        self
+      ) {
+
+        const speed =
+          gsap.utils.clamp(
+            -1,
+            1,
+            self.getVelocity() / 1800
+          );
+
+
+        gsap.to(
+          world,
+          {
+            y:
+              speed * 8,
+
+            x:
+              speed * 5,
+
+            duration: 0.22,
+
+            ease:
+              "power2.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotation:
+              speed * 5,
+
+            rotationY:
+              speed * 8,
+
+            scale:
+              1 +
+              Math.abs(speed) * 0.025,
+
+            duration: 0.22,
+
+            ease:
+              "power2.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+    });
+
+  }
+
+
+  /* =====================================================
+     DESKTOP HOVER
+  ===================================================== */
+
+  if (
+    finePointer &&
+    !reduceMotion
+  ) {
+
+    ape.addEventListener(
+      "pointerenter",
+      function () {
+
+        gsap.to(
+          rig,
+          {
+            y: -9,
+            scale: 1.07,
+
+            duration: 0.28,
+
+            ease:
+              "back.out(1.7)"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        const rect =
+          ape.getBoundingClientRect();
+
+
+        const x =
+          (
+            event.clientX -
+            rect.left
+          )
+          /
+          rect.width -
+          0.5;
+
+
+        const y =
+          (
+            event.clientY -
+            rect.top
+          )
+          /
+          rect.height -
+          0.5;
+
+
+        gsap.to(
+          world,
+          {
+            x:
+              x * 16,
+
+            y:
+              y * 10,
+
+            duration: 0.3,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            rotationY:
+              x * 10,
+
+            rotationX:
+              y * -6,
+
+            rotation:
+              x * 3,
+
+            scale: 1.07,
+
+            duration: 0.3,
+
+            ease:
+              "power3.out",
+
+            overwrite:
+              "auto"
+          }
+        );
+
+      }
+    );
+
+
+    ape.addEventListener(
+      "pointerleave",
+      function () {
+
+        gsap.to(
+          world,
+          {
+            x: 0,
+            y: 0,
+
+            duration: 0.5,
+
+            ease:
+              "elastic.out(1,0.5)"
+          }
+        );
+
+
+        gsap.to(
+          rig,
+          {
+            x: 0,
+            y: 0,
+            rotation: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+
+            duration: 0.45,
+
+            ease:
+              "back.out(1.6)"
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     CLICK / MOBILE TAP
+  ===================================================== */
+
+  ape.addEventListener(
+    "click",
+    function () {
+
+      if (reduceMotion) {
+        return;
+      }
+
+
+      danceApe(
+        rig,
+        aura,
+        pulse
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SECTION MOTION
+========================================================= */
+
+function initBlogMotion() {
+
+  if (reduceMotion) {
+    return;
+  }
+
 
   gsap.fromTo(
-    ".blog-featured__content",
-
+    ".blog-featured__top",
     {
-      opacity: 0,
-      y: 45
+      autoAlpha: 0,
+      y: 30
     },
-
     {
-      opacity: 1,
+      autoAlpha: 1,
       y: 0,
+
+      duration: 0.7,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+        trigger:
+          ".blog-featured__top",
+
+        start:
+          "top 87%",
+
+        once: true
+      }
+    }
+  );
+
+
+  gsap.fromTo(
+    ".blog-featured__visual",
+    {
+      autoAlpha: 0,
+      y: 55,
+      scale: 0.97
+    },
+    {
+      autoAlpha: 1,
+      y: 0,
+      scale: 1,
 
       duration: 0.9,
 
@@ -749,23 +1737,73 @@ function initBlogMotion() {
         "power3.out",
 
       scrollTrigger: {
-
         trigger:
           ".blog-featured",
 
         start:
-          "top 72%"
+          "top 77%",
 
+        once: true
       }
-
     }
   );
 
 
+  gsap.fromTo(
+    ".blog-featured__content",
+    {
+      autoAlpha: 0,
+      y: 42
+    },
+    {
+      autoAlpha: 1,
+      y: 0,
 
-  /* =====================================================
-     CARDS
-  ===================================================== */
+      duration: 0.85,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+        trigger:
+          ".blog-featured",
+
+        start:
+          "top 73%",
+
+        once: true
+      }
+    }
+  );
+
+
+  gsap.fromTo(
+    ".blog-archive__top",
+    {
+      autoAlpha: 0,
+      x: -25
+    },
+    {
+      autoAlpha: 1,
+      x: 0,
+
+      duration: 0.7,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+        trigger:
+          ".blog-archive__header",
+
+        start:
+          "top 86%",
+
+        once: true
+      }
+    }
+  );
+
 
   const cards =
     gsap.utils.toArray(
@@ -780,30 +1818,172 @@ function initBlogMotion() {
 
       gsap.fromTo(
         card,
-
         {
-          opacity: 0,
-          y: 60
+          autoAlpha: 0,
+          y: 55
         },
-
         {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
 
-          duration: 0.85,
+          duration: 0.82,
 
           ease:
             "power3.out",
 
           scrollTrigger: {
-
             trigger:
               card,
 
             start:
-              "top 86%"
+              "top 87%",
 
+            once: true
           }
+        }
+      );
+
+
+      const image =
+        card.querySelector(
+          ".blog-card__visual img"
+        );
+
+
+      if (image) {
+
+        gsap.fromTo(
+          image,
+          {
+            yPercent: -3,
+            scale: 1.06
+          },
+          {
+            yPercent: 3,
+            scale: 1.06,
+
+            ease: "none",
+
+            scrollTrigger: {
+              trigger:
+                card,
+
+              start:
+                "top bottom",
+
+              end:
+                "bottom top",
+
+              scrub: 1
+            }
+          }
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CARD POINTER MOTION
+========================================================= */
+
+function initCardPointerMotion() {
+
+  if (
+    !finePointer ||
+    reduceMotion
+  ) {
+    return;
+  }
+
+
+  const visuals =
+    document.querySelectorAll(
+      ".blog-featured__visual, .blog-card__visual"
+    );
+
+
+  visuals.forEach(
+    function (
+      visual
+    ) {
+
+      visual.addEventListener(
+        "pointermove",
+        function (
+          event
+        ) {
+
+          const rect =
+            visual.getBoundingClientRect();
+
+
+          const x =
+            (
+              event.clientX -
+              rect.left
+            )
+            /
+            rect.width -
+            0.5;
+
+
+          const y =
+            (
+              event.clientY -
+              rect.top
+            )
+            /
+            rect.height -
+            0.5;
+
+
+          gsap.to(
+            visual,
+            {
+              rotationY:
+                x * 4,
+
+              rotationX:
+                y * -4,
+
+              y: -4,
+
+              duration: 0.35,
+
+              ease:
+                "power3.out",
+
+              overwrite:
+                "auto"
+            }
+          );
+
+        }
+      );
+
+
+      visual.addEventListener(
+        "pointerleave",
+        function () {
+
+          gsap.to(
+            visual,
+            {
+              rotationX: 0,
+              rotationY: 0,
+              y: 0,
+
+              duration: 0.5,
+
+              ease:
+                "back.out(1.5)"
+            }
+          );
 
         }
       );
@@ -813,6 +1993,56 @@ function initBlogMotion() {
 
 }
 
+
+/* =========================================================
+   HERO JUMP
+========================================================= */
+
+function initHeroJump() {
+
+  const link =
+    document.querySelector(
+      ".blog-hero__jump"
+    );
+
+
+  const target =
+    document.getElementById(
+      "blog-featured"
+    );
+
+
+  if (
+    !link ||
+    !target
+  ) {
+    return;
+  }
+
+
+  link.addEventListener(
+    "click",
+    function (
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      target.scrollIntoView({
+        behavior:
+          reduceMotion
+            ? "auto"
+            : "smooth",
+
+        block:
+          "start"
+      });
+
+    }
+  );
+
+}
 
 
 /* =========================================================
@@ -827,9 +2057,7 @@ function initFooter() {
     );
 
 
-  if (
-    year
-  ) {
+  if (year) {
 
     year.textContent =
       String(
@@ -840,19 +2068,14 @@ function initFooter() {
   }
 
 
-
   const topButton =
     document.querySelector(
       ".site-footer__top-link"
     );
 
 
-  if (
-    !topButton
-  ) {
-
+  if (!topButton) {
     return;
-
   }
 
 
@@ -866,19 +2089,18 @@ function initFooter() {
 
 
       window.scrollTo({
-
         top: 0,
 
         behavior:
-          "smooth"
-
+          reduceMotion
+            ? "auto"
+            : "smooth"
       });
 
     }
   );
 
 }
-
 
 
 /* =========================================================
@@ -891,22 +2113,29 @@ document.addEventListener(
 
     initHeader();
 
-
     buildFeaturedBlog();
-
 
     buildBlogGrid();
 
-
     initFooter();
 
+    initHeroJump();
 
 
     requestAnimationFrame(
       function () {
 
+        initHeroMotion();
+
+        initHeroApe();
+
+        initHeroPointerMotion();
+
+        initArchiveApe();
+
         initBlogMotion();
 
+        initCardPointerMotion();
 
         ScrollTrigger.refresh();
 
@@ -917,6 +2146,9 @@ document.addEventListener(
 );
 
 
+/* =========================================================
+   LOAD
+========================================================= */
 
 window.addEventListener(
   "load",

@@ -1,11 +1,5 @@
 /* =========================================================
    APE STUDIO — WORK DETAIL
-   FINAL PINTEREST / MASONRY VERSION
-========================================================= */
-
-
-/* =========================================================
-   BRAND TOKENS
 ========================================================= */
 
 :root {
@@ -15,7 +9,7 @@
   --ape-white: #ffffff;
 
   --gallery-radius:
-    22px;
+    21px;
 }
 
 
@@ -24,17 +18,18 @@
 ========================================================= */
 
 .work-detail-page {
-  width:
-    100%;
+  position: relative;
+
+  width: 100%;
 
   overflow-x:
     clip;
 
-  background:
-    var(--ape-white);
-
   color:
     var(--ape-black);
+
+  background:
+    var(--ape-white);
 }
 
 
@@ -54,122 +49,172 @@
 
 
 /* =========================================================
-   PROJECT HERO
+   HERO
+   100% + 125% ZOOM SAFE
 ========================================================= */
 
 .work-detail-hero {
-  position:
-    relative;
+  position: relative;
 
-  width:
-    100%;
+  width: 100%;
 
-  min-height:
-    92svh;
+  min-height: 100svh;
 
-  display:
-    flex;
+  display: flex;
 
-  align-items:
-    flex-end;
+  align-items: center;
 
-  overflow:
-    hidden;
+  overflow: hidden;
+
+  isolation: isolate;
 
   padding:
-    165px
+    108px
     5vw
-    85px;
+    0;
 
   color:
     var(--ape-white);
 
   background:
-    var(--ape-black);
+    radial-gradient(
+      circle at 82% 28%,
+      rgba(125, 53, 235, 0.43),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 95% 92%,
+      rgba(198, 255, 51, 0.07),
+      transparent 25%
+    ),
+    linear-gradient(
+      125deg,
+      #000000 0%,
+      #08020e 35%,
+      #18072e 70%,
+      #090111 100%
+    );
 }
 
 
 /* =========================================================
-   VIOLET HERO GLOW
+   HERO GLOWS
 ========================================================= */
 
-.work-detail-hero::before {
-  content:
-    "";
-
+.work-detail-hero__glow {
   position:
     absolute;
 
-  width:
-    50vw;
-
-  height:
-    50vw;
-
-  right:
-    -19vw;
-
-  top:
-    -24vw;
+  z-index:
+    -1;
 
   border-radius:
     50%;
 
   pointer-events:
     none;
-
-  background:
-
-    radial-gradient(
-      circle,
-
-      rgba(
-        125,
-        53,
-        235,
-        0.60
-      )
-      0%,
-
-      rgba(
-        125,
-        53,
-        235,
-        0.22
-      )
-      38%,
-
-      transparent
-      70%
-    );
 }
 
 
-/* =========================================================
-   LIME HERO LINE
-========================================================= */
-
-.work-detail-hero::after {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  left:
-    0;
-
-  bottom:
-    0;
-
+.work-detail-hero__glow--violet {
   width:
-    32%;
+    54vw;
 
   height:
-    9px;
+    54vw;
+
+  right:
+    -20vw;
+
+  top:
+    -23vw;
+
+  opacity:
+    0.67;
 
   background:
-    var(--ape-lime);
+    radial-gradient(
+      circle,
+      rgba(125, 53, 235, 0.82),
+      rgba(125, 53, 235, 0.13) 50%,
+      transparent 70%
+    );
+
+  filter:
+    blur(70px);
+
+  animation:
+    detailVioletGlow
+    8s
+    ease-in-out
+    infinite alternate;
+}
+
+
+.work-detail-hero__glow--lime {
+  width:
+    34vw;
+
+  height:
+    34vw;
+
+  right:
+    3vw;
+
+  bottom:
+    -23vw;
+
+  opacity:
+    0.13;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(198, 255, 51, 0.95),
+      transparent 70%
+    );
+
+  filter:
+    blur(75px);
+
+  animation:
+    detailLimeGlow
+    7s
+    ease-in-out
+    infinite alternate;
+}
+
+
+@keyframes detailVioletGlow {
+
+  from {
+    transform:
+      translate3d(0, 0, 0)
+      scale(0.94);
+  }
+
+  to {
+    transform:
+      translate3d(-5%, 7%, 0)
+      scale(1.08);
+  }
+
+}
+
+
+@keyframes detailLimeGlow {
+
+  from {
+    transform:
+      scale(0.9);
+  }
+
+  to {
+    transform:
+      translate3d(-8%, -8%, 0)
+      scale(1.12);
+  }
+
 }
 
 
@@ -182,23 +227,64 @@
     relative;
 
   z-index:
-    2;
+    3;
 
   width:
-
     min(
-      1500px,
+      1320px,
       100%
+    );
+
+  min-height:
+    calc(
+      100svh - 108px
     );
 
   margin:
     0
     auto;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(340px, 0.68fr);
+
+  column-gap:
+    clamp(
+      48px,
+      5vw,
+      76px
+    );
+
+  align-items:
+    center;
 }
 
 
 /* =========================================================
-   BACK TO WORK
+   HERO COPY
+========================================================= */
+
+.work-detail-hero__copy {
+  position:
+    relative;
+
+  z-index:
+    5;
+
+  width: 100%;
+
+  max-width:
+    690px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   BACK
 ========================================================= */
 
 .work-detail__back {
@@ -212,25 +298,16 @@
     10px;
 
   margin-bottom:
-    55px;
+    18px;
 
   color:
-
-    rgba(
-      255,
-      255,
-      255,
-      0.70
-    );
+    rgba(255, 255, 255, 0.67);
 
   font-size:
-    9px;
+    8px;
 
   font-weight:
     850;
-
-  line-height:
-    1;
 
   letter-spacing:
     0.12em;
@@ -256,19 +333,19 @@
     var(--ape-lime);
 
   transform:
-    translateX(
-      -3px
-    );
+    translateX(-3px);
 }
 
 
 /* =========================================================
-   PROJECT META
+   PROJECT EYEBROW
 ========================================================= */
 
-.work-detail__meta {
-  margin-bottom:
-    20px;
+.work-detail__eyebrow {
+  margin:
+    0
+    0
+    14px;
 
   display:
     flex;
@@ -277,19 +354,16 @@
     center;
 
   gap:
-    15px;
+    9px;
 
   color:
     var(--ape-lime);
 
   font-size:
-    10px;
+    8px;
 
   font-weight:
-    850;
-
-  line-height:
-    1;
+    900;
 
   letter-spacing:
     0.13em;
@@ -299,20 +373,23 @@
 }
 
 
-.work-detail__meta i {
+.work-detail__eyebrow span {
   width:
-    36px;
+    6px;
 
   height:
-    1px;
+    6px;
 
   flex:
     0
     0
-    36px;
+    6px;
 
   background:
-    currentColor;
+    var(--ape-lime);
+
+  transform:
+    rotate(45deg);
 }
 
 
@@ -322,9 +399,8 @@
 
 .work-detail-hero h1 {
   width:
-
     min(
-      1350px,
+      680px,
       100%
     );
 
@@ -335,21 +411,20 @@
     var(--ape-white);
 
   font-size:
-
     clamp(
-      75px,
-      10vw,
-      165px
+      54px,
+      5.2vw,
+      76px
     );
 
   font-weight:
-    950;
+    900;
 
   line-height:
-    0.79;
+    0.92;
 
   letter-spacing:
-    -0.075em;
+    -0.05em;
 
   text-transform:
     uppercase;
@@ -364,52 +439,27 @@
 
 /* =========================================================
    PROJECT INTRO
+   BOTH PARAGRAPHS STAY UNDER THE TITLE
 ========================================================= */
 
 .work-detail__intro {
-  margin-top:
-
-    clamp(
-      50px,
-      6vw,
-      80px
+  width:
+    min(
+      600px,
+      100%
     );
+
+  margin-top:
+    22px;
 
   display:
-    grid;
-
-  grid-template-columns:
-
-    minmax(
-      0,
-      0.85fr
-    )
-
-    minmax(
-      300px,
-      0.65fr
-    );
-
-  gap:
-
-    clamp(
-      45px,
-      8vw,
-      130px
-    );
-
-  align-items:
-    start;
+    block;
 }
 
 
-/* =========================================================
-   LEAD COPY
-========================================================= */
-
 .work-detail__lead {
   max-width:
-    700px;
+    590px;
 
   margin:
     0;
@@ -418,49 +468,217 @@
     var(--ape-white);
 
   font-size:
-
     clamp(
-      24px,
-      2.4vw,
-      38px
+      20px,
+      1.8vw,
+      27px
     );
 
   font-weight:
-    700;
+    650;
 
   line-height:
-    1.16;
+    1.18;
 
   letter-spacing:
-    -0.035em;
+    -0.03em;
+}
+
+
+.work-detail__description {
+  max-width:
+    540px;
+
+  margin:
+    14px
+    0
+    0;
+
+  color:
+    rgba(255, 255, 255, 0.57);
+
+  font-size:
+    13px;
+
+  line-height:
+    1.62;
 }
 
 
 /* =========================================================
-   DESCRIPTION
+   HERO APE
 ========================================================= */
 
-.work-detail__description {
-  max-width:
-    480px;
+.work-detail__ape {
+  position:
+    relative;
 
-  margin:
-    0;
+  z-index:
+    4;
 
-  color:
+  right:
+    auto;
 
-    rgba(
-      255,
-      255,
-      255,
-      0.58
+  bottom:
+    auto;
+
+  justify-self:
+    end;
+
+  align-self:
+    end;
+
+  width:
+    min(
+      100%,
+      410px
     );
 
-  font-size:
-    14px;
+  height:
+    min(
+      560px,
+      calc(
+        100svh - 112px
+      )
+    );
 
-  line-height:
-    1.75;
+  margin:
+    0
+    -8px
+    0
+    auto;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  cursor:
+    pointer;
+
+  user-select:
+    none;
+
+  transform-origin:
+    center bottom;
+}
+
+
+.work-detail__ape-world,
+.work-detail__ape-rig,
+.work-detail__ape-float {
+  position:
+    relative;
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  transform-style:
+    preserve-3d;
+
+  transform-origin:
+    center bottom;
+
+  will-change:
+    transform;
+}
+
+
+.work-detail__ape img {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  object-position:
+    center bottom;
+
+  pointer-events:
+    none;
+
+  filter:
+    drop-shadow(
+      0
+      30px
+      38px
+      rgba(0, 0, 0, 0.45)
+    )
+    drop-shadow(
+      0
+      0
+      17px
+      rgba(125, 53, 235, 0.35)
+    );
+}
+
+
+.work-detail__ape-aura {
+  position:
+    absolute;
+
+  inset:
+    28%
+    4%
+    2%;
+
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(125, 53, 235, 0.43),
+      rgba(198, 255, 51, 0.055) 58%,
+      transparent 73%
+    );
+
+  filter:
+    blur(25px);
+
+  animation:
+    workDetailApeAura
+    3.7s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes workDetailApeAura {
+
+  0%,
+  100% {
+    transform:
+      scale(0.94);
+
+    opacity:
+      0.65;
+  }
+
+  50% {
+    transform:
+      scale(1.07);
+
+    opacity:
+      1;
+  }
+
 }
 
 
@@ -478,20 +696,27 @@
   padding:
     72px
     2.2vw
-    78px;
+    90px;
+
+  overflow:
+    hidden;
 
   background:
-    var(--ape-white);
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(125, 53, 235, 0.055),
+      transparent 22%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfaff 100%
+    );
 }
 
 
-/* =========================================================
-   GALLERY CONTAINER
-========================================================= */
-
 .work-gallery-section__inner {
   width:
-
     min(
       1800px,
       100%
@@ -504,16 +729,22 @@
 
 
 /* =========================================================
-   GALLERY HEADER
+   GALLERY INTRO
 ========================================================= */
 
 .work-gallery__header {
-  margin-bottom:
-    26px;
+  width:
+    min(
+      1500px,
+      100%
+    );
 
-  padding:
+  margin:
     0
-    2px
+    auto
+    34px;
+
+  padding-bottom:
     15px;
 
   display:
@@ -529,14 +760,8 @@
     30px;
 
   border-bottom:
-
     1px solid
-    rgba(
-      0,
-      0,
-      0,
-      0.15
-    );
+    rgba(0, 0, 0, 0.12);
 }
 
 
@@ -548,16 +773,13 @@
     var(--ape-violet);
 
   font-size:
-    10px;
+    9px;
 
   font-weight:
-    850;
-
-  line-height:
-    1;
+    900;
 
   letter-spacing:
-    0.14em;
+    0.13em;
 
   text-transform:
     uppercase;
@@ -566,25 +788,16 @@
 
 .work-gallery__header span {
   color:
-
-    rgba(
-      0,
-      0,
-      0,
-      0.40
-    );
+    rgba(0, 0, 0, 0.38);
 
   font-size:
-    10px;
+    9px;
 
   font-weight:
     800;
 
-  line-height:
-    1;
-
   letter-spacing:
-    0.10em;
+    0.1em;
 
   text-transform:
     uppercase;
@@ -592,7 +805,7 @@
 
 
 /* =========================================================
-   DENSE PINTEREST / MASONRY GALLERY
+   MASONRY
 ========================================================= */
 
 .work-gallery {
@@ -603,7 +816,6 @@
     3;
 
   column-gap:
-
     clamp(
       10px,
       1.15vw,
@@ -613,7 +825,7 @@
 
 
 /* =========================================================
-   GALLERY ITEM
+   ITEM
 ========================================================= */
 
 .work-gallery__item {
@@ -635,11 +847,12 @@
   break-inside:
     avoid;
 
-  page-break-inside:
-    avoid;
-
   vertical-align:
     top;
+
+  will-change:
+    transform,
+    opacity;
 }
 
 
@@ -649,16 +862,11 @@
 
   margin:
     0;
-
-  padding:
-    0;
 }
 
 
 /* =========================================================
    IMAGE FRAME
-
-   LIME outline + rounded corners.
 ========================================================= */
 
 .work-gallery__image {
@@ -672,7 +880,7 @@
     hidden;
 
   border:
-    3px solid
+    2px solid
     var(--ape-lime);
 
   border-radius:
@@ -680,12 +888,20 @@
 
   background:
     var(--ape-black);
+
+  box-shadow:
+    0
+    14px
+    35px
+    rgba(0, 0, 0, 0.07);
+
+  transform-style:
+    preserve-3d;
+
+  will-change:
+    transform;
 }
 
-
-/* =========================================================
-   INNER OUTLINE
-========================================================= */
 
 .work-gallery__image::after {
   content:
@@ -704,19 +920,13 @@
     none;
 
   border:
-
     1px solid
-    rgba(
-      0,
-      0,
-      0,
-      0.16
-    );
+    rgba(0, 0, 0, 0.11);
 
   border-radius:
     calc(
       var(--gallery-radius) -
-      3px
+      2px
     );
 }
 
@@ -741,7 +951,7 @@
   border-radius:
     calc(
       var(--gallery-radius) -
-      3px
+      2px
     );
 
   object-fit:
@@ -750,94 +960,18 @@
   object-position:
     center;
 
-  transform:
-    scale(
-      1
-    );
-
   transition:
-
     transform
     700ms
     cubic-bezier(
-      0.22,
+      0.16,
       1,
-      0.36,
+      0.3,
       1
     );
-}
 
-
-/* =========================================================
-   IMAGE LABEL
-========================================================= */
-
-.work-gallery__number {
-  margin-top:
-    7px;
-
-  padding:
-    0
-    2px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  gap:
-    15px;
-
-  color:
-
-    rgba(
-      0,
-      0,
-      0,
-      0.40
-    );
-
-  font-size:
-    8px;
-
-  font-weight:
-    850;
-
-  line-height:
-    1.2;
-
-  letter-spacing:
-    0.10em;
-
-  text-transform:
-    uppercase;
-}
-
-
-.work-gallery__number span:first-child {
-  flex:
-    0
-    0
-    auto;
-
-  color:
-    var(--ape-violet);
-}
-
-
-.work-gallery__number span:last-child {
-  overflow:
-    hidden;
-
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  will-change:
+    transform;
 }
 
 
@@ -852,23 +986,655 @@
 
 
 /* =========================================================
-   DESKTOP IMAGE HOVER
+   DESKTOP HOVER
 ========================================================= */
 
 @media
-(
-  hover: hover
-)
+(hover: hover)
 and
-(
-  pointer: fine
-) {
+(pointer: fine) {
 
   .work-gallery__image:hover img {
     transform:
-      scale(
-        1.025
+      scale(1.025);
+  }
+
+}
+
+
+/* =========================================================
+   SHORT LAPTOP
+   100% ZOOM SAFE
+========================================================= */
+
+@media
+(min-width: 1101px)
+and
+(max-height: 850px) {
+
+  .work-detail-hero {
+    padding-top:
+      102px;
+  }
+
+
+  .work-detail-hero__inner {
+    min-height:
+      calc(
+        100svh - 102px
       );
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(330px, 0.66fr);
+
+    column-gap:
+      clamp(
+        44px,
+        4vw,
+        64px
+      );
+  }
+
+
+  .work-detail-hero__copy {
+    max-width:
+      650px;
+  }
+
+
+  .work-detail__back {
+    margin-bottom:
+      15px;
+  }
+
+
+  .work-detail__eyebrow {
+    margin-bottom:
+      12px;
+  }
+
+
+  .work-detail-hero h1 {
+    width:
+      min(
+        640px,
+        100%
+      );
+
+    font-size:
+      clamp(
+        50px,
+        4.7vw,
+        64px
+      );
+
+    line-height:
+      0.93;
+  }
+
+
+  .work-detail__intro {
+    width:
+      min(
+        570px,
+        100%
+      );
+
+    margin-top:
+      18px;
+  }
+
+
+  .work-detail__lead {
+    font-size:
+      clamp(
+        19px,
+        1.65vw,
+        24px
+      );
+  }
+
+
+  .work-detail__description {
+    margin-top:
+      12px;
+
+    font-size:
+      12.5px;
+
+    line-height:
+      1.58;
+  }
+
+
+  .work-detail__ape {
+    width:
+      min(
+        100%,
+        390px
+      );
+
+    height:
+      calc(
+        100svh - 106px
+      );
+
+    max-height:
+      520px;
+
+    margin-right:
+      -6px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET / 125% LAPTOP ZOOM SAFE
+========================================================= */
+
+@media
+(min-width: 768px)
+and
+(max-width: 1100px) {
+
+  :root {
+    --gallery-radius:
+      18px;
+  }
+
+
+  .work-detail-hero {
+    min-height:
+      100svh;
+
+    padding:
+      clamp(
+        88px,
+        15vh,
+        106px
+      )
+      32px
+      0;
+  }
+
+
+  .work-detail-hero__inner {
+    min-height:
+      calc(
+        100svh -
+        clamp(
+          88px,
+          15vh,
+          106px
+        )
+      );
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(260px, 0.62fr);
+
+    gap:
+      clamp(
+        20px,
+        3vw,
+        30px
+      );
+
+    align-items:
+      center;
+  }
+
+
+  .work-detail-hero__copy {
+    width:
+      100%;
+
+    max-width:
+      540px;
+  }
+
+
+  .work-detail__back {
+    margin-bottom:
+      13px;
+
+    font-size:
+      7px;
+  }
+
+
+  .work-detail__eyebrow {
+    margin-bottom:
+      11px;
+
+    font-size:
+      7px;
+  }
+
+
+  .work-detail__eyebrow span {
+    width:
+      5px;
+
+    height:
+      5px;
+
+    flex-basis:
+      5px;
+  }
+
+
+  .work-detail-hero h1 {
+    width:
+      100%;
+
+    font-size:
+      clamp(
+        42px,
+        4.8vw,
+        54px
+      );
+
+    line-height:
+      0.94;
+
+    letter-spacing:
+      -0.045em;
+  }
+
+
+  .work-detail__intro {
+    width:
+      min(
+        500px,
+        100%
+      );
+
+    margin-top:
+      16px;
+
+    display:
+      block;
+  }
+
+
+  .work-detail__lead {
+    font-size:
+      clamp(
+        17px,
+        2vw,
+        22px
+      );
+
+    line-height:
+      1.18;
+  }
+
+
+  .work-detail__description {
+    max-width:
+      470px;
+
+    margin-top:
+      11px;
+
+    font-size:
+      12px;
+
+    line-height:
+      1.55;
+  }
+
+
+  .work-detail__ape {
+    width:
+      min(
+        100%,
+        300px
+      );
+
+    height:
+      min(
+        390px,
+        calc(
+          100svh - 90px
+        )
+      );
+
+    margin-right:
+      -6px;
+  }
+
+
+  .work-gallery-section {
+    padding:
+      60px
+      20px
+      72px;
+  }
+
+
+  .work-gallery {
+    column-count:
+      2;
+
+    column-gap:
+      12px;
+  }
+
+
+  .work-gallery__item {
+    margin-bottom:
+      12px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(max-width: 767px) {
+
+  :root {
+    --gallery-radius:
+      14px;
+  }
+
+
+  .work-detail-hero {
+    min-height:
+      auto;
+
+    display:
+      block;
+
+    padding:
+      98px
+      18px
+      0;
+  }
+
+
+  .work-detail-hero__inner {
+    min-height:
+      0;
+
+    display:
+      block;
+
+    padding-bottom:
+      clamp(
+        205px,
+        56vw,
+        255px
+      );
+  }
+
+
+  .work-detail-hero__copy {
+    width:
+      100%;
+
+    max-width:
+      100%;
+  }
+
+
+  .work-detail__back {
+    margin-bottom:
+      16px;
+
+    font-size:
+      7px;
+  }
+
+
+  .work-detail__eyebrow {
+    margin-bottom:
+      11px;
+
+    font-size:
+      7px;
+  }
+
+
+  .work-detail__eyebrow span {
+    width:
+      5px;
+
+    height:
+      5px;
+
+    flex-basis:
+      5px;
+  }
+
+
+  .work-detail-hero h1 {
+    width:
+      100%;
+
+    font-size:
+      clamp(
+        39px,
+        10.6vw,
+        50px
+      );
+
+    line-height:
+      0.94;
+
+    letter-spacing:
+      -0.05em;
+  }
+
+
+  .work-detail__intro {
+    width:
+      min(
+        94%,
+        390px
+      );
+
+    margin-top:
+      17px;
+
+    display:
+      block;
+  }
+
+
+  .work-detail__lead {
+    font-size:
+      clamp(
+        18px,
+        5vw,
+        23px
+      );
+
+    line-height:
+      1.18;
+  }
+
+
+  .work-detail__description {
+    margin-top:
+      12px;
+
+    font-size:
+      12px;
+
+    line-height:
+      1.58;
+  }
+
+
+  .work-detail__ape {
+    position:
+      absolute;
+
+    right:
+      -8px;
+
+    bottom:
+      -5px;
+
+    width:
+      clamp(
+        165px,
+        48vw,
+        210px
+      );
+
+    height:
+      clamp(
+        200px,
+        57vw,
+        250px
+      );
+
+    margin:
+      0;
+  }
+
+
+  .work-detail-hero__glow--violet {
+    width:
+      108vw;
+
+    height:
+      108vw;
+
+    right:
+      -62vw;
+
+    top:
+      17vh;
+  }
+
+
+  .work-detail-hero__glow--lime {
+    width:
+      80vw;
+
+    height:
+      80vw;
+
+    right:
+      -43vw;
+
+    bottom:
+      -32vw;
+  }
+
+
+  .work-gallery-section {
+    padding:
+      45px
+      9px
+      60px;
+  }
+
+
+  .work-gallery__header {
+    margin:
+      0
+      7px
+      18px;
+
+    padding-bottom:
+      11px;
+
+    gap:
+      20px;
+  }
+
+
+  .work-gallery__header p,
+  .work-gallery__header span {
+    font-size:
+      7px;
+  }
+
+
+  .work-gallery {
+    column-count:
+      2;
+
+    column-gap:
+      7px;
+  }
+
+
+  .work-gallery__item {
+    margin-bottom:
+      7px;
+  }
+
+
+  .work-gallery__image {
+    border-width:
+      1.5px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media
+(max-width: 390px) {
+
+  :root {
+    --gallery-radius:
+      12px;
+  }
+
+
+  .work-detail-hero {
+    padding-left:
+      16px;
+
+    padding-right:
+      16px;
+  }
+
+
+  .work-detail-hero h1 {
+    font-size:
+      clamp(
+        40px,
+        11.3vw,
+        50px
+      );
+  }
+
+
+  .work-gallery-section {
+    padding-left:
+      7px;
+
+    padding-right:
+      7px;
+  }
+
+
+  .work-gallery {
+    column-gap:
+      6px;
+  }
+
+
+  .work-gallery__item {
+    margin-bottom:
+      6px;
   }
 
 }
@@ -879,38 +1645,44 @@ and
 ========================================================= */
 
 @media
-(
-  min-width: 1600px
-) {
-
-  :root {
-    --gallery-radius:
-      24px;
-  }
-
+(min-width: 1600px) {
 
   .work-detail-hero__inner {
     width:
-
       min(
-        1600px,
+        1450px,
         100%
       );
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(400px, 0.7fr);
+
+    column-gap:
+      84px;
   }
 
 
-  .work-gallery-section {
-    padding-left:
-      2vw;
+  .work-detail-hero h1 {
+    width:
+      740px;
 
-    padding-right:
-      2vw;
+    font-size:
+      82px;
+  }
+
+
+  .work-detail__ape {
+    width:
+      450px;
+
+    height:
+      600px;
   }
 
 
   .work-gallery-section__inner {
     width:
-
       min(
         1840px,
         100%
@@ -933,581 +1705,25 @@ and
 
 
 /* =========================================================
-   TABLET
-========================================================= */
-
-@media
-(
-  min-width: 768px
-)
-and
-(
-  max-width: 1100px
-) {
-
-  :root {
-    --gallery-radius:
-      18px;
-  }
-
-
-  .work-detail-hero {
-    min-height:
-      85svh;
-
-    padding:
-      145px
-      38px
-      72px;
-  }
-
-
-  .work-detail-hero::after {
-    width:
-      42%;
-
-    height:
-      7px;
-  }
-
-
-  .work-detail__back {
-    margin-bottom:
-      45px;
-  }
-
-
-  .work-detail-hero h1 {
-    font-size:
-
-      clamp(
-        67px,
-        10.5vw,
-        108px
-      );
-
-    line-height:
-      0.82;
-  }
-
-
-  .work-detail__intro {
-    margin-top:
-      45px;
-
-    grid-template-columns:
-
-      minmax(
-        0,
-        1fr
-      )
-
-      minmax(
-        250px,
-        0.7fr
-      );
-
-    gap:
-      40px;
-  }
-
-
-  .work-detail__lead {
-    font-size:
-
-      clamp(
-        23px,
-        3vw,
-        31px
-      );
-  }
-
-
-  .work-detail__description {
-    font-size:
-      13px;
-  }
-
-
-  /* GALLERY */
-
-  .work-gallery-section {
-    padding:
-      60px
-      20px
-      70px;
-  }
-
-
-  .work-gallery__header {
-    margin-bottom:
-      20px;
-  }
-
-
-  .work-gallery {
-    column-count:
-      2;
-
-    column-gap:
-      12px;
-  }
-
-
-  .work-gallery__item {
-    margin-bottom:
-      12px;
-  }
-
-
-  .work-gallery__image {
-    border-width:
-      2px;
-  }
-
-
-  .work-gallery__image img {
-    border-radius:
-      calc(
-        var(--gallery-radius) -
-        2px
-      );
-  }
-
-
-  .work-gallery__image::after {
-    border-radius:
-      calc(
-        var(--gallery-radius) -
-        2px
-      );
-  }
-
-
-  .work-gallery__number {
-    margin-top:
-      6px;
-
-    font-size:
-      7px;
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media
-(
-  max-width: 767px
-) {
-
-  :root {
-    --gallery-radius:
-      14px;
-  }
-
-
-  /* HERO */
-
-  .work-detail-hero {
-    min-height:
-      auto;
-
-    padding:
-      122px
-      18px
-      58px;
-  }
-
-
-  .work-detail-hero::before {
-    width:
-      105vw;
-
-    height:
-      105vw;
-
-    right:
-      -55vw;
-
-    top:
-      -32vw;
-  }
-
-
-  .work-detail-hero::after {
-    width:
-      55%;
-
-    height:
-      6px;
-  }
-
-
-  /* BACK LINK */
-
-  .work-detail__back {
-    margin-bottom:
-      38px;
-
-    font-size:
-      8px;
-  }
-
-
-  /* META */
-
-  .work-detail__meta {
-    margin-bottom:
-      15px;
-
-    gap:
-      10px;
-
-    font-size:
-      8px;
-  }
-
-
-  .work-detail__meta i {
-    width:
-      25px;
-
-    flex-basis:
-      25px;
-  }
-
-
-  /* TITLE */
-
-  .work-detail-hero h1 {
-    width:
-      100%;
-
-    max-width:
-      100%;
-
-    font-size:
-
-      clamp(
-        47px,
-        13.5vw,
-        69px
-      );
-
-    line-height:
-      0.84;
-
-    letter-spacing:
-      -0.065em;
-
-    overflow-wrap:
-      normal;
-
-    word-break:
-      normal;
-  }
-
-
-  /* INTRO */
-
-  .work-detail__intro {
-    margin-top:
-      35px;
-
-    display:
-      block;
-  }
-
-
-  .work-detail__lead {
-    max-width:
-      100%;
-
-    font-size:
-
-      clamp(
-        21px,
-        6.2vw,
-        28px
-      );
-
-    line-height:
-      1.16;
-  }
-
-
-  .work-detail__description {
-    max-width:
-      100%;
-
-    margin-top:
-      23px;
-
-    font-size:
-      13px;
-
-    line-height:
-      1.68;
-  }
-
-
-  /* GALLERY */
-
-  .work-gallery-section {
-    padding:
-      48px
-      9px
-      58px;
-  }
-
-
-  .work-gallery-section__inner {
-    width:
-      100%;
-  }
-
-
-  .work-gallery__header {
-    margin:
-      0
-      7px
-      18px;
-
-    padding:
-      0
-      0
-      11px;
-
-    gap:
-      20px;
-  }
-
-
-  .work-gallery__header p,
-  .work-gallery__header span {
-    font-size:
-      7px;
-  }
-
-
-  /* MOBILE MASONRY */
-
-  .work-gallery {
-    width:
-      100%;
-
-    column-count:
-      2;
-
-    column-gap:
-      7px;
-  }
-
-
-  .work-gallery__item {
-    width:
-      100%;
-
-    margin:
-      0
-      0
-      7px;
-
-    display:
-      inline-block;
-
-    break-inside:
-      avoid;
-
-    vertical-align:
-      top;
-  }
-
-
-  /* IMAGE */
-
-  .work-gallery__image {
-    border-width:
-      2px;
-  }
-
-
-  .work-gallery__image img {
-    border-radius:
-      calc(
-        var(--gallery-radius) -
-        2px
-      );
-  }
-
-
-  .work-gallery__image::after {
-    border-radius:
-      calc(
-        var(--gallery-radius) -
-        2px
-      );
-  }
-
-
-  /* LABEL */
-
-  .work-gallery__number {
-    margin-top:
-      4px;
-
-    padding:
-      0
-      1px;
-
-    gap:
-      5px;
-
-    font-size:
-      5.8px;
-
-    letter-spacing:
-      0.06em;
-  }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media
-(
-  max-width: 390px
-) {
-
-  :root {
-    --gallery-radius:
-      12px;
-  }
-
-
-  .work-detail-hero {
-    padding:
-      118px
-      16px
-      55px;
-  }
-
-
-  .work-detail-hero h1 {
-    font-size:
-
-      clamp(
-        43px,
-        12.6vw,
-        55px
-      );
-  }
-
-
-  .work-detail__lead {
-    font-size:
-
-      clamp(
-        20px,
-        5.9vw,
-        25px
-      );
-  }
-
-
-  .work-gallery-section {
-    padding-left:
-      7px;
-
-    padding-right:
-      7px;
-  }
-
-
-  .work-gallery {
-    column-gap:
-      6px;
-  }
-
-
-  .work-gallery__item {
-    margin-bottom:
-      6px;
-  }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media
-(
-  max-width: 330px
-) {
-
-  .work-detail-hero {
-    padding-left:
-      14px;
-
-    padding-right:
-      14px;
-  }
-
-
-  .work-detail-hero h1 {
-    font-size:
-      41px;
-  }
-
-
-  .work-gallery-section {
-    padding-left:
-      6px;
-
-    padding-right:
-      6px;
-  }
-
-
-  .work-gallery {
-    column-gap:
-      5px;
-  }
-
-
-  .work-gallery__item {
-    margin-bottom:
-      5px;
-  }
-
-}
-
-
-/* =========================================================
    REDUCED MOTION
 ========================================================= */
 
 @media
-(
-  prefers-reduced-motion:
-  reduce
-) {
+(prefers-reduced-motion: reduce) {
+
+  .work-detail-hero__glow,
+  .work-detail__ape-aura {
+    animation:
+      none
+      !important;
+  }
+
 
   .work-detail__back,
   .work-gallery__image img {
-
     transition:
-      none;
-
+      none
+      !important;
   }
 
 }
