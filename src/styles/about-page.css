@@ -1,28 +1,23 @@
-/* =========================================================
-   APE STUDIO — ABOUT PAGE
-   FINAL POLISHED VERSION
-========================================================= */
-
-:root {
-  --ape-black: #000000;
-  --ape-violet: #7d35eb;
-  --ape-lime: #c6ff33;
-  --ape-white: #ffffff;
-  --ape-offwhite: #f7f6f4;
-}
-
-/* =========================================================
-   PAGE
-========================================================= */
+/* Page */
 
 .about-page {
+  --about-gutter: clamp(20px, 4vw, 64px);
+  --about-section-space: clamp(64px, 7vw, 104px);
+  --about-copy-dark: #39353f;
+  --about-copy-light: rgba(255, 255, 255, 0.86);
+
   width: 100%;
   overflow-x: clip;
-  color: var(--ape-black);
-  background: var(--ape-white);
+  color: #000000;
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
 }
 
-.about-page * {
+.about-page *,
+.about-page *::before,
+.about-page *::after {
   box-sizing: border-box;
 }
 
@@ -32,77 +27,48 @@
   max-width: 100%;
 }
 
-/* =========================================================
-   SHARED EYEBROW
-========================================================= */
+.about-page section[id] {
+  scroll-margin-top: 104px;
+}
+
+/* Section labels */
 
 .about-section-eyebrow {
   position: relative;
-
   width: fit-content;
-
-  margin:
-    0
-    0
-    17px;
-
-  padding-left: 21px;
-
-  color: var(--ape-violet);
-
-  font-size: 9px;
-
-  font-weight: 900;
-
-  line-height: 1;
-
-  letter-spacing: 0.15em;
-
+  margin: 0 0 24px;
+  padding-left: 22px;
+  color: #7d35eb;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .about-section-eyebrow::before {
   content: "";
-
   position: absolute;
-
+  top: 0.75em;
   left: 0;
-
-  top: 50%;
-
-  width: 10px;
-
-  height: 2px;
-
-  transform:
-    translateY(-50%);
-
-  background: var(--ape-lime);
+  width: 11px;
+  height: 3px;
+  transform: translateY(-50%);
+  background: #c6ff33;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+/* Hero */
 
 .about-hero {
   position: relative;
-
-  width: 100%;
-
-  height: 100svh;
-
-  min-height: 100svh;
-
-  overflow: hidden;
-
   isolation: isolate;
-
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
   color: #ffffff;
-
   background:
     radial-gradient(
-      70% 100%
-      at 100% 18%,
+      70% 100% at 100% 18%,
       rgba(125, 53, 235, 0.53),
       transparent 68%
     ),
@@ -115,341 +81,220 @@
     );
 }
 
-/* =========================================================
-   HERO GLOW
-========================================================= */
-
-.about-hero__glow {
-  position: absolute;
-
-  z-index: -1;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-}
-
-.about-hero__glow--violet {
-  width: 50vw;
-
-  height: 50vw;
-
-  right: -18vw;
-
-  top: -20vw;
-
-  opacity: 0.42;
-
-  filter:
-    blur(70px);
-
-  background:
-    radial-gradient(
-      circle,
-      #7d35eb,
-      transparent 68%
-    );
-}
-
-.about-hero__glow--lime {
-  width: 28vw;
-
-  height: 28vw;
-
-  right: 13vw;
-
-  bottom: -21vw;
-
-  opacity: 0.09;
-
-  filter:
-    blur(70px);
-
-  background:
-    radial-gradient(
-      circle,
-      #c6ff33,
-      transparent 70%
-    );
-}
-
-/* =========================================================
-   HERO INNER
-========================================================= */
-
 .about-hero__inner {
   position: relative;
-
   z-index: 3;
-
-  width:
-    min(
-      1320px,
-      90%
-    );
-
-  height: 100%;
-
-  min-height: 100%;
-
-  margin:
-    0
-    auto;
-
-  padding-top: 108px;
-
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(430px, 0.92fr);
-
-  gap:
-    clamp(
-      48px,
-      4.5vw,
-      72px
-    );
-
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  width: min(1440px, 100%);
+  height: 100%;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 108px var(--about-gutter) 0;
 }
-
-/* =========================================================
-   HERO CONTENT
-========================================================= */
 
 .about-hero__content {
+  position: relative;
+  z-index: 4;
   min-width: 0;
-
   max-width: 640px;
-
-  padding-bottom: 0;
-}
-
-.about-hero__eyebrow {
-  margin:
-    0
-    0
-    16px;
-
-  color: #c6ff33;
-
-  font-size: 9px;
-
-  font-weight: 900;
-
-  line-height: 1;
-
-  letter-spacing: 0.15em;
-
-  text-transform: uppercase;
 }
 
 .about-hero h1 {
-  width:
-    min(
-      640px,
-      100%
-    );
-
+  width: 100%;
   margin: 0;
-
   color: #ffffff;
-
-  font-size:
-    clamp(
-      54px,
-      4.8vw,
-      68px
-    );
-
-  font-weight: 950;
-
-  line-height: 0.98;
-
-  letter-spacing: -0.04em;
-
+  font-size: clamp(40px, 10vw, 64px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
 }
 
 .about-hero__title-line {
   display: block;
-
-  width: fit-content;
-
   max-width: 100%;
-
-  margin-bottom: 2px;
-
-  white-space: nowrap;
 }
 
-.about-hero__title-line:last-child {
-  margin-bottom: 0;
+.about-hero__title-line + .about-hero__title-line {
+  margin-top: 4px;
 }
 
 .about-hero__title-line--outline {
-  color:
-    rgba(125, 53, 235, 0.02);
-
-  -webkit-text-stroke:
-    1.7px
-    #7d35eb;
-
-  text-shadow:
-    0
-    0
-    30px
-    rgba(125, 53, 235, 0.14);
+  color: transparent;
+  -webkit-text-stroke: 1.5px #a56aff;
+  text-shadow: 0 0 30px rgba(125, 53, 235, 0.14);
 }
 
 .about-hero__lead {
-  width:
-    min(
-      500px,
-      100%
-    );
-
-  margin:
-    19px
-    0
-    0;
-
-  color:
-    rgba(255, 255, 255, 0.64);
-
-  font-size:
-    clamp(
-      13px,
-      0.95vw,
-      15px
-    );
-
-  line-height: 1.55;
+  max-width: 52ch;
+  margin: 20px 0 0;
+  color: var(--about-copy-light);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
 }
 
-/* =========================================================
-   HERO ACTIONS
-========================================================= */
+/* Breadcrumb */
+
+.about-breadcrumb {
+  margin: 0 0 18px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.about-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.about-breadcrumb__item a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+  text-underline-offset: 5px;
+}
+
+.about-breadcrumb__item a:hover {
+  color: #c6ff33;
+  text-decoration: underline;
+}
+
+.about-breadcrumb__separator {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 18px;
+}
+
+.about-breadcrumb__item [aria-current="page"] {
+  color: #c6ff33;
+  overflow-wrap: anywhere;
+}
+
+/* Hero actions */
 
 .about-hero__actions {
-  margin-top: 18px;
-
   display: flex;
-
   flex-wrap: wrap;
-
-  gap: 9px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .about-hero__primary,
 .about-hero__secondary {
-  min-height: 42px;
-
-  padding:
-    0
-    17px;
-
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
-  gap: 12px;
-
+  gap: 14px;
+  min-height: 46px;
+  padding: 12px 18px;
+  border: 1px solid transparent;
   border-radius: 999px;
-
-  font-size: 7.5px;
-
-  font-weight: 900;
-
-  letter-spacing: 0.09em;
-
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.035em;
+  text-align: center;
   text-transform: uppercase;
-
   text-decoration: none;
-
   transition:
-    transform 250ms ease,
-    background 250ms ease,
-    border-color 250ms ease;
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
 }
 
 .about-hero__primary {
   color: #000000;
-
   background: #c6ff33;
 }
 
 .about-hero__secondary {
   color: #ffffff;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.34);
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.about-hero__primary:hover,
-.about-hero__secondary:hover {
-  transform:
-    translateY(-3px);
+.about-hero__primary span,
+.about-hero__secondary span {
+  font-size: 16px;
+  line-height: 1;
 }
 
-.about-hero__secondary:hover {
-  border-color: #7d35eb;
-
-  background: #7d35eb;
+.about-breadcrumb a:focus-visible,
+.about-hero__primary:focus-visible,
+.about-hero__secondary:focus-visible {
+  outline: 2px solid #c6ff33;
+  outline-offset: 5px;
 }
 
-/* =========================================================
-   HERO MASCOT
-========================================================= */
+/* Hero lighting */
+
+.about-hero__glow {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.about-hero__glow--violet {
+  top: -20vw;
+  right: -18vw;
+  width: 70vw;
+  height: 70vw;
+  opacity: 0.42;
+  filter: blur(70px);
+  background: radial-gradient(circle, #7d35eb, transparent 68%);
+}
+
+.about-hero__glow--lime {
+  right: 13vw;
+  bottom: -21vw;
+  width: 28vw;
+  height: 28vw;
+  opacity: 0.09;
+  filter: blur(70px);
+  background: radial-gradient(circle, #c6ff33, transparent 70%);
+}
+
+/* Hero mascot */
 
 .about-hero__visual {
   position: relative;
-
+  align-self: stretch;
   width: 100%;
-
   min-width: 0;
-
-  height:
-    min(
-      640px,
-      calc(
-        100svh - 116px
-      )
-    );
-
-  max-height: 640px;
-
-  align-self: end;
-
-  display: flex;
-
-  align-items: flex-end;
-
-  justify-content: flex-end;
+  min-height: 0;
+  height: 100%;
 }
 
 .about-hero__ape-aura {
   position: absolute;
-
-  left: 3%;
-
   right: 3%;
-
-  bottom: 3%;
-
+  bottom: 0;
+  left: 3%;
   height: 70%;
-
   border-radius: 50%;
-
   opacity: 0.62;
-
-  filter:
-    blur(32px);
-
+  filter: blur(32px);
   background:
     radial-gradient(
       ellipse,
@@ -460,197 +305,96 @@
 }
 
 .about-hero__ape {
-  position: relative;
-
+  position: absolute;
   z-index: 3;
-
-  width:
-    min(
-      116%,
-      545px
-    );
-
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-
-  max-width: none;
-
-  max-height: 640px;
-
-  margin:
-    0
-    -20px
-    0
-    auto;
-
+  margin: 0;
   padding: 0;
-
   border: 0;
-
-  outline: 0;
-
   background: transparent;
-
   cursor: pointer;
-
-  transform-origin:
-    center bottom;
+  transform-origin: center bottom;
 }
 
 .about-hero__ape img {
   position: absolute;
-
+  bottom: 0;
   left: 50%;
-
-  bottom: -5px;
-
-  width: 110%;
-
-  height: 103%;
-
+  width: 100%;
+  height: 100%;
   max-width: none;
-
   object-fit: contain;
-
-  object-position:
-    center bottom;
-
-  transform:
-    translateX(-50%);
-
+  object-position: center bottom;
+  transform: translateX(-50%);
   pointer-events: none;
-
-  filter:
-    drop-shadow(
-      0
-      30px
-      45px
-      rgba(0, 0, 0, 0.46)
-    )
-    drop-shadow(
-      0
-      0
-      23px
-      rgba(125, 53, 235, 0.42)
-    );
+  filter: drop-shadow(0 0 22px rgba(125, 53, 235, 0.36));
 }
-
-/* =========================================================
-   HERO BOTTOM
-========================================================= */
 
 .about-hero__bottom {
   position: absolute;
-
   z-index: 5;
-
-  left: 5vw;
-
-  right: 5vw;
-
   bottom: 24px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 26px;
-
-  color:
-    rgba(255, 255, 255, 0.42);
-
-  font-size: 7px;
-
-  font-weight: 850;
-
-  letter-spacing: 0.13em;
+  left: max(
+    var(--about-gutter),
+    calc((100% - 1440px) / 2 + var(--about-gutter))
+  );
+  display: none;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  max-width: 48%;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  pointer-events: none;
 }
 
-/* =========================================================
-   WHO WE ARE
-========================================================= */
+/* Introduction */
 
 .about-intro {
   position: relative;
-
-  min-height: 92svh;
-
-  display: flex;
-
-  align-items: center;
-
+  padding: var(--about-section-space) var(--about-gutter);
   overflow: hidden;
-
-  padding:
-    115px
-    5vw
-    105px;
-
   background:
     radial-gradient(
-      circle
-      at 95% 12%,
+      circle at 95% 12%,
       rgba(125, 53, 235, 0.08),
       transparent 33%
     ),
     #ffffff;
 }
 
-.about-intro__inner {
-  width:
-    min(
-      1500px,
-      100%
-    );
-
-  margin:
-    0
-    auto;
+.about-intro__inner,
+.about-belief__inner {
+  width: min(1320px, 100%);
+  margin: 0 auto;
 }
 
 .about-intro__layout {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1.2fr)
-    minmax(330px, 0.8fr);
-
-  gap:
-    clamp(
-      55px,
-      8vw,
-      120px
-    );
-
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
 }
 
 .about-intro__heading-mask {
+  min-width: 0;
   overflow: hidden;
-
-  padding:
-    5px
-    0
-    12px;
+  padding: 5px 0 10px;
 }
 
 .about-intro__heading {
   margin: 0;
-
   color: #000000;
-
-  font-size:
-    clamp(
-      54px,
-      6vw,
-      98px
-    );
-
-  font-weight: 950;
-
-  line-height: 0.84;
-
-  letter-spacing: -0.065em;
-
+  font-size: clamp(38px, 9.5vw, 60px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
 }
 
@@ -659,187 +403,94 @@
 }
 
 .about-intro__copy {
-  width:
-    min(
-      445px,
-      100%
-    );
-
-  justify-self: end;
+  min-width: 0;
+  max-width: 62ch;
 }
 
 .about-intro__copy p {
-  margin:
-    0
-    0
-    25px;
-
-  color:
-    rgba(0, 0, 0, 0.63);
-
-  font-size: 14px;
-
-  line-height: 1.75;
+  margin: 0 0 22px;
+  color: var(--about-copy-dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
 .about-intro__copy p:last-child {
   margin-bottom: 0;
 }
 
-/* =========================================================
-   BELIEF
-========================================================= */
+/* Beliefs */
 
 .about-belief {
   position: relative;
-
+  padding: var(--about-section-space) var(--about-gutter);
   overflow: hidden;
-
-  padding:
-    105px
-    5vw;
-
   color: #ffffff;
-
   background:
     radial-gradient(
-      45% 70%
-      at 100% 50%,
+      45% 70% at 100% 50%,
       rgba(125, 53, 235, 0.17),
       transparent 72%
     ),
     #000000;
 }
 
-.about-belief__inner {
-  width:
-    min(
-      1500px,
-      100%
-    );
-
-  margin:
-    0
-    auto;
-}
-
-.about-belief
-.about-section-eyebrow {
+.about-belief .about-section-eyebrow {
   color: #c6ff33;
 }
 
 .about-belief__statement {
-  position: relative;
-
-  padding:
-    64px
-    0;
-
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1.22fr)
-    minmax(300px, 0.78fr);
-
-  gap: 65px;
-
-  align-items: center;
-
-  overflow: hidden;
-
-  border-top:
-    1px solid
-    rgba(255, 255, 255, 0.14);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  padding: 36px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .about-belief__statement:last-child {
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .about-belief__heading-mask {
+  min-width: 0;
+  padding: 5px 0;
   overflow: hidden;
-
-  padding:
-    6px
-    0;
 }
 
 .about-belief__statement h2 {
   margin: 0;
-
-  color: #ffffff;
-
-  font-size:
-    clamp(
-      53px,
-      5.7vw,
-      92px
-    );
-
-  font-weight: 950;
-
-  line-height: 0.84;
-
-  letter-spacing: -0.064em;
-
+  font-size: clamp(34px, 8.5vw, 56px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
 }
 
 .about-belief__statement h2 span {
   display: block;
-
-  color: #7d35eb;
+  margin-top: 4px;
+  color: #a56aff;
 }
 
 .about-belief__statement p {
-  width:
-    min(
-      400px,
-      100%
-    );
-
-  margin:
-    0
-    0
-    0
-    auto;
-
-  color:
-    rgba(255, 255, 255, 0.64);
-
-  font-size: 14px;
-
-  line-height: 1.7;
+  max-width: 46ch;
+  margin: 0;
+  color: var(--about-copy-light);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
-/* =========================================================
-   FEATURE SYSTEM
-========================================================= */
+/* Features */
 
 .about-feature {
   position: relative;
-
   width: 100%;
-
-  min-height: 100svh;
-
-  display: flex;
-
-  align-items: center;
-
+  padding: var(--about-section-space) var(--about-gutter);
   overflow: hidden;
-
-  padding:
-    120px
-    5vw
-    80px;
-
   background:
     radial-gradient(
-      circle
-      at 96% 10%,
+      circle at 96% 10%,
       rgba(125, 53, 235, 0.055),
       transparent 30%
     ),
@@ -847,75 +498,33 @@
 }
 
 .about-feature__inner {
-  width:
-    min(
-      1500px,
-      100%
-    );
-
-  margin:
-    0
-    auto;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 0.88fr)
-    minmax(0, 1.12fr);
-
-  gap:
-    clamp(
-      48px,
-      5.5vw,
-      82px
-    );
-
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: min(1320px, 100%);
+  margin: 0 auto;
 }
-
-/* =========================================================
-   FEATURE COPY
-========================================================= */
 
 .about-feature__copy {
   position: relative;
-
   z-index: 4;
-
+  order: 1;
   min-width: 0;
 }
 
 .about-feature__heading-mask {
+  min-width: 0;
+  padding: 5px 0 10px;
   overflow: hidden;
-
-  padding:
-    5px
-    0
-    9px;
 }
 
 .about-feature__copy h2 {
-  width: 100%;
-
-  max-width: 590px;
-
   margin: 0;
-
   color: #000000;
-
-  font-size:
-    clamp(
-      42px,
-      4.25vw,
-      67px
-    );
-
-  font-weight: 950;
-
-  line-height: 0.88;
-
-  letter-spacing: -0.058em;
-
+  font-size: clamp(29px, 7.7vw, 48px);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
 }
 
@@ -924,1079 +533,465 @@
 }
 
 .about-feature__description {
-  width:
-    min(
-      470px,
-      100%
-    );
-
-  margin:
-    21px
-    0
-    0;
-
-  color:
-    rgba(0, 0, 0, 0.60);
-
-  font-size: 14px;
-
-  line-height: 1.7;
+  max-width: 52ch;
+  margin: 24px 0 0;
+  color: var(--about-copy-dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
-/* =========================================================
-   PREMIUM MEDIA FRAME
-========================================================= */
+/* Feature media */
 
 .about-feature__media {
   position: relative;
-
   isolation: isolate;
-
+  order: 2;
   width: 100%;
-
-  height:
-    min(
-      62vh,
-      585px
-    );
-
-  min-height: 410px;
-
+  min-width: 0;
+  aspect-ratio: 4 / 3;
   margin: 0;
-
   overflow: hidden;
-
-  border:
-    1.5px solid
-    #c6ff33;
-
-  border-radius: 28px;
-
+  border: 1.5px solid #c6ff33;
+  border-radius: 20px;
   background: #090909;
-
-  box-shadow:
-    0
-    28px
-    75px
-    rgba(35, 8, 67, 0.13);
-
-  transform:
-    translateZ(0);
-}
-
-.about-feature__media::before {
-  content: "";
-
-  position: absolute;
-
-  z-index: 3;
-
-  inset: 11px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.18);
-
-  border-radius: 19px;
-
-  pointer-events: none;
+  box-shadow: 0 20px 50px rgba(35, 8, 67, 0.12);
+  transform: translateZ(0);
 }
 
 .about-feature__media::after {
   content: "";
-
   position: absolute;
-
   z-index: 2;
-
   inset: 0;
-
   pointer-events: none;
-
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.02) 0%,
+      rgba(0, 0, 0, 0.02),
       transparent 55%,
-      rgba(0, 0, 0, 0.20) 100%
+      rgba(0, 0, 0, 0.2)
     );
 }
 
 .about-feature__media img,
 .about-feature__media video {
   position: absolute;
-
-  inset:
-    -5%
-    0;
-
+  inset: -5% 0;
   width: 100%;
-
   height: 110%;
-
   max-width: none;
-
   object-fit: cover;
-
   object-position: center;
-
   will-change: transform;
 }
 
-/* =========================================================
-   PREMIUM TWO-TONE REVEAL
-========================================================= */
-
 .about-feature__media-reveal {
   position: absolute;
-
   z-index: 8;
-
   inset: 0;
-
   pointer-events: none;
-
-  background:
-    linear-gradient(
-      115deg,
-      #160326 0%,
-      #7d35eb 58%,
-      #7d35eb 100%
-    );
-
+  background: linear-gradient(115deg, #160326, #7d35eb 58%);
   will-change: transform;
 }
 
 .about-feature__media-reveal::after {
   content: "";
-
   position: absolute;
-
-  right: 0;
-
   top: 0;
-
-  width: 16px;
-
+  right: 0;
+  width: 12px;
   height: 100%;
-
   background: #c6ff33;
-
-  box-shadow:
-    -12px
-    0
-    35px
-    rgba(198, 255, 51, 0.22);
+  box-shadow: -12px 0 35px rgba(198, 255, 51, 0.22);
 }
 
-/* =========================================================
-   SECOND + FOURTH FEATURE
-========================================================= */
+/* Feature themes */
 
 .about-feature--motion,
 .about-feature--brand {
   color: #ffffff;
-
   background:
     radial-gradient(
-      58% 92%
-      at 100% 42%,
+      58% 92% at 100% 42%,
       rgba(125, 53, 235, 0.56),
       transparent 72%
     ),
-    radial-gradient(
-      30% 50%
-      at 4% 92%,
-      rgba(198, 255, 51, 0.04),
-      transparent 72%
-    ),
-    linear-gradient(
-      120deg,
-      #050109 0%,
-      #18032b 56%,
-      #3a0a6c 100%
-    );
+    linear-gradient(120deg, #050109, #18032b 56%, #3a0a6c);
 }
 
-/* =========================================================
-   MOTION / BRAND COPY
-========================================================= */
-
-.about-feature--motion
-.about-section-eyebrow,
-.about-feature--brand
-.about-section-eyebrow {
+.about-feature--motion .about-section-eyebrow,
+.about-feature--brand .about-section-eyebrow {
   color: #c6ff33;
 }
 
-.about-feature--motion
-.about-feature__copy h2,
-.about-feature--brand
-.about-feature__copy h2 {
+.about-feature--motion .about-feature__copy h2,
+.about-feature--brand .about-feature__copy h2 {
   color: #ffffff;
 }
 
-.about-feature--motion
-.about-feature__copy h2 span,
-.about-feature--brand
-.about-feature__copy h2 span {
+.about-feature--motion .about-feature__copy h2 span,
+.about-feature--brand .about-feature__copy h2 span {
   color: #c6ff33;
 }
 
-.about-feature--motion
-.about-feature__description,
-.about-feature--brand
-.about-feature__description {
-  color:
-    rgba(255, 255, 255, 0.68);
+.about-feature--motion .about-feature__description,
+.about-feature--brand .about-feature__description {
+  color: var(--about-copy-light);
 }
-
-/* =========================================================
-   ALTERNATING LAYOUT
-========================================================= */
-
-.about-feature--motion
-.about-feature__inner,
-.about-feature--brand
-.about-feature__inner {
-  grid-template-columns:
-    minmax(0, 1.12fr)
-    minmax(0, 0.88fr);
-}
-
-/* =========================================================
-   THIRD SECTION
-========================================================= */
 
 .about-feature--digital {
   background:
     radial-gradient(
-      circle
-      at 4% 88%,
+      circle at 4% 88%,
       rgba(198, 255, 51, 0.055),
       transparent 30%
     ),
-    linear-gradient(
-      135deg,
-      #f8f5ff,
-      #ffffff
-    );
+    linear-gradient(135deg, #f8f5ff, #ffffff);
 }
 
-/* =========================================================
-   SHORT LAPTOP
-   100% ZOOM
-========================================================= */
+/* Tablet hero */
 
-@media
-(min-width: 1101px)
-and
-(max-height: 850px) {
-
+@media (min-width: 768px) and (max-width: 1100px) {
   .about-hero__inner {
-    padding-top: 102px;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(420px, 0.92fr);
-
-    gap:
-      clamp(
-        44px,
-        4vw,
-        64px
-      );
-
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+    padding-top: 124px;
   }
 
   .about-hero__content {
-    max-width: 620px;
-
-    padding-bottom: 0;
-  }
-
-  .about-hero h1 {
-    width: 620px;
-
-    font-size:
-      clamp(
-        52px,
-        4.45vw,
-        62px
-      );
-
-    line-height: 0.99;
-  }
-
-  .about-hero__title-line {
-    margin-bottom: 2px;
-  }
-
-  .about-hero__lead {
-    width: 490px;
-
-    margin-top: 17px;
-
-    font-size: 13.5px;
-
-    line-height: 1.52;
-  }
-
-  .about-hero__actions {
-    margin-top: 16px;
-  }
-
-  .about-hero__visual {
-    height:
-      calc(
-        100svh - 106px
-      );
-
-    max-height: 650px;
-
-    justify-content: flex-end;
-  }
-
-  .about-hero__ape {
-    width:
-      min(
-        114%,
-        525px
-      );
-
-    max-width: none;
-
-    max-height: 650px;
-
-    margin-right: -20px;
-  }
-
-  .about-intro {
-    min-height: 100svh;
-
-    padding:
-      105px
-      5vw
-      70px;
-  }
-
-  .about-intro__heading {
-    font-size:
-      clamp(
-        50px,
-        5.4vw,
-        76px
-      );
-  }
-
-  .about-belief {
-    padding:
-      92px
-      5vw
-      66px;
-  }
-
-  .about-belief__statement {
-    padding:
-      53px
-      0;
-  }
-
-  .about-belief__statement h2 {
-    font-size:
-      clamp(
-        48px,
-        4.9vw,
-        72px
-      );
-  }
-
-  .about-feature {
-    min-height: 100svh;
-
-    padding:
-      108px
-      5vw
-      58px;
-  }
-
-  .about-feature__inner {
-    gap: 54px;
-  }
-
-  .about-feature__copy h2 {
-    max-width: 540px;
-
-    font-size:
-      clamp(
-        39px,
-        4vw,
-        56px
-      );
-  }
-
-  .about-feature__description {
-    margin-top: 17px;
-
-    font-size: 13px;
-  }
-
-  .about-feature__media {
-    height:
-      min(
-        59vh,
-        490px
-      );
-
-    min-height: 380px;
-  }
-}
-
-/* =========================================================
-   TABLET / 125% LAPTOP ZOOM SAFE
-========================================================= */
-
-@media
-(min-width: 768px)
-and
-(max-width: 1100px) {
-
-  .about-hero__inner {
-    width:
-      calc(
-        100% - 64px
-      );
-
-    height: 100%;
-
-    min-height: 100%;
-
-    padding-top:
-      clamp(
-        88px,
-        15vh,
-        112px
-      );
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(280px, 0.82fr);
-
-    gap:
-      clamp(
-        20px,
-        3vw,
-        34px
-      );
-
-    align-items: center;
-  }
-
-  .about-hero__content {
-    max-width: 550px;
-
-    padding-bottom: 0;
-  }
-
-  .about-hero h1 {
+    align-self: start;
     width: 100%;
-
-    font-size:
-      clamp(
-        44px,
-        4.9vw,
-        56px
-      );
-
-    line-height: 0.99;
-
-    letter-spacing: -0.038em;
+    max-width: none;
+    padding-bottom: 0;
   }
 
-  .about-hero__title-line {
-    margin-bottom: 2px;
+  .about-breadcrumb {
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(70px, 9vw, 96px);
+    line-height: 1.02;
   }
 
   .about-hero__lead {
-    width:
-      min(
-        420px,
-        100%
-      );
-
-    margin-top: 16px;
-
-    font-size: 12.5px;
-
-    line-height: 1.5;
+    width: 100%;
+    max-width: 60ch;
+    margin-top: 24px;
+    font-size: clamp(18px, 2.1vw, 22px);
+    line-height: 1.65;
   }
 
   .about-hero__actions {
-    margin-top: 15px;
+    gap: 14px;
+    margin-top: 26px;
   }
 
-  .about-hero__visual {
-    height:
-      min(
-        520px,
-        calc(
-          100svh - 92px
-        )
-      );
-
-    max-height: 520px;
-
-    align-self: end;
-
-    justify-content: flex-end;
-  }
-
-  .about-hero__ape {
-    width:
-      min(
-        110%,
-        420px
-      );
-
-    max-width: none;
-
-    max-height: 520px;
-
-    margin-right: -12px;
-  }
-
-  .about-intro {
-    padding:
-      100px
-      38px;
-  }
-
-  .about-intro__layout {
-    gap: 42px;
-  }
-
-  .about-intro__heading {
-    font-size:
-      clamp(
-        46px,
-        6.4vw,
-        66px
-      );
-  }
-
-  .about-belief {
-    padding:
-      95px
-      38px;
-  }
-
-  .about-belief__statement {
-    gap: 34px;
-  }
-
-  .about-belief__statement h2 {
-    font-size:
-      clamp(
-        43px,
-        5.8vw,
-        62px
-      );
-  }
-
-  .about-feature {
-    padding:
-      110px
-      38px
-      68px;
-  }
-
-  .about-feature__inner {
-    gap: 34px;
-  }
-
-  .about-feature__copy h2 {
-    font-size:
-      clamp(
-        36px,
-        5vw,
-        50px
-      );
-  }
-
-  .about-feature__description {
+  .about-hero__primary,
+  .about-hero__secondary {
+    min-height: 50px;
+    padding: 14px 24px;
     font-size: 12px;
   }
 
-  .about-feature__media {
-    height:
-      min(
-        55vh,
-        500px
-      );
+  .about-hero__visual {
+    align-self: stretch;
+    justify-self: stretch;
+    width: 100%;
+    min-height: 0;
+    height: 100%;
+  }
 
-    min-height: 360px;
+  .about-hero__ape {
+    width: 100%;
+    height: 100%;
+  }
 
-    border-radius: 22px;
+  .about-hero__ape img {
+    object-position: right bottom;
+  }
+
+  .about-hero__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 28%;
+    font-size: 10px;
   }
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* Tablet sections */
 
-@media
-(max-width: 767px) {
-
-  .about-hero {
-    height: auto;
-
-    min-height: 0;
+@media (min-width: 768px) {
+  .about-intro__layout {
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(0, 1.05fr);
+    align-items: start;
+    gap: 36px;
   }
 
+  .about-intro__heading {
+    font-size: clamp(36px, 4.6vw, 54px);
+  }
+
+  .about-belief__statement {
+    grid-template-columns:
+      minmax(0, 1.1fr)
+      minmax(0, 0.9fr);
+    align-items: center;
+    gap: 36px;
+    padding: 40px 0;
+  }
+
+  .about-belief__statement h2 {
+    font-size: clamp(32px, 4.1vw, 48px);
+  }
+
+  .about-feature__inner {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(0, 1.05fr);
+    align-items: center;
+    gap: 32px;
+  }
+
+  .about-feature__copy,
+  .about-feature__media {
+    order: initial;
+  }
+
+  .about-feature--motion .about-feature__inner,
+  .about-feature--brand .about-feature__inner {
+    grid-template-columns:
+      minmax(0, 1.05fr)
+      minmax(0, 0.95fr);
+  }
+
+  .about-feature__copy h2 {
+    font-size: clamp(27px, 3.55vw, 42px);
+  }
+
+  .about-feature__media {
+    min-height: 300px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Desktop */
+
+@media (min-width: 1101px) {
   .about-hero__inner {
-    width: 100%;
-
-    height: auto;
-
-    min-height: 0;
-
-    padding:
-      98px
-      18px
-      0;
-
-    display: block;
+    grid-template-columns:
+      minmax(0, 1.05fr)
+      minmax(0, 0.95fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    padding-top: 116px;
   }
 
   .about-hero__content {
-    width: 100%;
-
-    max-width: 100%;
-
-    padding-bottom: 0;
-  }
-
-  .about-hero__eyebrow {
-    margin-bottom: 11px;
-
-    font-size: 7px;
+    align-self: center;
+    padding-bottom: 72px;
   }
 
   .about-hero h1 {
-    width: 100%;
-
-    font-size:
-      clamp(
-        39px,
-        10.5vw,
-        49px
-      );
-
-    line-height: 1;
-
-    letter-spacing: -0.038em;
-  }
-
-  .about-hero__title-line {
-    margin-bottom: 1px;
-
-    white-space: normal;
-  }
-
-  .about-hero__title-line--outline {
-    -webkit-text-stroke:
-      1.1px
-      #7d35eb;
+    font-size: clamp(58px, 4.8vw, 76px);
   }
 
   .about-hero__lead {
-    width:
-      min(
-        94%,
-        390px
-      );
+    font-size: 17px;
+  }
 
-    margin-top: 17px;
+  .about-hero__bottom {
+    display: flex;
+  }
 
-    font-size: 13px;
+  .about-intro__layout {
+    grid-template-columns:
+      minmax(0, 1.05fr)
+      minmax(0, 0.95fr);
+    gap: clamp(48px, 6vw, 88px);
+  }
 
-    line-height: 1.53;
+  .about-intro__heading {
+    font-size: clamp(48px, 5.1vw, 76px);
+  }
+
+  .about-intro__copy p,
+  .about-belief__statement p,
+  .about-feature__description {
+    font-size: 17px;
+  }
+
+  .about-belief__statement {
+    grid-template-columns:
+      minmax(0, 1.2fr)
+      minmax(0, 0.8fr);
+    gap: 56px;
+    padding: 48px 0;
+  }
+
+  .about-belief__statement h2 {
+    font-size: clamp(44px, 4.6vw, 68px);
+  }
+
+  .about-feature__inner {
+    gap: clamp(40px, 5vw, 72px);
+  }
+
+  .about-feature__copy h2 {
+    font-size: clamp(36px, 3.65vw, 56px);
+  }
+
+  .about-feature__media {
+    min-height: 360px;
+    aspect-ratio: 6 / 5;
+    border-radius: 26px;
+  }
+}
+
+/* Short screens */
+
+@media (max-width: 767px) and (max-height: 740px) {
+  .about-hero__inner {
+    gap: 8px;
+    padding-top: 96px;
+  }
+
+  .about-breadcrumb {
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(36px, 9vw, 48px);
+  }
+
+  .about-hero__lead {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .about-hero__actions {
+    gap: 10px;
     margin-top: 18px;
   }
 
   .about-hero__primary,
   .about-hero__secondary {
-    min-height: 37px;
+    min-height: 42px;
+    padding: 10px 14px;
+    font-size: 10px;
+  }
+}
 
-    padding:
-      0
-      13px;
+/* Landscape phones */
 
-    font-size: 6.3px;
+@media (min-width: 600px) and (max-width: 1100px) and (max-height: 500px) {
+  .about-hero__inner {
+    grid-template-columns:
+      minmax(0, 1.2fr)
+      minmax(0, 0.8fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding-top: 94px;
   }
 
-  .about-hero__visual {
-    width: 100%;
-
-    height:
-      clamp(
-        285px,
-        76vw,
-        365px
-      );
-
-    min-height: 0;
-
-    max-height: 365px;
-
-    margin-top: 2px;
-
-    justify-content: flex-end;
+  .about-hero__content {
+    align-self: center;
+    padding-bottom: 12px;
   }
 
-  .about-hero__ape {
-    width:
-      clamp(
-        250px,
-        72vw,
-        335px
-      );
-
-    height: 100%;
-
-    max-width: none;
-
-    max-height: none;
-
-    margin-right: -10px;
+  .about-breadcrumb {
+    margin-bottom: 8px;
+    font-size: 12px;
   }
 
-  .about-hero__ape img {
-    width: 108%;
+  .about-breadcrumb__item a {
+    min-height: 24px;
+  }
 
-    height: 103%;
+  .about-hero h1 {
+    font-size: 32px;
+  }
+
+  .about-hero__lead {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .about-hero__actions {
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .about-hero__primary,
+  .about-hero__secondary {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 9px;
   }
 
   .about-hero__bottom {
     display: none;
   }
-
-  .about-hero__glow--violet {
-    width: 105vw;
-
-    height: 105vw;
-
-    right: -62vw;
-
-    top: 20vh;
-  }
-
-  .about-intro {
-    min-height: 0;
-
-    display: block;
-
-    padding:
-      72px
-      18px
-      80px;
-  }
-
-  .about-intro__layout {
-    display: block;
-  }
-
-  .about-intro__heading {
-    font-size:
-      clamp(
-        40px,
-        11.3vw,
-        53px
-      );
-
-    line-height: 0.87;
-  }
-
-  .about-intro__copy {
-    width: 100%;
-
-    margin-top: 27px;
-  }
-
-  .about-intro__copy p {
-    max-width: 370px;
-
-    font-size: 11.5px;
-
-    line-height: 1.62;
-  }
-
-  .about-belief {
-    padding:
-      73px
-      18px;
-  }
-
-  .about-belief__statement {
-    padding:
-      40px
-      0;
-
-    display: block;
-  }
-
-  .about-belief__statement h2 {
-    font-size:
-      clamp(
-        40px,
-        11.4vw,
-        54px
-      );
-
-    line-height: 0.86;
-  }
-
-  .about-belief__statement p {
-    width:
-      min(
-        340px,
-        100%
-      );
-
-    margin:
-      21px
-      0
-      0;
-
-    font-size: 11px;
-
-    line-height: 1.58;
-  }
-
-  .about-feature {
-    min-height: 0;
-
-    display: block;
-
-    padding:
-      74px
-      18px
-      78px;
-  }
-
-  .about-feature__inner,
-  .about-feature--motion
-  .about-feature__inner,
-  .about-feature--brand
-  .about-feature__inner {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 27px;
-  }
-
-  .about-feature__copy {
-    order: 1;
-  }
-
-  .about-feature__media {
-    order: 2;
-
-    width: 100%;
-
-    height: auto;
-
-    min-height: 0;
-
-    aspect-ratio: 4 / 3;
-
-    border-width: 1.5px;
-
-    border-radius: 18px;
-
-    box-shadow:
-      0
-      20px
-      50px
-      rgba(35, 8, 67, 0.12);
-  }
-
-  .about-feature__media::before {
-    inset: 7px;
-
-    border-radius: 12px;
-  }
-
-  .about-feature__copy h2 {
-    max-width: 100%;
-
-    font-size:
-      clamp(
-        36px,
-        10.2vw,
-        48px
-      );
-
-    line-height: 0.89;
-  }
-
-  .about-feature__description {
-    width:
-      min(
-        355px,
-        100%
-      );
-
-    margin-top: 15px;
-
-    font-size: 11px;
-
-    line-height: 1.58;
-  }
-
-  .about-feature__media img,
-  .about-feature__media video {
-    inset:
-      -4%
-      0;
-
-    height: 108%;
-  }
-
-  .about-feature__media-reveal::after {
-    width: 9px;
-  }
 }
 
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
+/* Small screens */
 
-@media
-(max-width: 390px) {
-
-  .about-hero__inner {
-    padding:
-      94px
-      16px
-      0;
+@media (max-width: 359px) {
+  .about-page {
+    --about-gutter: 16px;
   }
 
   .about-hero h1 {
-    font-size:
-      clamp(
-        36px,
-        10.4vw,
-        43px
-      );
-  }
-
-  .about-hero__lead {
-    font-size: 12px;
-  }
-
-  .about-hero__visual {
-    height: 285px;
-
-    max-height: 285px;
-  }
-
-  .about-hero__ape {
-    width: 265px;
-
-    max-height: none;
-
-    margin-right: -8px;
-  }
-
-  .about-intro,
-  .about-belief,
-  .about-feature {
-    padding-left: 16px;
-
-    padding-right: 16px;
-  }
-
-  .about-intro__heading {
-    font-size:
-      clamp(
-        37px,
-        10.5vw,
-        46px
-      );
-  }
-
-  .about-feature__copy h2 {
-    font-size:
-      clamp(
-        33px,
-        9.6vw,
-        43px
-      );
-  }
-}
-
-/* =========================================================
-   SHORT MOBILE
-========================================================= */
-
-@media
-(max-width: 767px)
-and
-(max-height: 700px) {
-
-  .about-hero {
-    min-height: 0;
-  }
-
-  .about-hero__inner {
-    padding-top: 92px;
-  }
-
-  .about-hero h1 {
-    font-size:
-      clamp(
-        36px,
-        10.2vw,
-        43px
-      );
-  }
-
-  .about-hero__lead {
-    margin-top: 13px;
-
-    font-size: 11.5px;
+    font-size: 36px;
   }
 
   .about-hero__actions {
-    margin-top: 13px;
+    gap: 8px;
   }
 
-  .about-hero__visual {
-    height: 250px;
-
-    max-height: 250px;
+  .about-hero__primary,
+  .about-hero__secondary {
+    gap: 8px;
+    padding-inline: 10px;
+    font-size: 9px;
   }
 
-  .about-hero__ape {
-    width: 235px;
-
-    max-height: none;
+  .about-feature__copy h2 {
+    font-size: 27px;
   }
 }
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+/* Hover */
 
-@media
-(prefers-reduced-motion: reduce) {
+@media (hover: hover) and (pointer: fine) {
+  .about-hero__primary:hover,
+  .about-hero__secondary:hover {
+    transform: translateY(-3px);
+  }
 
+  .about-hero__secondary:hover {
+    border-color: #7d35eb;
+    background: #7d35eb;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
   .about-hero__primary,
   .about-hero__secondary {
     transition: none;
