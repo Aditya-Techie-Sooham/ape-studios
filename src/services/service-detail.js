@@ -1,1348 +1,534 @@
-/* =========================================================
-   APE STUDIO — SERVICE DETAIL
-========================================================= */
-
+/* Imports */
 
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initHeader } from "../header/header.js";
+import { SERVICE_PAGES } from "./services-data.js";
 
-import {
-  ScrollTrigger
-} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
+/* Environment */
 
-import {
-  initHeader
-} from "../header/header.js";
-
-
-import {
-  SERVICE_PAGES
-} from "./services-data.js";
-
-
-gsap.registerPlugin(
-  ScrollTrigger
+const motionPreference = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
 );
 
-
-/* =========================================================
-   ENVIRONMENT
-========================================================= */
-
-const reduceMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-
-const finePointer =
-  window.matchMedia(
-    "(hover: hover) and (pointer: fine)"
-  ).matches;
-
-
-/* =========================================================
-   SERVICE MASCOTS
-========================================================= */
-
 const SERVICE_MASCOTS = {
-
-  "digital-marketing":
-    "/mascot/ape-laptop.webp",
-
-  "printables":
-    "/mascot/ape-idea.webp",
-
-  "branding":
-    "/mascot/ape-thinking.webp",
-
-  "influencer-marketing":
-    "/mascot/ape-phone.webp",
-
-  "visual-studio":
-    "/mascot/ape-camera.webp"
-
+  "digital-marketing": "/mascot/ape-laptop.webp",
+  printables: "/mascot/ape-idea.webp",
+  branding: "/mascot/ape-thinking.webp",
+  "influencer-marketing": "/mascot/ape-phone.webp",
+  "visual-studio": "/mascot/ape-camera.webp"
 };
 
+/* Content helpers */
 
-/* =========================================================
-   GET SERVICE SLUG
-========================================================= */
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+
+    return entities[character];
+  });
+}
 
 function getServiceSlug() {
+  const parts = window.location.pathname.split("/").filter(Boolean);
 
-  const bodySlug =
-    document.body.dataset.service;
-
-
-  if (bodySlug) {
-
-    return bodySlug;
-
-  }
-
-
-  const parts =
-    window.location.pathname
-      .split("/")
-      .filter(Boolean);
-
-
-  return (
-    parts[1]
-    ||
-    "digital-marketing"
-  );
-
+  return document.body.dataset.service || parts[1] || "";
 }
 
-
-/* =========================================================
-   GET SERVICE DATA
-========================================================= */
-
-function getServiceData() {
-
-  const slug =
-    getServiceSlug();
-
-
-  return (
-    SERVICE_PAGES[slug]
-    ||
-    SERVICE_PAGES[
-      "digital-marketing"
-    ]
-  );
-
-}
-
-
-/* =========================================================
-   SAFE SECTION ID
-========================================================= */
-
-function createSectionId(
-  title
-) {
-
-  return title
+function createSectionId(title) {
+  return String(title)
     .toLowerCase()
-    .replace(
-      /[^a-z0-9]+/g,
-      "-"
-    )
-    .replace(
-      /^-|-$/g,
-      ""
-    );
-
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
-
-/* =========================================================
-   HERO LINES
-========================================================= */
-
-function renderHeroLines(
-  lines
-) {
-
+function renderHeroLines(lines) {
   return lines
-    .map(
-      function (
-        line
-      ) {
+    .map((line) => {
+      const accent = line.accent ? " is-accent" : "";
 
-        return `
-
-          <span
-            class="
-              service-detail-hero__title-line
-              ${
-                line.accent
-                  ? "is-accent"
-                  : ""
-              }
-            "
-          >
-            ${line.text}
-          </span>
-
-        `;
-
-      }
-    )
+      return `
+        <span class="service-detail-hero__title-line${accent}">
+          ${escapeHTML(line.text)}
+        </span>
+      `;
+    })
     .join("");
-
 }
 
+/* Breadcrumb */
 
-/* =========================================================
-   SUB SERVICES
-   H2 STRUCTURE
-========================================================= */
+function renderBreadcrumb(service) {
+  return `
+    <nav class="service-breadcrumb" aria-label="Breadcrumb">
+      <ol class="service-breadcrumb__list" role="list">
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <span class="service-breadcrumb__separator" aria-hidden="true">
+            ›
+          </span>
+          <a href="/services/">Services</a>
+        </li>
+        <li>
+          <span class="service-breadcrumb__separator" aria-hidden="true">
+            ›
+          </span>
+          <span aria-current="page">
+            ${escapeHTML(service.navLabel)}
+          </span>
+        </li>
+      </ol>
+    </nav>
+  `;
+}
 
-function renderSubservices(
-  service
-) {
+/* Subservices */
 
+function renderSubservices(service) {
   return service.subservices
-    .map(
-      function (
-        item,
-        index
-      ) {
+    .map((item, index) => {
+      const id = createSectionId(item.title);
+      const headingId = `${id}-title`;
+      const reversed = index % 2 ? " is-reversed" : "";
 
-        const id =
-          createSectionId(
-            item.title
-          );
+      const images = (item.images || [])
+        .filter(Boolean)
+        .map((source, imageIndex) => {
+          const description = imageIndex
+            ? `${item.title} creative example by APE Studio`
+            : `${item.title} work by APE Studio`;
 
+          return `
+            <figure>
+              <img
+                src="${escapeHTML(source)}"
+                alt="${escapeHTML(description)}"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          `;
+        })
+        .join("");
 
-        const headingId =
-          `${id}-title`;
+      return `
+        <article
+          id="${escapeHTML(id)}"
+          class="service-subsection${reversed}"
+          aria-labelledby="${escapeHTML(headingId)}"
+        >
+          <div class="service-subsection__inner">
+            <div class="service-subsection__content">
+              <p class="service-subsection__eyebrow">
+                ${escapeHTML(service.navLabel)}
+              </p>
 
+              <h2 id="${escapeHTML(headingId)}">
+                ${escapeHTML(item.title)}
+              </h2>
 
-        return `
-
-          <article
-            id="${id}"
-            class="
-              service-subsection
-              ${
-                index % 2
-                  ? "is-reversed"
-                  : ""
-              }
-            "
-            aria-labelledby="${headingId}"
-          >
-
-
-            <div class="service-subsection__inner">
-
-
-              <div class="service-subsection__content">
-
-
-                <p class="service-subsection__eyebrow">
-                  ${service.navLabel}
-                </p>
-
-
-                <h2 id="${headingId}">
-                  ${item.title}
-                </h2>
-
-
-                <p class="service-subsection__description">
-                  ${item.description}
-                </p>
-
-
-              </div>
-
-
-
-              <div class="service-subsection__images">
-
-
-                <figure>
-
-                  <img
-                    src="${item.images[0]}"
-                    alt="${item.title} work by APE Studio"
-                    loading="lazy"
-                    decoding="async"
-                  >
-
-                </figure>
-
-
-                <figure>
-
-                  <img
-                    src="${item.images[1]}"
-                    alt="${item.title} creative example by APE Studio"
-                    loading="lazy"
-                    decoding="async"
-                  >
-
-                </figure>
-
-
-              </div>
-
-
+              <p class="service-subsection__description">
+                ${escapeHTML(item.description)}
+              </p>
             </div>
 
-
-          </article>
-
-        `;
-
-      }
-    )
+            <div class="service-subsection__images">
+              ${images}
+            </div>
+          </div>
+        </article>
+      `;
+    })
     .join("");
-
 }
 
-
-/* =========================================================
-   BUILD PAGE
-========================================================= */
+/* Page */
 
 function renderServicePage() {
-
-  const root =
-    document.getElementById(
-      "service-detail-root"
-    );
-
+  const root = document.getElementById("service-detail-root");
+  const slug = getServiceSlug();
+  const service = SERVICE_PAGES[slug];
 
   if (!root) {
-
-    return;
-
+    return false;
   }
 
-
-  const service =
-    getServiceData();
-
-
-  const mascot =
-    SERVICE_MASCOTS[
-      service.slug
-    ]
-    ||
-    "/mascot/ape-idea.webp";
-
-
-  const heroTitleId =
-    `${service.slug}-service-title`;
-
-
-  root.innerHTML =
-    `
-
-      <!-- ===============================================
-           HERO
-      ================================================ -->
-
-      <section
-        id="service-detail-hero"
-        class="service-detail-hero"
-        aria-labelledby="${heroTitleId}"
-      >
-
-
-        <div
-          class="service-detail-hero__glow service-detail-hero__glow--violet"
-          aria-hidden="true"
-        ></div>
-
-
-        <div
-          class="service-detail-hero__glow service-detail-hero__glow--lime"
-          aria-hidden="true"
-        ></div>
-
-
-
-        <div class="service-detail-hero__inner">
-
-
-          <!-- =============================================
-               LEFT
-          ============================================== -->
-
-          <div class="service-detail-hero__content">
-
-
-            <a
-              href="/services/"
-              class="service-detail-back"
-            >
-              ← ALL SERVICES
-            </a>
-
-
-            <p class="service-detail-hero__eyebrow">
-              ${service.eyebrow}
-            </p>
-
-
-            <!--
-              ONE H1 PER SERVICE DETAIL PAGE.
-
-              SPANS ARE PRESENTATION / ANIMATION WRAPPERS ONLY.
-            -->
-
-            <h1 id="${heroTitleId}">
-
-              ${renderHeroLines(
-                service.heroLines
-              )}
-
-            </h1>
-
-
-            <p class="service-detail-hero__lead">
-              ${service.intro}
-            </p>
-
-
-            <div class="service-detail-hero__actions">
-
-
-              <a
-                href="#service-subsections"
-                class="service-detail-primary"
-              >
-
-                EXPLORE
-
-                <span aria-hidden="true">
-                  ↓
-                </span>
-
-              </a>
-
-
-              <a
-                href="/contact/"
-                class="service-detail-secondary"
-              >
-
-                START A PROJECT
-
-                <span aria-hidden="true">
-                  ↗
-                </span>
-
-              </a>
-
-
-            </div>
-
-
-          </div>
-
-
-
-          <!-- =============================================
-               DECORATIVE MASCOT
-          ============================================== -->
-
-          <div class="service-detail-hero__visual">
-
-
-            <button
-              type="button"
-              class="service-detail-ape"
-              aria-label="Make the APE Studio mascot react"
-            >
-
-
-              <span
-                class="service-detail-ape__aura"
-                aria-hidden="true"
-              ></span>
-
-
-              <span class="service-detail-ape__world">
-
-                <span class="service-detail-ape__rig">
-
-                  <span class="service-detail-ape__float">
-
-                    <img
-                      src="${mascot}"
-                      alt=""
-                      draggable="false"
-                    >
-
-                  </span>
-
-                </span>
-
-              </span>
-
-
-            </button>
-
-
-          </div>
-
-
-        </div>
-
-
+  if (!service) {
+    root.innerHTML = `
+      <section class="service-detail-error">
+        <h1>Service not found</h1>
+        <a href="/services/">Explore all services</a>
       </section>
-
-
-
-      <!-- ===============================================
-           SUB SERVICES
-           H2 SECTIONS
-      ================================================ -->
-
-      <section
-        id="service-subsections"
-        class="service-subsections"
-        aria-label="${service.navLabel} services"
-      >
-
-        ${renderSubservices(
-          service
-        )}
-
-      </section>
-
     `;
 
-
-  /*
-   * IMPORTANT SEO RULE
-   *
-   * DO NOT overwrite:
-   *
-   * document.title
-   * meta description
-   * canonical
-   * Open Graph
-   *
-   * Each HTML page owns its own unique SEO metadata.
-   */
-
-}
-
-
-/* =========================================================
-   HERO APE DANCE
-========================================================= */
-
-function danceApe(
-  rig,
-  aura,
-  pulse
-) {
-
-  if (
-    !rig ||
-    reduceMotion
-  ) {
-
-    return;
-
+    return false;
   }
 
+  const mascot = SERVICE_MASCOTS[slug] || "/mascot/ape-idea.webp";
+  const titleId = `${slug}-service-title`;
 
-  gsap.killTweensOf(
-    rig
-  );
+  root.innerHTML = `
+    <section
+      id="service-detail-hero"
+      class="service-detail-hero"
+      aria-labelledby="${escapeHTML(titleId)}"
+    >
+      <div
+        class="service-detail-hero__glow service-detail-hero__glow--violet"
+        aria-hidden="true"
+      ></div>
 
+      <div
+        class="service-detail-hero__glow service-detail-hero__glow--lime"
+        aria-hidden="true"
+      ></div>
 
-  gsap.timeline()
+      <div class="service-detail-hero__inner">
+        <div class="service-detail-hero__content">
+          ${renderBreadcrumb(service)}
 
-    .to(
-      rig,
-      {
-        y: -26,
-        x: -10,
-        rotation: -7,
-        scale: 1.08,
+          <h1 id="${escapeHTML(titleId)}">
+            ${renderHeroLines(service.heroLines)}
+          </h1>
 
-        duration: 0.15
-      }
-    )
+          <p class="service-detail-hero__lead">
+            ${escapeHTML(service.intro)}
+          </p>
 
-    .to(
-      rig,
-      {
-        x: 12,
-        rotation: 8,
+          <div class="service-detail-hero__actions">
+            <a
+              href="#service-subsections"
+              class="service-detail-primary"
+            >
+              EXPLORE
+              <span aria-hidden="true">↓</span>
+            </a>
 
-        duration: 0.13
-      }
-    )
+            <a
+              href="/contact/"
+              class="service-detail-secondary"
+            >
+              START A PROJECT
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
 
-    .to(
-      rig,
-      {
-        x: -9,
-        rotation: -6,
+        <div class="service-detail-hero__visual">
+          <button
+            type="button"
+            class="service-detail-ape"
+            aria-label="Highlight the APE Studio mascot"
+          >
+            <span
+              class="service-detail-ape__aura"
+              aria-hidden="true"
+            ></span>
 
-        duration: 0.13
-      }
-    )
+            <img
+              src="${escapeHTML(mascot)}"
+              alt=""
+              draggable="false"
+            >
+          </button>
+        </div>
+      </div>
+    </section>
 
-    .to(
-      rig,
-      {
-        x: 0,
+    <section
+      id="service-subsections"
+      class="service-subsections"
+      aria-label="${escapeHTML(service.navLabel)} services"
+    >
+      ${renderSubservices(service)}
+    </section>
+  `;
 
-        rotationY:
-          "+=360",
+  return true;
+}
 
-        duration: 0.5,
+/* Mascot */
 
-        ease:
-          "power3.inOut"
-      }
-    )
+function initHeroApe() {
+  const button = document.querySelector(".service-detail-ape");
+  const aura = button?.querySelector(".service-detail-ape__aura");
 
-    .to(
-      rig,
-      {
-        x: 0,
-        y: 0,
+  if (!button || !aura) {
+    return;
+  }
 
-        rotation: 0,
-        rotationX: 0,
-        rotationY: 0,
-
-        scale: 1,
-
-        duration: 0.38,
-
-        ease:
-          "bounce.out"
-      }
-    );
-
-
-  if (aura) {
+  button.addEventListener("click", () => {
+    if (motionPreference.matches) {
+      return;
+    }
 
     gsap.fromTo(
       aura,
+      { opacity: 1, scale: 1.1 },
       {
-        scale: 0.78,
-        opacity: 0.9
-      },
-      {
-        scale: 1.35,
-        opacity: 0.45,
-
-        duration: 0.55
-      }
-    );
-
-  }
-
-
-  if (pulse) {
-
-    gsap.fromTo(
-      pulse,
-      {
-        scale: 0.7,
-        opacity: 0.7
-      },
-      {
-        scale: 1.4,
-        opacity: 0,
-
-        duration: 0.58
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   HERO APE INTERACTION
-========================================================= */
-
-function initHeroApe() {
-
-  const ape =
-    document.querySelector(
-      ".service-detail-ape"
-    );
-
-
-  const world =
-    document.querySelector(
-      ".service-detail-ape__world"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".service-detail-ape__rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".service-detail-ape__float"
-    );
-
-
-  const aura =
-    document.querySelector(
-      ".service-detail-ape__aura"
-    );
-
-
-  const pulse =
-    document.querySelector(
-      ".service-detail-ape__pulse"
-    );
-
-
-  if (
-    !ape ||
-    !world ||
-    !rig ||
-    !float
-  ) {
-
-    return;
-
-  }
-
-
-  if (!reduceMotion) {
-
-    gsap.to(
-      float,
-      {
-        y: -8,
-        rotation: 1.4,
-
-        duration: 1.7,
-
-        repeat: -1,
-
-        yoyo: true,
-
-        ease:
-          "sine.inOut"
-      }
-    );
-
-
-    gsap.to(
-      ".service-detail-hero__visual",
-      {
-        yPercent: -4,
-
-        ease: "none",
-
-        scrollTrigger: {
-
-          trigger:
-            ".service-detail-hero",
-
-          start:
-            "top top",
-
-          end:
-            "bottom top",
-
-          scrub:
-            0.8
-
-        }
-      }
-    );
-
-  }
-
-
-  if (
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    ape.addEventListener(
-      "pointermove",
-      function (
-        event
-      ) {
-
-        const rect =
-          ape.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          world,
-          {
-            x:
-              x * 20,
-
-            y:
-              y * 11,
-
-            duration: 0.34,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationY:
-              x * 12,
-
-            rotationX:
-              y * -7,
-
-            rotation:
-              x * 2,
-
-            scale: 1.045,
-
-            duration: 0.32,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          world,
-          {
-            x: 0,
-            y: 0,
-
-            duration: 0.55,
-
-            ease:
-              "elastic.out(1,0.45)"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotation: 0,
-            rotationX: 0,
-            rotationY: 0,
-            scale: 1,
-
-            duration: 0.48,
-
-            ease:
-              "back.out(1.6)"
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  ape.addEventListener(
-    "click",
-    function () {
-
-      danceApe(
-        rig,
-        aura,
-        pulse
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HERO MOTION
-========================================================= */
-
-function initHeroMotion() {
-
-  if (reduceMotion) {
-
-    return;
-
-  }
-
-
-  gsap.timeline({
-
-    defaults: {
-
-      ease:
-        "power4.out"
-
-    }
-
-  })
-
-    .fromTo(
-      ".service-detail-back",
-      {
-        opacity: 0,
-        y: 12
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.4
-      }
-    )
-
-
-    .fromTo(
-      ".service-detail-hero__eyebrow",
-      {
-        opacity: 0,
-        y: 13
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.42
-      },
-      "-=0.18"
-    )
-
-
-    .fromTo(
-      ".service-detail-hero__title-line",
-      {
-        opacity: 0,
-        y: 50,
-        rotationX: -10
-      },
-      {
-        opacity: 1,
-        y: 0,
-        rotationX: 0,
-
-        duration: 0.76,
-
-        stagger: 0.08
-      },
-      "-=0.2"
-    )
-
-
-    .fromTo(
-      ".service-detail-hero__lead",
-      {
-        opacity: 0,
-        y: 20
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.55
-      },
-      "-=0.4"
-    )
-
-
-    .fromTo(
-      ".service-detail-hero__actions",
-      {
-        opacity: 0,
-        y: 16
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.48
-      },
-      "-=0.32"
-    )
-
-
-    .fromTo(
-      ".service-detail-ape",
-      {
-        opacity: 0,
-        x: 65,
-        y: 55,
-        scale: 0.8,
-        rotation: 5
-      },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
+        opacity: 0.7,
         scale: 1,
-        rotation: 0,
-
-        duration: 1.05,
-
-        ease:
-          "back.out(1.5)"
-      },
-      "-=0.72"
+        duration: 0.65,
+        ease: "power2.out",
+        overwrite: true
+      }
     );
-
+  });
 }
 
+/* Motion */
 
-/* =========================================================
-   SUBSERVICE MOTION
-========================================================= */
+function initMotion() {
+  const media = gsap.matchMedia();
 
-function initSubserviceMotion() {
-
-  if (reduceMotion) {
-
-    return;
-
-  }
-
-
-  const sections =
-    gsap.utils.toArray(
-      ".service-subsection"
+  media.add("(prefers-reduced-motion: no-preference)", () => {
+    const lines = gsap.utils.toArray(
+      ".service-detail-hero__title-line"
     );
 
+    const lead = document.querySelector(
+      ".service-detail-hero__lead"
+    );
 
-  sections.forEach(
-    function (
-      section
-    ) {
+    const actions = document.querySelector(
+      ".service-detail-hero__actions"
+    );
 
-      const content =
-        section.querySelector(
-          ".service-subsection__content"
-        );
+    const ape = document.querySelector(".service-detail-ape");
 
+    const timeline = gsap.timeline({
+      defaults: { ease: "power3.out" }
+    });
 
-      const figures =
-        section.querySelectorAll(
-          "figure"
-        );
+    if (lines.length) {
+      timeline.from(lines, {
+        opacity: 0,
+        y: 22,
+        duration: 0.65,
+        stagger: 0.07
+      });
+    }
 
+    if (lead) {
+      timeline.from(
+        lead,
+        { opacity: 0, y: 14, duration: 0.5 },
+        "-=0.35"
+      );
+    }
 
-      const images =
-        section.querySelectorAll(
-          "figure img"
-        );
+    if (actions) {
+      timeline.from(
+        actions,
+        { opacity: 0, y: 10, duration: 0.45 },
+        "-=0.3"
+      );
+    }
 
+    if (ape) {
+      timeline.from(
+        ape,
+        { opacity: 0, duration: 0.7 },
+        0.15
+      );
+    }
 
-      gsap.fromTo(
-        content,
-        {
-          opacity: 0,
-          y: 36
-        },
-        {
-          opacity: 1,
-          y: 0,
-
-          duration: 0.72,
-
-          ease:
-            "power3.out",
-
-          scrollTrigger: {
-
-            trigger:
-              section,
-
-            start:
-              "top 78%",
-
-            once:
-              true
-
-          }
-        }
+    document.querySelectorAll(".service-subsection").forEach((section) => {
+      const content = section.querySelector(
+        ".service-subsection__content"
       );
 
+      const figures = section.querySelectorAll("figure");
 
-      gsap.fromTo(
-        figures,
-        {
+      if (content) {
+        gsap.from(content, {
           opacity: 0,
-          y: 40,
-          scale: 0.965
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-
-          duration: 0.78,
-
-          stagger: 0.09,
-
-          ease:
-            "power3.out",
-
+          y: 26,
+          duration: 0.65,
+          ease: "power3.out",
           scrollTrigger: {
-
-            trigger:
-              section,
-
-            start:
-              "top 80%",
-
-            once:
-              true
-
+            trigger: content,
+            start: "top 92%",
+            once: true
           }
-        }
-      );
+        });
+      }
 
+      figures.forEach((figure) => {
+        gsap.from(figure, {
+          opacity: 0,
+          y: 28,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: figure,
+            start: "top 94%",
+            once: true
+          }
+        });
+      });
+    });
+  });
 
-      images.forEach(
-        function (
-          image
-        ) {
-
+  media.add(
+    "(min-width: 1101px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    () => {
+      document
+        .querySelectorAll(".service-subsection__images img")
+        .forEach((image) => {
           gsap.fromTo(
             image,
-            {
-              yPercent: -3,
-              scale: 1.04
-            },
+            { yPercent: -3 },
             {
               yPercent: 3,
-              scale: 1.04,
-
               ease: "none",
-
               scrollTrigger: {
-
-                trigger:
-                  image.closest(
-                    "figure"
-                  ),
-
-                start:
-                  "top bottom",
-
-                end:
-                  "bottom top",
-
-                scrub:
-                  1
-
+                trigger: image.closest("figure"),
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
               }
             }
           );
-
-        }
-      );
-
+        });
     }
   );
-
 }
 
+/* Navigation */
 
-/* =========================================================
-   EXPLORE CTA
-========================================================= */
+function isModifiedClick(event) {
+  return (
+    event.button !== 0 ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey
+  );
+}
 
-function initAnchor() {
+function initNavigation() {
+  const explore = document.querySelector(".service-detail-primary");
+  const target = document.getElementById("service-subsections");
+  const topLink = document.querySelector(".site-footer__top-link");
 
-  const button =
-    document.querySelector(
-      ".service-detail-primary"
-    );
-
-
-  const target =
-    document.getElementById(
-      "service-subsections"
-    );
-
-
-  if (
-    !button ||
-    !target
-  ) {
-
-    return;
-
-  }
-
-
-  button.addEventListener(
-    "click",
-    function (
-      event
-    ) {
+  if (explore && target) {
+    explore.addEventListener("click", (event) => {
+      if (isModifiedClick(event)) {
+        return;
+      }
 
       event.preventDefault();
-
 
       target.scrollIntoView({
-
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth",
-
-        block:
-          "start"
-
+        behavior: motionPreference.matches ? "auto" : "smooth",
+        block: "start"
       });
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-function initFooter() {
-
-  const year =
-    document.getElementById(
-      "ape-footer-year"
-    );
-
-
-  if (year) {
-
-    year.textContent =
-      String(
-        new Date()
-          .getFullYear()
-      );
-
+    });
   }
 
+  if (topLink) {
+    topLink.setAttribute("href", "#service-detail-hero");
 
-  const top =
-    document.querySelector(
-      ".site-footer__top-link"
-    );
-
-
-  if (!top) {
-
-    return;
-
-  }
-
-
-  top.addEventListener(
-    "click",
-    function (
-      event
-    ) {
+    topLink.addEventListener("click", (event) => {
+      if (isModifiedClick(event)) {
+        return;
+      }
 
       event.preventDefault();
 
-
       window.scrollTo({
-
         top: 0,
-
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth"
-
+        behavior: motionPreference.matches ? "auto" : "smooth"
       });
-
-    }
-  );
-
+    });
+  }
 }
 
+/* Footer */
 
-/* =========================================================
-   START
-========================================================= */
+function initFooter() {
+  const year = document.getElementById("ape-footer-year");
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-
-    initHeader();
-
-    renderServicePage();
-
-    initAnchor();
-
-    initFooter();
-
-
-    requestAnimationFrame(
-      function () {
-
-        initHeroApe();
-
-        initHeroMotion();
-
-        initSubserviceMotion();
-
-        ScrollTrigger.refresh();
-
-      }
-    );
-
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
   }
-);
+}
 
+/* Layout */
 
-/* =========================================================
-   FINAL REFRESH
-========================================================= */
+function refreshLayout() {
+  ScrollTrigger.refresh();
+}
 
-window.addEventListener(
-  "load",
-  function () {
+function initImageRefresh() {
+  document.querySelectorAll("#service-detail-root img").forEach((image) => {
+    if (!image.complete) {
+      image.addEventListener("load", refreshLayout, { once: true });
+      image.addEventListener("error", refreshLayout, { once: true });
+    }
+  });
+}
 
-    ScrollTrigger.refresh();
-
+function restoreSectionLink() {
+  if (!window.location.hash) {
+    return;
   }
-);
+
+  let id;
+
+  try {
+    id = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.scrollIntoView({ behavior: "auto", block: "start" });
+  }
+}
+
+/* Start */
+
+function start() {
+  initHeader();
+  initFooter();
+
+  if (!renderServicePage()) {
+    return;
+  }
+
+  initHeroApe();
+  initNavigation();
+  initMotion();
+  initImageRefresh();
+
+  requestAnimationFrame(() => {
+    refreshLayout();
+    restoreSectionLink();
+  });
+
+  if (document.fonts) {
+    document.fonts.ready.then(refreshLayout);
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", start, { once: true });
+} else {
+  start();
+}
+
+window.addEventListener("load", refreshLayout, { once: true });
