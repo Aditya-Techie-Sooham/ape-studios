@@ -1,1479 +1,490 @@
-/* =========================================================
-   APE STUDIO — SERVICES MAIN
-========================================================= */
-
+/* Imports */
 
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initHeader } from "../header/header.js";
+import { SERVICE_PAGES } from "./services-data.js";
 
-import {
-  ScrollTrigger
-} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
+/* Environment */
 
-import {
-  initHeader
-} from "../header/header.js";
-
-
-import {
-  SERVICE_PAGES
-} from "./services-data.js";
-
-
-gsap.registerPlugin(
-  ScrollTrigger
+const motionPreference = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
 );
 
-
-/* =========================================================
-   ENVIRONMENT
-========================================================= */
-
-const reduceMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-
-const finePointer =
-  window.matchMedia(
-    "(hover: hover) and (pointer: fine)"
-  ).matches;
-
-
-/* =========================================================
-   SERVICE PREVIEW LABELS
-========================================================= */
+const desktopDirectory = window.matchMedia(
+  "(min-width: 1101px)"
+);
 
 const PREVIEW_LABELS = {
-
-  "digital-marketing":
-    "DIGITAL / PERFORMANCE / CONTENT",
-
-  "printables":
-    "PRINT / PACKAGING / OFFLINE",
-
-  "branding":
-    "IDENTITY / POSITIONING / SYSTEMS",
-
-  "influencer-marketing":
-    "CREATORS / REACH / RELEVANCE",
-
-  "visual-studio":
-    "PHOTO / FILM / REELS"
-
+  "digital-marketing": "DIGITAL / PERFORMANCE / CONTENT",
+  printables: "PRINT / PACKAGING / OFFLINE",
+  branding: "IDENTITY / POSITIONING / SYSTEMS",
+  "influencer-marketing": "CREATORS / REACH / RELEVANCE",
+  "visual-studio": "PHOTO / FILM / REELS"
 };
 
+/* Images */
 
-/* =========================================================
-   COVER IMAGE
-========================================================= */
-
-function getCoverImage(
-  service
-) {
-
-  return (
-    service?.subservices?.[0]?.images?.[0]
-    ||
-    "/ape-logo.png"
-  );
-
+function getCoverImage(service) {
+  return service?.subservices?.[0]?.images?.[0] || "";
 }
 
+function prepareCardImages(rows) {
+  rows.forEach((row) => {
+    const service = SERVICE_PAGES[row.dataset.service];
+    const image = row.querySelector(".capability-row__media img");
+    const source = getCoverImage(service);
 
-/* =========================================================
-   PRELOAD PREVIEW IMAGES
-========================================================= */
-
-function preloadImages() {
-
-  Object
-    .values(
-      SERVICE_PAGES
-    )
-    .forEach(
-      function (
-        service
-      ) {
-
-        const src =
-          getCoverImage(
-            service
-          );
-
-
-        if (!src) {
-          return;
-        }
-
-
-        const image =
-          new Image();
-
-
-        image.src =
-          src;
-
-      }
-    );
-
+    if (image && source) {
+      image.src = source;
+    }
+  });
 }
 
-
-/* =========================================================
-   CAPABILITY PREVIEW
-========================================================= */
+/* Directory */
 
 function initCapabilities() {
+  const rows = [...document.querySelectorAll(".capability-row")];
+  const image = document.getElementById("service-preview-image");
+  const title = document.getElementById("service-preview-title");
+  const eyebrow = document.getElementById("service-preview-eyebrow");
+  const frame = document.getElementById("capability-preview-frame");
 
-  const rows =
-    Array.from(
-      document.querySelectorAll(
-        ".capability-row"
-      )
-    );
-
-
-  const image =
-    document.getElementById(
-      "service-preview-image"
-    );
-
-
-  const title =
-    document.getElementById(
-      "service-preview-title"
-    );
-
-
-  const eyebrow =
-    document.getElementById(
-      "service-preview-eyebrow"
-    );
-
-
-  const frame =
-    document.getElementById(
-      "capability-preview-frame"
-    );
-
-
-  if (
-    !rows.length ||
-    !image
-  ) {
-
+  if (!rows.length || !image || !frame) {
     return;
-
   }
 
+  prepareCardImages(rows);
 
-  let activeSlug =
-    "";
+  const imageCache = new Map();
 
+  let activeRow = rows.find((row) => row.classList.contains("is-active"));
+  let requestId = 0;
+  let imageTimeline = null;
 
-  let imageTimeline =
-    null;
+  function loadImage(source) {
+    if (!imageCache.has(source)) {
+      const promise = new Promise((resolve) => {
+        const asset = new Image();
 
+        asset.onload = () => resolve(true);
+        asset.onerror = () => resolve(false);
+        asset.src = source;
+      });
 
-  function activate(
-    row
-  ) {
-
-    const slug =
-      row.dataset.service;
-
-
-    const service =
-      SERVICE_PAGES[slug];
-
-
-    if (!service) {
-      return;
+      imageCache.set(source, promise);
     }
 
+    return imageCache.get(source);
+  }
 
-    rows.forEach(
-      function (
-        current
-      ) {
+  function getDetails(row) {
+    const service = SERVICE_PAGES[row.dataset.service];
+    const link = row.querySelector(".capability-row__arrow");
+    const cardImage = row.querySelector(".capability-row__media img");
 
-        current.classList.toggle(
-          "is-active",
-          current === row
-        );
+    return {
+      label:
+        service?.navLabel ||
+        row.querySelector("h3")?.textContent.trim() ||
+        "APE Studio service",
 
-      }
+      eyebrow:
+        PREVIEW_LABELS[row.dataset.service] ||
+        service?.eyebrow ||
+        "",
+
+      source:
+        getCoverImage(service) ||
+        cardImage?.getAttribute("src") ||
+        "/ape-logo.png",
+
+      href: link?.getAttribute("href") || "/services/"
+    };
+  }
+
+  function updatePreview(details, source) {
+    image.src = source;
+    image.alt = `${details.label} work by APE Studio`;
+
+    frame.setAttribute("href", details.href);
+    frame.setAttribute(
+      "aria-label",
+      `Explore ${details.label} services`
     );
 
+    if (title) {
+      title.textContent = details.label;
+    }
 
-    if (
-      slug === activeSlug
-    ) {
+    if (eyebrow) {
+      eyebrow.textContent = details.eyebrow;
+    }
+  }
 
+  async function activate(row, animate = true, force = false) {
+    if (!row || (row === activeRow && !force)) {
       return;
-
     }
 
+    activeRow = row;
+    const currentRequest = ++requestId;
+    const details = getDetails(row);
 
-    activeSlug =
-      slug;
+    rows.forEach((current) => {
+      current.classList.toggle("is-active", current === row);
+    });
 
-
-    if (
-      title
-    ) {
-
-      title.textContent =
-        service.navLabel;
-
-    }
-
-
-    if (
-      eyebrow
-    ) {
-
-      eyebrow.textContent =
-        PREVIEW_LABELS[slug]
-        ||
-        service.eyebrow
-        ||
-        service.navLabel;
-
-    }
-
-
-    const nextImage =
-      getCoverImage(
-        service
-      );
-
-
-    if (
-      imageTimeline
-    ) {
-
+    if (imageTimeline) {
       imageTimeline.kill();
-
+      imageTimeline = null;
     }
 
+    gsap.killTweensOf(image);
+    gsap.set(image, { opacity: 1, scale: 1 });
+
+    const loaded = await loadImage(details.source);
+
+    if (currentRequest !== requestId) {
+      return;
+    }
+
+    const source = loaded ? details.source : "/ape-logo.png";
 
     if (
-      reduceMotion
+      !animate ||
+      motionPreference.matches ||
+      !desktopDirectory.matches
     ) {
-
-      image.src =
-        nextImage;
-
-
-      image.alt =
-        `${service.navLabel} work by APE Studio`;
-
-
+      updatePreview(details, source);
       return;
-
     }
 
-
-    imageTimeline =
-      gsap.timeline();
-
+    imageTimeline = gsap.timeline();
 
     imageTimeline
-
-      .to(
-        image,
-        {
-          opacity: 0,
-          scale: 1.035,
-
-          duration: 0.16,
-
-          ease:
-            "power2.in",
-
-          onComplete:
-            function () {
-
-              image.src =
-                nextImage;
-
-
-              image.alt =
-                `${service.navLabel} work by APE Studio`;
-
-            }
+      .to(image, {
+        opacity: 0,
+        scale: 1.025,
+        duration: 0.14,
+        ease: "power2.in",
+        onComplete: () => {
+          updatePreview(details, source);
         }
-      )
-
-
+      })
       .fromTo(
         image,
-        {
-          opacity: 0,
-          scale: 1.07
-        },
+        { opacity: 0, scale: 1.055 },
         {
           opacity: 1,
           scale: 1,
-
-          duration: 0.58,
-
-          ease:
-            "power3.out"
+          duration: 0.5,
+          ease: "power3.out"
         }
       );
-
   }
 
+  rows.forEach((row) => {
+    row.addEventListener("mouseenter", () => {
+      if (desktopDirectory.matches) {
+        activate(row);
+      }
+    });
 
-  rows.forEach(
-    function (
-      row
-    ) {
+    row.addEventListener("focusin", () => {
+      if (desktopDirectory.matches) {
+        activate(row);
+      }
+    });
 
-      row.addEventListener(
-        "mouseenter",
-        function () {
-
-          if (
-            finePointer
-          ) {
-
-            activate(
-              row
-            );
-
-          }
-
-        }
-      );
-
-
-      row.addEventListener(
-        "focusin",
-        function () {
-
-          activate(
-            row
-          );
-
-        }
-      );
-
-
-      row.addEventListener(
-        "click",
-        function (
-          event
-        ) {
-
-          if (
-            event.target.closest(
-              "a"
-            )
-          ) {
-
-            return;
-
-          }
-
-
-          activate(
-            row
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-  activate(
-    rows[0]
-  );
-
-
-  /* =====================================================
-     PREVIEW TILT
-  ===================================================== */
-
-  if (
-    frame &&
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    frame.addEventListener(
-      "pointermove",
-      function (
-        event
+    row.addEventListener("click", (event) => {
+      if (
+        desktopDirectory.matches &&
+        !event.target.closest("a")
       ) {
-
-        const rect =
-          frame.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          frame,
-          {
-            rotationY:
-              x * 4,
-
-            rotationX:
-              y * -4,
-
-            y: -3,
-
-            duration:
-              0.35,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
+        activate(row);
       }
-    );
+    });
 
-
-    frame.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          frame,
-          {
-            rotationX: 0,
-            rotationY: 0,
-            y: 0,
-
-            duration:
-              0.5,
-
-            ease:
-              "back.out(1.4)"
-          }
-        );
-
+    row.addEventListener("keydown", (event) => {
+      if (
+        desktopDirectory.matches &&
+        event.target === row &&
+        (event.key === "Enter" || event.key === " ")
+      ) {
+        event.preventDefault();
+        activate(row);
       }
-    );
+    });
+  });
 
+  function updateDirectoryMode() {
+    rows.forEach((row) => {
+      if (desktopDirectory.matches) {
+        row.setAttribute("tabindex", "0");
+      } else {
+        row.removeAttribute("tabindex");
+      }
+    });
+
+    if (desktopDirectory.matches) {
+      rows.forEach((row) => {
+        loadImage(getDetails(row).source);
+      });
+    }
+
+    activate(activeRow || rows[0], false, true);
+
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
   }
 
+  desktopDirectory.addEventListener("change", updateDirectoryMode);
+  updateDirectoryMode();
+
+  initPreviewTilt(frame);
 }
 
+/* Preview tilt */
 
-/* =========================================================
-   APE DANCE
-========================================================= */
+function initPreviewTilt(frame) {
+  const media = gsap.matchMedia();
 
-function danceApe(
-  rig,
-  aura,
-  pulse
-) {
+  media.add(
+    "(min-width: 1101px) and (prefers-reduced-motion: no-preference)",
+    () => {
+      function movePreview(event) {
+        if (event.pointerType === "touch") {
+          return;
+        }
 
-  if (
-    !rig ||
-    reduceMotion
-  ) {
+        const rect = frame.getBoundingClientRect();
 
+        if (!rect.width || !rect.height) {
+          return;
+        }
+
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        gsap.to(frame, {
+          rotationY: x * 4,
+          rotationX: y * -4,
+          duration: 0.35,
+          ease: "power3.out",
+          overwrite: "auto"
+        });
+      }
+
+      function resetPreview() {
+        gsap.to(frame, {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.45,
+          ease: "power3.out",
+          overwrite: "auto"
+        });
+      }
+
+      frame.addEventListener("pointermove", movePreview);
+      frame.addEventListener("pointerleave", resetPreview);
+      frame.addEventListener("blur", resetPreview);
+
+      return () => {
+        frame.removeEventListener("pointermove", movePreview);
+        frame.removeEventListener("pointerleave", resetPreview);
+        frame.removeEventListener("blur", resetPreview);
+
+        gsap.killTweensOf(frame);
+        gsap.set(frame, { clearProps: "transform" });
+      };
+    }
+  );
+}
+
+/* Mascot */
+
+function initHeroApe() {
+  const ape = document.querySelector(".services-hero__ape");
+  const aura = ape?.querySelector(".services-hero__ape-aura");
+
+  if (!ape || !aura) {
     return;
-
   }
 
-
-  gsap.killTweensOf(
-    rig
-  );
-
-
-  gsap.timeline()
-
-    .to(
-      rig,
-      {
-        y: -27,
-        x: -10,
-        rotation: -7,
-        scale: 1.08,
-
-        duration: 0.15
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 12,
-        rotation: 8,
-
-        duration: 0.13
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: -9,
-        rotation: -6,
-
-        duration: 0.13
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 0,
-
-        rotationY:
-          "+=360",
-
-        duration: 0.5,
-
-        ease:
-          "power3.inOut"
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 0,
-        y: 0,
-
-        rotation: 0,
-        rotationX: 0,
-        rotationY: 0,
-
-        scale: 1,
-
-        duration: 0.38,
-
-        ease:
-          "bounce.out"
-      }
-    );
-
-
-  if (
-    aura
-  ) {
+  ape.addEventListener("click", () => {
+    if (motionPreference.matches) {
+      return;
+    }
 
     gsap.fromTo(
       aura,
+      { opacity: 1, scale: 1.12 },
       {
-        scale: 0.78,
-        opacity: 0.9
-      },
-      {
-        scale: 1.35,
-        opacity: 0.45,
-
-        duration: 0.55,
-
-        ease:
-          "power2.out"
-      }
-    );
-
-  }
-
-
-  if (
-    pulse
-  ) {
-
-    gsap.fromTo(
-      pulse,
-      {
-        scale: 0.7,
-        opacity: 0.7
-      },
-      {
-        scale: 1.4,
-        opacity: 0,
-
-        duration: 0.58,
-
-        ease:
-          "power2.out"
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   HERO APE
-========================================================= */
-
-function initHeroApe() {
-
-  const ape =
-    document.querySelector(
-      ".services-hero__ape"
-    );
-
-
-  const world =
-    document.querySelector(
-      ".services-hero__ape-world"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".services-hero__ape-rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".services-hero__ape-float"
-    );
-
-
-  const aura =
-    document.querySelector(
-      ".services-hero__ape-aura"
-    );
-
-
-  const pulse =
-    document.querySelector(
-      ".services-hero__ape-pulse"
-    );
-
-
-  if (
-    !ape ||
-    !world ||
-    !rig ||
-    !float
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    !reduceMotion
-  ) {
-
-    gsap.to(
-      float,
-      {
-        y: -8,
-        rotation: 1.4,
-
-        duration: 1.7,
-
-        repeat: -1,
-
-        yoyo: true,
-
-        ease:
-          "sine.inOut"
-      }
-    );
-
-
-    gsap.to(
-      ".services-hero__visual",
-      {
-        yPercent: -4,
-
-        ease: "none",
-
-        scrollTrigger: {
-          trigger:
-            ".services-hero",
-
-          start:
-            "top top",
-
-          end:
-            "bottom top",
-
-          scrub:
-            0.8
-        }
-      }
-    );
-
-  }
-
-
-  if (
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    ape.addEventListener(
-      "pointermove",
-      function (
-        event
-      ) {
-
-        const rect =
-          ape.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          world,
-          {
-            x:
-              x * 21,
-
-            y:
-              y * 12,
-
-            duration: 0.34,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationY:
-              x * 12,
-
-            rotationX:
-              y * -7,
-
-            rotation:
-              x * 2,
-
-            scale: 1.045,
-
-            duration: 0.32,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          world,
-          {
-            x: 0,
-            y: 0,
-
-            duration: 0.55,
-
-            ease:
-              "elastic.out(1,0.45)"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotation: 0,
-            rotationX: 0,
-            rotationY: 0,
-            scale: 1,
-
-            duration: 0.48,
-
-            ease:
-              "back.out(1.6)"
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  ape.addEventListener(
-    "click",
-    function () {
-
-      danceApe(
-        rig,
-        aura,
-        pulse
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HERO BACKGROUND POINTER
-========================================================= */
-
-function initHeroPointer() {
-
-  if (
-    !finePointer ||
-    reduceMotion
-  ) {
-
-    return;
-
-  }
-
-
-  const hero =
-    document.querySelector(
-      ".services-hero"
-    );
-
-
-  const violet =
-    document.querySelector(
-      ".services-hero__glow--violet"
-    );
-
-
-  const lime =
-    document.querySelector(
-      ".services-hero__glow--lime"
-    );
-
-
-  if (
-    !hero
-  ) {
-
-    return;
-
-  }
-
-
-  hero.addEventListener(
-    "pointermove",
-    function (
-      event
-    ) {
-
-      const rect =
-        hero.getBoundingClientRect();
-
-
-      const x =
-        (
-          event.clientX -
-          rect.left
-        )
-        /
-        rect.width -
-        0.5;
-
-
-      const y =
-        (
-          event.clientY -
-          rect.top
-        )
-        /
-        rect.height -
-        0.5;
-
-
-      if (
-        violet
-      ) {
-
-        gsap.to(
-          violet,
-          {
-            x:
-              x * -30,
-
-            y:
-              y * -20,
-
-            duration: 1,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-
-
-      if (
-        lime
-      ) {
-
-        gsap.to(
-          lime,
-          {
-            x:
-              x * 25,
-
-            y:
-              y * 16,
-
-            duration: 1.1,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HERO MOTION
-========================================================= */
-
-function initHeroMotion() {
-
-  if (
-    reduceMotion
-  ) {
-
-    return;
-
-  }
-
-
-  gsap.timeline({
-
-    defaults: {
-      ease:
-        "power4.out"
-    }
-
-  })
-
-    .fromTo(
-      ".services-hero__eyebrow",
-      {
-        opacity: 0,
-        y: 14
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.45
-      }
-    )
-
-
-    .fromTo(
-      ".services-hero__title-line",
-      {
-        opacity: 0,
-        y: 55,
-        rotationX: -12
-      },
-      {
-        opacity: 1,
-        y: 0,
-        rotationX: 0,
-
-        duration: 0.78,
-
-        stagger: 0.08
-      },
-      "-=0.18"
-    )
-
-
-    .fromTo(
-      ".services-hero__copy",
-      {
-        opacity: 0,
-        y: 22
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.58
-      },
-      "-=0.4"
-    )
-
-
-    .fromTo(
-      ".services-hero__cta",
-      {
-        opacity: 0,
-        y: 15
-      },
-      {
-        opacity: 1,
-        y: 0,
-
-        duration: 0.5
-      },
-      "-=0.35"
-    )
-
-
-    .fromTo(
-      ".services-hero__ape",
-      {
-        opacity: 0,
-        x: 70,
-        y: 60,
-        scale: 0.8,
-        rotation: 5
-      },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
+        opacity: 0.7,
         scale: 1,
-        rotation: 0,
-
-        duration: 1.05,
-
-        ease:
-          "back.out(1.5)"
-      },
-      "-=0.72"
+        duration: 0.65,
+        ease: "power2.out",
+        overwrite: true
+      }
     );
-
-
-  gsap.to(
-    ".services-hero__title-line:nth-child(odd)",
-    {
-      xPercent: -2,
-
-      ease: "none",
-
-      scrollTrigger: {
-        trigger:
-          ".services-hero",
-
-        start:
-          "top top",
-
-        end:
-          "bottom top",
-
-        scrub:
-          1
-      }
-    }
-  );
-
-
-  gsap.to(
-    ".services-hero__title-line:nth-child(even)",
-    {
-      xPercent: 2,
-
-      ease: "none",
-
-      scrollTrigger: {
-        trigger:
-          ".services-hero",
-
-        start:
-          "top top",
-
-        end:
-          "bottom top",
-
-        scrub:
-          1
-      }
-    }
-  );
-
+  });
 }
 
+/* Entrance motion */
 
-/* =========================================================
-   CAPABILITY MOTION
-========================================================= */
+function initMotion() {
+  const media = gsap.matchMedia();
 
-function initCapabilityMotion() {
+  media.add("(prefers-reduced-motion: no-preference)", () => {
+    const lines = gsap.utils.toArray(".services-hero__title-line");
+    const copy = document.querySelector(".services-hero__copy");
+    const cta = document.querySelector(".services-hero__cta");
+    const ape = document.querySelector(".services-hero__ape");
 
-  if (
-    reduceMotion
-  ) {
+    const timeline = gsap.timeline({
+      defaults: { ease: "power3.out" }
+    });
 
-    return;
-
-  }
-
-
-  gsap.fromTo(
-    ".capabilities__heading",
-    {
-      opacity: 0,
-      y: 35
-    },
-    {
-      opacity: 1,
-      y: 0,
-
-      duration: 0.72,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".capabilities__header",
-
-        start:
-          "top 84%",
-
-        once:
-          true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".capabilities__intro",
-    {
-      opacity: 0,
-      y: 28,
-      scale: 0.97
-    },
-    {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-
-      duration: 0.68,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".capabilities__header",
-
-        start:
-          "top 84%",
-
-        once:
-          true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".capability-row",
-    {
-      opacity: 0,
-      x: -22
-    },
-    {
-      opacity: 1,
-      x: 0,
-
-      duration: 0.55,
-
-      stagger: 0.07,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".capability-list",
-
-        start:
-          "top 88%",
-
-        once:
-          true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".capability-preview",
-    {
-      opacity: 0,
-      x: 35,
-      scale: 0.97
-    },
-    {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-
-      duration: 0.8,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".capabilities__layout",
-
-        start:
-          "top 84%",
-
-        once:
-          true
-      }
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HERO CTA
-========================================================= */
-
-function initHeroCTA() {
-
-  const button =
-    document.querySelector(
-      ".services-hero__cta"
-    );
-
-
-  const target =
-    document.getElementById(
-      "capabilities"
-    );
-
-
-  if (
-    !button ||
-    !target
-  ) {
-
-    return;
-
-  }
-
-
-  button.addEventListener(
-    "click",
-    function (
-      event
-    ) {
-
-      event.preventDefault();
-
-
-      target.scrollIntoView({
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth",
-
-        block:
-          "start"
+    if (lines.length) {
+      timeline.from(lines, {
+        opacity: 0,
+        y: 24,
+        duration: 0.65,
+        stagger: 0.07
       });
-
     }
-  );
 
+    if (copy) {
+      timeline.from(
+        copy,
+        { opacity: 0, y: 14, duration: 0.5 },
+        "-=0.35"
+      );
+    }
+
+    if (cta) {
+      timeline.from(
+        cta,
+        { opacity: 0, y: 10, duration: 0.45 },
+        "-=0.3"
+      );
+    }
+
+    if (ape) {
+      timeline.from(
+        ape,
+        { opacity: 0, duration: 0.7 },
+        0.15
+      );
+    }
+
+    const targets = document.querySelectorAll(
+      ".capabilities__heading, .capabilities__intro, .capability-row"
+    );
+
+    targets.forEach((target) => {
+      gsap.from(target, {
+        opacity: 0,
+        y: 22,
+        duration: 0.6,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: target,
+          start: "top 94%",
+          once: true
+        }
+      });
+    });
+  });
 }
 
+/* Navigation */
 
-/* =========================================================
-   FOOTER
-========================================================= */
+function isModifiedClick(event) {
+  return (
+    event.button !== 0 ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey
+  );
+}
 
-function initFooter() {
+function initPageNavigation() {
+  const cta = document.querySelector(".services-hero__cta");
+  const capabilities = document.getElementById("capabilities");
+  const topLink = document.querySelector(".site-footer__top-link");
 
-  const year =
-    document.getElementById(
-      "ape-footer-year"
-    );
-
-
-  if (
-    year
-  ) {
-
-    year.textContent =
-      String(
-        new Date()
-          .getFullYear()
-      );
-
-  }
-
-
-  const top =
-    document.querySelector(
-      ".site-footer__top-link"
-    );
-
-
-  if (
-    !top
-  ) {
-
-    return;
-
-  }
-
-
-  top.addEventListener(
-    "click",
-    function (
-      event
-    ) {
+  if (cta && capabilities) {
+    cta.addEventListener("click", (event) => {
+      if (isModifiedClick(event)) {
+        return;
+      }
 
       event.preventDefault();
 
+      capabilities.scrollIntoView({
+        behavior: motionPreference.matches ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  }
+
+  if (topLink) {
+    topLink.addEventListener("click", (event) => {
+      if (isModifiedClick(event)) {
+        return;
+      }
+
+      event.preventDefault();
 
       window.scrollTo({
         top: 0,
-
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth"
+        behavior: motionPreference.matches ? "auto" : "smooth"
       });
-
-    }
-  );
-
+    });
+  }
 }
 
+/* Footer */
 
-/* =========================================================
-   START
-========================================================= */
+function initFooter() {
+  const year = document.getElementById("ape-footer-year");
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-
-    initHeader();
-
-    preloadImages();
-
-    initCapabilities();
-
-    initHeroApe();
-
-    initHeroPointer();
-
-    initHeroCTA();
-
-    initFooter();
-
-
-    requestAnimationFrame(
-      function () {
-
-        initHeroMotion();
-
-        initCapabilityMotion();
-
-        ScrollTrigger.refresh();
-
-      }
-    );
-
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
   }
-);
+}
 
+/* Start */
 
-/* =========================================================
-   FINAL REFRESH
-========================================================= */
+function start() {
+  initHeader();
+  initCapabilities();
+  initHeroApe();
+  initPageNavigation();
+  initFooter();
+  initMotion();
+
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", start, { once: true });
+} else {
+  start();
+}
 
 window.addEventListener(
   "load",
-  function () {
-
-    ScrollTrigger.refresh();
-
-  }
+  () => ScrollTrigger.refresh(),
+  { once: true }
 );
