@@ -1,2160 +1,389 @@
-/* =========================================================
-   APE STUDIO — BLOG LISTING PAGE
-========================================================= */
-
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initHeader } from "../header/header.js";
+import { BLOGS } from "./blog-data.js";
 
-import {
-  ScrollTrigger
-} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
-
-import {
-  initHeader
-} from "../header/header.js";
-
-
-import {
-  BLOGS
-} from "./blog-data.js";
-
-
-gsap.registerPlugin(
-  ScrollTrigger
+const motionPreference = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
 );
 
+/* Helpers */
 
-/* =========================================================
-   ENVIRONMENT
-========================================================= */
+function element(tag, className, text) {
+  const node = document.createElement(tag);
+  node.className = className || "";
 
-const reduceMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  if (text !== undefined) node.textContent = text;
 
-
-const finePointer =
-  window.matchMedia(
-    "(hover: hover) and (pointer: fine)"
-  ).matches;
-
-
-/* =========================================================
-   GET COVER IMAGE
-========================================================= */
-
-function getCoverImage(
-  blog
-) {
-
-  if (
-    Array.isArray(
-      blog.images
-    )
-    &&
-    blog.images.length > 0
-  ) {
-
-    return blog.images[0];
-
-  }
-
-
-  return (
-    blog.image
-    ||
-    ""
-  );
-
+  return node;
 }
 
-
-/* =========================================================
-   EXCERPT
-========================================================= */
-
-function createExcerpt(
-  blog,
-  length = 175
-) {
-
-  const source =
-    blog.excerpt
-    ||
-    blog.content?.[0]
-    ||
-    "";
-
-
-  if (
-    source.length <= length
-  ) {
-
-    return source;
-
-  }
-
-
-  return (
-    source
-      .slice(
-        0,
-        length
-      )
-      .trimEnd()
-    +
-    "…"
-  );
-
+function coverImage(blog) {
+  return blog.images?.[0] || blog.image || "";
 }
 
-
-/* =========================================================
-   ELEMENT HELPER
-========================================================= */
-
-function createElement(
-  tag,
-  className,
-  text
-) {
-
-  const element =
-    document.createElement(
-      tag
-    );
-
-
-  if (className) {
-
-    element.className =
-      className;
-
-  }
-
-
-  if (
-    text !== undefined
-  ) {
-
-    element.textContent =
-      text;
-
-  }
-
-
-  return element;
-
+function articleURL(blog) {
+  return `/blog/${encodeURIComponent(blog.slug)}/`;
 }
 
+function excerpt(blog, length = 175) {
+  const text = blog.excerpt || blog.content?.[0] || "";
 
-/* =========================================================
-   ARTICLE URL
-========================================================= */
-
-function getArticleURL(
-  blog
-) {
-
-  return (
-    `/blog/${encodeURIComponent(blog.slug)}/`
-  );
-
+  return text.length <= length
+    ? text
+    : `${text.slice(0, length).trimEnd()}…`;
 }
 
-
-/* =========================================================
-   BUILD FEATURED BLOG
-========================================================= */
-
-function buildFeaturedBlog() {
-
-  const container =
-    document.getElementById(
-      "blog-featured-content"
-    );
-
-
-  const blog =
-    BLOGS[0];
-
-
-  if (
-    !container
-    ||
-    !blog
-  ) {
-
-    return;
-
-  }
-
-
-  const inner =
-    createElement(
-      "div",
-      "blog-featured__inner"
-    );
-
-
-  /* =====================================================
-     IMAGE
-  ===================================================== */
-
-  const imageLink =
-    createElement(
-      "a",
-      "blog-featured__visual"
-    );
-
-
-  imageLink.href =
-    getArticleURL(
-      blog
-    );
-
-
-  imageLink.setAttribute(
-    "aria-label",
-    `Read ${blog.heading}`
-  );
-
-
-  const image =
-    document.createElement(
-      "img"
-    );
-
-
-  image.src =
-    getCoverImage(
-      blog
-    );
-
-
-  image.alt =
-    blog.heading;
-
-
-  image.loading =
-    "eager";
-
-
-  image.decoding =
-    "async";
-
-
-  imageLink.appendChild(
-    image
-  );
-
-
-  /* =====================================================
-     CONTENT
-  ===================================================== */
-
-  const content =
-    createElement(
-      "div",
-      "blog-featured__content"
-    );
-
-
-  const label =
-    createElement(
-      "p",
-      "blog-featured__label",
-      "Featured insight"
-    );
-
-
-  const headingLink =
-    createElement(
-      "a",
-      "blog-featured__heading-link"
-    );
-
-
-  headingLink.href =
-    getArticleURL(
-      blog
-    );
-
-
-  const heading =
-    createElement(
-      "h3",
-      "",
-      blog.heading
-    );
-
-
-  headingLink.appendChild(
-    heading
-  );
-
-
-  const subheading =
-    createElement(
-      "p",
-      "blog-featured__subheading",
-      blog.subheading
-    );
-
-
-  const excerpt =
-    createElement(
-      "p",
-      "blog-featured__excerpt",
-      createExcerpt(
-        blog,
-        220
-      )
-    );
-
-
-  const readMore =
-    createElement(
-      "a",
-      "blog-read-more",
-      "Read Article"
-    );
-
-
-  readMore.href =
-    getArticleURL(
-      blog
-    );
-
-
-  const arrow =
-    createElement(
-      "span",
-      "",
-      "→"
-    );
-
-
-  arrow.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  readMore.appendChild(
-    arrow
-  );
-
-
-  content.append(
-    label,
-    headingLink,
-    subheading,
-    excerpt,
-    readMore
-  );
-
-
-  inner.append(
-    imageLink,
-    content
-  );
-
-
-  container.appendChild(
-    inner
-  );
-
+function modifiedClick(event) {
+  return event.button !== 0 ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey;
 }
 
+let refreshFrame = null;
 
-/* =========================================================
-   CREATE BLOG CARD
-========================================================= */
+function refreshLayout() {
+  if (refreshFrame !== null) return;
 
-function createBlogCard(
-  blog
-) {
-
-  const article =
-    createElement(
-      "article",
-      "blog-card"
-    );
-
-
-  const imageLink =
-    createElement(
-      "a",
-      "blog-card__visual"
-    );
-
-
-  imageLink.href =
-    getArticleURL(
-      blog
-    );
-
-
-  imageLink.setAttribute(
-    "aria-label",
-    `Read ${blog.heading}`
-  );
-
-
-  const image =
-    document.createElement(
-      "img"
-    );
-
-
-  image.src =
-    getCoverImage(
-      blog
-    );
-
-
-  image.alt =
-    blog.heading;
-
-
-  image.loading =
-    "lazy";
-
-
-  image.decoding =
-    "async";
-
-
-  imageLink.appendChild(
-    image
-  );
-
-
-  const content =
-    createElement(
-      "div",
-      "blog-card__content"
-    );
-
-
-  const eyebrow =
-    createElement(
-      "p",
-      "blog-card__eyebrow",
-      "APE Journal"
-    );
-
-
-  const headingLink =
-    createElement(
-      "a",
-      "blog-card__heading-link"
-    );
-
-
-  headingLink.href =
-    getArticleURL(
-      blog
-    );
-
-
-  const heading =
-    createElement(
-      "h3",
-      "",
-      blog.heading
-    );
-
-
-  headingLink.appendChild(
-    heading
-  );
-
-
-  const subheading =
-    createElement(
-      "p",
-      "blog-card__subheading",
-      blog.subheading
-    );
-
-
-  const excerpt =
-    createElement(
-      "p",
-      "blog-card__excerpt",
-      createExcerpt(
-        blog
-      )
-    );
-
-
-  const readMore =
-    createElement(
-      "a",
-      "blog-read-more",
-      "Read Article"
-    );
-
-
-  readMore.href =
-    getArticleURL(
-      blog
-    );
-
-
-  const arrow =
-    createElement(
-      "span",
-      "",
-      "→"
-    );
-
-
-  arrow.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  readMore.appendChild(
-    arrow
-  );
-
-
-  content.append(
-    eyebrow,
-    headingLink,
-    subheading,
-    excerpt,
-    readMore
-  );
-
-
-  article.append(
-    imageLink,
-    content
-  );
-
-
-  return article;
-
+  refreshFrame = requestAnimationFrame(() => {
+    refreshFrame = null;
+    ScrollTrigger.refresh();
+  });
 }
 
+/* Breadcrumb */
 
-/* =========================================================
-   BUILD BLOG GRID
-========================================================= */
+function initBreadcrumb() {
+  const copy = document.querySelector(".blog-hero__copy");
 
-function buildBlogGrid() {
+  if (!copy) return;
 
-  const grid =
-    document.getElementById(
-      "blog-grid"
-    );
+  copy.querySelector(".blog-hero__eyebrow")?.remove();
 
+  if (copy.querySelector(".blog-breadcrumb")) return;
 
-  const archive =
-    document.querySelector(
-      ".blog-archive"
-    );
+  const nav = element("nav", "blog-breadcrumb");
+  nav.setAttribute("aria-label", "Breadcrumb");
 
+  nav.innerHTML = `
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Blog</span></li>
+    </ol>
+  `;
 
-  if (!grid) {
-    return;
-  }
-
-
-  if (
-    BLOGS.length <= 1
-  ) {
-
-    if (archive) {
-
-      archive.hidden =
-        true;
-
-    }
-
-
-    return;
-
-  }
-
-
-  BLOGS
-    .slice(1)
-    .forEach(
-      function (
-        blog
-      ) {
-
-        grid.appendChild(
-          createBlogCard(
-            blog
-          )
-        );
-
-      }
-    );
-
+  copy.prepend(nav);
 }
 
+/* Post content */
 
-/* =========================================================
-   HERO MOTION
-========================================================= */
+function createImageLink(blog, className, eager = false) {
+  const link = element("a", className);
+  const image = document.createElement("img");
 
-function initHeroMotion() {
+  link.href = articleURL(blog);
+  link.setAttribute("aria-label", `Read ${blog.heading}`);
 
-  if (reduceMotion) {
-    return;
-  }
+  image.alt = blog.heading;
+  image.loading = eager ? "eager" : "lazy";
+  image.decoding = "async";
+  image.addEventListener("load", refreshLayout, { once: true });
+  image.addEventListener("error", refreshLayout, { once: true });
+  image.src = coverImage(blog);
 
+  link.append(image);
 
-  const eyebrow =
-    document.querySelector(
-      ".blog-hero__eyebrow"
-    );
-
-
-  const titleLines =
-    document.querySelectorAll(
-      ".blog-hero h1 > *"
-    );
-
-
-  const lead =
-    document.querySelector(
-      ".blog-hero__lead"
-    );
-
-
-  const jump =
-    document.querySelector(
-      ".blog-hero__jump"
-    );
-
-
-  const ape =
-    document.querySelector(
-      ".blog-hero__ape"
-    );
-
-
-  const timeline =
-    gsap.timeline({
-      defaults: {
-        ease:
-          "power4.out"
-      }
-    });
-
-
-  if (eyebrow) {
-
-    timeline.fromTo(
-      eyebrow,
-      {
-        autoAlpha: 0,
-        y: 15
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.5
-      }
-    );
-
-  }
-
-
-  if (titleLines.length) {
-
-    timeline.fromTo(
-      titleLines,
-      {
-        autoAlpha: 0,
-        y: 70,
-        rotationX: -18
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        rotationX: 0,
-        duration: 0.92,
-        stagger: 0.09
-      },
-      "-=0.2"
-    );
-
-  }
-
-
-  if (lead) {
-
-    timeline.fromTo(
-      lead,
-      {
-        autoAlpha: 0,
-        y: 20
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.62
-      },
-      "-=0.4"
-    );
-
-  }
-
-
-  if (jump) {
-
-    timeline.fromTo(
-      jump,
-      {
-        autoAlpha: 0,
-        y: 14
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.55
-      },
-      "-=0.35"
-    );
-
-  }
-
-
-  if (ape) {
-
-    timeline.fromTo(
-      ape,
-      {
-        autoAlpha: 0,
-        x: 110,
-        y: 80,
-        rotation: 8,
-        scale: 0.66
-      },
-      {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        duration: 1.12,
-        ease:
-          "back.out(1.6)"
-      },
-      "-=0.72"
-    );
-
-  }
-
-
-  gsap.to(
-    ".blog-hero h1 span",
-    {
-      xPercent: -3,
-
-      ease: "none",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-hero",
-
-        start:
-          "top top",
-
-        end:
-          "bottom top",
-
-        scrub: 1
-      }
-    }
-  );
-
-
-  gsap.to(
-    ".blog-hero h1 strong",
-    {
-      xPercent: 3,
-
-      ease: "none",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-hero",
-
-        start:
-          "top top",
-
-        end:
-          "bottom top",
-
-        scrub: 1
-      }
-    }
-  );
-
-
-  gsap.to(
-    ".blog-hero__ape",
-    {
-      yPercent: -7,
-
-      ease: "none",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-hero",
-
-        start:
-          "top top",
-
-        end:
-          "bottom top",
-
-        scrub: 0.9
-      }
-    }
-  );
-
+  return link;
 }
 
+function createPostContent(blog, featured = false) {
+  const prefix = featured ? "blog-featured" : "blog-card";
+  const content = element("div", `${prefix}__content`);
 
-/* =========================================================
-   HERO APE
-========================================================= */
-
-function initHeroApe() {
-
-  const ape =
-    document.querySelector(
-      ".blog-hero__ape"
-    );
-
-
-  const world =
-    document.querySelector(
-      ".blog-hero__ape-world"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".blog-hero__ape-rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".blog-hero__ape-float"
-    );
-
-
-  const aura =
-    document.querySelector(
-      ".blog-hero__ape-aura"
-    );
-
-
-  const pulse =
-    document.querySelector(
-      ".blog-hero__ape-pulse"
-    );
-
-
-  if (
-    !ape ||
-    !world ||
-    !rig ||
-    !float
-  ) {
-    return;
-  }
-
-
-  if (!reduceMotion) {
-
-    gsap.to(
-      float,
-      {
-        y: -8,
-        rotation: 1.4,
-
-        duration: 1.8,
-
-        repeat: -1,
-
-        yoyo: true,
-
-        ease:
-          "sine.inOut"
-      }
-    );
-
-  }
-
-
-  if (
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    ape.addEventListener(
-      "pointermove",
-      function (
-        event
-      ) {
-
-        const rect =
-          ape.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          world,
-          {
-            x:
-              x * 24,
-
-            y:
-              y * 14,
-
-            duration: 0.38,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationY:
-              x * 13,
-
-            rotationX:
-              y * -8,
-
-            rotation:
-              x * 3,
-
-            scale: 1.06,
-
-            duration: 0.32,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          world,
-          {
-            x: 0,
-            y: 0,
-
-            duration: 0.6,
-
-            ease:
-              "elastic.out(1,0.45)"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotation: 0,
-            rotationX: 0,
-            rotationY: 0,
-            scale: 1,
-
-            duration: 0.5,
-
-            ease:
-              "back.out(1.7)"
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  ape.addEventListener(
-    "click",
-    function () {
-
-      if (reduceMotion) {
-        return;
-      }
-
-
-      danceApe(
-        rig,
-        aura,
-        pulse
-      );
-
-    }
+  const label = element(
+    "p",
+    featured ? "blog-featured__label" : "blog-card__eyebrow",
+    featured ? "Featured insight" : "APE Journal"
   );
 
+  const headingLink = element("a", `${prefix}__heading-link`);
+  headingLink.href = articleURL(blog);
+  headingLink.append(element("h3", "", blog.heading));
+
+  const subheading = element(
+    "p",
+    `${prefix}__subheading`,
+    blog.subheading
+  );
+
+  const summary = element(
+    "p",
+    `${prefix}__excerpt`,
+    excerpt(blog, featured ? 220 : 175)
+  );
+
+  const readMore = element("a", "blog-read-more", "Read Article");
+  readMore.href = articleURL(blog);
+
+  const arrow = element("span", "", "→");
+  arrow.setAttribute("aria-hidden", "true");
+  readMore.append(arrow);
+
+  content.append(label, headingLink);
+
+  if (blog.subheading) content.append(subheading);
+  if (summary.textContent) content.append(summary);
+
+  content.append(readMore);
+
+  return content;
 }
 
+function buildPosts() {
+  const featured = document.getElementById("blog-featured-content");
+  const featuredSection = document.getElementById("blog-featured");
+  const grid = document.getElementById("blog-grid");
+  const archive = document.querySelector(".blog-archive");
 
-/* =========================================================
-   SHARED APE DANCE
-========================================================= */
+  if (featured && BLOGS[0]) {
+    const inner = element("div", "blog-featured__inner");
 
-function danceApe(
-  rig,
-  aura,
-  pulse
-) {
-
-  if (!rig) {
-    return;
-  }
-
-
-  gsap.killTweensOf(
-    rig
-  );
-
-
-  gsap.timeline()
-
-    .to(
-      rig,
-      {
-        y: -26,
-        x: -12,
-        rotation: -8,
-        scale: 1.1,
-
-        duration: 0.16
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 14,
-        rotation: 8,
-
-        duration: 0.13
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: -10,
-        rotation: -6,
-
-        duration: 0.13
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 8,
-        rotation: 5,
-
-        duration: 0.12
-      }
-    )
-
-    .to(
-      rig,
-      {
-        x: 0,
-
-        rotationY:
-          "+=360",
-
-        duration: 0.48,
-
-        ease:
-          "power3.inOut"
-      }
-    )
-
-    .to(
-      rig,
-      {
-        y: 0,
-
-        rotation: 0,
-        rotationX: 0,
-        rotationY: 0,
-
-        scale: 1,
-
-        duration: 0.4,
-
-        ease:
-          "bounce.out"
-      }
+    inner.append(
+      createImageLink(BLOGS[0], "blog-featured__visual", true),
+      createPostContent(BLOGS[0], true)
     );
 
-
-  if (aura) {
-
-    gsap.fromTo(
-      aura,
-      {
-        scale: 0.78,
-        opacity: 0.9
-      },
-      {
-        scale: 1.35,
-        opacity: 0.45,
-
-        duration: 0.55,
-
-        ease:
-          "power2.out"
-      }
-    );
-
+    featured.replaceChildren(inner);
   }
 
+  if (featuredSection) featuredSection.hidden = !BLOGS.length;
+  if (archive) archive.hidden = BLOGS.length <= 1;
 
-  if (pulse) {
+  if (!grid) return;
 
-    gsap.fromTo(
-      pulse,
-      {
-        scale: 0.65,
-        opacity: 0.8
-      },
-      {
-        scale: 1.42,
-        opacity: 0,
+  const fragment = document.createDocumentFragment();
 
-        duration: 0.58,
+  BLOGS.slice(1).forEach((blog) => {
+    const card = element("article", "blog-card");
 
-        ease:
-          "power2.out"
-      }
+    card.append(
+      createImageLink(blog, "blog-card__visual"),
+      createPostContent(blog)
     );
 
-  }
+    fragment.append(card);
+  });
 
+  grid.replaceChildren(fragment);
 }
 
+/* Mascots */
 
-/* =========================================================
-   HERO BACKGROUND POINTER MOTION
-========================================================= */
+function initMascot(selector, prefix) {
+  const button = document.querySelector(selector);
 
-function initHeroPointerMotion() {
+  if (!button) return;
 
-  if (
-    !finePointer ||
-    reduceMotion
-  ) {
-    return;
-  }
+  button.setAttribute("aria-label", "Activate the APE Studio mascot glow");
 
+  button.addEventListener("click", () => {
+    if (motionPreference.matches) return;
 
-  const hero =
-    document.querySelector(
-      ".blog-hero"
-    );
+    const aura = button.querySelector(`.${prefix}-aura`);
+    const pulse = button.querySelector(`.${prefix}-pulse`);
 
-
-  const violet =
-    document.querySelector(
-      ".blog-hero__glow--violet"
-    );
-
-
-  const lime =
-    document.querySelector(
-      ".blog-hero__glow--lime"
-    );
-
-
-  if (!hero) {
-    return;
-  }
-
-
-  hero.addEventListener(
-    "pointermove",
-    function (
-      event
-    ) {
-
-      const rect =
-        hero.getBoundingClientRect();
-
-
-      const x =
-        (
-          event.clientX -
-          rect.left
-        )
-        /
-        rect.width -
-        0.5;
-
-
-      const y =
-        (
-          event.clientY -
-          rect.top
-        )
-        /
-        rect.height -
-        0.5;
-
-
-      if (violet) {
-
-        gsap.to(
-          violet,
-          {
-            x:
-              x * -36,
-
-            y:
-              y * -22,
-
-            duration: 1,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-
-
-      if (lime) {
-
-        gsap.to(
-          lime,
-          {
-            x:
-              x * 28,
-
-            y:
-              y * 18,
-
-            duration: 1.1,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   ARCHIVE APE
-========================================================= */
-
-function initArchiveApe() {
-
-  const section =
-    document.querySelector(
-      ".blog-archive"
-    );
-
-
-  const ape =
-    document.querySelector(
-      ".blog-archive__ape"
-    );
-
-
-  const world =
-    document.querySelector(
-      ".blog-archive__ape-world"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".blog-archive__ape-rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".blog-archive__ape-float"
-    );
-
-
-  const aura =
-    document.querySelector(
-      ".blog-archive__ape-aura"
-    );
-
-
-  const pulse =
-    document.querySelector(
-      ".blog-archive__ape-pulse"
-    );
-
-
-  if (
-    !section ||
-    !ape ||
-    !world ||
-    !rig ||
-    !float
-  ) {
-    return;
-  }
-
-
-  if (!reduceMotion) {
-
-    /* =====================================================
-       ENTRANCE
-    ===================================================== */
-
-    gsap.fromTo(
-      ape,
-      {
-        autoAlpha: 0,
-        x: 55,
-        y: 35,
-        scale: 0.72,
-        rotation: 6
-      },
-      {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotation: 0,
-
-        duration: 0.85,
-
-        ease:
-          "back.out(1.8)",
-
-        scrollTrigger: {
-          trigger:
-            section,
-
-          start:
-            "top 80%",
-
-          once: true
-        }
-      }
-    );
-
-
-    /* =====================================================
-       ALWAYS FLOAT
-    ===================================================== */
-
-    gsap.to(
-      float,
-      {
-        y: -8,
-        rotation: 1.8,
-
-        duration: 1.55,
-
-        repeat: -1,
-
-        yoyo: true,
-
-        ease:
-          "sine.inOut"
-      }
-    );
-
-
-    /* =====================================================
-       SCROLL REACTION
-    ===================================================== */
-
-    ScrollTrigger.create({
-      trigger:
-        section,
-
-      start:
-        "top bottom",
-
-      end:
-        "bottom top",
-
-      onUpdate(
-        self
-      ) {
-
-        const speed =
-          gsap.utils.clamp(
-            -1,
-            1,
-            self.getVelocity() / 1800
-          );
-
-
-        gsap.to(
-          world,
-          {
-            y:
-              speed * 8,
-
-            x:
-              speed * 5,
-
-            duration: 0.22,
-
-            ease:
-              "power2.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotation:
-              speed * 5,
-
-            rotationY:
-              speed * 8,
-
-            scale:
-              1 +
-              Math.abs(speed) * 0.025,
-
-            duration: 0.22,
-
-            ease:
-              "power2.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-    });
-
-  }
-
-
-  /* =====================================================
-     DESKTOP HOVER
-  ===================================================== */
-
-  if (
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    ape.addEventListener(
-      "pointerenter",
-      function () {
-
-        gsap.to(
-          rig,
-          {
-            y: -9,
-            scale: 1.07,
-
-            duration: 0.28,
-
-            ease:
-              "back.out(1.7)"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointermove",
-      function (
-        event
-      ) {
-
-        const rect =
-          ape.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          world,
-          {
-            x:
-              x * 16,
-
-            y:
-              y * 10,
-
-            duration: 0.3,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationY:
-              x * 10,
-
-            rotationX:
-              y * -6,
-
-            rotation:
-              x * 3,
-
-            scale: 1.07,
-
-            duration: 0.3,
-
-            ease:
-              "power3.out",
-
-            overwrite:
-              "auto"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          world,
-          {
-            x: 0,
-            y: 0,
-
-            duration: 0.5,
-
-            ease:
-              "elastic.out(1,0.5)"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            x: 0,
-            y: 0,
-            rotation: 0,
-            rotationX: 0,
-            rotationY: 0,
-            scale: 1,
-
-            duration: 0.45,
-
-            ease:
-              "back.out(1.6)"
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     CLICK / MOBILE TAP
-  ===================================================== */
-
-  ape.addEventListener(
-    "click",
-    function () {
-
-      if (reduceMotion) {
-        return;
-      }
-
-
-      danceApe(
-        rig,
-        aura,
-        pulse
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   SECTION MOTION
-========================================================= */
-
-function initBlogMotion() {
-
-  if (reduceMotion) {
-    return;
-  }
-
-
-  gsap.fromTo(
-    ".blog-featured__top",
-    {
-      autoAlpha: 0,
-      y: 30
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-
-      duration: 0.7,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-featured__top",
-
-        start:
-          "top 87%",
-
-        once: true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".blog-featured__visual",
-    {
-      autoAlpha: 0,
-      y: 55,
-      scale: 0.97
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      scale: 1,
-
-      duration: 0.9,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-featured",
-
-        start:
-          "top 77%",
-
-        once: true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".blog-featured__content",
-    {
-      autoAlpha: 0,
-      y: 42
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-
-      duration: 0.85,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-featured",
-
-        start:
-          "top 73%",
-
-        once: true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".blog-archive__top",
-    {
-      autoAlpha: 0,
-      x: -25
-    },
-    {
-      autoAlpha: 1,
-      x: 0,
-
-      duration: 0.7,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-archive__header",
-
-        start:
-          "top 86%",
-
-        once: true
-      }
-    }
-  );
-
-
-  const cards =
-    gsap.utils.toArray(
-      ".blog-card"
-    );
-
-
-  cards.forEach(
-    function (
-      card
-    ) {
-
+    if (aura) {
       gsap.fromTo(
-        card,
+        aura,
+        { opacity: 1, scale: .9 },
         {
-          autoAlpha: 0,
-          y: 55
-        },
+          opacity: .7,
+          scale: 1.12,
+          duration: .7,
+          ease: "power2.out",
+          overwrite: true
+        }
+      );
+    }
+
+    if (pulse) {
+      gsap.fromTo(
+        pulse,
+        { opacity: .6, scale: .75 },
         {
-          autoAlpha: 1,
+          opacity: 0,
+          scale: 1.35,
+          duration: .7,
+          ease: "power2.out",
+          overwrite: true
+        }
+      );
+    }
+  });
+}
+
+/* Motion */
+
+function initMotion() {
+  const media = gsap.matchMedia();
+
+  media.add("(prefers-reduced-motion: no-preference)", () => {
+    const copy = document.querySelector(".blog-hero__copy");
+    const ape = document.querySelector(".blog-hero__ape");
+
+    if (copy) {
+      gsap.fromTo(
+        copy.children,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
           y: 0,
+          duration: .65,
+          stagger: .09,
+          ease: "power3.out"
+        }
+      );
+    }
 
-          duration: 0.82,
+    if (ape) {
+      gsap.fromTo(
+        ape,
+        { opacity: 0 },
+        { opacity: 1, duration: .85, delay: .15 }
+      );
+    }
 
-          ease:
-            "power3.out",
-
+    document.querySelectorAll(
+      ".blog-featured__top, .blog-featured__inner, " +
+      ".blog-archive__header, .blog-card"
+    ).forEach((target) => {
+      gsap.fromTo(
+        target,
+        { opacity: 0, y: 26 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: .7,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger:
-              card,
-
-            start:
-              "top 87%",
-
+            trigger: target,
+            start: "top 94%",
             once: true
           }
         }
       );
+    });
+  });
 
+  media.add(
+    "(min-width:1101px) and (hover:hover) and " +
+    "(pointer:fine) and (prefers-reduced-motion:no-preference)",
+    () => {
+      const cleanups = [];
 
-      const image =
-        card.querySelector(
-          ".blog-card__visual img"
-        );
+      document.querySelectorAll(
+        ".blog-featured__visual, .blog-card__visual"
+      ).forEach((visual) => {
+        function move(event) {
+          if (event.pointerType === "touch") return;
 
+          const rect = visual.getBoundingClientRect();
 
-      if (image) {
+          if (!rect.width || !rect.height) return;
 
-        gsap.fromTo(
-          image,
-          {
-            yPercent: -3,
-            scale: 1.06
-          },
-          {
-            yPercent: 3,
-            scale: 1.06,
+          gsap.to(visual, {
+            rotationY: ((event.clientX - rect.left) / rect.width - .5) * 4,
+            rotationX: ((event.clientY - rect.top) / rect.height - .5) * -4,
+            transformPerspective: 1000,
+            y: -3,
+            duration: .35,
+            overwrite: "auto"
+          });
+        }
 
-            ease: "none",
+        function leave() {
+          gsap.to(visual, {
+            rotationX: 0,
+            rotationY: 0,
+            y: 0,
+            duration: .45,
+            overwrite: "auto"
+          });
+        }
 
-            scrollTrigger: {
-              trigger:
-                card,
+        visual.addEventListener("pointermove", move);
+        visual.addEventListener("pointerleave", leave);
 
-              start:
-                "top bottom",
+        cleanups.push(() => {
+          visual.removeEventListener("pointermove", move);
+          visual.removeEventListener("pointerleave", leave);
+          gsap.killTweensOf(visual);
+          gsap.set(visual, { clearProps: "transform" });
+        });
+      });
 
-              end:
-                "bottom top",
-
-              scrub: 1
-            }
-          }
-        );
-
-      }
-
+      return () => cleanups.forEach((cleanup) => cleanup());
     }
   );
-
 }
 
+/* Navigation */
 
-/* =========================================================
-   CARD POINTER MOTION
-========================================================= */
+function initNavigation() {
+  const jump = document.querySelector(".blog-hero__jump");
+  const target = document.getElementById("blog-featured");
+  const top = document.querySelector(".site-footer__top-link");
+  const year = document.getElementById("ape-footer-year");
 
-function initCardPointerMotion() {
+  if (year) year.textContent = String(new Date().getFullYear());
 
-  if (
-    !finePointer ||
-    reduceMotion
-  ) {
-    return;
-  }
-
-
-  const visuals =
-    document.querySelectorAll(
-      ".blog-featured__visual, .blog-card__visual"
-    );
-
-
-  visuals.forEach(
-    function (
-      visual
-    ) {
-
-      visual.addEventListener(
-        "pointermove",
-        function (
-          event
-        ) {
-
-          const rect =
-            visual.getBoundingClientRect();
-
-
-          const x =
-            (
-              event.clientX -
-              rect.left
-            )
-            /
-            rect.width -
-            0.5;
-
-
-          const y =
-            (
-              event.clientY -
-              rect.top
-            )
-            /
-            rect.height -
-            0.5;
-
-
-          gsap.to(
-            visual,
-            {
-              rotationY:
-                x * 4,
-
-              rotationX:
-                y * -4,
-
-              y: -4,
-
-              duration: 0.35,
-
-              ease:
-                "power3.out",
-
-              overwrite:
-                "auto"
-            }
-          );
-
-        }
-      );
-
-
-      visual.addEventListener(
-        "pointerleave",
-        function () {
-
-          gsap.to(
-            visual,
-            {
-              rotationX: 0,
-              rotationY: 0,
-              y: 0,
-
-              duration: 0.5,
-
-              ease:
-                "back.out(1.5)"
-            }
-          );
-
-        }
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HERO JUMP
-========================================================= */
-
-function initHeroJump() {
-
-  const link =
-    document.querySelector(
-      ".blog-hero__jump"
-    );
-
-
-  const target =
-    document.getElementById(
-      "blog-featured"
-    );
-
-
-  if (
-    !link ||
-    !target
-  ) {
-    return;
-  }
-
-
-  link.addEventListener(
-    "click",
-    function (
-      event
-    ) {
+  if (jump && target) {
+    jump.addEventListener("click", (event) => {
+      if (modifiedClick(event)) return;
 
       event.preventDefault();
-
 
       target.scrollIntoView({
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth",
-
-        block:
-          "start"
+        behavior: motionPreference.matches ? "auto" : "smooth",
+        block: "start"
       });
+    });
+  }
 
-    }
-  );
+  top?.addEventListener("click", (event) => {
+    if (modifiedClick(event)) return;
 
+    event.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      behavior: motionPreference.matches ? "auto" : "smooth"
+    });
+  });
 }
 
+/* Start */
 
-/* =========================================================
-   FOOTER
-========================================================= */
-
-function initFooter() {
-
-  const year =
-    document.getElementById(
-      "ape-footer-year"
-    );
-
-
-  if (year) {
-
-    year.textContent =
-      String(
-        new Date()
-          .getFullYear()
-      );
-
-  }
-
-
-  const topButton =
-    document.querySelector(
-      ".site-footer__top-link"
-    );
-
-
-  if (!topButton) {
-    return;
-  }
-
-
-  topButton.addEventListener(
-    "click",
-    function (
-      event
-    ) {
-
-      event.preventDefault();
-
-
-      window.scrollTo({
-        top: 0,
-
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth"
-      });
-
-    }
-  );
-
+function start() {
+  initHeader();
+  initBreadcrumb();
+  buildPosts();
+  initMascot(".blog-hero__ape", "blog-hero__ape");
+  initMascot(".blog-archive__ape", "blog-archive__ape");
+  initNavigation();
+  initMotion();
+  refreshLayout();
+  document.fonts?.ready.then(refreshLayout);
 }
 
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", start, { once: true });
+} else {
+  start();
+}
 
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-
-    initHeader();
-
-    buildFeaturedBlog();
-
-    buildBlogGrid();
-
-    initFooter();
-
-    initHeroJump();
-
-
-    requestAnimationFrame(
-      function () {
-
-        initHeroMotion();
-
-        initHeroApe();
-
-        initHeroPointerMotion();
-
-        initArchiveApe();
-
-        initBlogMotion();
-
-        initCardPointerMotion();
-
-        ScrollTrigger.refresh();
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   LOAD
-========================================================= */
-
-window.addEventListener(
-  "load",
-  function () {
-
-    ScrollTrigger.refresh();
-
-  }
-);
+window.addEventListener("load", refreshLayout, { once: true });

@@ -1,2346 +1,745 @@
-/* =========================================================
-   APE STUDIO — FULL BLOG ARTICLE
-========================================================= */
-
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initHeader } from "../header/header.js";
+import { BLOGS } from "./blog-data.js";
 
-import {
-  ScrollTrigger
-} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
-import {
-  initHeader
-} from "../header/header.js";
+const SITE_ORIGIN = "https://apeindia.in";
 
-import {
-  BLOGS
-} from "./blog-data.js";
-
-
-gsap.registerPlugin(
-  ScrollTrigger
+const motionPreference = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
 );
 
+/* Helpers */
 
-/* =========================================================
-   CONSTANTS
-========================================================= */
+function element(tag, className, text) {
+  const node = document.createElement(tag);
+  node.className = className || "";
 
-const SITE_ORIGIN =
-  "https://apeindia.in";
+  if (text !== undefined) node.textContent = text;
 
+  return node;
+}
 
-/* =========================================================
-   ENVIRONMENT
-========================================================= */
+function coverImage(blog) {
+  return blog.images?.[0] || blog.image || "";
+}
 
-const reduceMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-
-const finePointer =
-  window.matchMedia(
-    "(hover: hover) and (pointer: fine)"
-  ).matches;
-
-
-/* =========================================================
-   URL / SLUG
-
-   SUPPORTS BOTH:
-
-   OLD:
-   /blog/read/?slug=article-slug
-
-   NEW:
-   /blog/article-slug/
-========================================================= */
+function articleURL(blog) {
+  return `${SITE_ORIGIN}/blog/${encodeURIComponent(blog.slug)}/`;
+}
 
 function getSlug() {
+  const query = new URLSearchParams(location.search).get("slug");
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+  if (query) return query;
 
+  const parts = location.pathname.split("/").filter(Boolean);
 
-  const querySlug =
-    params.get(
-      "slug"
-    );
-
-
-  if (querySlug) {
-
-    return querySlug;
-
-  }
-
-
-  const parts =
-    window.location.pathname
-      .split("/")
-      .filter(Boolean);
-
-
-  if (
-    parts[0] === "blog"
-    &&
-    parts[1]
-    &&
-    parts[1] !== "read"
-  ) {
-
-    return decodeURIComponent(
-      parts[1]
-    );
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================================
-   CLEAN ARTICLE URL
-========================================================= */
-
-function getCleanArticleURL(
-  blog
-) {
-
-  return (
-    `${SITE_ORIGIN}/blog/${encodeURIComponent(blog.slug)}/`
-  );
-
-}
-
-
-/* =========================================================
-   FIND BLOG
-========================================================= */
-
-function findBlog() {
-
-  const slug =
-    getSlug();
-
-
-  if (!slug) {
-
+  if (parts[0] !== "blog" || !parts[1] || parts[1] === "read") {
     return null;
-
   }
 
+  try {
+    return decodeURIComponent(parts[1]);
+  } catch {
+    return null;
+  }
+}
 
-  return (
-    BLOGS.find(
-      function (
-        blog
-      ) {
+let refreshFrame = null;
 
-        return (
-          blog.slug === slug
-        );
+function refreshLayout() {
+  if (refreshFrame !== null) return;
 
-      }
-    )
-    ||
-    null
+  refreshFrame = requestAnimationFrame(() => {
+    refreshFrame = null;
+    ScrollTrigger.refresh();
+  });
+}
+
+/* Metadata */
+
+function setMeta(key, value, property = false) {
+  const attribute = property ? "property" : "name";
+
+  let node = document.head.querySelector(
+    `meta[${attribute}="${key}"]`
   );
 
-}
-
-
-/* =========================================================
-   GET COVER IMAGE
-========================================================= */
-
-function getCoverImage(
-  blog
-) {
-
-  if (
-    Array.isArray(
-      blog.images
-    )
-    &&
-    blog.images.length > 0
-  ) {
-
-    return blog.images[0];
-
+  if (!node) {
+    node = document.createElement("meta");
+    node.setAttribute(attribute, key);
+    document.head.append(node);
   }
 
-
-  return (
-    blog.image
-    ||
-    ""
-  );
-
+  node.content = value;
 }
 
+function setCanonical(url) {
+  let node = document.head.querySelector('link[rel="canonical"]');
 
-/* =========================================================
-   GALLERY
-========================================================= */
-
-function getGalleryImages(
-  blog
-) {
-
-  if (
-    !Array.isArray(
-      blog.images
-    )
-  ) {
-
-    return [];
-
+  if (!node) {
+    node = document.createElement("link");
+    node.rel = "canonical";
+    document.head.append(node);
   }
 
-
-  return blog.images.slice(
-    1
-  );
-
+  node.href = url;
 }
 
+function setStructuredData(id, data) {
+  let node = document.getElementById(id);
 
-/* =========================================================
-   ELEMENT HELPER
-========================================================= */
-
-function createElement(
-  tag,
-  className,
-  text
-) {
-
-  const element =
-    document.createElement(
-      tag
-    );
-
-
-  if (className) {
-
-    element.className =
-      className;
-
+  if (!node) {
+    node = document.createElement("script");
+    node.id = id;
+    node.type = "application/ld+json";
+    document.head.append(node);
   }
 
-
-  if (
-    text !== undefined
-  ) {
-
-    element.textContent =
-      text;
-
-  }
-
-
-  return element;
-
+  node.textContent = JSON.stringify(data);
 }
 
-
-/* =========================================================
-   META HELPER
-========================================================= */
-
-function setMeta(
-  selector,
-  attribute,
-  value
-) {
-
-  let element =
-    document.querySelector(
-      selector
-    );
-
-
-  if (!element) {
-
-    element =
-      document.createElement(
-        "meta"
-      );
-
-
-    if (
-      selector.includes(
-        'property="'
-      )
-    ) {
-
-      const propertyMatch =
-        selector.match(
-          /property="([^"]+)"/
-        );
-
-
-      if (propertyMatch) {
-
-        element.setAttribute(
-          "property",
-          propertyMatch[1]
-        );
-
-      }
-
-    }
-
-    else {
-
-      const nameMatch =
-        selector.match(
-          /name="([^"]+)"/
-        );
-
-
-      if (nameMatch) {
-
-        element.setAttribute(
-          "name",
-          nameMatch[1]
-        );
-
-      }
-
-    }
-
-
-    document.head.appendChild(
-      element
-    );
-
-  }
-
-
-  element.setAttribute(
-    attribute,
-    value
-  );
-
-}
-
-
-/* =========================================================
-   CANONICAL
-========================================================= */
-
-function setCanonical(
-  url
-) {
-
-  let canonical =
-    document.querySelector(
-      'link[rel="canonical"]'
-    );
-
-
-  if (!canonical) {
-
-    canonical =
-      document.createElement(
-        "link"
-      );
-
-
-    canonical.rel =
-      "canonical";
-
-
-    document.head.appendChild(
-      canonical
-    );
-
-  }
-
-
-  canonical.href =
-    url;
-
-}
-
-
-/* =========================================================
-   STRUCTURED DATA HELPER
-========================================================= */
-
-function setStructuredData(
-  id,
-  data
-) {
-
-  let script =
-    document.getElementById(
-      id
-    );
-
-
-  if (!script) {
-
-    script =
-      document.createElement(
-        "script"
-      );
-
-
-    script.type =
-      "application/ld+json";
-
-
-    script.id =
-      id;
-
-
-    document.head.appendChild(
-      script
-    );
-
-  }
-
-
-  script.textContent =
-    JSON.stringify(
-      data
-    );
-
-}
-
-
-/* =========================================================
-   UPDATE PAGE SEO
-========================================================= */
-
-function updatePageMeta(
-  blog
-) {
-
-  const title =
-    `${blog.heading} | APE Studio Journal`;
-
-
-  const description =
-    blog.subheading
-    ||
-    blog.content?.[0]
-    ||
+function updateMetadata(blog) {
+  const title = `${blog.heading} | APE Studio Journal`;
+
+  const description = blog.subheading ||
+    blog.content?.[0] ||
     "Read insights from APE Studio.";
 
+  const url = articleURL(blog);
+  const source = coverImage(blog);
+  const image = source ? new URL(source, SITE_ORIGIN).href : "";
 
-  const cover =
-    getCoverImage(
-      blog
-    );
+  document.title = title;
 
-
-  const canonicalURL =
-    getCleanArticleURL(
-      blog
-    );
-
-
-  const coverURL =
-    cover
-      ? new URL(
-          cover,
-          SITE_ORIGIN
-        ).href
-      : "";
-
-
-  /* =====================================================
-     TITLE
-  ===================================================== */
-
-  document.title =
-    title;
-
-
-  /* =====================================================
-     PRIMARY META
-  ===================================================== */
+  setCanonical(url);
+  setMeta("description", description);
 
   setMeta(
-    'meta[name="description"]',
-    "content",
-    description
-  );
-
-
-  setMeta(
-    'meta[name="robots"]',
-    "content",
+    "robots",
     "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
   );
 
+  Object.entries({
+    "og:type": "article",
+    "og:site_name": "APE Studio",
+    "og:locale": "en_IN",
+    "og:title": title,
+    "og:description": description,
+    "og:url": url
+  }).forEach(([key, value]) => {
+    setMeta(key, value, true);
+  });
 
-  /* =====================================================
-     OPEN GRAPH
-  ===================================================== */
+  setMeta("twitter:card", "summary_large_image");
+  setMeta("twitter:title", title);
+  setMeta("twitter:description", description);
 
-  setMeta(
-    'meta[property="og:type"]',
-    "content",
-    "article"
-  );
-
-
-  setMeta(
-    'meta[property="og:site_name"]',
-    "content",
-    "APE Studio"
-  );
-
-
-  setMeta(
-    'meta[property="og:locale"]',
-    "content",
-    "en_IN"
-  );
-
-
-  setMeta(
-    'meta[property="og:title"]',
-    "content",
-    title
-  );
-
-
-  setMeta(
-    'meta[property="og:description"]',
-    "content",
-    description
-  );
-
-
-  setMeta(
-    'meta[property="og:url"]',
-    "content",
-    canonicalURL
-  );
-
-
-  if (coverURL) {
-
-    setMeta(
-      'meta[property="og:image"]',
-      "content",
-      coverURL
-    );
-
-
-    setMeta(
-      'meta[property="og:image:alt"]',
-      "content",
-      `${blog.heading} — APE Studio Journal`
-    );
-
+  if (image) {
+    setMeta("og:image", image, true);
+    setMeta("og:image:alt", blog.heading, true);
+    setMeta("twitter:image", image);
+    setMeta("twitter:image:alt", blog.heading);
   }
 
+  setStructuredData("blog-structured-data", {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.heading,
+    description,
+    image: image || undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "APE Studio",
+      url: `${SITE_ORIGIN}/`
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url
+    }
+  });
 
-  /* =====================================================
-     X / TWITTER
-  ===================================================== */
-
-  setMeta(
-    'meta[name="twitter:card"]',
-    "content",
-    "summary_large_image"
-  );
-
-
-  setMeta(
-    'meta[name="twitter:title"]',
-    "content",
-    title
-  );
-
-
-  setMeta(
-    'meta[name="twitter:description"]',
-    "content",
-    description
-  );
-
-
-  if (coverURL) {
-
-    setMeta(
-      'meta[name="twitter:image"]',
-      "content",
-      coverURL
-    );
-
-
-    setMeta(
-      'meta[name="twitter:image:alt"]',
-      "content",
-      `${blog.heading} — APE Studio Journal`
-    );
-
-  }
-
-
-  /* =====================================================
-     CANONICAL
-
-     IMPORTANT:
-     OLD QUERY URLS CAN STILL LOAD,
-     BUT CANONICAL POINTS TO THE CLEAN URL.
-  ===================================================== */
-
-  setCanonical(
-    canonicalURL
-  );
-
-
-  /* =====================================================
-     BLOG POST STRUCTURED DATA
-
-     No fake:
-     - author
-     - datePublished
-     - dateModified
-     - reading time
-
-     because those do not currently exist in blog-data.js.
-  ===================================================== */
-
-  setStructuredData(
-    "blog-structured-data",
-    {
-      "@context":
-        "https://schema.org",
-
-      "@type":
-        "BlogPosting",
-
-      headline:
-        blog.heading,
-
-      description:
-        description,
-
-      image:
-        coverURL
-        ||
-        undefined,
-
-      publisher: {
-        "@type":
-          "Organization",
-
-        name:
-          "APE Studio",
-
-        url:
-          `${SITE_ORIGIN}/`
+  setStructuredData("blog-breadcrumb-data", {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_ORIGIN}/`
       },
-
-      mainEntityOfPage: {
-        "@type":
-          "WebPage",
-
-        "@id":
-          canonicalURL
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${SITE_ORIGIN}/blog/`
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: blog.heading,
+        item: url
       }
-    }
-  );
-
-
-  /* =====================================================
-     BREADCRUMB STRUCTURED DATA
-
-     If an article HTML page later contains this same ID,
-     the script is simply updated rather than duplicated.
-  ===================================================== */
-
-  setStructuredData(
-    "blog-breadcrumb-data",
-    {
-      "@context":
-        "https://schema.org",
-
-      "@type":
-        "BreadcrumbList",
-
-      "@id":
-        `${canonicalURL}#breadcrumb`,
-
-      itemListElement: [
-        {
-          "@type":
-            "ListItem",
-
-          position:
-            1,
-
-          name:
-            "Home",
-
-          item:
-            `${SITE_ORIGIN}/`
-        },
-        {
-          "@type":
-            "ListItem",
-
-          position:
-            2,
-
-          name:
-            "Blog",
-
-          item:
-            `${SITE_ORIGIN}/blog/`
-        },
-        {
-          "@type":
-            "ListItem",
-
-          position:
-            3,
-
-          name:
-            blog.heading
-        }
-      ]
-    }
-  );
-
+    ]
+  });
 }
 
+/* Images */
 
-/* =========================================================
-   ARTICLE NOT FOUND
-========================================================= */
+function createImage(source, alt, eager = false) {
+  const image = document.createElement("img");
 
-function buildNotFound(
-  container
-) {
+  image.alt = alt;
+  image.loading = eager ? "eager" : "lazy";
+  image.decoding = "async";
+  image.addEventListener("load", refreshLayout, { once: true });
+  image.addEventListener("error", refreshLayout, { once: true });
+  image.src = source;
 
-  container.classList.add(
-    "blog-article--missing"
-  );
+  return image;
+}
 
+/* Breadcrumb */
 
-  const inner =
-    createElement(
+function buildBreadcrumb(blog) {
+  const nav = element("nav", "blog-read-breadcrumb");
+  nav.setAttribute("aria-label", "Breadcrumb");
+
+  const list = document.createElement("ol");
+
+  [
+    ["/", "Home"],
+    ["/blog/", "Blog"],
+    [null, blog.heading]
+  ].forEach(([href, label]) => {
+    const item = document.createElement("li");
+    const text = element(href ? "a" : "span", "", label);
+
+    if (href) text.href = href;
+    else text.setAttribute("aria-current", "page");
+
+    item.append(text);
+    list.append(item);
+  });
+
+  nav.append(list);
+
+  return nav;
+}
+
+/* Hero */
+
+function buildHero(blog) {
+  const hero = element("header", "blog-article__hero");
+
+  hero.id = "blog-article-hero";
+  hero.setAttribute("aria-labelledby", "blog-article-title");
+
+  ["violet", "lime"].forEach((tone) => {
+    const glow = element(
       "div",
-      "blog-missing"
+      `blog-article__glow blog-article__glow--${tone}`
     );
 
+    glow.setAttribute("aria-hidden", "true");
+    hero.append(glow);
+  });
 
-  const title =
-    createElement(
-      "h1",
-      "",
-      "Article Not Found."
-    );
+  const inner = element("div", "blog-article__hero-inner");
+  const copy = element("div", "blog-article__hero-copy");
+  const heading = element("h1", "", blog.heading);
 
+  heading.id = "blog-article-title";
 
-  const link =
-    createElement(
-      "a",
-      "",
-      "Back To Blog →"
-    );
+  copy.append(buildBreadcrumb(blog), heading);
 
-
-  link.href =
-    "/blog/";
-
-
-  inner.append(
-    title,
-    link
-  );
-
-
-  container.appendChild(
-    inner
-  );
-
-
-  document.title =
-    "Article Not Found | APE Studio";
-
-
-  setMeta(
-    'meta[name="robots"]',
-    "content",
-    "noindex, follow"
-  );
-
-
-  setMeta(
-    'meta[name="description"]',
-    "content",
-    "The requested APE Studio Journal article could not be found."
-  );
-
-
-  setCanonical(
-    `${SITE_ORIGIN}/blog/`
-  );
-
-}
-
-
-/* =========================================================
-   BUILD GALLERY
-========================================================= */
-
-function buildGallery(
-  blog
-) {
-
-  const galleryImages =
-    getGalleryImages(
-      blog
-    );
-
-
-  if (
-    galleryImages.length === 0
-  ) {
-
-    return null;
-
+  if (blog.subheading) {
+    copy.append(element(
+      "p",
+      "blog-article__subheading",
+      blog.subheading
+    ));
   }
 
+  const ape = element("button", "blog-article__hero-ape");
 
-  const section =
-    createElement(
-      "section",
-      "blog-gallery-section"
-    );
+  ape.type = "button";
+  ape.setAttribute(
+    "aria-label",
+    "Activate the APE Studio mascot glow"
+  );
 
+  const aura = element("span", "blog-article__hero-ape-aura");
+  aura.setAttribute("aria-hidden", "true");
+
+  const image = createImage("/mascot/ape-laptop.webp", "", true);
+  image.draggable = false;
+
+  ape.append(aura, image);
+  inner.append(copy, ape);
+  hero.append(inner);
+
+  return hero;
+}
+
+/* Supporting image carousel */
+
+function buildGallery(blog) {
+  const images = (blog.images || []).slice(1).filter(Boolean);
+
+  if (!images.length) return null;
+
+  const section = element("section", "blog-gallery-section");
 
   section.setAttribute(
     "aria-label",
     `${blog.heading} supporting visuals`
   );
 
+  const carousel = element("div", "blog-carousel");
+  const track = element("div", "blog-article__gallery");
 
-  const gallery =
-    createElement(
-      "div",
-      "blog-article__gallery"
+  track.id = "blog-supporting-images";
+  track.tabIndex = 0;
+  track.setAttribute("role", "region");
+  track.setAttribute("aria-roledescription", "carousel");
+  track.setAttribute("aria-label", "Supporting images");
+
+  images.forEach((source) => {
+    const figure = element("figure", "blog-article__gallery-item");
+
+    const image = createImage(
+      source,
+      `${blog.heading} supporting visual`
     );
 
+    image.draggable = false;
 
-  gallery.dataset.count =
-    String(
-      galleryImages.length
-    );
+    image.addEventListener("error", () => {
+      figure.hidden = true;
 
+      track.dispatchEvent(new Event("gallerychange"));
+      refreshLayout();
+    }, { once: true });
 
-  galleryImages.forEach(
-    function (
-      src
-    ) {
+    figure.append(image);
+    track.append(figure);
+  });
 
-      const figure =
-        createElement(
-          "figure",
-          "blog-article__gallery-item"
-        );
+  const controls = element("div", "blog-carousel__controls");
 
-
-      const image =
-        document.createElement(
-          "img"
-        );
-
-
-      image.src =
-        src;
-
-
-      image.alt =
-        `${blog.heading} supporting visual`;
-
-
-      image.loading =
-        "lazy";
-
-
-      image.decoding =
-        "async";
-
-
-      figure.appendChild(
-        image
-      );
-
-
-      gallery.appendChild(
-        figure
-      );
-
-    }
+  const previous = element(
+    "button",
+    "blog-carousel__button",
+    "←"
   );
 
-
-  section.appendChild(
-    gallery
+  const next = element(
+    "button",
+    "blog-carousel__button",
+    "→"
   );
 
+  previous.type = "button";
+  next.type = "button";
+
+  previous.dataset.direction = "previous";
+  next.dataset.direction = "next";
+
+  previous.setAttribute("aria-label", "Previous supporting image");
+  next.setAttribute("aria-label", "Next supporting image");
+
+  previous.setAttribute("aria-controls", track.id);
+  next.setAttribute("aria-controls", track.id);
+
+  controls.append(previous, next);
+  carousel.append(track, controls);
+  section.append(carousel);
 
   return section;
-
 }
 
-
-/* =========================================================
-   BUILD ARTICLE HERO
-========================================================= */
-
-function buildArticleHero(
-  blog
-) {
-
-  const hero =
-    createElement(
-      "header",
-      "blog-article__hero"
-    );
-
-
-  const violetGlow =
-    createElement(
-      "div",
-      "blog-article__glow blog-article__glow--violet"
-    );
-
-
-  violetGlow.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const limeGlow =
-    createElement(
-      "div",
-      "blog-article__glow blog-article__glow--lime"
-    );
-
-
-  limeGlow.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const heroInner =
-    createElement(
-      "div",
-      "blog-article__hero-inner"
-    );
-
-
-  const copy =
-    createElement(
-      "div",
-      "blog-article__hero-copy"
-    );
-
-
-  const eyebrow =
-    createElement(
-      "p",
-      "blog-article__eyebrow"
-    );
-
-
-  eyebrow.append(
-    document.createTextNode(
-      "APE JOURNAL"
-    )
-  );
-
-
-  const diamond =
-    createElement(
-      "span",
-      ""
-    );
-
-
-  diamond.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  eyebrow.appendChild(
-    diamond
-  );
-
-
-  eyebrow.append(
-    document.createTextNode(
-      "IDEAS & OBSERVATIONS"
-    )
-  );
-
-
-  const heading =
-    createElement(
-      "h1",
-      "",
-      blog.heading
-    );
-
-
-  const subheading =
-    createElement(
-      "p",
-      "blog-article__subheading",
-      blog.subheading
-    );
-
-
-  copy.append(
-    eyebrow,
-    heading,
-    subheading
-  );
-
-
-  /* =====================================================
-     HERO APE
-  ===================================================== */
-
-  const ape =
-    createElement(
-      "button",
-      "blog-article__hero-ape"
-    );
-
-
-  ape.type =
-    "button";
-
-
-  ape.setAttribute(
-    "aria-label",
-    "Make the APE mascot react"
-  );
-
-
-  const aura =
-    createElement(
-      "span",
-      "blog-article__hero-ape-aura"
-    );
-
-
-  aura.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const world =
-    createElement(
-      "span",
-      "blog-article__hero-ape-world"
-    );
-
-
-  const rig =
-    createElement(
-      "span",
-      "blog-article__hero-ape-rig"
-    );
-
-
-  const float =
-    createElement(
-      "span",
-      "blog-article__hero-ape-float"
-    );
-
-
-  const apeImage =
-    document.createElement(
-      "img"
-    );
-
-
-  apeImage.src =
-    "/mascot/ape-laptop.webp";
-
-
-  apeImage.alt =
-    "";
-
-
-  apeImage.draggable =
-    false;
-
-
-  float.appendChild(
-    apeImage
-  );
-
-
-  rig.appendChild(
-    float
-  );
-
-
-  world.appendChild(
-    rig
-  );
-
-
-  ape.append(
-    aura,
-    world
-  );
-
-
-  heroInner.append(
-    copy,
-    ape
-  );
-
-
-  hero.append(
-    violetGlow,
-    limeGlow,
-    heroInner
-  );
-
-
-  return hero;
-
-}
-
-
-/* =========================================================
-   BUILD READING APE
-========================================================= */
-
-function buildReadingApe() {
-
-  const side =
-    createElement(
-      "aside",
-      "blog-article__side"
-    );
-
-
-  side.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const ape =
-    createElement(
-      "div",
-      "blog-reading-ape"
-    );
-
-
-  const aura =
-    createElement(
-      "div",
-      "blog-reading-ape__aura"
-    );
-
-
-  const rig =
-    createElement(
-      "div",
-      "blog-reading-ape__rig"
-    );
-
-
-  const float =
-    createElement(
-      "div",
-      "blog-reading-ape__float"
-    );
-
-
-  const image =
-    document.createElement(
-      "img"
-    );
-
-
-  image.src =
-    "/mascot/ape-sitting.webp";
-
-
-  image.alt =
-    "";
-
-
-  image.draggable =
-    false;
-
-
-  float.appendChild(
-    image
-  );
-
-
-  rig.appendChild(
-    float
-  );
-
-
-  ape.append(
-    aura,
-    rig
-  );
-
-
-  side.appendChild(
-    ape
-  );
-
-
-  return side;
-
-}
-
-
-/* =========================================================
-   BUILD ARTICLE
-========================================================= */
-
-function buildArticle() {
-
-  const container =
-    document.getElementById(
-      "blog-article"
-    );
-
-
-  if (!container) {
-
-    return;
-
+function initCarousel() {
+  const track = document.querySelector(".blog-article__gallery");
+
+  if (!track) return;
+
+  const carousel = track.closest(".blog-carousel");
+  const controls = carousel.querySelector(".blog-carousel__controls");
+  const previous = controls.querySelector('[data-direction="previous"]');
+  const next = controls.querySelector('[data-direction="next"]');
+
+  let dragging = false;
+  let pointerId = null;
+  let startX = 0;
+  let startScroll = 0;
+  let updateFrame = null;
+
+  function slides() {
+    return [...track.querySelectorAll(
+      ".blog-article__gallery-item:not([hidden])"
+    )];
   }
 
-
-  const blog =
-    findBlog();
-
-
-  if (!blog) {
-
-    buildNotFound(
-      container
-    );
-
-
-    return;
-
+  function maximum() {
+    return Math.max(0, track.scrollWidth - track.clientWidth);
   }
 
+  function step() {
+    const first = slides()[0];
 
-  updatePageMeta(
-    blog
-  );
+    if (!first) return track.clientWidth;
 
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
 
-  /* =====================================================
-     HERO
-  ===================================================== */
-
-  const hero =
-    buildArticleHero(
-      blog
-    );
-
-
-  /* =====================================================
-     COVER IMAGE
-  ===================================================== */
-
-  const visualSection =
-    createElement(
-      "section",
-      "blog-article__visual-wrap"
-    );
-
-
-  visualSection.setAttribute(
-    "aria-label",
-    `${blog.heading} featured visual`
-  );
-
-
-  const visual =
-    createElement(
-      "div",
-      "blog-article__visual"
-    );
-
-
-  const image =
-    document.createElement(
-      "img"
-    );
-
-
-  image.src =
-    getCoverImage(
-      blog
-    );
-
-
-  image.alt =
-    blog.heading;
-
-
-  image.loading =
-    "eager";
-
-
-  image.decoding =
-    "async";
-
-
-  visual.appendChild(
-    image
-  );
-
-
-  visualSection.appendChild(
-    visual
-  );
-
-
-  /* =====================================================
-     GALLERY
-  ===================================================== */
-
-  const gallerySection =
-    buildGallery(
-      blog
-    );
-
-
-  /* =====================================================
-     BODY
-  ===================================================== */
-
-  const body =
-    createElement(
-      "section",
-      "blog-article__body"
-    );
-
-
-  body.setAttribute(
-    "aria-label",
-    `${blog.heading} article`
-  );
-
-
-  const bodyInner =
-    createElement(
-      "div",
-      "blog-article__body-inner"
-    );
-
-
-  const side =
-    buildReadingApe();
-
-
-  const content =
-    createElement(
-      "div",
-      "blog-article__content"
-    );
-
-
-  (
-    blog.content
-    ||
-    []
-  )
-    .forEach(
-      function (
-        paragraph
-      ) {
-
-        const p =
-          createElement(
-            "p",
-            "blog-article__paragraph",
-            paragraph
-          );
-
-
-        content.appendChild(
-          p
-        );
-
-      }
-    );
-
-
-  /* =====================================================
-     BACK TO BLOG
-  ===================================================== */
-
-  const back =
-    createElement(
-      "a",
-      "blog-article__back"
-    );
-
-
-  back.href =
-    "/blog/";
-
-
-  const arrow =
-    createElement(
-      "span",
-      "",
-      "←"
-    );
-
-
-  arrow.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const text =
-    document.createTextNode(
-      "Back To Blog"
-    );
-
-
-  back.append(
-    arrow,
-    text
-  );
-
-
-  content.appendChild(
-    back
-  );
-
-
-  bodyInner.append(
-    side,
-    content
-  );
-
-
-  body.appendChild(
-    bodyInner
-  );
-
-
-  /* =====================================================
-     FINAL ORDER
-  ===================================================== */
-
-  container.appendChild(
-    hero
-  );
-
-
-  container.appendChild(
-    visualSection
-  );
-
-
-  if (gallerySection) {
-
-    container.appendChild(
-      gallerySection
-    );
-
+    return first.getBoundingClientRect().width + gap;
   }
 
+  function update() {
+    updateFrame = null;
 
-  container.appendChild(
-    body
-  );
+    const max = maximum();
 
-}
-
-
-/* =========================================================
-   ARTICLE HERO MOTION
-========================================================= */
-
-function initArticleHero() {
-
-  if (reduceMotion) {
-
-    return;
-
+    controls.hidden = max <= 2;
+    previous.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max - 2;
   }
 
+  function requestUpdate() {
+    if (updateFrame !== null) return;
 
-  const eyebrow =
-    document.querySelector(
-      ".blog-article__eyebrow"
-    );
+    updateFrame = requestAnimationFrame(update);
+  }
 
-
-  const heading =
-    document.querySelector(
-      ".blog-article__hero h1"
-    );
-
-
-  const subheading =
-    document.querySelector(
-      ".blog-article__subheading"
-    );
-
-
-  const ape =
-    document.querySelector(
-      ".blog-article__hero-ape"
-    );
-
-
-  const timeline =
-    gsap.timeline({
-      defaults: {
-        ease:
-          "power4.out"
-      }
+  function move(direction) {
+    track.scrollTo({
+      left: Math.max(
+        0,
+        Math.min(maximum(), track.scrollLeft + direction * step())
+      ),
+      behavior: motionPreference.matches ? "auto" : "smooth"
     });
-
-
-  if (eyebrow) {
-
-    timeline.fromTo(
-      eyebrow,
-      {
-        autoAlpha: 0,
-        y: 15
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.5
-      }
-    );
-
   }
 
+  previous.addEventListener("click", () => move(-1));
+  next.addEventListener("click", () => move(1));
 
-  if (heading) {
+  track.addEventListener("scroll", requestUpdate, { passive: true });
+  track.addEventListener("gallerychange", requestUpdate);
 
-    timeline.fromTo(
-      heading,
-      {
-        autoAlpha: 0,
-        y: 72,
-        rotationX: -16
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        rotationX: 0,
-        duration: 0.95
-      },
-      "-=0.18"
-    );
+  track.addEventListener("keydown", (event) => {
+    if (event.target !== track) return;
 
-  }
-
-
-  if (subheading) {
-
-    timeline.fromTo(
-      subheading,
-      {
-        autoAlpha: 0,
-        y: 20
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.62
-      },
-      "-=0.4"
-    );
-
-  }
-
-
-  if (ape) {
-
-    timeline.fromTo(
-      ape,
-      {
-        autoAlpha: 0,
-        x: 90,
-        y: 65,
-        scale: 0.7,
-        rotation: 6
-      },
-      {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotation: 0,
-        duration: 1,
-
-        ease:
-          "back.out(1.6)"
-      },
-      "-=0.7"
-    );
-
-
-    gsap.to(
-      ape,
-      {
-        yPercent: -7,
-
-        ease:
-          "none",
-
-        scrollTrigger: {
-          trigger:
-            ".blog-article__hero",
-
-          start:
-            "top top",
-
-          end:
-            "bottom top",
-
-          scrub:
-            0.9
-        }
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ARTICLE HERO APE
-========================================================= */
-
-function initArticleHeroApe() {
-
-  const ape =
-    document.querySelector(
-      ".blog-article__hero-ape"
-    );
-
-
-  const world =
-    document.querySelector(
-      ".blog-article__hero-ape-world"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".blog-article__hero-ape-rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".blog-article__hero-ape-float"
-    );
-
-
-  if (
-    !ape ||
-    !world ||
-    !rig ||
-    !float
-  ) {
-
-    return;
-
-  }
-
-
-  if (!reduceMotion) {
-
-    gsap.to(
-      float,
-      {
-        y: -7,
-        rotation: 1.4,
-
-        duration: 1.75,
-
-        repeat: -1,
-
-        yoyo: true,
-
-        ease:
-          "sine.inOut"
-      }
-    );
-
-  }
-
-
-  if (
-    finePointer &&
-    !reduceMotion
-  ) {
-
-    ape.addEventListener(
-      "pointermove",
-      function (
-        event
-      ) {
-
-        const rect =
-          ape.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          )
-          /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          )
-          /
-          rect.height -
-          0.5;
-
-
-        gsap.to(
-          world,
-          {
-            x:
-              x * 20,
-
-            y:
-              y * 12,
-
-            duration:
-              0.35,
-
-            ease:
-              "power3.out"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationY:
-              x * 11,
-
-            rotationX:
-              y * -7,
-
-            scale:
-              1.05,
-
-            duration:
-              0.32,
-
-            ease:
-              "power3.out"
-          }
-        );
-
-      }
-    );
-
-
-    ape.addEventListener(
-      "pointerleave",
-      function () {
-
-        gsap.to(
-          world,
-          {
-            x: 0,
-            y: 0,
-
-            duration:
-              0.55,
-
-            ease:
-              "elastic.out(1,0.5)"
-          }
-        );
-
-
-        gsap.to(
-          rig,
-          {
-            rotationX: 0,
-            rotationY: 0,
-            rotation: 0,
-            scale: 1,
-
-            duration:
-              0.45,
-
-            ease:
-              "back.out(1.6)"
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  ape.addEventListener(
-    "click",
-    function () {
-
-      if (reduceMotion) {
-
-        return;
-
-      }
-
-
-      gsap.killTweensOf(
-        rig
-      );
-
-
-      gsap.timeline()
-
-        .to(
-          rig,
-          {
-            y: -20,
-            rotation: -6,
-            scale: 1.08,
-
-            duration:
-              0.16
-          }
-        )
-
-        .to(
-          rig,
-          {
-            rotation: 6,
-
-            duration:
-              0.13
-          }
-        )
-
-        .to(
-          rig,
-          {
-            rotationY:
-              "+=360",
-
-            duration:
-              0.48,
-
-            ease:
-              "power3.inOut"
-          }
-        )
-
-        .to(
-          rig,
-          {
-            y: 0,
-            rotation: 0,
-            rotationY: 0,
-            scale: 1,
-
-            duration:
-              0.4,
-
-            ease:
-              "bounce.out"
-          }
-        );
-
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      move(event.key === "ArrowLeft" ? -1 : 1);
     }
-  );
 
-}
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
 
-
-/* =========================================================
-   ARTICLE MOTION
-========================================================= */
-
-function initArticleMotion() {
-
-  const article =
-    document.querySelector(
-      ".blog-article"
-    );
-
-
-  if (
-    !article ||
-    article.classList.contains(
-      "blog-article--missing"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  if (reduceMotion) {
-
-    return;
-
-  }
-
-
-  /* =====================================================
-     COVER
-  ===================================================== */
-
-  gsap.fromTo(
-    ".blog-article__visual",
-    {
-      autoAlpha: 0,
-      y: 60,
-      scale: 0.97
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      scale: 1,
-
-      duration:
-        0.95,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-article__visual-wrap",
-
-        start:
-          "top 83%",
-
-        once:
-          true
-      }
-    }
-  );
-
-
-  gsap.fromTo(
-    ".blog-article__visual img",
-    {
-      scale: 1.06,
-      yPercent: -3
-    },
-    {
-      scale: 1.06,
-      yPercent: 3,
-
-      ease:
-        "none",
-
-      scrollTrigger: {
-        trigger:
-          ".blog-article__visual",
-
-        start:
-          "top bottom",
-
-        end:
-          "bottom top",
-
-        scrub:
-          1
-      }
-    }
-  );
-
-
-  /* =====================================================
-     GALLERY
-  ===================================================== */
-
-  const galleryItems =
-    gsap.utils.toArray(
-      ".blog-article__gallery-item"
-    );
-
-
-  galleryItems.forEach(
-    function (
-      item
-    ) {
-
-      gsap.fromTo(
-        item,
-        {
-          autoAlpha: 0,
-          y: 42,
-          scale: 0.97
-        },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-
-          duration:
-            0.78,
-
-          ease:
-            "power3.out",
-
-          scrollTrigger: {
-            trigger:
-              item,
-
-            start:
-              "top 88%",
-
-            once:
-              true
-          }
-        }
-      );
-
-    }
-  );
-
-
-  /* =====================================================
-     PARAGRAPHS
-  ===================================================== */
-
-  const paragraphs =
-    gsap.utils.toArray(
-      ".blog-article__paragraph"
-    );
-
-
-  paragraphs.forEach(
-    function (
-      paragraph
-    ) {
-
-      gsap.fromTo(
-        paragraph,
-        {
-          autoAlpha: 0,
-          y: 28
-        },
-        {
-          autoAlpha: 1,
-          y: 0,
-
-          duration:
-            0.72,
-
-          ease:
-            "power3.out",
-
-          scrollTrigger: {
-            trigger:
-              paragraph,
-
-            start:
-              "top 89%",
-
-            once:
-              true
-          }
-        }
-      );
-
-    }
-  );
-
-
-  gsap.fromTo(
-    ".blog-article__back",
-    {
-      autoAlpha: 0,
-      y: 18
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-
-      duration:
-        0.65,
-
-      scrollTrigger: {
-        trigger:
-          ".blog-article__back",
-
-        start:
-          "top 92%",
-
-        once:
-          true
-      }
-    }
-  );
-
-}
-
-
-/* =========================================================
-   READING APE MOTION
-========================================================= */
-
-function initReadingApe() {
-
-  const ape =
-    document.querySelector(
-      ".blog-reading-ape"
-    );
-
-
-  const rig =
-    document.querySelector(
-      ".blog-reading-ape__rig"
-    );
-
-
-  const float =
-    document.querySelector(
-      ".blog-reading-ape__float"
-    );
-
-
-  if (
-    !ape ||
-    !rig ||
-    !float ||
-    reduceMotion
-  ) {
-
-    return;
-
-  }
-
-
-  gsap.to(
-    float,
-    {
-      y: -6,
-      rotation: 1.4,
-
-      duration:
-        1.7,
-
-      repeat:
-        -1,
-
-      yoyo:
-        true,
-
-      ease:
-        "sine.inOut"
-    }
-  );
-
-
-  ScrollTrigger.create({
-    trigger:
-      ".blog-article__body",
-
-    start:
-      "top 60%",
-
-    end:
-      "bottom 40%",
-
-    onUpdate(
-      self
-    ) {
-
-      const speed =
-        gsap.utils.clamp(
-          -1,
-          1,
-          self.getVelocity() /
-          1800
-        );
-
-
-      gsap.to(
-        rig,
-        {
-          rotation:
-            speed * 4,
-
-          x:
-            speed * 5,
-
-          duration:
-            0.25,
-
-          ease:
-            "power2.out",
-
-          overwrite:
-            "auto"
-        }
-      );
-
+      track.scrollTo({
+        left: event.key === "Home" ? 0 : maximum(),
+        behavior: motionPreference.matches ? "auto" : "smooth"
+      });
     }
   });
 
-}
+  track.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "touch" || event.button !== 0) return;
+    if (maximum() <= 2) return;
 
+    dragging = true;
+    pointerId = event.pointerId;
+    startX = event.clientX;
+    startScroll = track.scrollLeft;
 
-/* =========================================================
-   FOOTER
-========================================================= */
+    track.classList.add("is-dragging");
+    track.setPointerCapture(pointerId);
+  });
 
-function initFooter() {
+  track.addEventListener("pointermove", (event) => {
+    if (!dragging || event.pointerId !== pointerId) return;
 
-  const year =
-    document.getElementById(
-      "ape-footer-year"
-    );
+    track.scrollLeft = startScroll - (event.clientX - startX);
+  });
 
+  function finish(event) {
+    if (!dragging || event.pointerId !== pointerId) return;
 
-  if (year) {
+    dragging = false;
 
-    year.textContent =
-      String(
-        new Date()
-          .getFullYear()
-      );
-
-  }
-
-
-  const topButton =
-    document.querySelector(
-      ".site-footer__top-link"
-    );
-
-
-  if (!topButton) {
-
-    return;
-
-  }
-
-
-  topButton.addEventListener(
-    "click",
-    function (
-      event
-    ) {
-
-      event.preventDefault();
-
-
-      window.scrollTo({
-        top: 0,
-
-        behavior:
-          reduceMotion
-            ? "auto"
-            : "smooth"
-      });
-
+    if (track.hasPointerCapture(pointerId)) {
+      track.releasePointerCapture(pointerId);
     }
-  );
 
+    pointerId = null;
+    track.classList.remove("is-dragging");
+
+    const distance = step();
+
+    track.scrollTo({
+      left: Math.max(
+        0,
+        Math.min(
+          maximum(),
+          Math.round(track.scrollLeft / distance) * distance
+        )
+      ),
+      behavior: motionPreference.matches ? "auto" : "smooth"
+    });
+
+    requestUpdate();
+  }
+
+  track.addEventListener("pointerup", finish);
+  track.addEventListener("pointercancel", finish);
+
+  const resizeObserver = new ResizeObserver(requestUpdate);
+  resizeObserver.observe(track);
+
+  update();
 }
 
+/* Reading mascot */
 
-/* =========================================================
-   START
-========================================================= */
+function buildReadingApe() {
+  const side = element("aside", "blog-article__side");
+  side.setAttribute("aria-hidden", "true");
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
+  const ape = element("div", "blog-reading-ape");
+  const aura = element("div", "blog-reading-ape__aura");
+  const rig = element("div", "blog-reading-ape__rig");
+  const float = element("div", "blog-reading-ape__float");
 
-    initHeader();
+  const image = createImage("/mascot/ape-sitting.webp", "");
+  image.draggable = false;
 
-    buildArticle();
+  float.append(image);
+  rig.append(float);
+  ape.append(aura, rig);
+  side.append(ape);
 
-    initFooter();
+  return side;
+}
 
+/* Article */
 
-    requestAnimationFrame(
-      function () {
+function buildArticle() {
+  const container = document.getElementById("blog-article");
 
-        initArticleHero();
+  if (!container) return false;
 
-        initArticleHeroApe();
+  container.classList.add("blog-article");
 
-        initArticleMotion();
+  const slug = getSlug();
+  const blog = BLOGS.find((item) => item.slug === slug);
 
-        initReadingApe();
+  if (!blog) {
+    container.classList.add("blog-article--missing");
 
-        ScrollTrigger.refresh();
+    const inner = element("div", "blog-missing");
+    const link = element("a", "", "Back To Blog →");
 
+    link.href = "/blog/";
+
+    inner.append(element("h1", "", "Article Not Found."), link);
+    container.replaceChildren(inner);
+
+    document.title = "Article Not Found | APE Studio";
+
+    setMeta("robots", "noindex, follow");
+    setMeta("description", "The requested article could not be found.");
+    setCanonical(`${SITE_ORIGIN}/blog/`);
+
+    return false;
+  }
+
+  updateMetadata(blog);
+
+  const nodes = [buildHero(blog)];
+  const cover = coverImage(blog);
+
+  if (cover) {
+    const wrap = element("section", "blog-article__visual-wrap");
+
+    wrap.setAttribute(
+      "aria-label",
+      `${blog.heading} featured visual`
+    );
+
+    const frame = element("div", "blog-article__visual");
+
+    frame.append(createImage(cover, blog.heading, true));
+    wrap.append(frame);
+    nodes.push(wrap);
+  }
+
+  const gallery = buildGallery(blog);
+
+  if (gallery) nodes.push(gallery);
+
+  const body = element("section", "blog-article__body");
+  body.setAttribute("aria-label", `${blog.heading} article`);
+
+  const inner = element("div", "blog-article__body-inner");
+  const content = element("div", "blog-article__content");
+
+  (blog.content || [])
+    .filter((paragraph) => String(paragraph).trim())
+    .forEach((paragraph) => {
+      content.append(element(
+        "p",
+        "blog-article__paragraph",
+        String(paragraph).trim()
+      ));
+    });
+
+  const back = element("a", "blog-article__back");
+  back.href = "/blog/";
+
+  const arrow = element("span", "", "←");
+  arrow.setAttribute("aria-hidden", "true");
+
+  back.append(arrow, document.createTextNode("Back To Blog"));
+  content.append(back);
+
+  inner.append(buildReadingApe(), content);
+  body.append(inner);
+  nodes.push(body);
+
+  container.replaceChildren(...nodes);
+
+  return true;
+}
+
+/* Motion */
+
+function initMotion() {
+  const media = gsap.matchMedia();
+
+  media.add("(prefers-reduced-motion: no-preference)", () => {
+    const copy = document.querySelector(".blog-article__hero-copy");
+    const ape = document.querySelector(".blog-article__hero-ape");
+
+    if (copy) {
+      gsap.fromTo(
+        copy.children,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: .65,
+          stagger: .09,
+          ease: "power3.out"
+        }
+      );
+    }
+
+    if (ape) {
+      gsap.fromTo(
+        ape,
+        { opacity: 0 },
+        { opacity: 1, duration: .85, delay: .15 }
+      );
+    }
+
+    document.querySelectorAll(
+      ".blog-article__visual, .blog-carousel, " +
+      ".blog-article__paragraph, .blog-article__back"
+    ).forEach((target) => {
+      gsap.fromTo(
+        target,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: .7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: target,
+            start: "top 94%",
+            once: true
+          }
+        }
+      );
+    });
+  });
+
+  const ape = document.querySelector(".blog-article__hero-ape");
+  const aura = ape?.querySelector(".blog-article__hero-ape-aura");
+
+  ape?.addEventListener("click", () => {
+    if (motionPreference.matches || !aura) return;
+
+    gsap.fromTo(
+      aura,
+      { opacity: 1, scale: .9 },
+      {
+        opacity: .7,
+        scale: 1.12,
+        duration: .7,
+        ease: "power2.out",
+        overwrite: true
       }
     );
+  });
+}
 
+/* Footer */
+
+function initFooter() {
+  const year = document.getElementById("ape-footer-year");
+  const top = document.querySelector(".site-footer__top-link");
+
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
   }
-);
 
+  top?.addEventListener("click", (event) => {
+    if (
+      event.button !== 0 ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
 
-/* =========================================================
-   LOAD
-========================================================= */
+    event.preventDefault();
 
-window.addEventListener(
-  "load",
-  function () {
+    window.scrollTo({
+      top: 0,
+      behavior: motionPreference.matches ? "auto" : "smooth"
+    });
+  });
+}
 
-    ScrollTrigger.refresh();
+/* Start */
 
+function start() {
+  initHeader();
+
+  if (buildArticle()) {
+    initCarousel();
+    initMotion();
   }
-);
+
+  initFooter();
+  refreshLayout();
+  document.fonts?.ready.then(refreshLayout);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", start, { once: true });
+} else {
+  start();
+}
+
+window.addEventListener("load", refreshLayout, { once: true });
