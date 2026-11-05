@@ -1,1228 +1,322 @@
 <!doctype html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Start a project with APE Studio. Get in touch for branding, social media, digital marketing, websites, packaging, performance marketing and creative services.">
+  <title>Contact APE Studio</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Start a project with APE Studio. Get in touch for branding, social media, digital marketing, websites, packaging, performance marketing and creative services."
-  >
-
-  <title>
-    Contact APE Studio
-  </title>
-
-
-  <!-- =====================================================
-       CONTACT PAGE — CRITICAL CSS
-       LOAD BEFORE FIRST PAINT
-       PREVENTS FLASH / RELOAD ISSUE
-  ====================================================== -->
-
-  <link
-    rel="stylesheet"
-    href="/src/styles/variables.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/src/styles/reset.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/src/styles/header.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/src/styles/footer.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/src/styles/contact-page.css"
-  >
-
+  <link rel="stylesheet" href="/src/styles/variables.css">
+  <link rel="stylesheet" href="/src/styles/reset.css">
+  <link rel="stylesheet" href="/src/styles/header.css">
+  <link rel="stylesheet" href="/src/styles/footer.css">
+  <link rel="stylesheet" href="/src/styles/contact-page.css">
 </head>
 
-
-<body>
-
-
-  <!-- =====================================================
-       GLOBAL HEADER
-  ====================================================== -->
-
-  <header
-    id="site-header"
-    class="site-header is-light"
-  >
-
+<body id="top" class="contact-body">
+  <header id="site-header" class="site-header is-light">
     <div class="site-header__inner">
-
-      <a
-        href="/"
-        class="site-header__brand"
-        aria-label="APE Studio Home"
-      >
-
-        <img
-          src="/ape-logo.png"
-          alt="APE Studio"
-          class="site-header__logo"
-        >
-
+      <a href="/" class="site-header__brand" aria-label="APE Studio home">
+        <img src="/ape-logo.png" alt="APE Studio" class="site-header__logo">
       </a>
 
-
-      <nav
-        class="site-header__nav"
-        aria-label="Primary navigation"
-      >
-
-        <a href="/">
-          Home
-        </a>
-
-        <a href="/about/">
-          About
-        </a>
-
-        <a href="/services/">
-          Services
-        </a>
-
-        <a href="/work/">
-          Work
-        </a>
-
-        <a href="/blog/">
-          Blog
-        </a>
-
-        <a href="/faq/">
-          FAQ
-        </a>
-
-        <a
-          href="/contact/"
-          class="is-active"
-          aria-current="page"
-        >
-          Contact
-        </a>
-
+      <nav class="site-header__nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/services/">Services</a>
+        <a href="/work/">Work</a>
+        <a href="/blog/">Blog</a>
+        <a href="/faq/">FAQ</a>
+        <a href="/contact/" class="is-active" aria-current="page">Contact</a>
       </nav>
 
-
-      <a
-        href="/contact/"
-        class="site-header__cta"
-      >
-
-        <span>
-          Let's Talk
-        </span>
-
-        <span aria-hidden="true">
-          ↗
-        </span>
-
+      <a href="/contact/" class="site-header__cta">
+        <span>Let's Talk</span>
+        <span aria-hidden="true">↗</span>
       </a>
 
-
-      <button
-        id="site-menu-toggle"
-        class="site-menu-toggle"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-      >
-
-        <span></span>
-        <span></span>
-
+      <button id="site-menu-toggle" class="site-menu-toggle" type="button"
+        aria-label="Open menu" aria-expanded="false" aria-controls="site-mobile-menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </button>
-
     </div>
 
-
-    <!-- MOBILE MENU -->
-
-    <div
-      id="site-mobile-menu"
-      class="site-mobile-menu"
-      aria-hidden="true"
-    >
-
-      <div
-        class="site-mobile-menu__background-word"
-        aria-hidden="true"
-      >
-        APE
-      </div>
-
+    <div id="site-mobile-menu" class="site-mobile-menu" aria-hidden="true">
+      <div class="site-mobile-menu__background-word" aria-hidden="true">APE</div>
 
       <div class="site-mobile-menu__top">
-
-        <span>
-          NAVIGATION
-        </span>
-
-        <span>
-          KOLKATA / INDIA
-        </span>
-
+        <span>NAVIGATION</span>
+        <span>KOLKATA / INDIA</span>
       </div>
 
-
-      <nav class="site-mobile-menu__links">
-
-        <a href="/">
-          <small>01</small>
-          <span>Home</span>
-        </a>
-
-        <a href="/about/">
-          <small>02</small>
-          <span>About</span>
-        </a>
-
-        <a href="/services/">
-          <small>03</small>
-          <span>Services</span>
-        </a>
-
-        <a href="/work/">
-          <small>04</small>
-          <span>Work</span>
-        </a>
-
-        <a href="/blog/">
-          <small>05</small>
-          <span>Blog</span>
-        </a>
-
-        <a href="/faq/">
-          <small>06</small>
-          <span>FAQ</span>
-        </a>
-
-        <a
-          href="/contact/"
-          class="is-active"
-          aria-current="page"
-        >
-          <small>07</small>
-          <span>Contact</span>
-        </a>
-
+      <nav class="site-mobile-menu__links" aria-label="Mobile navigation">
+        <a href="/"><span>Home</span></a>
+        <a href="/about/"><span>About</span></a>
+        <a href="/services/"><span>Services</span></a>
+        <a href="/work/"><span>Work</span></a>
+        <a href="/blog/"><span>Blog</span></a>
+        <a href="/faq/"><span>FAQ</span></a>
+        <a href="/contact/" class="is-active" aria-current="page"><span>Contact</span></a>
       </nav>
 
-
       <div class="site-mobile-menu__footer">
-
-        <a href="/contact/">
-          START A PROJECT ↗
-        </a>
-
+        <a href="/contact/">START A PROJECT ↗</a>
       </div>
-
     </div>
-
   </header>
 
-
-
-  <!-- =====================================================
-       CONTACT PAGE
-  ====================================================== -->
-
   <main class="contact-page">
-
-
-    <!-- ===================================================
-         HERO
-    ==================================================== -->
-
-    <section class="contact-hero">
-
-
-      <div
-        class="contact-hero__glow contact-hero__glow--violet"
-        aria-hidden="true"
-      ></div>
-
-
-      <div
-        class="contact-hero__glow contact-hero__glow--lime"
-        aria-hidden="true"
-      ></div>
-
-
-      <div
-        class="contact-hero__glow contact-hero__glow--deep"
-        aria-hidden="true"
-      ></div>
-
-
+    <section class="contact-hero" aria-labelledby="contact-title">
       <div class="contact-hero__inner">
-
-
-        <!-- HERO COPY -->
-
         <div class="contact-hero__headline">
+          <nav class="contact-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true">›</span>
+            <span aria-current="page">Contact</span>
+          </nav>
 
-          <p class="contact-hero__eyebrow">
-
-            START A CONVERSATION
-
-            <span aria-hidden="true"></span>
-
-            APE STUDIO
-
-          </p>
-
-
-          <h1>
-
-            LET'S MAKE
-
-            <span>
-              SOMETHING
-            </span>
-
-            WORTH NOTICING.
-
+          <h1 id="contact-title">
+            <span>Let's make</span>
+            <span class="contact-hero__outline">something</span>
+            <span>worth noticing.</span>
           </h1>
 
-
           <p class="contact-hero__lead">
-
-            Have a brand, campaign, website, content idea or
-            something completely different in mind? Tell us
-            what you're building.
-
+            Have a brand, campaign, website or content idea in mind?
+            Tell us what you’re building.
           </p>
 
-
-          <a
-            href="#contact-form"
-            class="contact-hero__jump"
-          >
-
-            <span>
-              START A PROJECT
-            </span>
-
-            <i aria-hidden="true">
-              ↓
-            </i>
-
+          <a href="#contact-form" class="contact-hero__jump">
+            <span>Start a project</span>
+            <i aria-hidden="true">↓</i>
           </a>
-
         </div>
 
-
-
-        <!-- CONTACT CARD -->
-
-        <aside class="contact-hero__details">
-
-
-          <div class="contact-hero__location">
-
-            <span
-              class="contact-hero__location-dot"
-              aria-hidden="true"
-            ></span>
-
-            <span>
-              KOLKATA / INDIA
-            </span>
-
-          </div>
-
-
-          <!-- PHONE -->
+        <aside class="contact-hero__details" aria-label="APE Studio contact details">
+          <p class="contact-hero__location">Kolkata, India</p>
 
           <div class="contact-detail">
-
-            <p class="contact-detail__label">
-              WHATSAPP / PHONE
-            </p>
-
-
-            <a
-              href="https://wa.me/919230647425?text=Hi%20APE%20Studio%2C%20I%27d%20like%20to%20discuss%20a%20project."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-
-              <span class="contact-detail__value">
-                +91 9230647425
-              </span>
-
-              <span
-                class="contact-detail__arrow"
-                aria-hidden="true"
-              >
-                ↗
-              </span>
-
+            <p class="contact-detail__label">WhatsApp / Phone</p>
+            <a href="https://wa.me/919230647425?text=Hi%20APE%20Studio%2C%20I%27d%20like%20to%20discuss%20a%20project."
+              target="_blank" rel="noopener noreferrer">
+              <span>+91 9230647425</span>
+              <span class="contact-detail__arrow" aria-hidden="true">↗</span>
             </a>
-
           </div>
 
-
-          <!-- EMAIL -->
-
           <div class="contact-detail">
-
-            <p class="contact-detail__label">
-              EMAIL
-            </p>
-
-
+            <p class="contact-detail__label">Email</p>
             <a href="mailto:info@apeindia.in">
-
-              <span class="contact-detail__value">
-                info@apeindia.in
-              </span>
-
-              <span
-                class="contact-detail__arrow"
-                aria-hidden="true"
-              >
-                ↗
-              </span>
-
+              <span>info@apeindia.in</span>
+              <span class="contact-detail__arrow" aria-hidden="true">↗</span>
             </a>
-
           </div>
-
-
-
-          <!-- =================================================
-               SOCIAL MEDIA
-          ================================================== -->
 
           <div class="contact-social">
-
-            <p class="contact-detail__label">
-              FOLLOW APE
-            </p>
-
+            <p class="contact-detail__label">Follow APE</p>
 
             <div class="contact-social__links">
-
-
-              <!-- FACEBOOK -->
-
-              <a
-                class="contact-social__link"
-                href="https://www.facebook.com/share/19gyU4ZwxS/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="APE Studio on Facebook"
-                title="Facebook"
-              >
-
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M13.5 22v-9h3l.45-3.5H13.5V7.25c0-1.01.28-1.7 1.73-1.7H17V2.42c-.31-.04-1.39-.13-2.65-.13-2.62 0-4.42 1.6-4.42 4.55V9.5H7v3.5h2.93v9h3.57Z"
-                  />
+              <a href="https://www.facebook.com/share/19gyU4ZwxS/"
+                target="_blank" rel="noopener noreferrer" aria-label="APE Studio on Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M13.5 22v-9h3l.45-3.5H13.5V7.25c0-1.01.28-1.7 1.73-1.7H17V2.42c-.31-.04-1.39-.13-2.65-.13-2.62 0-4.42 1.6-4.42 4.55V9.5H7v3.5h2.93v9h3.57Z"/>
                 </svg>
-
               </a>
 
-
-
-              <!-- INSTAGRAM -->
-
-              <a
-                class="contact-social__link"
-                href="https://www.instagram.com/apestudiosin?exln=N2tpem5qNWY1dXNw"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="APE Studio on Instagram"
-                title="Instagram"
-              >
-
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-
-                  <path
-                    fill="currentColor"
-                    d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.76 3.76 0 0 0 4 7.75v8.5A3.76 3.76 0 0 0 7.75 20h8.5A3.76 3.76 0 0 0 20 16.25v-8.5A3.76 3.76 0 0 0 16.25 4h-8.5Zm8.75 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
-                  />
-
+              <a href="https://www.instagram.com/apestudiosin?exln=N2tpem5qNWY1dXNw"
+                target="_blank" rel="noopener noreferrer" aria-label="APE Studio on Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
                 </svg>
-
               </a>
 
-
-
-              <!-- LINKEDIN -->
-
-              <a
-                class="contact-social__link"
-                href="https://www.linkedin.com/company/ape-studioindia/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="APE Studio on LinkedIn"
-                title="LinkedIn"
-              >
-
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-
-                  <path
-                    fill="currentColor"
-                    d="M5.34 3.5A2.34 2.34 0 1 1 5.33 8.18 2.34 2.34 0 0 1 5.34 3.5ZM3.3 9.75h4.08V22H3.3V9.75Zm6.55 0h3.91v1.67h.06c.54-1.03 1.88-2.12 3.87-2.12 4.14 0 4.91 2.73 4.91 6.28V22h-4.08v-5.69c0-1.36-.03-3.1-1.89-3.1-1.89 0-2.18 1.47-2.18 3V22H9.85V9.75Z"
-                  />
-
+              <a href="https://www.linkedin.com/company/ape-studioindia/"
+                target="_blank" rel="noopener noreferrer" aria-label="APE Studio on LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M5.34 3.5A2.34 2.34 0 1 1 5.33 8.18 2.34 2.34 0 0 1 5.34 3.5ZM3.3 9.75h4.08V22H3.3V9.75Zm6.55 0h3.91v1.67h.06c.54-1.03 1.88-2.12 3.87-2.12 4.14 0 4.91 2.73 4.91 6.28V22h-4.08v-5.69c0-1.36-.03-3.1-1.89-3.1-1.89 0-2.18 1.47-2.18 3V22H9.85V9.75Z"/>
                 </svg>
-
               </a>
 
-
-
-              <!-- YOUTUBE -->
-
-              <a
-                class="contact-social__link"
-                href="https://youtube.com/@apestudioind?si=pNedUN5wmQLruhUn"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="APE Studio on YouTube"
-                title="YouTube"
-              >
-
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-
-                  <path
-                    fill="currentColor"
-                    d="M23.5 6.2a3 3 0 0 0-2.11-2.12C19.52 3.58 12 3.58 12 3.58s-7.52 0-9.39.5A3 3 0 0 0 .5 6.2 31.08 31.08 0 0 0 0 12a31.08 31.08 0 0 0 .5 5.8 3 3 0 0 0 2.11 2.12c1.87.5 9.39.5 9.39.5s7.52 0 9.39-.5a3 3 0 0 0 2.11-2.12A31.08 31.08 0 0 0 24 12a31.08 31.08 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"
-                  />
-
+              <a href="https://youtube.com/@apestudioind?si=pNedUN5wmQLruhUn"
+                target="_blank" rel="noopener noreferrer" aria-label="APE Studio on YouTube">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M23.5 6.2a3 3 0 0 0-2.11-2.12C19.52 3.58 12 3.58 12 3.58s-7.52 0-9.39.5A3 3 0 0 0 .5 6.2 31.08 31.08 0 0 0 0 12a31.08 31.08 0 0 0 .5 5.8 3 3 0 0 0 2.11 2.12c1.87.5 9.39.5 9.39.5s7.52 0 9.39-.5a3 3 0 0 0 2.11-2.12A31.08 31.08 0 0 0 24 12a31.08 31.08 0 0 0-.5-5.8ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/>
                 </svg>
-
               </a>
-
-
             </div>
-
           </div>
-
-
         </aside>
-
-
       </div>
-
     </section>
 
-
-
-    <!-- ===================================================
-         CONTACT FORM
-    ==================================================== -->
-
-    <section
-      id="contact-form"
-      class="contact-form-section"
-    >
-
+    <section id="contact-form" class="contact-form-section" aria-labelledby="enquiry-title">
       <div class="contact-form-section__inner">
-
-
-        <!-- LEFT -->
-
         <div class="contact-form-section__intro">
-
-
-          <p class="contact-form-section__eyebrow">
-            START A PROJECT
-          </p>
-
-
-          <h2>
-
-            Tell us what
-
-            <span>
-              you're building.
-            </span>
-
-          </h2>
-
-
-          <p class="contact-form-section__copy">
-
-            Give us a little context about your brand,
-            requirement or project. We'll take it from there.
-
-          </p>
-
-
-          <div class="contact-form-section__mini">
-
-            <span>
-              BRANDING
-            </span>
-
-            <span>
-              DIGITAL
-            </span>
-
-            <span>
-              CONTENT
-            </span>
-
-            <span>
-              PRODUCTION
-            </span>
-
-          </div>
-
+          <h2 id="enquiry-title">Tell us what <span>you’re building.</span></h2>
+          <p>Share a little about your brand, what you need, and what you’d like to achieve.</p>
         </div>
-
-
-
-        <!-- FORM CARD -->
 
         <div class="contact-form-wrap">
-
-
-          <div
-            class="contact-form-wrap__accent"
-            aria-hidden="true"
-          ></div>
-
-
-          <div class="contact-form-wrap__top">
-
-            <span>
-              PROJECT ENQUIRY
-            </span>
-
-            <span>
-              APE / KOLKATA
-            </span>
-
-          </div>
-
-
-          <form
-            id="ape-contact-form"
-            class="contact-form"
-            method="POST"
-            target="contact-form-frame"
-            autocomplete="on"
-          >
-
-
-            <!-- HONEYPOT -->
-
-            <div
-              class="contact-form__trap"
-              aria-hidden="true"
-            >
-
-              <label>
-
-                Website
-
-                <input
-                  type="text"
-                  name="website"
-                  tabindex="-1"
-                  autocomplete="off"
-                >
-
-              </label>
-
+          <form id="ape-contact-form" class="contact-form" method="post"
+            target="contact-form-frame" autocomplete="on"
+            action="https://script.google.com/macros/s/AKfycbxa2g03RBbN0y8fMBVH56Pe-eYVn7XzHXmGUmu2IAkTF3Mxp0YA9rPT3vP70jJP0nOANw/exec">
+            <div class="contact-form__trap" aria-hidden="true">
+              <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
             </div>
-
-
-            <!-- NAME -->
 
             <div class="contact-field">
-
-              <label for="contact-name">
-                Your Name
-              </label>
-
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                placeholder="Full name"
-                autocomplete="name"
-                required
-              >
-
+              <label for="contact-name">Name</label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Full name" required>
             </div>
-
-
-            <!-- PHONE -->
 
             <div class="contact-field">
-
-              <label for="contact-phone">
-                Phone Number
-              </label>
-
-              <input
-                id="contact-phone"
-                name="phone"
-                type="tel"
-                placeholder="+91"
-                autocomplete="tel"
-                required
-              >
-
+              <label for="contact-phone">Phone</label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91" required>
             </div>
-
-
-            <!-- EMAIL -->
 
             <div class="contact-field">
-
-              <label for="contact-email">
-                Email
-              </label>
-
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                placeholder="you@company.com"
-                autocomplete="email"
-                required
-              >
-
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
             </div>
-
-
-            <!-- COMPANY -->
 
             <div class="contact-field">
-
-              <label for="contact-company">
-                Brand / Company
-              </label>
-
-              <input
-                id="contact-company"
-                name="company"
-                type="text"
-                placeholder="Brand or company name"
-                autocomplete="organization"
-              >
-
+              <label for="contact-company">Company (optional)</label>
+              <input id="contact-company" name="company" type="text" autocomplete="organization" placeholder="Brand or company name">
             </div>
-
-
-            <!-- SERVICE -->
 
             <div class="contact-field contact-field--full">
-
-              <label for="contact-service">
-                What can we help you with?
-              </label>
-
-              <select
-                id="contact-service"
-                name="service"
-                required
-              >
-
-                <option
-                  value=""
-                  selected
-                  disabled
-                >
-                  Select a service
-                </option>
-
-                <option value="Social Media">
-                  Social Media
-                </option>
-
-                <option value="Performance Marketing">
-                  Performance Marketing
-                </option>
-
-                <option value="Digital Marketing">
-                  Digital Marketing
-                </option>
-
-                <option value="Website Development">
-                  Website Development
-                </option>
-
-                <option value="Packaging">
-                  Packaging
-                </option>
-
-                <option value="Branding">
-                  Branding
-                </option>
-
-                <option value="Influencer Marketing">
-                  Influencer Marketing
-                </option>
-
-                <option value="Reels / Editing / Motion">
-                  Reels / Editing / Motion
-                </option>
-
-                <option value="Multiple Services">
-                  Multiple Services
-                </option>
-
-                <option value="Other">
-                  Something Else
-                </option>
-
+              <label for="contact-service">What can we help you with?</label>
+              <select id="contact-service" name="service" required>
+                <option value="" selected disabled>Select a service</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Performance Marketing">Performance Marketing</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Packaging">Packaging</option>
+                <option value="Branding">Branding</option>
+                <option value="Influencer Marketing">Influencer Marketing</option>
+                <option value="Reels / Editing / Motion">Reels / Editing / Motion</option>
+                <option value="Multiple Services">Multiple Services</option>
+                <option value="Other">Something Else</option>
               </select>
-
             </div>
-
-
-            <!-- MESSAGE -->
 
             <div class="contact-field contact-field--full">
-
-              <label for="contact-message">
-                Tell us about the project
-              </label>
-
-              <textarea
-                id="contact-message"
-                name="message"
-                rows="6"
-                placeholder="A little context helps us understand what you're looking for..."
-                required
-              ></textarea>
-
+              <label for="contact-message">Tell us about the project</label>
+              <textarea id="contact-message" name="message" rows="5" required></textarea>
             </div>
 
-
-            <!-- HIDDEN TRACKING -->
-
-            <input
-              id="contact-page-url"
-              type="hidden"
-              name="pageUrl"
-            >
-
-            <input
-              id="contact-referrer"
-              type="hidden"
-              name="referrer"
-            >
-
-            <input
-              id="contact-utm-source"
-              type="hidden"
-              name="utmSource"
-            >
-
-            <input
-              id="contact-utm-medium"
-              type="hidden"
-              name="utmMedium"
-            >
-
-            <input
-              id="contact-utm-campaign"
-              type="hidden"
-              name="utmCampaign"
-            >
-
-
-            <!-- SUBMIT -->
+            <input type="hidden" id="contact-page-url" name="pageUrl">
+            <input type="hidden" id="contact-referrer" name="referrer">
+            <input type="hidden" id="contact-utm-source" name="utmSource">
+            <input type="hidden" id="contact-utm-medium" name="utmMedium">
+            <input type="hidden" id="contact-utm-campaign" name="utmCampaign">
 
             <div class="contact-form__footer">
-
-              <button
-                id="contact-submit"
-                class="contact-submit"
-                type="submit"
-              >
-
-                <span class="contact-submit__text">
-                  Send Enquiry
-                </span>
-
-                <span
-                  class="contact-submit__arrow"
-                  aria-hidden="true"
-                >
-                  ↗
-                </span>
-
+              <button id="contact-submit" class="contact-submit" type="submit">
+                <span>Send enquiry</span>
+                <i aria-hidden="true">↗</i>
               </button>
-
-
-              <p
-                id="contact-form-status"
-                class="contact-form__status"
-                role="status"
-                aria-live="polite"
-              ></p>
-
+              <p id="contact-form-status" class="contact-form__status" role="status"></p>
             </div>
-
-
           </form>
 
-
-          <iframe
-            id="contact-form-frame"
-            name="contact-form-frame"
-            class="contact-form-frame"
-            title="Contact form submission"
-          ></iframe>
-
-
+          <iframe id="contact-form-frame" name="contact-form-frame"
+            class="contact-form-frame" title="Contact form response"
+            tabindex="-1" aria-hidden="true"></iframe>
         </div>
-
-
       </div>
-
     </section>
-
-
   </main>
 
-
-
-  <!-- =====================================================
-       FLOATING WHATSAPP
-  ====================================================== -->
-
-  <a
-    class="floating-whatsapp"
+  <a class="floating-whatsapp"
     href="https://wa.me/919230647425?text=Hi%20APE%20Studio%2C%20I%27d%20like%20to%20discuss%20a%20project."
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Chat with APE Studio on WhatsApp"
-  >
-
-    <svg
-      viewBox="0 0 32 32"
-      aria-hidden="true"
-    >
-
-      <path
-        fill="currentColor"
-        d="M16 3C8.82 3 3 8.56 3 15.42c0 2.48.76 4.78 2.07 6.72L3.7 29l7.2-1.3A13.5 13.5 0 0 0 16 28.7c7.18 0 13-5.56 13-12.42S23.18 3 16 3Zm0 23.45c-1.72 0-3.4-.43-4.87-1.25l-.35-.2-4.27.77.81-4-.23-.38a10.03 10.03 0 0 1-1.6-5.39c0-5.56 4.72-10.08 10.51-10.08S26.5 10.44 26.5 16 21.79 26.45 16 26.45Zm5.76-7.5c-.32-.15-1.87-.88-2.16-.98-.29-.1-.5-.15-.71.15-.21.31-.82.99-1 1.19-.19.21-.38.23-.7.08-.32-.15-1.34-.47-2.55-1.5a9.42 9.42 0 0 1-1.76-2.1c-.18-.31-.02-.48.14-.63.15-.14.32-.36.48-.54.16-.18.21-.31.32-.52.1-.2.05-.38-.03-.54-.08-.15-.71-1.64-.98-2.24-.26-.6-.52-.51-.71-.52h-.61c-.21 0-.55.08-.84.38-.29.31-1.11 1.04-1.11 2.53s1.14 2.93 1.3 3.13c.16.21 2.24 3.27 5.42 4.58.76.31 1.35.5 1.81.64.76.23 1.45.2 2 .12.61-.09 1.87-.73 2.13-1.43.27-.7.27-1.31.19-1.44-.08-.12-.29-.2-.61-.35Z"
-      />
-
+    target="_blank" rel="noopener noreferrer" aria-label="Chat with APE Studio on WhatsApp">
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+      <path d="M16 3C8.82 3 3 8.56 3 15.42c0 2.48.76 4.78 2.07 6.72L3.7 29l7.2-1.3A13.5 13.5 0 0 0 16 28.7c7.18 0 13-5.56 13-12.42S23.18 3 16 3Zm0 23.45c-1.72 0-3.4-.43-4.87-1.25l-.35-.2-4.27.77.81-4-.23-.38a10.03 10.03 0 0 1-1.6-5.39c0-5.56 4.72-10.08 10.51-10.08S26.5 10.44 26.5 16 21.79 26.45 16 26.45Zm5.76-7.5c-.32-.15-1.87-.88-2.16-.98-.29-.1-.5-.15-.71.15-.21.31-.82.99-1.01 1.19-.19.21-.38.23-.7.08-.32-.15-1.34-.47-2.55-1.5a9.42 9.42 0 0 1-1.76-2.1c-.18-.31-.02-.48.14-.63.14-.14.32-.36.48-.54.16-.18.21-.31.32-.52.1-.2.05-.38-.03-.54-.08-.15-.71-1.64-.98-2.24-.26-.6-.52-.51-.71-.52h-.61c-.21 0-.55.08-.84.38-.29.31-1.11 1.04-1.11 2.53s1.14 2.93 1.3 3.13c.16.21 2.24 3.27 5.42 4.58.76.31 1.35.5 1.81.64.76.23 1.45.2 2 .12.61-.09 1.87-.73 2.13-1.43.27-.7.27-1.31.19-1.44-.08-.12-.29-.2-.61-.35Z"/>
     </svg>
-
-    <span>
-      WhatsApp
-    </span>
-
+    <span>WhatsApp</span>
   </a>
 
-
-
-  <!-- =====================================================
-       GLOBAL FOOTER
-  ====================================================== -->
-
-  <footer
-    id="site-footer"
-    class="site-footer"
-  >
-
+  <footer id="site-footer" class="site-footer">
     <div class="site-footer__container">
-
-
       <div class="site-footer__cta">
-
         <div>
-
-          <p class="site-footer__eyebrow">
-            READY TO MAKE A MOVE?
-          </p>
-
-          <h2>
-
-            LET'S BUILD
-
-            <span>
-              SOMETHING GOOD.
-            </span>
-
-          </h2>
-
+          <p class="site-footer__eyebrow">READY TO MAKE A MOVE?</p>
+          <h2>LET'S BUILD <span>SOMETHING GOOD.</span></h2>
         </div>
-
-
-        <a
-          href="/contact/#contact-form"
-          class="site-footer__cta-button"
-        >
-
-          <span>
-            LET'S TALK
-          </span>
-
-          <i aria-hidden="true">
-            ↗
-          </i>
-
+        <a href="/contact/#contact-form" class="site-footer__cta-button">
+          <span>LET'S TALK</span><i aria-hidden="true">↗</i>
         </a>
-
       </div>
-
-
 
       <div class="site-footer__main">
-
-
         <div class="site-footer__brand-column">
-
-          <a
-            href="/"
-            class="site-footer__logo"
-            aria-label="APE Studio home"
-          >
-
-            <img
-              src="/ape-logo.png"
-              alt="APE Studio"
-            >
-
+          <a href="/" class="site-footer__logo" aria-label="APE Studio home">
+            <img src="/ape-logo.png" alt="APE Studio">
           </a>
-
-
-          <p>
-            Strategy, creativity, digital and production
-            brought together to build brands that get noticed,
-            remembered and chosen.
-          </p>
-
+          <p>Strategy, creativity, digital and production brought together to build brands that get noticed, remembered and chosen.</p>
         </div>
-
-
 
         <div class="site-footer__column">
-
-          <p class="site-footer__column-title">
-            PAGES
-          </p>
-
-          <nav>
-
-            <a href="/">
-              Home
-            </a>
-
-            <a href="/about/">
-              About
-            </a>
-
-            <a href="/services/">
-              Services
-            </a>
-
-            <a href="/work/">
-              Work
-            </a>
-
+          <p class="site-footer__column-title">PAGES</p>
+          <nav aria-label="Footer pages">
+            <a href="/">Home</a>
+            <a href="/about/">About</a>
+            <a href="/services/">Services</a>
+            <a href="/work/">Work</a>
           </nav>
-
         </div>
-
-
 
         <div class="site-footer__column">
-
-          <p class="site-footer__column-title">
-            EXPLORE
-          </p>
-
-          <nav>
-
-            <a href="/blog/">
-              Blog
-            </a>
-
-            <a href="/faq/">
-              FAQ
-            </a>
-
-            <a href="/contact/">
-              Contact
-            </a>
-
+          <p class="site-footer__column-title">EXPLORE</p>
+          <nav aria-label="Explore">
+            <a href="/blog/">Blog</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/contact/">Contact</a>
           </nav>
-
         </div>
 
-
-
-        <div
-          class="
-            site-footer__column
-            site-footer__column--services
-          "
-        >
-
-          <p class="site-footer__column-title">
-            CAPABILITIES
-          </p>
-
-          <nav>
-
-            <a href="/services/">
-              Social Media
-            </a>
-
-            <a href="/services/">
-              Performance Marketing
-            </a>
-
-            <a href="/services/">
-              Digital Marketing
-            </a>
-
-            <a href="/services/">
-              Website Development
-            </a>
-
-            <a href="/services/">
-              Packaging
-            </a>
-
-            <a href="/services/">
-              Branding
-            </a>
-
-            <a href="/services/">
-              Influencer Marketing
-            </a>
-
-            <a href="/services/">
-              Reels & Motion
-            </a>
-
+        <div class="site-footer__column site-footer__column--services">
+          <p class="site-footer__column-title">CAPABILITIES</p>
+          <nav aria-label="Capabilities">
+            <a href="/services/">Social Media</a>
+            <a href="/services/">Performance Marketing</a>
+            <a href="/services/">Digital Marketing</a>
+            <a href="/services/">Website Development</a>
+            <a href="/services/">Packaging</a>
+            <a href="/services/">Branding</a>
+            <a href="/services/">Influencer Marketing</a>
+            <a href="/services/">Reels &amp; Motion</a>
           </nav>
-
         </div>
-
-
       </div>
-
-
 
       <div class="site-footer__divider"></div>
 
-
       <div class="site-footer__bottom">
-
-
         <div class="site-footer__copyright">
-
-          <span>
-
-            ©
-            <span id="ape-footer-year"></span>
-            APE STUDIO
-
-          </span>
-
-          <span>
-            ALL RIGHTS RESERVED
-          </span>
-
+          <span>© <span id="ape-footer-year"></span> APE STUDIO</span>
+          <span>ALL RIGHTS RESERVED</span>
         </div>
-
 
         <div class="site-footer__bottom-nav">
-
-          <a href="/about/">
-            ABOUT
-          </a>
-
-          <a href="/services/">
-            SERVICES
-          </a>
-
-          <a href="/work/">
-            WORK
-          </a>
-
-          <a href="/blog/">
-            BLOG
-          </a>
-
-          <a href="/faq/">
-            FAQ
-          </a>
-
-          <a href="/contact/">
-            CONTACT
-          </a>
-
+          <a href="/about/">ABOUT</a>
+          <a href="/services/">SERVICES</a>
+          <a href="/work/">WORK</a>
+          <a href="/blog/">BLOG</a>
+          <a href="/faq/">FAQ</a>
+          <a href="/contact/">CONTACT</a>
         </div>
 
-
-        <a
-          href="#"
-          class="site-footer__top-link"
-        >
-
-          BACK TO TOP
-
-          <span>
-            ↑
-          </span>
-
-        </a>
-
+        <a href="#top" class="site-footer__top-link">BACK TO TOP <span aria-hidden="true">↑</span></a>
       </div>
-
-
     </div>
-
   </footer>
 
-
-  <script
-    type="module"
-    src="/src/contact/contact.js"
-  ></script>
-
-
+  <script type="module" src="/src/contact/contact.js"></script>
 </body>
-
 </html>
