@@ -2,6 +2,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeader } from "../header/header.js";
 import { team } from "../team/team-data.js";
+import { initHeroMascotInteraction } from "../shared/hero-mascot.js";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -807,6 +809,7 @@ function start() {
   buildTeam();
   initHero();
   initHeroCTA();
+  initHeroMascotInteraction();
   initIntroReveal();
   initTeam();
   initBeliefReveals();

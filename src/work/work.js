@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeader } from "../header/header.js";
+import { initHeroMascotInteraction } from "../shared/hero-mascot.js";
 
 import {
   WORK_CATEGORIES,
@@ -527,6 +528,7 @@ function start() {
   buildProjects();
 
   initHeroApe();
+  initHeroMascotInteraction();
   initProjectApe();
   initFiltering();
   initHeroCTA();

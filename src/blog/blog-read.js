@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeader } from "../header/header.js";
 import { BLOGS } from "./blog-data.js";
+import { initHeroMascotInteraction } from "../shared/hero-mascot.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -725,6 +726,7 @@ function initFooter() {
 
 function start() {
   initHeader();
+  initHeroMascotInteraction();
 
   if (buildArticle()) {
     initCarousel();

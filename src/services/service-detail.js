@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeader } from "../header/header.js";
 import { SERVICE_PAGES } from "./services-data.js";
+import { initHeroMascotInteraction } from "../shared/hero-mascot.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -514,6 +515,7 @@ function start() {
   initNavigation();
   initMotion();
   initImageRefresh();
+  initHeroMascotInteraction();
 
   requestAnimationFrame(() => {
     refreshLayout();

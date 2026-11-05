@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initHeader } from "../header/header.js";
+import { initHeroMascotInteraction } from "../shared/hero-mascot.js";
 
 import {
   getWorkProject,
@@ -691,6 +692,7 @@ function start() {
   if (!renderShell()) return;
 
   initHeader();
+  initHeroMascotInteraction();
 
   const projectReady = buildProjectPage();
 
