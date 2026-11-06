@@ -1,1077 +1,466 @@
-/* =========================================================
-   APE HERO
-   MOBILE-FIRST
-========================================================= */
+/* APE Studio — responsive Home hero */
 
-.ape-hero {
-  --hero-violet: #7d35eb;
-  --hero-lime: #c6ff33;
-  --hero-white: #ffffff;
+#ape-hero {
+  --hero-violet: #7D35EB;
+  --hero-lime: #C6FF33;
+  --hero-white: #FFFFFF;
+  --hero-gutter: clamp(16px, 4.5vw, 72px);
+  --hero-top: clamp(100px, 14svh, 128px);
+  --hero-bottom: clamp(24px, 5svh, 48px);
 
   position: relative;
-
-  width: 100%;
-
-  min-height: 100svh;
-
-  overflow: hidden;
-
-  color: var(--hero-white);
-
-  background:
-    radial-gradient(
-      circle at 78% 32%,
-      rgba(125, 53, 235, 0.16),
-      transparent 34%
-    ),
-    linear-gradient(
-      145deg,
-      #121018 0%,
-      #181322 52%,
-      #101118 100%
-    );
-
   isolation: isolate;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--hero-white);
+  background:
+    radial-gradient(ellipse at 82% 36%, rgb(125 53 235 / 19%), transparent 56%),
+    linear-gradient(145deg, #000000, #181322 55%, #101118);
 }
 
+#ape-hero,
+#ape-hero *,
+#ape-hero *::before,
+#ape-hero *::after {
+  box-sizing: border-box;
+}
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.ape-hero__background {
+#ape-hero .ape-hero__background {
   position: absolute;
-
   inset: 0;
-
   z-index: 0;
-
   pointer-events: none;
 }
 
-
-/* =========================================================
-   MOBILE INNER
-========================================================= */
-
-.ape-hero__inner {
-  position: relative;
-
-  z-index: 2;
-
-  width: 100%;
-
-  box-sizing: border-box;
-
-  padding:
-    100px
-    16px
-    28px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 22px;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.ape-hero__content {
-  position: relative;
-
-  z-index: 10;
-
-  width: 100%;
-
-  min-width: 0;
-}
-
-
-/* =========================================================
-   H1
-========================================================= */
-
-.ape-hero__title {
-  width: 100%;
-
-  max-width: 100%;
-
-  margin: 0;
-
-  color: #fff;
-
-  font-family:
-    var(--ape-font),
-    "Inter Tight",
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size:
-    clamp(
-      45px,
-      12.1vw,
-      55px
-    );
-
-  font-weight: 900;
-
-  line-height: 0.91;
-
-  letter-spacing: -0.062em;
-
-  text-wrap: balance;
-}
-
-
-/* =========================================================
-   TITLE LINES
-========================================================= */
-
-.ape-hero__title-line {
+#ape-hero > .ape-aurora-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: block;
-
   width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
+#ape-hero .ape-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(18px, 3vw, 38px);
+  width: min(100%, 1800px);
+  height: auto;
+  margin-inline: auto;
+  padding: var(--hero-top) var(--hero-gutter) var(--hero-bottom);
+}
+
+#ape-hero .ape-hero__content {
+  position: relative;
+  z-index: 10;
+  container-type: inline-size;
+  width: 100%;
+  min-width: 0;
+  max-width: 760px;
+}
+
+#ape-hero .ape-hero__title {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  color: var(--hero-white);
+  font-family: var(--ape-font, "Inter Tight"), Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 9vw, 4.25rem);
+  font-size: clamp(2rem, 9.5cqi, 4.75rem);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.062em;
+}
+
+#ape-hero .ape-hero__title-line {
+  display: block;
+  width: 100%;
   max-width: 100%;
-
   overflow: visible;
 }
 
+#ape-hero .ape-hero__title-line + .ape-hero__title-line {
+  margin-top: 0.045em;
+}
 
-.ape-hero__title-line--violet {
+#ape-hero .ape-hero__title-line--violet {
   color: var(--hero-violet);
 }
 
+/* Existing headline and copy animation wrappers */
 
-/* =========================================================
-   KINETIC WORD
-   CRITICAL:
-   NEVER BREAK INSIDE WORD
-========================================================= */
-
-.ape-hero__kinetic-word {
+#ape-hero .ape-hero__kinetic-word {
   display: inline-block;
-
   white-space: nowrap;
-
   vertical-align: bottom;
 }
 
-
-/* =========================================================
-   KINETIC CHARACTER
-========================================================= */
-
-.ape-hero__kinetic-char {
-  display: inline-block;
-
+#ape-hero .ape-hero__kinetic-char {
   position: relative;
-
-  will-change:
-    transform,
-    opacity,
-    filter;
+  display: inline-block;
+  will-change: transform, opacity, filter;
 }
 
-
-/* =========================================================
-   OLD TITLE WORD CLASSES
-   SAFE FALLBACK
-========================================================= */
-
-.ape-hero__title-word-mask {
+#ape-hero .ape-hero__title-word-mask {
   display: inline-block;
-
   vertical-align: bottom;
 }
 
-
-.ape-hero__title-word {
+#ape-hero .ape-hero__title-word {
   display: inline-block;
 }
 
-
-/* =========================================================
-   SEO COPY
-========================================================= */
-
-.ape-hero__seo-copy {
+#ape-hero .ape-hero__seo-copy {
   position: absolute !important;
-
   width: 1px !important;
-
   height: 1px !important;
-
   padding: 0 !important;
-
   margin: -1px !important;
-
   overflow: hidden !important;
-
   clip: rect(0, 0, 0, 0) !important;
-
+  clip-path: inset(50%) !important;
   white-space: nowrap !important;
-
   border: 0 !important;
 }
 
-
-/* =========================================================
-   SUPPORTING COPY
-========================================================= */
-
-.ape-hero__copy-stage {
+#ape-hero .ape-hero__copy-stage {
   position: relative;
-
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
   width: 100%;
-
-  max-width: 100%;
-
-  height: 112px;
-
-  margin-top: 24px;
-
+  max-width: 60ch;
+  height: auto;
+  margin-top: clamp(15px, 2.1vw, 28px);
   overflow: hidden;
 }
 
-
-.ape-hero__copy-line {
-  position: absolute;
-
-  inset:
-    0
-    0
-    auto
-    0;
-
+#ape-hero .ape-hero__copy-line {
+  position: relative;
+  inset: auto;
+  grid-area: 1 / 1;
   width: 100%;
-
+  min-width: 0;
   margin: 0;
-
-  color:
-    rgba(255,255,255,.7);
-
-  font-family:
-    var(--ape-font),
-    "Inter Tight",
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 14px;
-
+  color: rgb(255 255 255 / 78%);
+  font-family: var(--ape-font, "Inter Tight"), Arial, Helvetica, sans-serif;
+  font-size: clamp(0.875rem, 1.08vw, 1rem);
   font-weight: 500;
-
   line-height: 1.65;
-
   letter-spacing: -0.012em;
-
   visibility: hidden;
-
   opacity: 0;
 }
 
-
-/* =========================================================
-   SUPPORT COPY WORD
-========================================================= */
-
-.ape-hero__word-mask {
+#ape-hero .ape-hero__word-mask {
   display: inline-block;
-
   overflow: hidden;
-
   vertical-align: bottom;
 }
 
-
-.ape-hero__word {
+#ape-hero .ape-hero__word {
   display: inline-block;
-
-  will-change:
-    transform,
-    opacity,
-    filter;
+  will-change: transform, opacity, filter;
 }
 
+/* Calls to action */
 
-/* =========================================================
-   MOBILE CTAs
-========================================================= */
-
-.ape-hero__actions {
-  width: 100%;
-
-  margin-top: 8px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 9px;
-}
-
-
-.ape-hero__cta {
-  width: 100%;
-
-  min-width: 0;
-
-  min-height: 50px;
-
-  padding:
-    5px
-    5px
-    5px
-    14px;
-
-  box-sizing: border-box;
-
+#ape-hero .ape-hero__actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  width: 100%;
+  margin-top: clamp(12px, 1.6vw, 20px);
+}
 
+#ape-hero .ape-hero__cta {
+  display: flex;
+  flex: 0 1 auto;
   align-items: center;
-
   justify-content: space-between;
-
   gap: 8px;
-
+  width: auto;
+  min-width: 0;
+  min-height: 46px;
+  padding: 5px 5px 5px 13px;
+  border: 1px solid transparent;
   border-radius: 999px;
-
-  font-family:
-    var(--ape-font),
-    "Inter Tight",
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 9px;
-
+  font-family: var(--ape-font, "Inter Tight"), Arial, Helvetica, sans-serif;
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
   font-weight: 850;
-
-  line-height: 1.1;
-
+  line-height: 1.2;
   letter-spacing: 0.02em;
-
   text-decoration: none;
-
   text-transform: uppercase;
-
   -webkit-tap-highlight-color: transparent;
 }
 
-
-.ape-hero__cta span {
+#ape-hero .ape-hero__cta span {
   min-width: 0;
 }
 
-
-.ape-hero__cta i {
-  width: 38px;
-
-  height: 38px;
-
-  flex:
-    0
-    0
-    38px;
-
+#ape-hero .ape-hero__cta i {
   display: grid;
-
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
   place-items: center;
-
   border-radius: 50%;
-
   font-size: 13px;
-
   font-style: normal;
 }
 
-
-/* =========================================================
-   PRIMARY
-========================================================= */
-
-.ape-hero__cta--primary {
-  color: #111;
-
-  border:
-    1px solid
-    var(--hero-lime);
-
-  background:
-    var(--hero-lime);
+#ape-hero .ape-hero__cta--primary {
+  border-color: var(--hero-lime);
+  color: #000000;
+  background: var(--hero-lime);
 }
 
-
-.ape-hero__cta--primary i {
-  color: #fff;
-
+#ape-hero .ape-hero__cta--primary i {
+  color: var(--hero-white);
   background: #17131f;
 }
 
-
-/* =========================================================
-   SECONDARY
-========================================================= */
-
-.ape-hero__cta--secondary {
-  color: #fff;
-
-  border:
-    1px solid
-    rgba(255,255,255,.22);
-
-  background:
-    rgba(255,255,255,.035);
+#ape-hero .ape-hero__cta--secondary {
+  border-color: rgb(255 255 255 / 22%);
+  color: var(--hero-white);
+  background: rgb(255 255 255 / 3.5%);
 }
 
-
-.ape-hero__cta--secondary i {
-  color:
-    var(--hero-lime);
-
-  background:
-    rgba(255,255,255,.08);
+#ape-hero .ape-hero__cta--secondary i {
+  color: var(--hero-lime);
+  background: rgb(255 255 255 / 8%);
 }
 
+#ape-hero :focus-visible {
+  outline: 2px solid var(--hero-lime);
+  outline-offset: 3px;
+}
 
-/* =========================================================
-   MOBILE GALLERY
-========================================================= */
+/* Keep the gallery stable on refresh. GSAP still moves the cards. */
 
-.ape-hero__gallery {
+#ape-hero .ape-hero__gallery {
   position: relative;
-
+  justify-self: center;
   width: 100%;
-
-  height:
-    clamp(
-      300px,
-      78vw,
-      345px
-    );
-
-  margin-top: 4px;
-
+  min-width: 0;
+  max-width: 820px;
+  height: clamp(230px, 78vw, 460px);
+  margin: 0;
   overflow: hidden;
-
   perspective: 1400px;
-
-  transform-style:
-    preserve-3d;
-
-  flex:
-    0
-    0
-    auto;
+  transform-style: preserve-3d;
+  transform: none !important;
+  opacity: 1 !important;
 }
 
+#ape-hero .ape-hero__deck {
+  --hero-card-width: min(72%, 400px);
+  --hero-card-gap: clamp(20px, 4vw, 42px);
 
-/* =========================================================
-   DECK
-========================================================= */
-
-.ape-hero__deck {
   position: absolute;
-
-  inset: 0;
-
+  inset: 0 0 12px;
   overflow: hidden;
-
   touch-action: pan-y;
-
   user-select: none;
-
   -webkit-user-select: none;
-
   cursor: grab;
-
   perspective: 1400px;
-
-  transform-style:
-    preserve-3d;
+  transform-style: preserve-3d;
 }
 
-
-.ape-hero__deck.is-dragging {
+#ape-hero .ape-hero__deck.is-dragging {
   cursor: grabbing;
 }
 
-
-/* =========================================================
-   MOBILE CARD
-========================================================= */
-
-.ape-hero-card {
+#ape-hero .ape-hero-card {
   position: absolute;
-
+  top: 50%;
   left: 50%;
-
-  top: 47%;
-
-  width:
-    min(
-      71vw,
-      310px
-    );
-
-  height:
-    min(
-      74vw,
-      325px
-    );
-
   display: block;
-
+  width: var(--hero-card-width);
+  height: calc(100% - var(--hero-card-gap));
   overflow: hidden;
-
-  border:
-    1px solid
-    rgba(125,53,235,.48);
-
-  border-radius: 23px;
-
-  background:
-    #15131a;
-
-  box-shadow:
-    0
-    24px
-    55px
-    rgba(0,0,0,.28);
-
+  border: 1px solid rgb(125 53 235 / 48%);
+  border-radius: clamp(18px, 2vw, 30px);
+  background: #15131a;
+  box-shadow: 0 24px 55px rgb(0 0 0 / 28%);
   text-decoration: none;
-
-  transform-style:
-    preserve-3d;
-
-  will-change:
-    transform,
-    opacity;
-
-  -webkit-tap-highlight-color:
-    transparent;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Center the first card before GSAP writes its transforms. */
 
-.ape-hero-card.is-active {
-  border-color:
-    rgba(198,255,51,.82);
-
-  box-shadow:
-    0
-    28px
-    65px
-    rgba(0,0,0,.38),
-    0
-    0
-    0
-    1px
-    rgba(198,255,51,.05);
+#ape-hero .ape-hero-card:not([style*="transform"]):first-child {
+  top: calc(var(--hero-card-gap) / 2);
+  left: calc((100% - var(--hero-card-width)) / 2);
+  border-color: rgb(198 255 51 / 82%);
 }
 
+#ape-hero .ape-hero-card:not([style*="transform"]):not(:first-child) {
+  visibility: hidden;
+}
 
-/* =========================================================
-   CARD IMAGE
-========================================================= */
+#ape-hero .ape-hero-card.is-active {
+  border-color: rgb(198 255 51 / 82%);
+  box-shadow: 0 28px 65px rgb(0 0 0 / 38%);
+}
 
-.ape-hero-card img {
-  width: 100%;
+#ape-hero .ape-hero-card:focus-visible {
+  outline-offset: -4px;
+}
 
-  height: 100%;
-
+#ape-hero .ape-hero-card img {
   display: block;
-
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-
   pointer-events: none;
-
   user-select: none;
-
   -webkit-user-drag: none;
-
-  transform:
-    scale(1.025);
-
-  transition:
-    transform
-    .8s
-    cubic-bezier(.16,1,.3,1);
+  transform: scale(1.025);
+  transition: transform 0.8s cubic-bezier(.16, 1, .3, 1);
 }
 
-
-.ape-hero-card.is-active img {
-  transform:
-    scale(1.05);
+#ape-hero .ape-hero-card.is-active img,
+#ape-hero .ape-hero-card:not([style*="transform"]):first-child img {
+  transform: scale(1.05);
 }
 
-
-/* =========================================================
-   MOBILE PROGRESS
-========================================================= */
-
-.ape-hero__progress {
+#ape-hero .ape-hero__progress {
   position: absolute;
-
-  left: 50%;
-
   bottom: 2px;
-
-  width: 46%;
-
-  max-width: 200px;
-
+  left: 50%;
+  width: min(46%, 220px);
   height: 2px;
-
   overflow: hidden;
-
-  background:
-    rgba(255,255,255,.15);
-
-  transform:
-    translateX(-50%);
+  background: rgb(255 255 255 / 15%);
+  transform: translateX(-50%);
 }
 
-
-.ape-hero__progress span {
+#ape-hero .ape-hero__progress span {
   position: absolute;
-
   inset: 0;
-
-  background:
-    var(--hero-lime);
-
-  transform:
-    scaleX(.142857);
-
-  transform-origin:
-    left center;
-
-  will-change:
-    transform;
+  display: block;
+  background: var(--hero-lime);
+  transform: scaleX(.142857);
+  transform-origin: left center;
+  will-change: transform;
 }
 
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
+/* Compact phones */
 
 @media (max-width: 360px) {
-
-  .ape-hero__inner {
-    padding:
-      94px
-      14px
-      24px;
-
-    gap: 18px;
+  #ape-hero {
+    --hero-gutter: 14px;
+    --hero-top: 94px;
   }
 
-
-  .ape-hero__title {
-    font-size:
-      clamp(
-        40px,
-        12vw,
-        44px
-      );
+  #ape-hero .ape-hero__title {
+    font-size: clamp(1.75rem, 10cqi, 2.125rem);
   }
 
-
-  .ape-hero__copy-stage {
-    height: 122px;
-
-    margin-top: 20px;
+  #ape-hero .ape-hero__actions {
+    gap: 7px;
   }
 
-
-  .ape-hero__copy-line {
-    font-size: 13px;
+  #ape-hero .ape-hero__cta {
+    padding-left: 10px;
   }
 
-
-  .ape-hero__actions {
-    grid-template-columns: 1fr;
-  }
-
-
-  .ape-hero__cta {
-    min-height: 48px;
-
-    font-size: 9px;
-  }
-
-
-  .ape-hero__gallery {
-    height: 275px;
-  }
-
-
-  .ape-hero-card {
-    width: 69vw;
-
-    height: 255px;
-
-    border-radius: 20px;
+  #ape-hero .ape-hero__cta i {
+    flex-basis: 30px;
+    width: 30px;
+    height: 30px;
   }
 }
 
+/* Portrait tablets */
 
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (min-width: 768px) {
-
-  .ape-hero__inner {
-    padding:
-      125px
-      5vw
-      42px;
-
-    gap: 32px;
+@media (min-width: 760px) {
+  #ape-hero .ape-hero__title {
+    font-size: clamp(2.5rem, 8.6cqi, 4.9rem);
   }
 
-
-  .ape-hero__title {
-    max-width: 760px;
-
-    font-size:
-      clamp(
-        60px,
-        7.4vw,
-        78px
-      );
+  #ape-hero .ape-hero__gallery {
+    height: clamp(320px, 49vw, 480px);
   }
 
-
-  .ape-hero__copy-stage {
-    max-width: 640px;
-
-    height: 105px;
-
-    margin-top: 30px;
-  }
-
-
-  .ape-hero__copy-line {
-    font-size: 15px;
-  }
-
-
-  .ape-hero__actions {
-    width: auto;
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-  }
-
-
-  .ape-hero__cta {
-    width: auto;
-
-    min-width: 180px;
-
-    padding-left: 18px;
-
-    font-size: 10px;
-  }
-
-
-  .ape-hero__gallery {
-    height:
-      clamp(
-        380px,
-        49vw,
-        480px
-      );
-
-    margin-top: 4px;
-  }
-
-
-  .ape-hero-card {
-    width:
-      min(
-        38vw,
-        355px
-      );
-
-    height:
-      min(
-        43vw,
-        410px
-      );
-
-    border-radius: 28px;
+  #ape-hero .ape-hero__cta {
+    min-width: 154px;
   }
 }
 
+/* Landscape tablets, laptops and large screens */
 
-/* =========================================================
-   DESKTOP — 100% CHROME PRIMARY
-========================================================= */
-
-@media (min-width: 1024px) {
-
-  .ape-hero {
-    min-height: 680px;
-
-    height: 100svh;
+@media (min-width: 800px) and (orientation: landscape),
+       (min-width: 1100px) {
+  #ape-hero .ape-hero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    min-height: min(100svh, 960px);
   }
 
-
-  .ape-hero__inner {
-    width: 100%;
-
-    height: 100%;
-
-    padding:
-      125px
-      4.5vw
-      38px;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(400px, .86fr)
-      minmax(520px, 1.14fr);
-
-    align-items: center;
-
-    gap:
-      clamp(
-        36px,
-        4vw,
-        72px
-      );
+  #ape-hero .ape-hero__title {
+    font-size: clamp(1.9rem, 9.3cqi, 5.25rem);
   }
 
-
-  .ape-hero__content {
-    max-width: 660px;
+  #ape-hero .ape-hero__gallery {
+    height: clamp(245px, 59svh, 540px);
   }
 
+  #ape-hero .ape-hero__deck {
+    --hero-card-width: min(73%, 430px);
+  }
+}
 
-  .ape-hero__title {
-    max-width: 650px;
+/* Short landscape windows, including laptops at 125% zoom */
 
-    font-size:
-      clamp(
-        56px,
-        4.75vw,
-        80px
-      );
-
-    line-height: .89;
+@media (min-width: 800px) and (orientation: landscape) and (max-height: 680px) {
+  #ape-hero {
+    --hero-top: 100px;
+    --hero-bottom: 24px;
   }
 
-
-  .ape-hero__copy-stage {
-    max-width: 570px;
-
-    height: 105px;
-
-    margin-top: 32px;
+  #ape-hero .ape-hero__inner {
+    gap: clamp(18px, 3vw, 44px);
   }
 
-
-  .ape-hero__copy-line {
-    font-size:
-      clamp(
-        13px,
-        1vw,
-        15px
-      );
-
-    line-height: 1.68;
+  #ape-hero .ape-hero__title {
+    font-size: clamp(1.9rem, 8.7cqi, 4.35rem);
   }
 
+  #ape-hero .ape-hero__copy-stage {
+    margin-top: 15px;
+  }
 
-  .ape-hero__actions {
+  #ape-hero .ape-hero__actions {
     margin-top: 12px;
   }
 
-
-  .ape-hero__gallery {
-    width: 100%;
-
-    max-width: 780px;
-
-    height:
-      min(
-        59vh,
-        510px
-      );
-
-    min-height: 390px;
-
-    margin-top: 0;
-
-    justify-self: center;
-  }
-
-
-  .ape-hero-card {
-    top: 50%;
-
-    width:
-      min(
-        28vw,
-        395px
-      );
-
-    height:
-      min(
-        53vh,
-        460px
-      );
-
-    border-radius: 30px;
-  }
-
-
-  .ape-hero__progress {
-    width:
-      min(
-        280px,
-        48%
-      );
+  #ape-hero .ape-hero__gallery {
+    height: clamp(220px, calc(100svh - 148px), 400px);
   }
 }
 
-
-/* =========================================================
-   LARGE DESKTOP
-========================================================= */
-
-@media (min-width: 1500px) {
-
-  .ape-hero__inner {
-    max-width: 1800px;
-
-    margin:
-      0 auto;
-
-    padding-left: 70px;
-
-    padding-right: 70px;
+@media (prefers-reduced-motion: reduce) {
+  #ape-hero *,
+  #ape-hero *::before,
+  #ape-hero *::after {
+    animation: none !important;
+    transition: none !important;
   }
 
-
-  .ape-hero__title {
-    font-size:
-      clamp(
-        68px,
-        4.4vw,
-        92px
-      );
-  }
-
-
-  .ape-hero__gallery {
-    max-width: 850px;
-  }
-
-
-  .ape-hero-card {
-    width: 410px;
-
-    height: 480px;
-  }
-}
-
-
-/* =========================================================
-   125% / SHORT DESKTOP SAFETY
-========================================================= */
-
-@media
-  (min-width: 1024px)
-  and
-  (max-height: 700px) {
-
-  .ape-hero {
-    min-height: 620px;
-  }
-
-
-  .ape-hero__inner {
-    padding-top: 105px;
-
-    padding-bottom: 22px;
-  }
-
-
-  .ape-hero__title {
-    font-size:
-      clamp(
-        48px,
-        4.35vw,
-        64px
-      );
-  }
-
-
-  .ape-hero__copy-stage {
-    height: 90px;
-
-    margin-top: 22px;
-  }
-
-
-  .ape-hero__copy-line {
-    font-size: 12px;
-  }
-
-
-  .ape-hero__gallery {
-    height: 420px;
-
-    min-height: 0;
-  }
-
-
-  .ape-hero-card {
-    height:
-      min(
-        50vh,
-        365px
-      );
-  }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media
-  (prefers-reduced-motion: reduce) {
-
-  .ape-hero *,
-  .ape-hero *::before,
-  .ape-hero *::after {
-    animation:
-      none !important;
-
-    transition:
-      none !important;
-  }
-
-
-  .ape-hero__copy-line:first-child {
+  #ape-hero .ape-hero__copy-line:first-child {
     visibility: visible;
-
     opacity: 1;
   }
 }
