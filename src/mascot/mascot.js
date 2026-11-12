@@ -84,9 +84,7 @@ const SCENES = [
   },
 ];
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+/* INITIALIZE */
 
 export function initMascot() {
   const reducedMotion = window.matchMedia(
@@ -125,9 +123,7 @@ export function initMascot() {
   setTimeout(() => ScrollTrigger.refresh(), 250);
 }
 
-/* =========================================================
-   CHARACTER MARKUP
-========================================================= */
+/* CHARACTER MARKUP */
 
 function getCharacterMarkup(config) {
   return `
@@ -173,9 +169,7 @@ function getCharacterMarkup(config) {
   `;
 }
 
-/* =========================================================
-   MAIN CHARACTER
-========================================================= */
+/* MAIN CHARACTER */
 
 function createMainCharacter({
   section,
@@ -278,9 +272,7 @@ function collectElements(character) {
   return item;
 }
 
-/* =========================================================
-   ENTRANCE AND IDLE
-========================================================= */
+/* ENTRANCE AND IDLE */
 
 function entrance(item, section, personality) {
   const directions = {
@@ -420,9 +412,7 @@ function scrollFloat(item, section, personality) {
   });
 }
 
-/* =========================================================
-   INTERACTION
-========================================================= */
+/* INTERACTION */
 
 function setupCharacterInteraction({
   item,
@@ -548,9 +538,7 @@ function setupDesktopChase({ item, area, personality }) {
   });
 }
 
-/* =========================================================
-   MOBILE DRAG AND TAP
-========================================================= */
+/* MOBILE DRAG AND TAP */
 
 function setupMobileDrag({ item, area, personality }) {
   let startX = 0;
@@ -773,9 +761,7 @@ function mobileParty(item) {
     });
 }
 
-/* =========================================================
-   HOVER REACTION
-========================================================= */
+/* HOVER REACTION */
 
 function hoverReaction(item, personality) {
   impact(item);
@@ -838,9 +824,7 @@ function hoverReaction(item, personality) {
     });
 }
 
-/* =========================================================
-   RUN AROUND SECTION
-========================================================= */
+/* RUN AROUND SECTION */
 
 function runAroundSection({ item, area }) {
   item.following = false;
@@ -950,9 +934,7 @@ function runAroundSection({ item, area }) {
   }, "<0.08");
 }
 
-/* =========================================================
-   ATTENTION LOOP
-========================================================= */
+/* ATTENTION LOOP */
 
 function createAttentionLoop({ item, section }) {
   let active = false;
@@ -1040,9 +1022,7 @@ function attentionMove(item) {
     });
 }
 
-/* =========================================================
-   EFFECTS
-========================================================= */
+/* EFFECTS */
 
 function impact(item) {
   if (!item.impact) return;
@@ -1151,9 +1131,7 @@ function energyTrail(item) {
   }
 }
 
-/* =========================================================
-   SPEECH AND RETURN
-========================================================= */
+/* SPEECH AND RETURN */
 
 function showSpeech(item) {
   item.character.classList.add("is-speaking");
@@ -1204,9 +1182,7 @@ function returnHome(item) {
   });
 }
 
-/* =========================================================
-   SUPPORT CHARACTER FACTORY
-========================================================= */
+/* SUPPORT CHARACTER FACTORY */
 
 function createSupportCharacter({
   section,
@@ -1283,9 +1259,7 @@ function createSupportCharacter({
   });
 }
 
-/* =========================================================
-   HERO IDEA
-========================================================= */
+/* HERO IDEA */
 
 function createHeroIdea({ reducedMotion, desktop }) {
   const hero = document.querySelector(
@@ -1310,9 +1284,7 @@ function createHeroIdea({ reducedMotion, desktop }) {
   });
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* FOOTER */
 
 function createFooter({ reducedMotion, desktop }) {
   const footer = document.querySelector(
